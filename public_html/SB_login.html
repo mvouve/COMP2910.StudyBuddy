@@ -8,19 +8,31 @@
 		<script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
 	</head>
 	<body>
-		<img src="sb_logo.jpeg" alt="Study Buddy">
-		<div id="login">
-			<form>
-				<label for="email">E-mail:</label>
-				<input type="text" name="email" id="email"><br/>
-				<label for="password">Password:</label>
-				<input type="text" name="password" id="password"><br/>
-				<label for="remember">Remember me:</label>
-				<input type="checkbox" name="remember" id="remember"><br/>
-				<input type="submit" value="LOGIN"><br/>
-				<input type="button" value="REGISTER"><br/><br/>
-				<input type="button" value="Forgot Your Password?">
-			</form>
+		<div data-role="page">
+			<div data-role="header">
+				<img src="sb_logo.jpeg" alt="Study Buddy">
+			</div>
+			<div data-role="body" id="login">
+				<form>
+					<label for="email">E-mail:</label>
+					<input type="text" name="email" id="email"><br/>
+					<label for="password">Password:</label>
+					<input type="text" name="password" id="password"><br/>
+					<label for="remember">Remember me:</label>
+					<input type="checkbox" name="remember" id="remember"><br/>
+					<input type="submit" value="LOGIN" onclick="loginClick()"><br/> <!-- should do an ajax request checking for correct input, if it is, go to next page -->	
+					<input type="button" value="REGISTER"><br/><br/>
+					<input type="button" value="Forgot Your Password?">
+				</form>
+			</div>
+			<div data-role="footer">
+			</div>
 		</div>
+	<script>
+	function loginClick ()
+	{
+		window.location.assign("SB_main.html");
+	}
+	</script>
 	</body>
 </html>
