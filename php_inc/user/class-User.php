@@ -1,4 +1,7 @@
 <?php
+/*
+StudyBuddy User class
+*/
 class User
 {
 	/* user athentification settings */
@@ -21,7 +24,7 @@ class User
 		$sql = 'UPDATE INTO User SET displayName = :display_name WHERE email = :email';
 		$sql = $db->prepare( $sql );
 		$sql->bindParam( ':email', $email );
-		$sql->bindParam( ':display_name', $displayName );
+		$sql->bindParam( ':display_name', trim( $displayName ) );
 		
 		
 		
@@ -34,7 +37,7 @@ class User
 		}
 		
 		// verify valid displayname and update in the database.
-		if ( InputValidation::isValidDisplayName( $display_name ) )
+		if ( InputValidation::isValidDisplayName( trim( $display_name ) )
 		{
 			$sql->execute();
 		}
