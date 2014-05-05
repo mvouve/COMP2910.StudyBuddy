@@ -11,9 +11,9 @@
         <link rel="stylesheet" href="css/jquery.mobile.icons.min.css" />
 	</head>
 	<body>
-		<div data-role="page" data-theme="A">
+		<div data-role="page" data-theme="a">
 			<div data-role="header">
-				<img src="sb_logo.jpeg" alt="Study Buddy">
+				<img src="sb_logo.jpeg" alt="Study Buddy" />
 			</div>
 			<div data-role="body" id="login">
 				<form>
@@ -21,7 +21,7 @@
 					<input type="text" name="email" id="email"><br/>
 					<label for="password">Password:</label>
 					<input type="text" name="password" id="password"><br/>
-					<label for="remember">Remember me:</label>
+					<label for="remember">Remember me</label>
 					<input type="checkbox" name="remember" id="remember"><br/>
 					<input type="submit" value="LOGIN" onclick="loginClick()"><br/> <!-- should do an ajax request checking for correct input, if it is, go to next page -->	
 					<input type="button" value="REGISTER"><br/><br/>
@@ -32,10 +32,23 @@
 			</div>
 		</div>
 	<script>
-	function loginClick ()
-	{
-		window.location.assign("SB_main.html");
-	}
+	    function loginClick ()
+        {
+            window.location.assign("SB_main.html");
+        }
+        function registerClick ()
+        {
+            window.location.assign("SB_register.html");
+        }
+        function recoveryClick ()
+        {
+            window.location.assign("SB_recover.html");
+        }
+        function validation ()
+        {
+            var emailRegex = /@my.bcit.ca$/;
+            var validEmail = document.form.["loginForm"]["email"].value.match(emailRegex);
+        }
 	</script>
 	</body>
 </html>
