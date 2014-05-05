@@ -15,7 +15,7 @@
 			<div data-role="header">
 				<img src="sb_logo.jpeg" alt="Study Buddy" />
 			</div>
-			<div data-role="body" id="login">
+			<div data-role="content" id="login">
 				<form name="loginform">
 					<label for="email">E-mail:</label>
 					<input type="text" name="email" id="email"><br/>
@@ -24,10 +24,12 @@
 					<label for="remember">Remember me</label>
 					<input type="checkbox" name="remember" id="remember"><br/>
 					<input type="submit" value="LOGIN" onclick="loginClick()"><br/> <!-- should do an ajax request checking for correct input, if it is, go to next page -->	
-					<input type="button" value="REGISTER" onclick="registerClick()"><br/><br/>
-					<input type="button" value="Forgot Your Password?" onclick="recoveryClick()">
 				</form>
 			</div>
+            <div data-role="content" id="accounts">
+                <input type="button" value="REGISTER" onclick="registerClick()"><br/><br/>
+			    <input type="button" value="Forgot Your Password?" onclick="recoveryClick()">
+            </div>
 			<div data-role="footer">
 			</div>
 		</div>

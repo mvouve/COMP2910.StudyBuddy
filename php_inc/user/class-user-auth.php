@@ -92,6 +92,38 @@ class UserAuth
 		
 	}
 	
+	public function verifyAccount( $verificationString )
+	{
+		global $db;
+		$success = false;
+		
+		$sql = 'SELECT *
+				FROM ' . UserAuth::USER_TABLE . ' 
+				WHERE verified=\'F\'
+					AND verificationString=:verString
+				;';
+				
+		$sql = $db->prepare( $sql );
+		$sql->bindParam( ':verString', $verificationString );
+		
+		$sql->execute();
+		$user = $sql->fetch( PDO::FETCH_ASSOC );
+		
+		//The verification string exists.
+		if ( $user != false )
+		{
+			// User waited too long to verify.
+			if ( time() - $user['verificationTime'] > VERIFICATION_EXPIRATION )
+			{
+				throw new ExpiredVerificationStringException();
+			}
+			else
+			{
+				
+			}
+		}
+	}
+	
 	private function getRecentLoginAttempts( $email )
 	{
 		global $db;
