@@ -92,6 +92,11 @@ class UserAuth
 		
 	}
 	
+	/*
+	 * Verify an account with a given verification string.
+	 *
+	 * @param $verificationString the verificationString given to the user.
+	 */
 	public function verifyAccount( $verificationString )
 	{
 		global $db;
@@ -99,7 +104,7 @@ class UserAuth
 		
 		$sql = 'SELECT *
 				FROM ' . UserAuth::USER_TABLE . ' 
-				WHERE verified=\'F\'
+				WHERE ( verified=\'F\' OR deleted=\'T\' )
 					AND verificationString=:verString
 				;';
 				
@@ -117,11 +122,14 @@ class UserAuth
 			{
 				throw new ExpiredVerificationStringException();
 			}
+			// Valid String and Time, user is verified!
 			else
 			{
-				
+				$success = setVerified( $user[ 'ID' ] );
 			}
 		}
+		
+		return $success;
 	}
 	
 	private function getRecentLoginAttempts( $email )
@@ -166,6 +174,23 @@ class UserAuth
 		$sql->bindParam( ':password', $hashedPassword );
 		$sql->bindParam( ':verificationString', $verificationString );
 		
+		return $sql->execute();
+	}
+	
+	/*
+	 * Indicate that the User is now verified.
+	 */
+	private function setVerified( $userID )
+	{
+		global $db;
+		
+		$sql = 'UPDATE ' . UserAuth::USER_TABLE . ' 
+				SET verified=\'T\', verificationTime=CURRENT_TIMESTAMP
+				WHERE ID=:id
+				;';
+				
+		$sql = $db->prepare( $sql );
+		$sql->bindParam( ':id', $userID );
 		return $sql->execute();
 	}
 }
