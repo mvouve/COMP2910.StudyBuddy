@@ -25,6 +25,13 @@ class UserAuth
 	{
 	}
 	
+	/*
+	 * Get the status of an account indicated by an email address.
+	 *
+	 * @param $email the email address of the account to check.
+	 * 
+	 * @returns ACCOUNT_EXISTS, ACCOUNT_DOES_NOT_EXIST, ACCOUNT_DELETED
+	 */
 	public function getAccountStatus( $email )
 	{
 		global $db;
@@ -53,6 +60,16 @@ class UserAuth
 		return $retval;
 	}
 	
+	/*
+	 * Register an account.
+	 * 
+	 * @param $email a valid email address.
+	 * @param $displayName a valid displayName.
+	 * @param $password the users password.
+	 *
+	 * @returns TRUE on success, FALSE on failure.
+	 * @throws AccountDeletedException if the account was previously deleted.
+	 */
 	public funcion register( $email, $displayName, $password )
 	{
 		$success = false;
@@ -92,6 +109,15 @@ class UserAuth
 		/* COME BACK TO THIS LATER! */
 	}
 	
+	/*
+	 * Create a new user in the database.
+	 * 
+	 * @param $email a valid email address.
+	 * @param $displayName a valid displayName.
+	 * @param $password the users password.
+	 *
+	 * @returns TRUE on success, FALSE on failure.
+	 */
 	private function createNewUser( $email, $displayName, $password )
 	{
 		global $db;
