@@ -7,7 +7,7 @@ class InputValidation
 	static function isValidDisplayName( $displayName )
 	{
 		// define regular expression
-		$displayNameRegex = '/[0-9A-Za-z-/._]{5,}/g';
+		$displayNameRegex = '/([0-9A-Za-z-/._]{5,}$)/g';
 		
 		//check if displayname matches regular expression
 		if( !preg_match( $displayNameRegex, $displayName )
@@ -19,4 +19,3 @@ class InputValidation
 	}
 
 }
-	
