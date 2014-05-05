@@ -237,7 +237,7 @@ html body .ui-group-theme-a .ui-bar-inherit {
 	background-color: #f9f9f9 /*{a-page-background-color}*/;
 	border-color: #ddb9ef /*{a-page-border}*/;
 	color: #333333 /*{a-page-color}*/;
-	text-shadow: 0 /*{a-page-shadow-x}*/ 0 /*{a-page-shadow-y}*/ 0 /*{a-page-shadow-radius}*/ #fffff /*{a-page-shadow-color}*/;
+	text-shadow: 0 /*{a-page-shadow-x}*/ 0 /*{a-page-shadow-y}*/ 0 /*{a-page-shadow-radius}*/ #ffffff /*{a-page-shadow-color}*/;
 }
 /* Body: Read-only lists, text inputs, collapsible content */
 .ui-body-a,
