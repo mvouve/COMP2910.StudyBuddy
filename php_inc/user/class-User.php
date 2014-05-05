@@ -1,0 +1,9 @@
+class User
+{
+	updateSettings()
+	{
+	}
+	isLoggedIn()
+	{
+	}
+}
