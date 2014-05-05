@@ -60,12 +60,14 @@ class UserAuth
 	
 		if ( $accountStatus === UserAuth::ACCOUNT_DOES_NOT_EXIST )
 		{
-			$success = createUser( $email, $displayName, $password );
+			$success = createNewUser( $email, $displayName, $password );
 		}
 		else if ( $accountStatus === UserAuth::ACCOUNT_DELETED )
 		{
-			
+			throw new AccountDeletedException();
 		}
+		
+		return success;
 	}
 	
 	public function changePassword( $email, $password )
@@ -90,7 +92,7 @@ class UserAuth
 		/* COME BACK TO THIS LATER! */
 	}
 	
-	private function createUser( $email, $displayName, $password )
+	private function createNewUser( $email, $displayName, $password )
 	{
 		global $db;
 			
