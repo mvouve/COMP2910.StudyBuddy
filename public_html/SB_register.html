@@ -31,5 +31,12 @@
 			<div data-role="footer" id="footer">
 			</div>
 		</div>
+        <script>
+            function validation ()
+            {
+                var emailRegex = /@my.bcit.ca$/;
+                var validEmail = document.form["loginForm"]["email"].value.match(emailRegex);
+            }
+        </script>
 	</body>
 </html>
