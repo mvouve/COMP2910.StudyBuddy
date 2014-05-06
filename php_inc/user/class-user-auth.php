@@ -7,9 +7,9 @@ class UserAuth
 	private static const $USER_TABLE = 'User';
 	private static const $USER_TOKEN_TABLE = 'UserToken';
 	private static const $LOGIN_ATTEMPT_TABLE = 'LoginAttempt';
-	private static const $ACCOUNT_EXISTS = 0;
-	private static const $ACCOUNT_DELETED = 1;
-	private static const $ACCOUNT_DOES_NOT_EXIST = 2; 
+	public static const $ACCOUNT_EXISTS = 0;
+	public static const $ACCOUNT_DELETED = 1;
+	public static const $ACCOUNT_DOES_NOT_EXIST = 2; 
 	
 	private $passHasher;
 	

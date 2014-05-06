@@ -4,7 +4,7 @@ class InputValidation
     /* 
      * Check if input password is valid.
      *
-     * @params $displayName the display name to be checked
+     * @param $displayName the display name to be checked
      *
      * @returns true on valid, false on invalid 
      */
@@ -24,7 +24,7 @@ class InputValidation
     /* 
      * Check if input password is valid.
      *
-     * @params $password the password to be checked
+     * @param $password the password to be checked
      *
      * @returns true on valid, false on invalid 
      */
@@ -44,22 +44,28 @@ class InputValidation
     /* 
      * Check if input email is valid. Valid emails must end in @my.bcit.ca
      *
-     * @params $email the email to be checked
+     * @param $email the email to be checked
      *
      * @returns true on valid, false on invalid 
      */
-    static function isValidPassword( $email )
+    static function isValidEmail( $email )
     {
         // define regular expression
-        $emailRegex = '/(@my.bcit.ca$)/g';
+        $emailRegex = array(
+                            '/(@my.bcit.ca$)/g',
+                            '/(@bcit.ca$)/g'
+                            );
         
         //check if email matches regular expression
-        if( !preg_match( $emailRegex, $email )
+        foreach ( $emailRegex as $regex )
         {
-            return false;
+            if ( preg_match( $regex, $email ) )
+            {
+                return true;
+            }
         }
         
-        return true;
+        return false;
     }
 
 }
