@@ -1,4 +1,7 @@
 <?php
+require( '../../config.php' );
+require( PHP_INC_PATH . 'common.php' );
+
 $retval = array();
 
 // Only do something if a 'method' was set.
@@ -31,14 +34,14 @@ if ( isset( $_POST['method'] ) )
     // Registration Method
     else if ( $_POST['method'] == 'register' )
     {
-        $retval = registerAccount( $_POST['email',
+        $retval = registerAccount( $_POST['email'],
                                    $_POST['display_name'],
                                    $_POST['password'],
                                    $_POST['confirm_password'] 
                                   );
     }
 	
-	echo = json_encode( $retval );
+	echo json_encode( $retval );
 }
 
 /*
@@ -53,8 +56,8 @@ if ( isset( $_POST['method'] ) )
  */
 function registerAccount( $email, $displayName, $password, $confirmPassword )
 {
-    require_once( '../php_inc/user/class-user-auth.php' );
-    require_once( '../php_inc/class-input-validation.php' );
+    require( PHP_INC_PATH . 'user/class-user-auth.php' );
+    require( PHP_INC_PATH . 'class-input-validation.php' );
     
     $userAuth = new UserAuth();
     $accountStatus = UserAuth::ACCOUNT_DOES_NOT_EXIST;
@@ -63,7 +66,7 @@ function registerAccount( $email, $displayName, $password, $confirmPassword )
         'invalidAttributes' => array(),
         'accountExists'     => false,
         'accountDeleted'    => false,
-        'userID'            => false;
+        'userID'            => false
     );
     
     // Check if Email is valid.

@@ -11,10 +11,10 @@ class InputValidation
     static function isValidDisplayName( $displayName )
     {
         // define regular expression
-        $displayNameRegex = '/(^[0-9A-Za-z-/._]{5,32}$)/g';
+        $displayNameRegex = '/(^[0-9A-Za-z-/._]{5,32}$)/';
         
         //check if displayname matches regular expression
-        if( !preg_match( $displayNameRegex, $displayName )
+        if( !preg_match_all( $displayNameRegex, $displayName ) )
         {
             return false;
         }
@@ -31,10 +31,10 @@ class InputValidation
     static function isValidPassword( $password )
     {
         // define regular expression
-        $passwordRegex = '/(^[0-9A-Za-z-/._]{5,50}$)/g';
+        $passwordRegex = '/(^[0-9A-Za-z-/._]{5,50}$)/';
         
         //check if password matches regular expression
-        if( !preg_match( $passwordRegex, $password )
+        if( !preg_match_all( $passwordRegex, $password ) )
         {
             return false;
         }
@@ -52,14 +52,14 @@ class InputValidation
     {
         // define regular expression
         $emailRegex = array(
-                            '/(@my.bcit.ca$)/g',
-                            '/(@bcit.ca$)/g'
+                            '/(@my.bcit.ca$)/',
+                            '/(@bcit.ca$)/'
                             );
         
         //check if email matches regular expression
         foreach ( $emailRegex as $regex )
         {
-            if ( preg_match( $regex, $email ) )
+            if ( preg_match_all( $regex, $email ) )
             {
                 return true;
             }

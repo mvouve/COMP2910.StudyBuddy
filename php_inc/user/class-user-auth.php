@@ -1,15 +1,15 @@
 <?php
 
-require_once( '/lib/PasswordHash.php' );
+require_once( PHP_INC_PATH . 'lib/PasswordHash.php' );
 
 class UserAuth
 {
-	private static const $USER_TABLE = 'User';
-	private static const $USER_TOKEN_TABLE = 'UserToken';
-	private static const $LOGIN_ATTEMPT_TABLE = 'LoginAttempt';
-	public static const $ACCOUNT_EXISTS = 0;
-	public static const $ACCOUNT_DELETED = 1;
-	public static const $ACCOUNT_DOES_NOT_EXIST = 2; 
+	const USER_TABLE = 'User';
+	const USER_TOKEN_TABLE = 'UserToken';
+	const LOGIN_ATTEMPT_TABLE = 'LoginAttempt';
+	const ACCOUNT_EXISTS = 0;
+	const ACCOUNT_DELETED = 1;
+	const ACCOUNT_DOES_NOT_EXIST = 2; 
 	
 	private $passHasher;
 	
@@ -82,7 +82,7 @@ class UserAuth
 	 * @returns TRUE on success, FALSE on failure.
 	 * @throws AccountDeletedException if the account was previously deleted.
 	 */
-	public funcion register( $email, $displayName, $password )
+	public function register( $email, $displayName, $password )
 	{
 		$success = false;
 		$accountStatus = getAccountStatus( $email );
