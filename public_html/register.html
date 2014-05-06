@@ -33,23 +33,30 @@
 			</div>
 		</div>
         <script>
+            //used to ensure a user-entered display name is not null or empty
             function validateUsername() {
-                var username = document.form["registerForm"]["displayName"].value;
+                var displayNameRegex = /[0-9A-Za-z-]{5,32}$/g;
+                var username = document.form["registerForm"]["displayName"].value.match(displayNameRegex);
                 if ((username == null) || (username == "")) {
-                    alert("Please enter a user display name.");
+                    alert("Please enter a user display name, 5-32 alphaneumeric characters.");
                     return false;
                 }
                 return true;
             }
+
+            //used to ensure a user-entered email is a valid BCIT e-mail
             function validateMail() {
-                var emailRegex = /@my.bcit.ca$/;
+                var emailRegex = /@my.bcit.ca$/g;
                 var validEmail = document.form["loginForm"]["email"].value.match(emailRegex);
-                if (validEmail == null)
-                {
+                if (validEmail == null) {
                     alert("must use a @my.bcit.ca e-mail address.");
                     return false;
                 }
                 return true;
+            }
+
+            function checkEmail() {
+
             }
         </script>
 	</body>
