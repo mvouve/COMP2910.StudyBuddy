@@ -44,10 +44,10 @@ if ( isset( $_POST['method'] ) )
  * Attempt to register an account given details from the input form.
  *
  * @returns [ valid=true|false
-             ,success=true|false
              ,invalidAttributes[] (array of field names that were invalid)
              ,accountExists=true|false
              ,accountDeleted=true|false
+             ,userID=integer (or false on failure)
              ]
  */
 function registerAccount( $email, $displayName, $password, $confirmPassword )
@@ -58,11 +58,11 @@ function registerAccount( $email, $displayName, $password, $confirmPassword )
     $userAuth = new UserAuth();
     $accountStatus = UserAuth::ACCOUNT_DOES_NOT_EXIST;
     $retval = array (
-        'valid' => true,
-        'success' => false,
+        'valid'             => true,
         'invalidAttributes' => array(),
-        'accountExists' => false,
-        'accountDeleted' => false
+        'accountExists'     => false,
+        'accountDeleted'    => false,
+        'userID'            => false;
     );
     
     // Check if Email is valid.
@@ -113,7 +113,7 @@ function registerAccount( $email, $displayName, $password, $confirmPassword )
     // Create the User account if all inputs are valid.
     if ( $retval['valid'])
     {
-        $retval['success'] = $userAuth->createNewUser( $email, $displayName, $password );
+        $retval['valid'] = $userAuth->createNewUser( $email, $displayName, $password );
     }
     
     return $retval;

@@ -168,7 +168,7 @@ class UserAuth
 	 * @param $displayName a valid displayName.
 	 * @param $password the users password.
 	 *
-	 * @returns TRUE on success, FALSE on failure.
+	 * @returns the ID of the created user on success, or false on failure.
 	 */
 	private function createNewUser( $email, $displayName, $password )
 	{
@@ -189,7 +189,12 @@ class UserAuth
 		$sql->bindParam( ':password', $hashedPassword );
 		$sql->bindParam( ':verificationString', $verificationString );
 		
-		return $sql->execute();
+		if ( $sql->execute() )
+        {
+            return $db->lastInsertId();
+        }
+        
+        return false;
 	}
 	
 	/*
