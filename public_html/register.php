@@ -24,9 +24,9 @@
 					<label for="displayName">Display Name:</label>
 					<input type="text" name="display_name" id="displayName"><br/>
 					<label for="password">Password:</label>
-					<input type="text" name="password" id="password"><br/>
+					<input type="password" name="password" id="password"><br/>
 					<label for="confirm">Confirm Password:</label>
-					<input type="text" name="confirm_password" id="confirm"><br/>
+					<input type="password" name="confirm_password" id="confirm"><br/>
                     <input id="register-submit" type="submit" value="Register" />
                     <input type="hidden" name="method" value="register" />
 				</form>
