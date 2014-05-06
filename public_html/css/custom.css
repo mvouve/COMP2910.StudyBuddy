@@ -1,4 +1,9 @@
 .center
 {
-text-align:center;
+    text-align:center;
+}
+
+.content
+{
+    width:90%;
 }
