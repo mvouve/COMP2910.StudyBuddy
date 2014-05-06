@@ -1,6 +1,7 @@
 <?php
 $retval = array();
 
+// Only do something if a 'method' was set.
 if ( isset( $_POST['method'] ) )
 {
 	// DUMMY CHECK_CREDENTIALS METHOD!
