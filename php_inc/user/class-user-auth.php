@@ -20,7 +20,7 @@ class UserAuth
 
 	public function login( $email, $password, $rememberMe)
 	{
-		if ( checkCredentials( $email, $password ) )
+		if ( $this->checkCredentials( $email, $password ) )
 		{
 			
 		}
@@ -79,24 +79,19 @@ class UserAuth
 	 * @param $displayName a valid displayName.
 	 * @param $password the users password.
 	 *
-	 * @returns TRUE on success, FALSE on failure.
-	 * @throws AccountDeletedException if the account was previously deleted.
+	 * @returns userID on success, FALSE on failure.
 	 */
 	public function register( $email, $displayName, $password )
 	{
 		$success = false;
-		$accountStatus = getAccountStatus( $email );
+		$accountStatus = $this->getAccountStatus( $email );
 	
 		if ( $accountStatus === UserAuth::ACCOUNT_DOES_NOT_EXIST )
 		{
-			$success = createNewUser( $email, $displayName, $password );
-		}
-		else if ( $accountStatus === UserAuth::ACCOUNT_DELETED )
-		{
-			throw new AccountDeletedException();
+			$success = $this->createNewUser( $email, $displayName, $password );
 		}
 		
-		return success;
+		return $success;
 	}
 	
 	public function changePassword( $email, $password )
@@ -137,7 +132,7 @@ class UserAuth
 			// Valid String and Time, user is verified!
 			else
 			{
-				$success = setVerified( $user[ 'ID' ] );
+				$success = $this->setVerified( $user[ 'ID' ] );
 			}
 		}
 		
@@ -181,17 +176,21 @@ class UserAuth
 				;';
 				
 		$hashedPassword = $this->passHasher->HashPassword( $password );
-		$verificationString = generateVerificationString();
+		$verificationString = $this->generateVerificationString();
 		
 		$sql = $db->prepare( $sql );
 		$sql->bindParam( ':email', $email );
 		$sql->bindParam( ':displayName', $displayName );
 		$sql->bindParam( ':password', $hashedPassword );
 		$sql->bindParam( ':verificationString', $verificationString );
-		
+        
 		if ( $sql->execute() )
         {
             return $db->lastInsertId();
+        }
+        else
+        {
+            print_r( $sql->errorInfo() );
         }
         
         return false;

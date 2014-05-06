@@ -11,7 +11,7 @@ class InputValidation
     static function isValidDisplayName( $displayName )
     {
         // define regular expression
-        $displayNameRegex = '/(^[0-9A-Za-z-/._]{5,32}$)/';
+        $displayNameRegex = '/(^[0-9A-Za-z._]{5,32}$)/';
         
         //check if displayname matches regular expression
         if( !preg_match_all( $displayNameRegex, $displayName ) )
@@ -31,7 +31,7 @@ class InputValidation
     static function isValidPassword( $password )
     {
         // define regular expression
-        $passwordRegex = '/(^[0-9A-Za-z-/._]{5,50}$)/';
+        $passwordRegex = '/(^[0-9A-Za-z._]{5,50}$)/';
         
         //check if password matches regular expression
         if( !preg_match_all( $passwordRegex, $password ) )

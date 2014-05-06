@@ -18,7 +18,7 @@
 				<h1>Register Account</h1>
 			</div>
 			<div class="contenta" data-role="content" id="register">
-				<form id="registerForm" name="registerForm">
+				<form id="registerForm" name="registerForm" method="POST">
 					<label for="email">E-mail:</label>
 					<input type="text" name="email" id="email"><br/>
 					<label for="displayName">Display Name:</label>
@@ -62,19 +62,18 @@
             }
             
             function onRegister( result ) {
-                alert( $.parseJSON( result ) );
+                alert( JSON.stringify(result, null, 4) );
             }
             
-            function onError( xhr, status, error) {
-                alert(error);
-            }
-            
-            $( "#register-submit" ).click( function() {
+            $( "#register-submit" ).click( function( e ) {
                 var formData = $( "#registerForm" ).serializeArray();
-                alert( "Sending Request" );
-                $.post( "http://localhost/StudyBuddy/public_html/ajax/user/auth.php", formData, onRegister, "json" );
+                
+                $.post( "http://localhost/StudyBuddy/public_html/ajax/user/auth.php",
+                        formData,
+                        onRegister,
+                        "json" );
                         
-                return false;
+                e.preventDefault();
             });
         </script>
 	</body>

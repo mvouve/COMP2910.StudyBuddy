@@ -117,7 +117,7 @@ function registerAccount( $email, $displayName, $password, $confirmPassword )
     // Create the User account if all inputs are valid.
     if ( $retval['valid'])
     {
-        $retval['valid'] = $userAuth->createNewUser( $email, $displayName, $password );
+        $retval['valid'] = $userAuth->register( $email, $displayName, $password );
     }
     
     return $retval;
