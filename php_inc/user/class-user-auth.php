@@ -1,5 +1,7 @@
 <?php
 
+require_once( '/lib/PasswordHash.php' );
+
 class UserAuth
 {
 	private static const $USER_TABLE = 'User';
@@ -8,6 +10,13 @@ class UserAuth
 	private static const $ACCOUNT_EXISTS = 0;
 	private static const $ACCOUNT_DELETED = 1;
 	private static const $ACCOUNT_DOES_NOT_EXIST = 2; 
+	
+	private $passHasher;
+	
+	function __construct()
+	{
+		$this->passHasher = new PasswordHash( 8, false );
+	}
 
 	public function login( $email, $password, $rememberMe)
 	{
@@ -19,6 +28,9 @@ class UserAuth
 	
 	public function checkCredentials( $email, $password)
 	{
+		global $db;
+		
+		
 	}
 	
 	public function logout()
@@ -168,6 +180,9 @@ class UserAuth
 					(:email, :displayName, :password, \'F\', \'F\', :verificationString)
 				;';
 				
+		$hashedPassword = $this->passHasher->HashPassword( $password );
+		$verificationString = generateVerificationString();
+		
 		$sql = $db->prepare( $sql );
 		$sql->bindParam( ':email', $email );
 		$sql->bindParam( ':displayName', $displayName );
@@ -192,5 +207,13 @@ class UserAuth
 		$sql = $db->prepare( $sql );
 		$sql->bindParam( ':id', $userID );
 		return $sql->execute();
+	}
+	
+	/*
+	 * Generate a random verification string.
+	 */
+	private function generateVerificationString()
+	{
+		return sha1(microtime(true).mt_rand(10000,90000));
 	}
 }
