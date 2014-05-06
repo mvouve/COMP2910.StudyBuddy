@@ -23,7 +23,9 @@
 					<input type="checkbox" name="remember" id="remember">
 					<input type="submit" value="Login" onclick="loginClick()"> <!-- should do an ajax request checking for correct input, if it is, go to next page -->	
 				</form>
+                <br>
                 <input type="button" value="Register" onclick="registerClick()">
+                <br>
 			    <input type="button" value="Forgot Your Password?" onclick="recoveryClick()">
 			</div>
 			<div data-role="footer">
@@ -40,7 +42,7 @@
         }
         function recoveryClick ()
         {
-            window.location.assign("recover.html");
+            window.location.assign("recovery-request.html");
         }
 	</script>
 	</body>
