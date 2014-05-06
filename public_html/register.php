@@ -1,22 +1,10 @@
 <!--Study Buddy - Account Registration-->
-
-<html>
-	<head>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile.structure-1.4.2.min.css" />
-		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css">
-		<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-		<script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
-        <link rel="stylesheet" href="css/study-buddy-theme.min.css" />
-        <link rel="stylesheet" href="css/jquery.mobile.icons.min.css" />
-        <link rel="stylesheet" href="css/custom.css"/>
-	</head>
-	<body>
-		<div data-role="page" data-theme="a">
-			<div data-role="header" id="header">
-				<img src="images/sb-logo.png" alt="SB"/>
-				<h1>Register Account</h1>
-			</div>
+<?php include( 'pagelets/header.php' ); ?>
+        <div data-role="page" data-theme="a">
+            <div data-role="header" id="header">
+                <img src="images/sb-logo.png" alt="SB" class="ui-btn-left"/>
+                <h1>Register Account</h1>
+            </div>
 			<div class="contenta" data-role="content" id="register">
 				<form id="registerForm" name="registerForm" method="POST">
 					<label for="email">E-mail:</label>
@@ -27,7 +15,7 @@
 					<input type="password" name="password" id="password"><br/>
 					<label for="confirm">Confirm Password:</label>
 					<input type="password" name="confirm_password" id="confirm"><br/>
-                    <input id="register-submit" type="submit" value="Register" />
+                    <input id="register-submit" type="submit" value="Register">
                     <input type="hidden" name="method" value="register" />
 				</form>
 			</div>
@@ -63,17 +51,22 @@
             
             function onRegister( result ) {
                 alert( JSON.stringify(result, null, 4) );
+                
+                // Reset the Submit button to inactive after being pressed
+                $.mobile.activePage.find('.ui-btn-active').removeClass('ui-btn-active ui-focus');
             }
             
-            $( "#register-submit" ).click( function( e ) {
+            // Note the change from $().click to $().on( 'click tap', function( e ) {} );
+            $( "#register-submit" ).on( 'click tap', function( e ) {
+                // Use e.preventDefault() to stop page redirection!
+                e.preventDefault();
+                
                 var formData = $( "#registerForm" ).serializeArray();
                 
                 $.post( "http://localhost/StudyBuddy/public_html/ajax/user/auth.php",
                         formData,
                         onRegister,
                         "json" );
-                        
-                e.preventDefault();
             });
         </script>
 	</body>
