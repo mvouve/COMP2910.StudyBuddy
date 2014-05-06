@@ -29,22 +29,61 @@
                 <br>
 			    <input type="button" value="Forgot Your Password?" onclick="recoveryClick()">
 			</div>
+            <div id="error" style="display:none">
+                <p>Login failed. Please try again.</p>
+            </div>
 			<div data-role="footer">
 			</div>
 		</div>
 	<script>
-	    function loginClick ()
-        {
-            window.location.assign("main.html");
-        }
-        function registerClick ()
-        {
-            window.location.assign("register.html");
-        }
-        function recoveryClick ()
-        {
-            window.location.assign("recovery-request.html");
-        }
+	    function loginClick()
+     {
+         window.location.assign("SB_main.html");
+     }
+     function registerClick()
+     {
+         window.location.assign("SB_register.html");
+     }
+     function recoveryClick()
+     {
+         window.location.assign("SB_recover.html");
+     }
+
+     function showError()
+     {
+         document.getElementById(error).style.display = 'block';
+     }
+
+     function credentialCheck()
+     {
+         var email = $("#emailbutton").val();
+         var password = $("#passwordbutton").val();
+
+         $.AJAX
+         ({
+             datatype:"json",
+             type: "POST",
+             url:"/ajax/user/auth.php",
+             data:
+             {
+                method: check_credentials,
+		        email: email,
+		        password: password,
+             },
+             success: function (json)
+             {
+                 if (json.valid == true)
+                 {
+                     window.location.assign("SB_main.html");
+                 }
+                 else
+                 {
+                     showError();
+                 }
+             },
+             error: showError(),
+        });
+    }
 	</script>
 	</body>
 </html>
