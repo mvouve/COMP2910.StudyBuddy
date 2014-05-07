@@ -8,8 +8,8 @@
 				<form id="registerForm" name="registerForm" method="POST">
 					<label for="email">E-mail:</label>
 					<input type="text" name="email" id="email"><br/>
-					<label for="displayName">Display Name:</label>
-					<input type="text" name="displayName" id="displayName"><br/>
+					<label for="display_name">Display Name:</label>
+					<input type="text" name="display_name" id="display_name"><br/>
 					<label for="password">Password:</label>
 					<input type="password" name="password" id="password"><br/>
 					<label for="confirm">Confirm Password:</label>
