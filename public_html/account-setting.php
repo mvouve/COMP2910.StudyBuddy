@@ -31,11 +31,17 @@
                     <h3>Change your password</h3> 
 				    <form id="passwordChange" name="passwordChange" method="POST">
                         <label for="oldPassword">Current Password:</label>
-					    <input type="password" name="password" id="oldPassword"><br/>
+					    <input type="password" name="password" id="oldPassword" required><br/>
+
+
 					    <label for="newPassword">New Password:</label>
-					    <input type="password" name="password" id="newPassword"><br/>
+					    <input type="password" name="password" id="newPassword" required><br/>
+
+
 					    <label for="confirmPassword">Confirm New Password:</label>
-					    <input type="password" name="confirm_password" id="confirmPassword"><br/>
+					    <input type="password" name="confirm_password" id="confirmPassword" required><br/>
+
+
                         <input id="passwordUpdate" type="submit" value="Password Update">
                         <input type="hidden" name="method" value="passwordUpdate" />
 				    </form>
