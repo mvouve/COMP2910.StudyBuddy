@@ -3,10 +3,7 @@
 <?php renderPagelet( 'header.php', array( '{{customHeadTags}}' => '' ) ); ?>
     <body>
         <div data-role="page" data-theme="a">
-            <div data-role="header" id="header">
-                <img src="images/sb-logo.png" alt="SB" class="ui-btn-left"/>
-                <h1>Register Account</h1>
-            </div>
+            <?php renderPagelet( 'banner.php', array( '{{title}}' => 'Register Account' ) ); ?>
 			<div class="contenta" data-role="content" id="register">
 				<form id="registerForm" name="registerForm" method="POST">
 					<label for="email">E-mail:</label>

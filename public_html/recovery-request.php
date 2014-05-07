@@ -2,10 +2,7 @@
 <?php renderPagelet( 'header.php', array( '{{customHeadTags}}' => '' ) ); ?>
     <body>
         <div data-role="page" data-theme="a">
-            <div data-role="header">
-				<img src="images/sb-logo.png" alt="Study Buddy" />
-                <h1>Password Recovery</h1>
-            </div>
+            <?php renderPagelet( 'banner.php', array( '{{title}}' => 'Password Recovery' ) ); ?>
             <div data-role="content" class="contenta center">
                 <p>If you have forgotten your password, you can request an email to reset your password by entering your email here.</p>
 			    <form>
