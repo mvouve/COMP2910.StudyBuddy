@@ -16,7 +16,7 @@ class UserAuth
 	function __construct()
 	{
 		$this->passHasher = new PasswordHash( 8, false );
-		$this->startSession();
+		//$this->startSession();
 	}
 
 	public function login( $email, $password, $rememberMe)
