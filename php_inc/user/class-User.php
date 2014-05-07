@@ -10,6 +10,7 @@ class User
 	const ACCOUNT_EXISTS = 0;
 	const ACCOUNT_DELETED = 1;
 	const ACCOUNT_DOES_NOT_EXIST = 2; 
+    const ACCOUNT_NOT_VERIFIED = 3;
 	
 	private $passHasher;
 	private static $instance = null;
@@ -111,10 +112,17 @@ class User
 		{
 			$retval = User::ACCOUNT_DOES_NOT_EXIST;
 		}
-		else if ( $user['deleted'] === 'T' )
-		{
-			$retval = User::ACCOUNT_DELETED;
-		}
+		else 
+        {
+            if ( $user['deleted'] === 'T' )
+            {
+                $retval = User::ACCOUNT_DELETED;
+            }
+            else if ( $user['verified'] === 'F' )
+            {
+                $retval = User::ACCOUNT_NOT_VERIFIED;
+            }
+        }
 		
 		return $retval;
 	}

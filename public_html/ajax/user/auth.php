@@ -62,11 +62,12 @@ function registerAccount( $email, $displayName, $password, $confirmPassword )
     $User = User::instance();
     $accountStatus = User::ACCOUNT_DOES_NOT_EXIST;
     $retval = array (
-        'valid'             => true,
-        'invalidAttributes' => array(),
-        'accountExists'     => false,
-        'accountDeleted'    => false,
-        'userID'            => false
+        'valid'              => true,
+        'invalidAttributes'  => array(),
+        'accountExists'      => false,
+        'accountDeleted'     => false,
+        'accountNotVerified' => false,
+        'userID'             => false
     );
     
     // Check if Email is valid.
@@ -90,6 +91,11 @@ function registerAccount( $email, $displayName, $password, $confirmPassword )
         {
             $retval['valid'] = false;
             $retval['accountDeleted'] = true;
+        }
+        else if ( $accountStatus === User::ACCOUNT_NOT_VERIFIED )
+        {
+            $retval['valid'] = false;
+            $retval['accountNotVerified'] = true;
         }
     }
     
