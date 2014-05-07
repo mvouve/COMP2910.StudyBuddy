@@ -26,15 +26,15 @@
 	<script>
 	 function loginClick()
      {
-         window.location.assign("main.html");
+         window.location.assign("main.php");
      }
      function registerClick()
      {
-         window.location.assign("register.html");
+         window.location.assign("register.php");
      }
      function recoveryClick()
      {
-         window.location.assign("recovery-request.html");
+         window.location.assign("recovery-request.php");
      }
 
      function showError()
@@ -59,7 +59,7 @@
             {
                 if (json.valid == true)
                 {
-                    window.location.assign("main.html");
+                    window.location.assign("main.php");
                 }
                 else
                 {
