@@ -239,6 +239,7 @@ class UserAuth
 		session_regenerate_id();
 	}
 	
+	/*
 	private function getUser( $email )
 	{
 		global $db;
@@ -249,4 +250,5 @@ class UserAuth
 				;';
 		$sql = 
 	}
+	*/
 }
