@@ -1,15 +1,15 @@
 <?php
 
-require_once( '/lib/PasswordHash.php' );
+require_once( PHP_INC_PATH . 'lib/PasswordHash.php' );
 
 class UserAuth
 {
-	private static const $USER_TABLE = 'User';
-	private static const $USER_TOKEN_TABLE = 'UserToken';
-	private static const $LOGIN_ATTEMPT_TABLE = 'LoginAttempt';
-	private static const $ACCOUNT_EXISTS = 0;
-	private static const $ACCOUNT_DELETED = 1;
-	private static const $ACCOUNT_DOES_NOT_EXIST = 2; 
+	const USER_TABLE = 'User';
+	const USER_TOKEN_TABLE = 'UserToken';
+	const LOGIN_ATTEMPT_TABLE = 'LoginAttempt';
+	const ACCOUNT_EXISTS = 0;
+	const ACCOUNT_DELETED = 1;
+	const ACCOUNT_DOES_NOT_EXIST = 2; 
 	
 	private $passHasher;
 	
@@ -20,7 +20,7 @@ class UserAuth
 
 	public function login( $email, $password, $rememberMe)
 	{
-		if ( checkCredentials( $email, $password ) )
+		if ( $this->checkCredentials( $email, $password ) )
 		{
 			
 		}
@@ -79,24 +79,19 @@ class UserAuth
 	 * @param $displayName a valid displayName.
 	 * @param $password the users password.
 	 *
-	 * @returns TRUE on success, FALSE on failure.
-	 * @throws AccountDeletedException if the account was previously deleted.
+	 * @returns userID on success, FALSE on failure.
 	 */
-	public funcion register( $email, $displayName, $password )
+	public function register( $email, $displayName, $password )
 	{
 		$success = false;
-		$accountStatus = getAccountStatus( $email );
+		$accountStatus = $this->getAccountStatus( $email );
 	
 		if ( $accountStatus === UserAuth::ACCOUNT_DOES_NOT_EXIST )
 		{
-			$success = createNewUser( $email, $displayName, $password );
-		}
-		else if ( $accountStatus === UserAuth::ACCOUNT_DELETED )
-		{
-			throw new AccountDeletedException();
+			$success = $this->createNewUser( $email, $displayName, $password );
 		}
 		
-		return success;
+		return $success;
 	}
 	
 	public function changePassword( $email, $password )
@@ -137,7 +132,7 @@ class UserAuth
 			// Valid String and Time, user is verified!
 			else
 			{
-				$success = setVerified( $user[ 'ID' ] );
+				$success = $this->setVerified( $user[ 'ID' ] );
 			}
 		}
 		
@@ -168,7 +163,7 @@ class UserAuth
 	 * @param $displayName a valid displayName.
 	 * @param $password the users password.
 	 *
-	 * @returns TRUE on success, FALSE on failure.
+	 * @returns the ID of the created user on success, or false on failure.
 	 */
 	private function createNewUser( $email, $displayName, $password )
 	{
@@ -181,15 +176,24 @@ class UserAuth
 				;';
 				
 		$hashedPassword = $this->passHasher->HashPassword( $password );
-		$verificationString = generateVerificationString();
+		$verificationString = $this->generateVerificationString();
 		
 		$sql = $db->prepare( $sql );
 		$sql->bindParam( ':email', $email );
 		$sql->bindParam( ':displayName', $displayName );
 		$sql->bindParam( ':password', $hashedPassword );
 		$sql->bindParam( ':verificationString', $verificationString );
-		
-		return $sql->execute();
+        
+		if ( $sql->execute() )
+        {
+            return $db->lastInsertId();
+        }
+        else
+        {
+            print_r( $sql->errorInfo() );
+        }
+        
+        return false;
 	}
 	
 	/*
