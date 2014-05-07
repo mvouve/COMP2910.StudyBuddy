@@ -27,11 +27,40 @@ class UserAuth
 		}
 	}
 	
+    /*
+     * Check if a users credentials are correct.
+     *
+     * @param $email the supplied email address.
+     * @param $password the supplied password.
+     *
+     * @return true if the credentials are correct, false if the credentials are incorrect.
+     */
 	public function checkCredentials( $email, $password)
 	{
 		global $db;
 		
-		
+        // Get the password associated with the email address.
+		$sql = 'SELECT password
+                FROM ' . UserAuth::USER_TABLE . ' 
+                WHERE email=:email
+                ;';
+                
+        $sql = $db->prepare( $sql );
+        $sql->bindParam( ':email', $email );
+        
+        $result = $sql->fetch( PDO::FETCH_ASSOC );
+        
+        // Only check if the user exists!
+        if ( $result != false )
+        {
+            // Compare the hashes.
+            if ( $this->passHasher->CheckPassword($password, $result['password']) )
+            {
+                return true;
+            }
+        }
+        
+        return false;
 	}
 	
 	public function logout()
