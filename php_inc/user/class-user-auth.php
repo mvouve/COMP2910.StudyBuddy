@@ -16,6 +16,7 @@ class UserAuth
 	function __construct()
 	{
 		$this->passHasher = new PasswordHash( 8, false );
+		//$this->startSession();
 	}
 
 	public function login( $email, $password, $rememberMe)
@@ -220,4 +221,34 @@ class UserAuth
 	{
 		return sha1(microtime(true).mt_rand(10000,90000));
 	}
+	
+	private function startSession()
+	{
+		ini_set('session.use_only_cookies', 1);
+		
+		$cookieParams = session_get_cookie_params();
+		session_set_cookie_params($cookieParams["lifetime"],
+								  $cookieParams["path"], 
+								  $cookieParams["domain"], 
+								  SECURE,
+								  true
+								  );
+								  
+		session_name( 'studybuddy' );
+		session_start();
+		session_regenerate_id();
+	}
+	
+	/*
+	private function getUser( $email )
+	{
+		global $db;
+		
+		$sql = 'SELECT *
+				FROM ' . UserAuth::USER_TABLE . ' 
+				WHERE email=:email
+				;';
+		$sql = 
+	}
+	*/
 }

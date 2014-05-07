@@ -28,31 +28,11 @@
 -->
     <body>
         <div data-role="page" id="page">
-            <!-- The panel -->
-            <div data-role="panel" id="menuPanel" data-theme="b" data-position="right" data-display="overlay">
-                <div class="panel-content">
-                    <h1>Menu</h1><br>
-                    <ul data-role="listview">
-                        <li><a href="#">My Meetings</a></li>
-                        <li><a href="#">Create Meetings</a></li>
-                        <li><br></li>
-                        <li><a href="#">My Courses</a></li>
-                        <li><a href="#">Account Settings</a></li>
-                        <li><a href="#">Logout</a></li>
-                    </ul>
-                </div>
-            </div>
-            <!-- /The panel -->
-            <div data-role="header" data-position="fixed">  
-                <h1>studyBuddy</h1>
-                <!-- Call the panel -->
-                <a href="#menuPanel" data-role="button" data-inline="true" data-icon="bars" class="ui-btn-right" data-position="right" data-display="overlay">Menu</a>
-                <!-- /Call the panel -->
-                </div>
-                    <div class="center" data-role="main">
+            <?php define('HAS_MENU',1);
+                  renderPagelet( 'banner.php', array( '{{title}}' => 'MiAn pAije' ) ); ?>
+            <div class="center" data-role="main">
                     <p>Main Page</p>
-                </div>  
-            </div>      
+            </div>     
         </div>
     </body>
 </html>
