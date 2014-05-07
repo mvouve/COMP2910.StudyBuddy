@@ -11,4 +11,3 @@
         <link rel="stylesheet" href="css/custom.css"/>
         {{customHeadTags}}
     </head>
-    <body>

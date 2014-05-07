@@ -1,5 +1,7 @@
 <!--Study Buddy - Account Registration-->
-<?php include( 'pagelets/header.php' ); ?>
+<?php require( 'config.php' ); ?>
+<?php renderPagelet( 'header.php', array( '{{customHeadTags}}' => '' ) ); ?>
+    <body>
         <div data-role="page" data-theme="a">
             <div data-role="header" id="header">
                 <img src="images/sb-logo.png" alt="SB" class="ui-btn-left"/>
