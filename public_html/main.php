@@ -37,7 +37,7 @@
                         <li><a href="#">Create Meetings</a></li>
                         <li><br></li>
                         <li><a href="#">My Courses</a></li>
-                        <li><a href="#">Account Settings</a></li>
+                        <li><a href="account-settings.php">Account Settings</a></li>
                         <li><a href="#">Logout</a></li>
                     </ul>
                 </div>
