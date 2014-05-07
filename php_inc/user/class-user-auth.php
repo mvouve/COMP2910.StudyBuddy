@@ -124,11 +124,101 @@ class UserAuth
 		return $success;
 	}
 	
+    /*
+     * Change a users Password
+     *
+     * @param $email the email address that identifies the user.
+     * @param $password the users new password.
+     *
+     * @return true on success, false on failure (or invalid password)
+     */
 	public function changePassword( $email, $password )
 	{
-		
+        global $db;
+        
+        // Ensure the password is valid.
+        if ( !InputValidation::isValidPassword( $password ) )
+        {
+            return false;
+        }
+        
+        $sql = 'UPDATE ' . UserAuth::USER_TABLE . ' 
+                SET password=:password
+                WHERE email=:email
+                ;';
+        
+		$hashedPassword = $this->passHasher->HashPassword( $password );
+        
+        $sql = $db->prepare( $sql );
+        $sql->bindParam( ':password', $hashedPassword );
+        $sql->bindParam( ':email', $email );
+        return $sql->execute();
 	}
 	
+    /*
+     * Change the users password, ensuring the user has access to the old password.
+     *
+     * @param $email the users email.
+     * @param $oldPassword the users current password.
+     * @param $newPassword the password the user wants to have.
+     * @param $confirmPassword a confirmation copy of newPassword.
+     *
+     * @return true on success, false on failure.
+     */
+    function updatePassword( $email, $oldPassword, $newPassword, $confirmPassword )
+    {
+        // Ensure the password is valid.
+        if ( !InputValidation::isValidPassword( $newPassword ) )
+        {
+            return false;
+        }
+        
+        // Ensure the new passwords match.
+        if ( $newPassword != $confirmPassword )
+        {
+            return false;
+        }
+        
+        // Ensure the user has permission to do this
+        if ( !$this->checkCredentials( $email, $oldPassword ) )
+        {
+            return false;
+        }
+        
+        // Try to change the password.
+        return $this->changePassword( $email, $newPassword );
+    }
+    
+    /*
+     * Change a users DisplayName
+     *
+     * @param $email the users email address.
+     * @param $displayName the users new displayName
+     *
+     * @return true on success, false on failure or invalid displayName.
+     */
+    function updateDisplayName( $email, $displayName )
+    {
+        global $db;
+        
+        // Ensure the new display name is valid.
+        if ( !InputValidation::isValidDisplayName( $displayName ) )
+        {
+            return false;
+        }
+        
+        $sql = 'UPDATE ' . UserAuth::USER_TABLE . ' 
+                SET displayName=:displayName
+                WHERE email=:email
+                ;';
+                
+        $sql = $db->prepare( $sql );
+        $sql->bindParam( ':displayName', $displayName );
+        $sql->bindParam( ':email', $email );
+        
+        return $sql->execute();
+    }
+    
 	/*
 	 * Verify an account with a given verification string.
 	 *
@@ -268,16 +358,7 @@ class UserAuth
 		session_regenerate_id();
 	}
 	
-	/*
 	private function getUser( $email )
 	{
-		global $db;
-		
-		$sql = 'SELECT *
-				FROM ' . UserAuth::USER_TABLE . ' 
-				WHERE email=:email
-				;';
-		$sql = 
 	}
-	*/
 }

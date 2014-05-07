@@ -30,7 +30,7 @@
             //used to ensure a user-entered display name is not null or empty
             function validateUsername() {
                 var displayNameRegex = /[0-9A-Za-z-]{5,32}$/g;
-                var username = document.getElementById("displayName").value.match(displayNameRegex);
+                var username = document.getElementById("display_name").value.match(displayNameRegex);
                 if ((username == null) || (username == "")) {
                     alert("Please enter a user display name, 5-32 alphaneumeric characters.");
                     return false;
