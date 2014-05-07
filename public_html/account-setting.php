@@ -11,28 +11,8 @@
 
     <body>
         <div data-role="page" data-theme="a">
-            <!-- The panel -->
-            <div data-role="panel" id="menuPanel" data-theme="b" data-position="right" data-display="overlay">
-                <div class="panel-content">
-                    <h1>Menu</h1><br>
-                    <ul data-role="listview">
-                        <li><a href="main.php">My Meetings</a></li>
-                        <li><a href="#">Create Meetings</a></li>
-                        <li><br></li>
-                        <li><a href="#">My Courses</a></li>
-                        <li><a href="account-setting.php">Account Settings</a></li>
-                        <li><a href="#">Logout</a></li>
-                    </ul>
-                </div>
-            </div>
-            <!-- /The panel -->
-            <div data-role="header" id="header">
-                <img src="images/sb-logo.png" alt="SB" class="ui-btn-left"/>
-                <!-- Call the panel -->
-                <a href="#menuPanel" data-role="button" data-inline="true" data-icon="bars" class="ui-btn-right" data-position="right" data-display="overlay">Menu</a>
-                <!-- /Call the panel -->
-                <h1>Account Settings</h1>
-            </div>
+            <?php define('HAS_MENU',1);
+                  renderPagelet( 'banner.php', array( '{{title}}' => 'Account Settings' ) ); ?>
 
 
 
