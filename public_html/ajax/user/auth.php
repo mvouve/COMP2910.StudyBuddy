@@ -56,11 +56,11 @@ if ( isset( $_POST['method'] ) )
  */
 function registerAccount( $email, $displayName, $password, $confirmPassword )
 {
-    require( PHP_INC_PATH . 'user/class-user-auth.php' );
+    require( PHP_INC_PATH . 'user/class-user.php' );
     require( PHP_INC_PATH . 'class-input-validation.php' );
     
-    $userAuth = new UserAuth();
-    $accountStatus = UserAuth::ACCOUNT_DOES_NOT_EXIST;
+    $User = User::instance();
+    $accountStatus = User::ACCOUNT_DOES_NOT_EXIST;
     $retval = array (
         'valid'             => true,
         'invalidAttributes' => array(),
@@ -79,14 +79,14 @@ function registerAccount( $email, $displayName, $password, $confirmPassword )
     // Check if email is already used or the account was recently deleted.
     if ( $retval['valid'] )
     {
-        $accountStatus = $userAuth->getAccountStatus( $email );
+        $accountStatus = $User->getAccountStatus( $email );
         
-        if ( $accountStatus === UserAuth::ACCOUNT_EXISTS )
+        if ( $accountStatus === User::ACCOUNT_EXISTS )
         {
             $retval['valid'] = false;
             $retval['accountExists'] = true;
         }
-        else if ( $accountStatus === UserAuth::ACCOUNT_DELETED )
+        else if ( $accountStatus === User::ACCOUNT_DELETED )
         {
             $retval['valid'] = false;
             $retval['accountDeleted'] = true;
@@ -117,7 +117,7 @@ function registerAccount( $email, $displayName, $password, $confirmPassword )
     // Create the User account if all inputs are valid.
     if ( $retval['valid'])
     {
-        $retval['valid'] = $userAuth->register( $email, $displayName, $password );
+        $retval['valid'] = $User->register( $email, $displayName, $password );
     }
     
     return $retval;
