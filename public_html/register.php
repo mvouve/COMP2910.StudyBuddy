@@ -60,8 +60,6 @@
             
             // Note the change from $().click to $().on( 'click tap', function( e ) {} );
             $( "#register-submit" ).on( 'click tap', function( e ) {
-                // Use e.preventDefault() to stop page redirection!
-                e.preventDefault();
                 
                 var formData = $( "#registerForm" ).serializeArray();
                 
@@ -69,6 +67,9 @@
                         formData,
                         onRegister,
                         "json" );
+                        
+                // Use e.preventDefault() to stop page redirection!
+                e.preventDefault();
             });
         </script>
 	</body>

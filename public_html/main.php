@@ -43,7 +43,7 @@
                 </div>
             </div>
             <!-- /The panel -->
-            <div data-role="header">  
+            <div data-role="header" data-position="fixed">  
                 <h1>studyBuddy</h1>
                 <!-- Call the panel -->
                 <a href="#menuPanel" data-role="button" data-inline="true" data-icon="bars" class="ui-btn-right" data-position="right" data-display="overlay">Menu</a>
