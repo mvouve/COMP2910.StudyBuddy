@@ -10,7 +10,7 @@
 					<input type="text" name="password" id="password" placeholder="password">
 					<label for="remember">Remember me</label>
 					<input type="checkbox" name="remember" id="remember">
-					<input type="submit" value="Login" onclick="loginClick()"> <!-- should do an ajax request checking for correct input, if it is, go to next page -->	
+					<input type="submit" id="loginbutton" value="Login" onclick="loginClick()"> <!-- should do an ajax request checking for correct input, if it is, go to next page -->	
 				</form>
                 <br>
                 <input type="button" value="Register" onclick="registerClick()">
@@ -24,17 +24,17 @@
 			</div>
 		</div>
 	<script>
-	    function loginClick()
+	 function loginClick()
      {
-         window.location.assign("main.php");
+         window.location.assign("main.html");
      }
      function registerClick()
      {
-         window.location.assign("register.php");
+         window.location.assign("register.html");
      }
      function recoveryClick()
      {
-         window.location.assign("recovery-request.php");
+         window.location.assign("recovery-request.html");
      }
 
      function showError()
@@ -42,36 +42,35 @@
          document.getElementById(error).style.display = 'block';
      }
 
-     function credentialCheck()
+     $(document).ready(function()
      {
-         var email = $("#emailbutton").val();
-         var password = $("#passwordbutton").val();
+        $("#loginbutton").click(function()
+        {
 
-         $.AJAX
+            var formData = $("#loginform").serialize();
+         $.ajax
          ({
-             datatype:"json",
-             type: "POST",
-             url:"/ajax/user/auth.php",
-             data:
-             {
-                method: check_credentials,
-		        email: email,
-		        password: password,
-             },
-             success: function (json)
-             {
-                 if (json.valid == true)
-                 {
-                     window.location.assign("SB_main.html");
-                 }
-                 else
-                 {
-                     showError();
-                 }
-             },
-             error: showError(),
+            type: "POST",
+            url:"/ajax/user/auth.php",
+            cache: false,
+            data: formData,
+            datatype:"json",
+            success: function (json)
+            {
+                if (json.valid == true)
+                {
+                    window.location.assign("main.html");
+                }
+                else
+                {
+                    showError();
+                }
+            },
+            error: showError()
+            });
+            return false;
         });
-    }
+    });
 	</script>
 	</body>
 </html>
