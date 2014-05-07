@@ -33,8 +33,17 @@
             </div>
 			<div class="contenta" data-role="content" data-theme="b">
                 <div data-role="collapsible">
+                    <h3>Change your display name</h3>
+                    <form id="nameChange" name="nameChange" method="POST">
+                        <label for="newName">New Name:</label>
+                        <input type="text" name="newName" id="newName">
+                        <input id="nameUpdate" type="submit" value="Name Update">
+                        <input type="hidden" name="method" value="nameUpdate" />
+                    </form>
+                </div>
+                <div data-role="collapsible">
                     <h3>Change your password</h3> 
-				    <form id="registerForm" name="registerForm" method="POST">
+				    <form id="passwordChange" name="passwordChange" method="POST">
                         <label for="oldPassword">Current Password:</label>
 					    <input type="password" name="password" id="oldPassword"><br/>
 					    <label for="newPassword">New Password:</label>

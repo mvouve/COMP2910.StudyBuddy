@@ -29,6 +29,7 @@
     <body>
         <div data-role="page" id="page">
             <!-- The panel -->
+            
             <div data-role="panel" id="menuPanel" data-theme="b" data-position="right" data-display="overlay">
                 <div class="panel-content">
                     <h1>Menu</h1><br>
@@ -44,7 +45,7 @@
             </div>
             <!-- /The panel -->
             <div data-role="header" data-position="fixed">  
-                <h1>studyBuddy</h1>
+                <h1>My Meetings</h1>
                 <!-- Call the panel -->
                 <a href="#menuPanel" data-role="button" data-inline="true" data-icon="bars" class="ui-btn-right" data-position="right" data-display="overlay">Menu</a>
                 <!-- /Call the panel -->
