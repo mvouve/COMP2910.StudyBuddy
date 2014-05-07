@@ -4,6 +4,8 @@
         <script type="text/javascript" src="js/jquery.slidepanel.js"></script>
         <link rel="stylesheet" type="text/css" href="css/jquery.slidepanel.css">
     ');
+
+    $email = "you@my.bcit.ca";
 ?>
 <?php renderPagelet( 'header.php', array( '{{customHeadTags}}' => '' ) ); ?>
 
@@ -31,7 +33,13 @@
                 <!-- /Call the panel -->
                 <h1>Account Settings</h1>
             </div>
+
+
+
 			<div class="contenta" data-role="content" data-theme="b">
+                <div class="center contenta">
+                    <p><?php echo $email; ?></p>
+                </div>
                 <div data-role="collapsible">
                     <h3>Change your display name</h3>
                     <form id="nameChange" name="nameChange" method="POST">
