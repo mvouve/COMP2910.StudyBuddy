@@ -9,12 +9,12 @@
 					<label for="email">E-mail:</label>
 					<input type="text" name="email" id="email"><br/>
 					<label for="displayName">Display Name:</label>
-					<input type="text" name="display_name" id="displayName"><br/>
+					<input type="text" name="displayName" id="displayName"><br/>
 					<label for="password">Password:</label>
 					<input type="password" name="password" id="password"><br/>
 					<label for="confirm">Confirm Password:</label>
 					<input type="password" name="confirm_password" id="confirm"><br/>
-                    <input id="register-submit" type="submit" value="Register">
+                    <input id="register-submit" type="submit" value="Register" onclick="register()">
                     <input type="hidden" name="method" value="register" />
 				</form>
 			</div>
@@ -22,10 +22,15 @@
 			</div>
 		</div>
         <script>
+            function register()
+            {
+                alert('Displayname: ' + (validateUsername()?'true':'false'));
+            }
+
             //used to ensure a user-entered display name is not null or empty
             function validateUsername() {
                 var displayNameRegex = /[0-9A-Za-z-]{5,32}$/g;
-                var username = document.form["registerForm"]["display_name"].value.match(displayNameRegex);
+                var username = document.getElementById("displayName").value.match(displayNameRegex);
                 if ((username == null) || (username == "")) {
                     alert("Please enter a user display name, 5-32 alphaneumeric characters.");
                     return false;
@@ -47,24 +52,24 @@
             function checkEmail() {
 
             }
-            
-            function onRegister( result ) {
-                alert( JSON.stringify(result, null, 4) );
-                
+
+            function onRegister(result) {
+                alert(JSON.stringify(result, null, 4));
+
                 // Reset the Submit button to inactive after being pressed
                 $.mobile.activePage.find('.ui-btn-active').removeClass('ui-btn-active ui-focus');
             }
-            
+
             // Note the change from $().click to $().on( 'click tap', function( e ) {} );
-            $( "#register-submit" ).on( 'click tap', function( e ) {
-                
-                var formData = $( "#registerForm" ).serializeArray();
-                
-                $.post( "http://localhost/StudyBuddy/public_html/ajax/user/auth.php",
+            $("#register-submit").on('click tap', function (e) {
+
+                var formData = $("#registerForm").serializeArray();
+
+                $.post( <?php echo '\''.AJAX_URL . 'user/auth.php\''; ?>,
                         formData,
                         onRegister,
-                        "json" );
-                        
+                        "json");
+
                 // Use e.preventDefault() to stop page redirection!
                 e.preventDefault();
             });
