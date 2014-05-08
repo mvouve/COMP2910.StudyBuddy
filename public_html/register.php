@@ -8,8 +8,8 @@
 				<form id="registerForm" name="registerForm" method="POST">
 					<label for="email" id="emailLabel">Email:</label>
 					<input type="text" name="email" id="email"><br/>
-					<label for="display_name">Display Name:</label>
-					<input type="text" name="display_name" id="display_name"><br/>
+					<label for="displayName" id="displayNameLabel">Display Name:</label>
+					<input type="text" name="displayName" id="displayName"><br/>
 					<label for="password">Password:</label>
 					<input type="password" name="password" id="password"><br/>
 					<label for="confirm">Confirm Password:</label>
@@ -22,7 +22,6 @@
 			</div>
 		</div>
         <script>
-            var valid = false;
             //used to ensure a user-entered email is a valid BCIT e-mail
             function validateEmail() {
                 var emailRegex = /^[0-9a-z_.]@my\\.bcit\\.ca$/gi;
@@ -30,11 +29,9 @@
                 var validEmail = document.getElementById("email").value.match(emailRegex);
                 if (validEmail == null || validEmail.length != 1) {
                     emailLabel.style.color="#FF0000";
-                    valid = false;
                     return false;
                 }
                 emailLabel.style.color="#00FF00";
-                valid &= true;
                 return true;
             }
 
