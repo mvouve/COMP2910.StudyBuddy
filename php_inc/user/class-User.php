@@ -398,7 +398,17 @@ class User
      */
     public function emailVerificationString( $email, $verificationString )
     {
-        //CODE GOES HERE
+        //the subject line for the verification e-mail
+        $subject = "My subject line";
+
+        //the message to be sent with newline characters "\r\n"
+        $message = "Line 1\r\nLine 2\r\nLine 3";
+
+        // Use wordwrap() to ensure the message is no longer than 70 columns long (industry standard)
+        $message = wordwrap($message, 70, "\r\n");
+
+        // Send mail
+        mail($email, $subject, $message);
     }
     
     /*
