@@ -21,7 +21,10 @@
                         <input id="verification-submit" type="button" value="Verify">
                         <input type="hidden" name="verification-submit" value="verification-submit" />
                     </form>
-                </div>             
+                </div>
+                <div data-role="content">
+                    <input id="send-again" type="button" value="Re-send Verification Email" onclick="sendAgain()"/>
+                </div>
 			</div>
 		</div>
         <script>
