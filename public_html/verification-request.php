@@ -25,7 +25,7 @@
 			</div>
 		</div>
         <script>
-             $('#verification-submit').click(function () {
+            $('#verification-submit').click(function () {
                 var verificationCode = $("#verification-form");
                 $.ajax({
                     type: "POST",
@@ -34,11 +34,27 @@
                     error: alertTest,
                     datatype: 'json'
                 });
+
+                $.ajax({
+                    type: "GET",
+                    url: "",
+                    data: verifiedStatus,
+                    error: alertTest,
+                    datatype: 'json'
+                })
+
+                if (verified == true) {
+                    window.location = "verification-success.php"
+                } else {
+                    alert("The verification code is incorrect, please try again");
+                }
             });
 
             function alertTest(data) {
                 alert('Submitted!');
             }
+
+
         </script>
 	</body>
 </html>
