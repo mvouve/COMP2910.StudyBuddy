@@ -1,27 +1,31 @@
 <!--Study Buddy - Account Registration-->
 <?php require( 'config.php' ); ?>
-<?php renderPagelet( 'header.php', array( '{{customHeadTags}}' => '' ) ); ?>
+<?php renderPagelet( 'header.php', array( '{{customHeadTags}}' => '<style>.validated-field
+ {
+     position: relative;
+ }
+ </style>' ) ); ?>
     <body>
         <div data-role="page" data-theme="a">
             <?php renderPagelet( 'banner.php', array( '{{title}}' => 'Register Account' ) ); ?>
 			<div class="contenta" data-role="content" id="register">
 				<form id="register-form" name="register-form" method="POST">
 					<label for="email">Email:</label>
-                    <div class="ui-icon-delete ui-btn-icon-right" style="position:relative;" id="email-div">
+                    <div class="ui-icon-delete ui-btn-icon-right validated-field" id="email-div">
 					<input type="text" name="email" id="email"></div>
 
 					<label for="display-name" id="display-name-label">Display Name:</label>
-                    <div class="ui-icon-delete ui-btn-icon-right" style="position:relative;" id="display-name-div">
+                    <div class="ui-icon-delete ui-btn-icon-right validated-field" id="display-name-div">
 					    <input type="text" name="display-name" id="display-name">
                     </div>
 
                     <label for="password" id="password-label">Password:</label>
-					<div class="ui-icon-delete ui-btn-icon-right" style="position:relative;" id="password-div">
+					<div class="ui-icon-delete ui-btn-icon-right validated-field" id="password-div">
                         <input type="password" name="password" id="password">
                     </div>
 
                     <label for="confirm" id="confirm-label">Confirm Password:</label>
-                    <div class="ui-icon-delete ui-btn-icon-right" style="position:relative;" id="confirm-div">
+                    <div class="ui-icon-delete ui-btn-icon-right validated-field" id="confirm-div">
 					    <input type="password" name="confirm-password" id="confirm">
                     </div>
                     <input id="register-submit" type="submit" value="Register">
@@ -37,10 +41,10 @@
                 var emailRegex = /^(([0-9a-z_.]+@((my\.bcit\.ca)|(bcit.ca)))|(a\d{8}@((mybcit\.ca)|(learn\.bcit\.ca))))$/gi;
                 var validEmail = document.getElementById("email").value.match(emailRegex);
                 if (validEmail == null || validEmail.length != 1) {
-                    $("#email-div").attr('class','ui-icon-delete ui-btn-icon-right');
+                    $("#email-div").removeClass('ui-icon-check').addClass('ui-icon-delete');
                     return false;
                 }
-                $("#email-div").attr('class','ui-icon-check ui-btn-icon-right');
+                $("#email-div").removeClass('ui-icon-delete').addClass('ui-icon-check');
                 return true;
             }
 
@@ -50,10 +54,10 @@
                 var displayNameLabel = document.getElementById("display-name-label");
                 var displayName = document.getElementById("display-name").value.match(displayNameRegex);
                 if (displayName == null || displayName.length != 1) {
-                    $("#display-name-div").attr('class','ui-icon-delete ui-btn-icon-right');
+                    $("#display-name-div").removeClass('ui-icon-check').addClass('ui-icon-delete');
                     return false;
                 }
-                $("#display-name-div").attr('class','ui-icon-check ui-btn-icon-right');
+                $("#display-name-div").removeClass('ui-icon-delete').addClass('ui-icon-check');
                 return true;
             }
 
@@ -64,15 +68,15 @@
                 var password = document.getElementById("password").value.match(passwordRegex);
                 var confirm = document.getElementById("confirm").value;
                 if (password == null || password.length != 1) {
-                    $("#password-div").attr('class','ui-icon-delete ui-btn-icon-right');
+                    $("#password-div").removeClass('ui-icon-check').addClass('ui-icon-delete');
                     return false;
                 }
-                $("#password-div").attr('class','ui-icon-check ui-btn-icon-right');
+                $("#password-div").removeClass('ui-icon-delete').addClass('ui-icon-check');
                 if ( password[0] != confirm ) {
-                    $("#confirm-div").attr('class','ui-icon-delete ui-btn-icon-right');
+                    $("#confirm-div").removeClass('ui-icon-check').addClass('ui-icon-delete');
                     return false;
                 }
-                $("#confirm-div").attr('class','ui-icon-check ui-btn-icon-right');
+                $("#confirm-div").removeClass('ui-icon-delete').addClass('ui-icon-check');
                 return true;
 
             }
