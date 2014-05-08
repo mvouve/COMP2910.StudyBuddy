@@ -2,7 +2,7 @@
 $retval = array('success' => false );
 
 //Only do something if a method is set.
-if ( isset( $_POST['method']) )
+if ( isset( $_POST['method'] ) )
 {
 	// Update name Function.
 	if( $_POST['method'] == 'update-display-name' )
@@ -33,11 +33,15 @@ if ( isset( $_POST['method']) )
 function updateDisplayName( $email, $displayName )
 {
 	$user = User::instance();
+	$retval = array( 'success' => false );
 	
-	if( $user->updateDisplayName( $email, $displayName ) )
+	
+	if( $user->updateDisplayName( $email, $displayName ) && $user->isLoggedIn() )
 	{
 		$retval = array( 'success' => true );
 	}
+	
+	return $retval;
 }
 
 /*
@@ -47,9 +51,13 @@ function updateDisplayName( $email, $displayName )
 function updatePassword( $email, $oldPassword, $newPassword, $confirmPassword )
 {
 	$user = User::instance();
+	$retval = array( 'success' => false );
 	
-	if( $user->updatePassword( $email, $oldPassword, $newPassword, $confirmPassword ) )
+	if( $user->updatePassword( $email, $oldPassword, $newPassword, $confirmPassword ) && $user->isLoggedIn()
+	)
 	{
 		$retval = array( 'success' => true );
 	}
+	
+	return $retval;
 }

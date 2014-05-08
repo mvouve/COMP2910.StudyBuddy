@@ -16,10 +16,10 @@
                 <div data-role="Verification">
                     <form id="verification-form" name="verification" method="POST">
                         <label for="verifcation">Please enter your verification code:</label>
-                        <input type="text" name="display-name" id="display-name">
+                        <input type="text" name="verification-code" id="verification-code">
 
                         <input id="verification-submit" type="button" value="Verify">
-                        <input type="hidden" name="verification-submit" value="verification-submit" />
+                        <input type="hidden" name="method" value="verify" />
                     </form>
                 </div>
                 <div data-role="content">
@@ -29,22 +29,14 @@
 		</div>
         <script>
             $('#verification-submit').click(function () {
-                var verificationCode = $("#verification-form");
+                var verificationCode = $("#verification-form").serializeArray();
                 $.ajax({
                     type: "POST",
-                    url: "/ajax/user/settings.php",
+                    url: <?php echo '\'' . AJAX_URL . 'user/settings.php\''; ?>,
                     data: verificationCode,
-                    error: alertTest,
+                    success: alertTest,
                     datatype: 'json'
                 });
-
-                $.ajax({
-                    type: "GET",
-                    url: "",
-                    data: verifiedStatus,
-                    error: alertTest,
-                    datatype: 'json'
-                })
 
                 if (verified == true) {
                     window.location = "verification-success.php"
