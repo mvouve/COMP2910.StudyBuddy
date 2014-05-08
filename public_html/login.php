@@ -10,7 +10,7 @@
 					<input type="password" name="password" id="password" placeholder="password">
 					<label for="remember">Remember me</label>
 					<input type="checkbox" name="remember" id="remember">
-					<input type="submit" id="login-submit" value="Login" onclick="loginClick()">
+					<input type="submit" id="login-submit" value="Login">
 					<input type="hidden" name="method" value="login"/><!-- should do an ajax request checking for correct input, if it is, go to next page -->	
 				</form>
                 <br>
@@ -38,27 +38,12 @@
      {
          document.getElementById(error).style.display = 'block';
      }
-     
-     $("#login-submit").on( 'click tap', function(e) {
-     	e.preventDefault();
-     	
-     	var forData = $('#login-form').serializeArray();
-     	
-     	$.post( <?php echo '\'' . AJAX_URL . 'user/auth.php\''; ?>,
-                        formData,
-                        onRegister,
-                        "json");
-     	
-     });
-	/*
-     $(document).ready(function()
+     $("#loginbutton").on( 'click tap', function (e)
      {
-        $("#loginbutton").click(function()
+		e.preventDefault();
+        var formData = $("#login-form").serialize();
+        $.ajax
         {
-
-            var formData = $("#loginform").serialize();
-         $.ajax
-         ({
             type: "POST",
             url:"/ajax/user/auth.php",
             cache: false,
@@ -79,8 +64,6 @@
             });
             return false;
         });
-    });
-    */
 	</script>
 	</body>
 </html>
