@@ -398,11 +398,13 @@ class User
      */
     public function emailVerificationString( $email, $verificationString )
     {
+        //the verification URL:
+        $verAcount = "verify-account.php"       //NOT SURE IF THIS IS THE FINAL URL FOR THIS PAGE, MIGHT HAVE TO BE CHANGED
         //the subject line for the verification e-mail
-        $subject = "My subject line";
+        $subject = "Study Buddy Verification";
 
-        //the message to be sent with newline characters "\r\n"
-        $message = "Line 1\r\nLine 2\r\nLine 3";
+        //the message to be sent
+        $message = "You have requested a verification email for Study Buddy. Your verification code is provided below:<br/>$verificationString<br/><br/>Thank you for using Study Buddy.<br/><br/>Sincerely,<br/>The Study Buddy Team";
 
         // Use wordwrap() to ensure the message is no longer than 70 columns long (industry standard)
         $message = wordwrap($message, 70, "\r\n");
