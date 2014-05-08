@@ -1,5 +1,5 @@
 <!-- Study Buddy Email Verification Request -->
-<?php require( 'config.php' ); ?>
+<?php require_once( 'config.php' ); ?>
 <?php renderPagelet( 'header.php', array( '{{customHeadTags}}' => '' ) ); ?>
 	<body>
 		<div data-role="page" data-theme="a">

@@ -1,5 +1,5 @@
 <!--Study Buddy - Account Registration-->
-<?php require( 'config.php' ); ?>
+<?php require_once( 'config.php' ); ?>
 <?php renderPagelet( 'header.php', array( '{{customHeadTags}}' => '<style>.validated-field
  {
      position: relative;
