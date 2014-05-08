@@ -367,12 +367,12 @@ class User
         $success = FALSE;
 
         //create a new verification string
-
         $newVString = generateVerificationString();
 
         //update USER_TABLE with new verificationString
         $sql = 'UPDATE ' . User::USER_TABLE . ' 
-                SET verificationString=:newVString
+                SET verificationString=:newVString,
+                    verificationTime=CURRENT_TIMESTAMP
                 WHERE email=:email
                 ;';
 
@@ -380,26 +380,16 @@ class User
         $sql = $db->prepare( $sql );
 
         //bind the parameter to the variable name
-        $sql->bindParam( ':newVString', $verificationString );
+        $sql->bindParam( ':newVString', $newVString );
+        $success = $sql->execute();
 
-        //update verificationTime in USER_TABLE to CURRENT_TIMESTAMP
-        $sql = 'UPDATE ' . User::USER_TABLE . ' 
-                SET verificationTime=:CURRENT_TIMESTAMP
-                WHERE email=:email
-                ;';
-
-        //prepare the sql statement for execution
-        $sql = $db->prepare( $sql );
-
-        //bind the parameter to the variable name
-        $sql->bindParam( ':CURRENT_TIMESTAMP', $verificationTime );
-
-        //send e-mail
-        $success = emailVerificationString($email, $newVString);
-
-        //return true or false for success
-        return $success;
+        // If the verification string was created, send it to the email.
+        if ( $success )
+        {
+            $success = emailVerificationString( $email, $newVString );
+        }
         
+        return $success;
     }
     
     /** Sebastian
