@@ -112,8 +112,7 @@
                 // Use e.preventDefault() to stop page redirection!
 
                 //sebastians button fix start
-                var btn = document.getElementById('#register-submit');
-                btn.click();
+                var btn = $('#register-submit');
                 btn.disabled = true;
                 //sebastians button fix end
 
