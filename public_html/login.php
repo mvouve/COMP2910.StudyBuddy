@@ -18,11 +18,11 @@
 					<!-- should do an ajax request checking for correct input, if it is, go to next page -->	
 				</form>
                 <br>
-                <a href="register.php">
+                <a href="register.php" rel="external">
                     <input type="button" value="Register">
                 </a>
                 <br>
-                <a href="recovery-request.php">
+                <a href="recovery-request.php" rel="external">
 			        <input type="button" value="Forgot Your Password?">
                 </a>
 			</div>
