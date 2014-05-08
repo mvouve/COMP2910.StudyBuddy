@@ -45,6 +45,10 @@ class User
 		}
 	}
 	
+    public function logout()
+	{
+	}
+    
     /*
      * Check if a users credentials are correct.
      *
@@ -79,10 +83,6 @@ class User
         }
         
         return false;
-	}
-	
-	public function logout()
-	{
 	}
 	
 	/*

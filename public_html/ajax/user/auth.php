@@ -56,8 +56,7 @@ if ( isset( $_POST['method'] ) )
  */
 function registerAccount( $email, $displayName, $password, $confirmPassword )
 {
-    require( PHP_INC_PATH . 'user/class-user.php' );
-    require( PHP_INC_PATH . 'class-input-validation.php' );
+    require_once( PHP_INC_PATH . 'class-input-validation.php' );
     
     $User = User::instance();
     $accountStatus = User::ACCOUNT_DOES_NOT_EXIST;
