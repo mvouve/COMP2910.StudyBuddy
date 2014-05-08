@@ -26,6 +26,11 @@ if ( isset( $_POST['method'] ) )
                                    $_POST['confirm-password'] 
                                   );
     }
+	// DEACTIVATE ACCOUNT
+	else if ( $_POST['method'] == 'delete-account' )
+	{
+		$retval = deactivate( $email, $password );
+	}
 	
 	echo json_encode( $retval );
 }
@@ -150,4 +155,17 @@ function registerAccount( $email, $displayName, $password, $confirmPassword )
     }
     
     return $retval;
+}
+
+function deactivate( $email, $password )
+{
+	$user = User::instance();
+	$retval = array( 'deleted' => false );
+	
+	if ( $user->checkCredentials( $email, $password ) )
+	{
+		$retval['deleted'] = $user->deleteAccount( $email );
+	}
+	
+	return $retval;
 }
