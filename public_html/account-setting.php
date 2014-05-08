@@ -57,17 +57,24 @@
             $('#confirm-password').blur(function () {
                 $('update-password').attr('disabled', 'disabled');
                 $('#mismatch').hide();
-
-                var match1 = $('#new-password').val();
-                var match2 = $('#confirm-password').val();
-                if (match1 != match2) {
+                var newp = $('#new-password').val();
+                var newp2 = $('#confirm-password').val();
+                if (newp != newp2) {
                     $('#mismatch').show();
                     $('update-password').attr('disabled');
-
                 }
-
                 return false;
             });
+
+            $('password-change').submit(function(){
+            $.ajax({
+                type:"POST",
+                url:placeholderurl.php, //WHERE DOES THE STUFF GO
+                data: $('password-change').serialize()
+                });
+                ev.preventDefault();
+            } 
+           
         </script>
 	</body>
 </html>
