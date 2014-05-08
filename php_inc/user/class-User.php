@@ -118,6 +118,22 @@ class User
         
         return false;
     }
+	
+	/*
+	 * Mark an account as deleted.
+	 */
+	public function deleteAccount( $email )
+	{
+		global $db;
+		
+		$sql = 'UPDATE ' . User::USER_TABLE . ' 
+				SET deleted=\'T\'
+				WHERE email=:email
+				;';
+		$sql = $db->prepare( $sql );
+		$sql->bindParam( ':email', $email );
+		return $sql->execute();
+	}
     
     /*
      * Check if a users credentials are correct.
