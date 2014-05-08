@@ -158,7 +158,7 @@ class User
 		$sql->execute();
         
         $result = $sql->fetch( PDO::FETCH_ASSOC );
-        
+		
         // Only check if the user exists!
         if ( $result != false )
         {
