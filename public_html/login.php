@@ -5,7 +5,7 @@
 		<div data-role="page" data-theme="a">
             <?php renderPagelet( 'banner.php', array( '{{title}}' => 'Login' ) ); ?>
 			<div class="contenta" data-role="content" id="login">
-				<form name="login-form" method="POST">
+				<form name="login-form" id="login-form" method="POST">
 					<input type="text" name="email" id="email" placeholder="email">
 					<input type="password" name="password" id="password" placeholder="password">
 					<label for="remember">Remember me</label>
@@ -42,13 +42,13 @@
 		}
 		else
 		{
-			document.getElementById(error).style.display = 'block';
+			document.getElementById( 'error' ).style.display = 'block';
 		}
 	}
 
     function showError()
     {
-        document.getElementById(error).style.display = 'block';
+        document.getElementById( 'error' ).style.display = 'block';
     }
 	
 	$("#login-submit").on( 'click tap', function (e) 
@@ -60,7 +60,7 @@
 		$.post( <?php echo '\'' . AJAX_URL . 'user/auth.php\''; ?>,
 						formData,
 						onLogin,
-						"json");
+						"json" );
 	});
 	</script>
 	</body>
