@@ -31,16 +31,18 @@
                     type: "POST",
                     url: <?php echo '\'' . AJAX_URL . 'user/settings.php\''; ?>,
                     data: passwordForm,
-                    error: failedSubmit,
+                    error: failedSubmit(),
                     datatype: 'json',
                     success: function(json){
-                        if(json. == ){
+                        if(json.success == true){
                             window.location.assign("login.php");
+                        }
+                        else{
+                            failedSubmit();
                         }
                     }
 
                 });
-                alert('hello');
             });
             
             function failedSubmit(){
