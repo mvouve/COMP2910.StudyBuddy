@@ -7,7 +7,7 @@
                         <li><br></li>
                         <li><a href='#'>My Courses</a></li>
                         <li><a href='account-setting.php'>Account Settings</a></li>
-                        <li><a href='login.php'>Logout</a></li>
+                        <li><a href='login.php?logout=true'>Logout</a></li>
                     </ul>
                 </div>
             </div>

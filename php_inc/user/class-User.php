@@ -433,13 +433,13 @@ class User
     {
 		global $db;
 		
-		$sql = 'SELECT verificationString
+		$sql = 'SELECT verificationString, email
 				FROM ' . User::USER_TABLE . ' 
 				WHERE ID=:id
 				;';
 				
 		$sql = $db->prepare( $sql );
-		$sql->bindParam( ':email', $email );
+		$sql->bindParam( ':id', $id );
 		
 		if ( !$sql->execute() )
 		{
@@ -448,6 +448,7 @@ class User
 		
 		$result = $sql->fetch( PDO::FETCH_ASSOC );
 		$verificationString = $result['verificationString'];
+		$email = $result['email'];
 	
         //the subject line for the verification e-mail
         $subject = 'Study Buddy Verification';
