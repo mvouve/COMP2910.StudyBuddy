@@ -76,8 +76,6 @@
 			</div>
 		</div>
         <script>
-            $('#update-password').attr('disabled');
-            $('#update-name').attr('disabled');
             $('#update-password').on( 'click tap', function () {
                 alert('belly');
                 var passwordForm = $("#update-password").serializeArray();
@@ -91,6 +89,7 @@
                 alert('hello');
             });
 
+            
             $('#update-name').on( 'click tap', function () {
                 alert('starting updating name');
                 var updateNameForm = $("#update-name").serializeArray();
@@ -110,7 +109,7 @@
                 });
             });
 
-            $('#deactivate-account').click(function () {
+            $('#deactivate-account').on( 'click tap', function () {
                 alert('account deactivation button pressed');
                 var deactivateAccountForm = $("#deactivate-account").serializeArray();
 
@@ -136,11 +135,9 @@
                 var displayName = document.getElementById("display-name").value.match(displayNameRegex);
                 if (displayName == null || displayName.length != 1) {
                     $("#display-name-div").removeClass('ui-icon-check').addClass('ui-icon-delete');
-                    $('#update-name').attr('disabled');
                     return false;
                 }
-                $("#display-name-div").removeClass('ui-icon-delete').addClass('ui-icon-check');
-                $('#update-name').removeAttr('disabled');
+                $('#display-name-div').removeClass('ui-icon-delete').addClass('ui-icon-check');
                 return true;
             }
             $("#display-name").keyup( function(e){validateDisplayName();} );
@@ -149,20 +146,22 @@
                 var passwordRegex = /^.+$/g;
                 var password = document.getElementById("new-password").value.match(passwordRegex);
                 var confirm = document.getElementById("confirm-password").value;
+
                 if (password == null || password.length != 1) {
                     $("#password-div").removeClass('ui-icon-check').addClass('ui-icon-delete');
                     $("#confirm-div").removeClass('ui-icon-check').addClass('ui-icon-delete');
-                    $('#update-password').attr('disabled');
+
                     return false;
                 }
                 $("#password-div").removeClass('ui-icon-delete').addClass('ui-icon-check');
+
                 if ( password[0] != confirm ) {
                     $("#confirm-div").removeClass('ui-icon-check').addClass('ui-icon-delete');
-                    $('#update-password').attr('disabled');
+
                     return false;
                 }
                 $("#confirm-div").removeClass('ui-icon-delete').addClass('ui-icon-check');
-                $('#update-password').removeAttr('disabled');
+
                 return true;
 
             }
