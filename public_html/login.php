@@ -1,5 +1,5 @@
 <!--Study Buddy - Login Page-->
-<?php require( 'config.php' ); ?>
+<?php require_once( 'config.php' ); ?>
 <?php renderPagelet( 'header.php', array( '{{customHeadTags}}' => '' ) ); ?>
 	<body>
 		<div data-role="page" data-theme="a">
@@ -11,7 +11,8 @@
 					<label for="remember">Remember me</label>
 					<input type="checkbox" name="remember" id="remember">
 					<input type="submit" id="login-submit" value="Login">
-					<input type="hidden" name="method" value="login"/><!-- should do an ajax request checking for correct input, if it is, go to next page -->	
+					<input type="hidden" name="method" value="login"/>
+					<!-- should do an ajax request checking for correct input, if it is, go to next page -->	
 				</form>
                 <br>
                 <input type="button" value="Register" onclick="registerClick()">
@@ -25,45 +26,42 @@
 			</div>
 		</div>
 	<script>
-     function registerClick()
-     {
-         window.location.assign("register.php");
-     }
-     function recoveryClick()
-     {
-         window.location.assign("recovery-request.php");
-     }
+    function registerClick()
+    {
+        window.location.assign("register.php");
+    }
+    function recoveryClick()
+    {
+        window.location.assign("recovery-request.php");
+    }
+	function onLogin(result)
+	{
+		if( result.valid )
+		{
+			window.location.assign("main.php");
+		}
+		else
+		{
+			document.getElementById(error).style.display = 'block';
+		}
+	}
 
-     function showError()
-     {
-         document.getElementById(error).style.display = 'block';
-     }
-     $("#login-submit").on( 'click tap', function (e)
-     {
-		e.defaultPrevented();
-        var formData = $("#login-form").serialize();
-        $.ajax
-        {
-            type: "POST",
-            url: "ajax/user/auth.php",
-            cache: false,
-            data: formData,
-            datatype:"json",
-            success: function (json)
-            {
-                if (json.valid == true)
-                {
-                    window.location.assign("main.php");
-                }
-                else
-                {
-                    showError();
-                }
-            },
-            error: showError()
-            });
-            return false;
-        });
+    function showError()
+    {
+        document.getElementById(error).style.display = 'block';
+    }
+	
+	$("#login-submit").on( 'click tap', function (e) 
+	{
+		e.preventDefault();
+		
+		var formData = $("#login-form").serializeArray();
+		
+		$.post( <?php echo '\'' . AJAX_URL . 'user/auth.php\''; ?>,
+						formData,
+						onLogin,
+						"json");
+	});
 	</script>
 	</body>
 </html>
