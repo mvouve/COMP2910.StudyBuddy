@@ -1,10 +1,6 @@
 <!--Study Buddy - Account Registration-->
 <?php require_once( 'config.php' ); ?>
-<?php renderPagelet( 'header.php', array( '{{customHeadTags}}' => '<style>.validated-field
- {
-     position: relative;
- }
- </style>' ) ); ?>
+<?php renderPagelet( 'header.php', array( '{{customHeadTags}}' => '' ) ); ?>
     <body>
         <div data-role="page" data-theme="a">
             <?php renderPagelet( 'banner.php', array( '{{title}}' => 'Register Account' ) ); ?>

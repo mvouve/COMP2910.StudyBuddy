@@ -13,3 +13,13 @@
 {
 	padding: 5px 10px;
 }
+
+a
+{
+    text-decoration:none;
+}
+
+.validated-field
+{
+    position: relative;
+}
