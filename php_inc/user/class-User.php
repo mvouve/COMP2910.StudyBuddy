@@ -41,13 +41,38 @@ class User
 	{
 		if ( $this->checkCredentials( $email, $password ) )
 		{
-			
+			if ( $this->getAccountStatus( $email ) === User::ACCOUNT_EXISTS )
+            {
+                $_SESSION['valid'] = 1;
+                $_SESSION['email'] = $email;
+                
+                // Store a unique id for session id
+                if ( $rememberMe )
+                {
+                }
+                
+                return true;
+            }
 		}
+        
+        return false;
 	}
 	
     public function logout()
 	{
+        $_SESSION = array();
+        session_destroy();
 	}
+    
+    public function isLoggedIn()
+    {
+        if ( isset( $_SESSION['valid'] ) && $_SESSION['valid'] )
+        {
+            return true;
+        }
+        
+        return false;
+    }
     
     /*
      * Check if a users credentials are correct.
@@ -367,24 +392,19 @@ class User
 	}
 	
 	private function startSession()
-	{/*
+	{
 		ini_set('session.use_only_cookies', 1);
 		
 		$cookieParams = session_get_cookie_params();
 		session_set_cookie_params($cookieParams["lifetime"],
 								  $cookieParams["path"], 
 								  $cookieParams["domain"], 
-								  SECURE,
+								  false,
 								  true
 								  );
 								  
 		session_name( 'studybuddy' );
 		session_start();
 		session_regenerate_id();
-        */
-	}
-	
-	private function getUser( $email )
-	{
 	}
 }
