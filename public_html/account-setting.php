@@ -43,7 +43,7 @@
 
 
                         <input id="update-password" type="button" value="Update Password">
-                        <input type="hidden" name="method" value="update-password" />
+                        <input type="hidden" name="method" value="update-password">
 				    </form>
                     <div id="mismatch" style="display:none">
                         <p>Please check your new passwords</p>
@@ -54,15 +54,18 @@
 			</div>
 		</div>
         <script>
-            $( '#confirm-password' ).blur( function() {
-                $( '#mismatch' ).hide();
-                
-                var match1 = $( '#new-password' ).val();
-                var match2 = $( '#confirm-password' ).val();
+            $('#confirm-password').blur(function () {
+                $('update-password').attr('disabled', 'disabled');
+                $('#mismatch').hide();
+
+                var match1 = $('#new-password').val();
+                var match2 = $('#confirm-password').val();
                 if (match1 != match2) {
-                    $( '#mismatch' ).show();
+                    $('#mismatch').show();
+                    $('update-password').attr('disabled');
+
                 }
-                
+
                 return false;
             });
         </script>
