@@ -24,7 +24,7 @@
                     <div class="ui-icon-delete ui-btn-icon-right validated-field" id="confirm-div">
 					    <input type="password" name="confirm-password" id="confirm">
                     </div>
-                    <input id="register-submit" type="submit" value="Register">
+                    <input id="register-submit" type="button" value="Register">
                     <input type="hidden" name="method" value="register" />
 				</form>
 			</div>
