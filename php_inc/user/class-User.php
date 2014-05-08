@@ -48,7 +48,7 @@ class User
      */
 	public function login( $email, $password, $rememberMe)
 	{
-		if ( $this->checkCredentials( $email, $password ) )
+		if ( !$this->isLoggedIn() && $this->checkCredentials( $email, $password ) )
 		{
 			if ( $this->getAccountStatus( $email ) === User::ACCOUNT_EXISTS )
             {
@@ -160,7 +160,7 @@ class User
 	 *
 	 * @param $email the email address of the account to check.
 	 * 
-	 * @returns ACCOUNT_EXISTS, ACCOUNT_DOES_NOT_EXIST, ACCOUNT_DELETED
+	 * @returns ACCOUNT_EXISTS, ACCOUNT_DOES_NOT_EXIST, ACCOUNT_DELETED, ACCOUNT_NOT_VERIFIED
 	 */
 	public function getAccountStatus( $email )
 	{

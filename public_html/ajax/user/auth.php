@@ -8,28 +8,14 @@ $retval = array();
 if ( isset( $_POST['method'] ) )
 {
 	// DUMMY CHECK_CREDENTIALS METHOD!
-	if ( $_POST['method'] == 'check_credentials' )
+	if ( $_POST['method'] == 'login' )
 	{
-		if ( $_POST['email'] === 'me@bcit.ca' && $_POST['password'] === 'password' )
-		{
-			$retval['valid'] = true;
-		}
-		else
-		{
-			$retval['valid'] = false;
-		}
+        $retval = login( $_POST['email'], $_POST['password'], isset( $_POST['remember'] ) );
 	}
 	// DUMMY EMAIL_EXISTS METHOD!
 	else if ( $_POST['method'] == 'email_exists' )
 	{
-		if ( $_POST['email'] == 'me@bcit.ca' )
-		{
-			$retval['exists'] = true; 
-		}
-		else
-		{
-			$retval['exists'] = false;
-		}
+        $retval = checkEmail( $_POST['email'] );
 	}
     // Registration Method
     else if ( $_POST['method'] == 'register' )
@@ -42,6 +28,36 @@ if ( isset( $_POST['method'] ) )
     }
 	
 	echo json_encode( $retval );
+}
+
+/*
+ * Attempt to log the user in.
+ * @returns [ valid=true|false ]
+ */
+function login( $email, $password, $remember )
+{
+    $user = User::instance();
+    
+    $loggedIn = $user->login( $email, $password, $remember );
+    
+    return array( 'valid' => $loggedIn );
+}
+
+/*
+ * Checks if an email is already registered
+ * @returns [ exists=true|false ]
+ */
+function checkEmail( $email )
+{
+    $user = User::instance();
+    $retval = array( 'exists' => 'true' );
+    
+    if ( $user->getAccountStatus( $email ) === User::ACCOUNT_DOES_NOT_EXIST )
+    {
+        $retval['exists'] = false;
+    }
+    
+    return $retval;
 }
 
 /*
