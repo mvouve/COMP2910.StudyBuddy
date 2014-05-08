@@ -28,7 +28,10 @@
                         <input type="hidden" name="method" value="update-display-name" />
                     </form>
                 </div>
-
+                <div id="name-change-success" style="display:none">
+                        <p>Name Change Successful!</p>
+                </div>
+                      
                 <div data-role="collapsible">
                     <h3>Change your password</h3> 
 				    <form id="password-change" name="password-change" method="POST">
@@ -94,12 +97,33 @@
 
             $('#update-name').click(function () {
                 alert('updating name');
-                var 
-            
-            })
+                var updateNameForm = $("#update-name").serializeArray();
+
+                $.ajax
+                ({
+                    type: "POST",
+                    url: "/ajax/user/settings.php",
+                    data: updateNameForm,
+                    datatype: 'json',
+                    success: function (json) {
+                        if (json.success == true) {
+                            nameChangeSuccess();
+                        }
+                    },
+                    error: errorMessage()
+                });
+            });
 
             function onPasswordChange(data) {
                 alert('HI!');
+            }
+
+            function errorMessage() {
+                alert('error message');
+            }
+
+            function nameChangeSuccess() {
+                $('#name-change-succcess').show();
             }
         </script>
 	</body>
