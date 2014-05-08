@@ -5,12 +5,13 @@
 		<div data-role="page" data-theme="a">
             <?php renderPagelet( 'banner.php', array( '{{title}}' => 'Login' ) ); ?>
 			<div class="contenta" data-role="content" id="login">
-				<form name="loginform">
+				<form name="loginform" method="POST">
 					<input type="text" name="email" id="email" placeholder="email">
 					<input type="password" name="password" id="password" placeholder="password">
 					<label for="remember">Remember me</label>
 					<input type="checkbox" name="remember" id="remember">
-					<input type="submit" id="loginbutton" value="Login" onclick="loginClick()"> <!-- should do an ajax request checking for correct input, if it is, go to next page -->	
+					<input type="submit" id="loginbutton" value="Login" onclick="loginClick()">
+					<input type="hidden" name="method" value="login"/><!-- should do an ajax request checking for correct input, if it is, go to next page -->	
 				</form>
                 <br>
                 <input type="button" value="Register" onclick="registerClick()">
