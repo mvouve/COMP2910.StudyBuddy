@@ -38,14 +38,14 @@
      {
          document.getElementById(error).style.display = 'block';
      }
-     $("#loginbutton").on( 'click tap', function (e)
+     $("#login-submit").on( 'click tap', function (e)
      {
-		e.preventDefault();
+		e.defaultPrevented();
         var formData = $("#login-form").serialize();
         $.ajax
         {
             type: "POST",
-            url:"/ajax/user/auth.php",
+            url: "ajax/user/auth.php",
             cache: false,
             data: formData,
             datatype:"json",
