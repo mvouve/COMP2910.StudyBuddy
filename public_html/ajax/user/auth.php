@@ -97,7 +97,9 @@ function registerAccount( $email, $displayName, $password, $confirmPassword )
     if ( $retval['valid'] )
     {
         $accountStatus = $User->getAccountStatus( $email );
-        
+        $id = $User->getUserID( $email );
+		$retval['userID'] = $id;
+		
         if ( $accountStatus === User::ACCOUNT_EXISTS )
         {
             $retval['valid'] = false;
@@ -143,7 +145,7 @@ function registerAccount( $email, $displayName, $password, $confirmPassword )
 		
 		if ($retval['valid'] != false )
 		{
-			$retval['emailSent'] = $User->emailVerificationString( $email );
+			//$retval['emailSent'] = $User->emailVerificationString( $reval['valid'] );
 		}
     }
     
