@@ -8,28 +8,14 @@ $retval = array();
 if ( isset( $_POST['method'] ) )
 {
 	// DUMMY CHECK_CREDENTIALS METHOD!
-	if ( $_POST['method'] == 'check_credentials' )
+	if ( $_POST['method'] == 'login' )
 	{
-		if ( $_POST['email'] === 'me@bcit.ca' && $_POST['password'] === 'password' )
-		{
-			$retval['valid'] = true;
-		}
-		else
-		{
-			$retval['valid'] = false;
-		}
+        $retval = login( $_POST['email'], $_POST['password'], isset( $_POST['remember'] ) );
 	}
 	// DUMMY EMAIL_EXISTS METHOD!
 	else if ( $_POST['method'] == 'email_exists' )
 	{
-		if ( $_POST['email'] == 'me@bcit.ca' )
-		{
-			$retval['exists'] = true; 
-		}
-		else
-		{
-			$retval['exists'] = false;
-		}
+        $retval = checkEmail( $_POST['email'] );
 	}
     // Registration Method
     else if ( $_POST['method'] == 'register' )
@@ -45,6 +31,36 @@ if ( isset( $_POST['method'] ) )
 }
 
 /*
+ * Attempt to log the user in.
+ * @returns [ valid=true|false ]
+ */
+function login( $email, $password, $remember )
+{
+    $user = User::instance();
+    
+    $loggedIn = $user->login( $email, $password, $remember );
+    
+    return array( 'valid' => $loggedIn );
+}
+
+/*
+ * Checks if an email is already registered
+ * @returns [ exists=true|false ]
+ */
+function checkEmail( $email )
+{
+    $user = User::instance();
+    $retval = array( 'exists' => 'true' );
+    
+    if ( $user->getAccountStatus( $email ) === User::ACCOUNT_DOES_NOT_EXIST )
+    {
+        $retval['exists'] = false;
+    }
+    
+    return $retval;
+}
+
+/*
  * Attempt to register an account given details from the input form.
  *
  * @returns [ valid=true|false
@@ -56,17 +72,17 @@ if ( isset( $_POST['method'] ) )
  */
 function registerAccount( $email, $displayName, $password, $confirmPassword )
 {
-    require( PHP_INC_PATH . 'user/class-user-auth.php' );
-    require( PHP_INC_PATH . 'class-input-validation.php' );
+    require_once( PHP_INC_PATH . 'class-input-validation.php' );
     
-    $userAuth = new UserAuth();
-    $accountStatus = UserAuth::ACCOUNT_DOES_NOT_EXIST;
+    $User = User::instance();
+    $accountStatus = User::ACCOUNT_DOES_NOT_EXIST;
     $retval = array (
-        'valid'             => true,
-        'invalidAttributes' => array(),
-        'accountExists'     => false,
-        'accountDeleted'    => false,
-        'userID'            => false
+        'valid'              => true,
+        'invalidAttributes'  => array(),
+        'accountExists'      => false,
+        'accountDeleted'     => false,
+        'accountNotVerified' => false,
+        'userID'             => false
     );
     
     // Check if Email is valid.
@@ -79,17 +95,22 @@ function registerAccount( $email, $displayName, $password, $confirmPassword )
     // Check if email is already used or the account was recently deleted.
     if ( $retval['valid'] )
     {
-        $accountStatus = $userAuth->getAccountStatus( $email );
+        $accountStatus = $User->getAccountStatus( $email );
         
-        if ( $accountStatus === UserAuth::ACCOUNT_EXISTS )
+        if ( $accountStatus === User::ACCOUNT_EXISTS )
         {
             $retval['valid'] = false;
             $retval['accountExists'] = true;
         }
-        else if ( $accountStatus === UserAuth::ACCOUNT_DELETED )
+        else if ( $accountStatus === User::ACCOUNT_DELETED )
         {
             $retval['valid'] = false;
             $retval['accountDeleted'] = true;
+        }
+        else if ( $accountStatus === User::ACCOUNT_NOT_VERIFIED )
+        {
+            $retval['valid'] = false;
+            $retval['accountNotVerified'] = true;
         }
     }
     
@@ -117,7 +138,7 @@ function registerAccount( $email, $displayName, $password, $confirmPassword )
     // Create the User account if all inputs are valid.
     if ( $retval['valid'])
     {
-        $retval['valid'] = $userAuth->register( $email, $displayName, $password );
+        $retval['valid'] = $User->register( $email, $displayName, $password );
     }
     
     return $retval;

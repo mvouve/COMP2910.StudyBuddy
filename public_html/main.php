@@ -5,7 +5,7 @@
         <link rel="stylesheet" type="text/css" href="css/jquery.slidepanel.css">
     ');
 ?>
-<?php renderPagelet( 'header.php', array( '{{customHeadTags}}' => '' ) ); ?>
+<?php renderPagelet( 'header.php', array( '{{customHeadTags}}' => $sliderHeader ) ); ?>
 
 <!--doctype html>
 <html>

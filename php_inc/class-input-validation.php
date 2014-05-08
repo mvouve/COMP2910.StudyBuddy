@@ -59,7 +59,7 @@ class InputValidation
         //check if email matches regular expression
         foreach ( $emailRegex as $regex )
         {
-            if ( preg_match_all( $regex, $email ) )
+            if ( preg_match_all( $regex, $email ) > 0 )
             {
                 return true;
             }
