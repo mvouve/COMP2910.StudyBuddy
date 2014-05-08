@@ -6,8 +6,8 @@
                         <li><a href='#'>Create Meetings</a></li>
                         <li><br></li>
                         <li><a href='#'>My Courses</a></li>
-                        <li><a href='account-setting.php'>Account Settings</a></li>
-                        <li><a href='login.php?logout=true'>Logout</a></li>
+                        <li><a href='account-setting.php' rel='external'>Account Settings</a></li>
+                        <li><a href='login.php?logout=true' rel='external'>Logout</a></li>
                     </ul>
                 </div>
             </div>
