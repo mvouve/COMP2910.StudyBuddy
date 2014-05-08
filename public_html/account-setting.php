@@ -96,7 +96,7 @@
             });
 
             $('#update-name').click(function () {
-                alert('updating name');
+                alert('starting updating name');
                 var updateNameForm = $("#update-name").serializeArray();
 
                 $.ajax
@@ -106,11 +106,31 @@
                     data: updateNameForm,
                     datatype: 'json',
                     success: function (json) {
-                        if (json.success == true) {
+                        if (json.success == true) { 
                             nameChangeSuccess();
                         }
                     },
                     error: errorMessage()
+                });
+            });
+
+            $('#deactivate-account').click(function () {
+                alert('account deactivation button pressed');
+                var deactivateAccountForm = $("#deactivate-account").serializeArray();
+
+                $.ajax
+                ({
+                    type: "POST",
+                    url: <?php echo '\'' . AJAX_URL . '/ajax/user/auth.php\''; ?>,
+                    data: deactivateAccountForm,
+                    datatype: 'json',
+                    success: function (json) {
+                        if (json.deleted == true)
+                        {
+                            alert('Study Buddy account deactivated.');
+                            redirectToMain();
+                        },
+                    error: errorMessage();
                 });
             });
 
@@ -124,6 +144,11 @@
 
             function nameChangeSuccess() {
                 $('#name-change-succcess').show();
+            }
+
+            function redirectToMain()
+            {
+                window.location.assign("main.php");
             }
         </script>
 	</body>
