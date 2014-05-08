@@ -18,23 +18,19 @@
 					<!-- should do an ajax request checking for correct input, if it is, go to next page -->	
 				</form>
                 <br>
-                <input type="button" value="Register" onclick="registerClick()">
+                <a href="register.php">
+                    <input type="button" value="Register">
+                </a>
                 <br>
-			    <input type="button" value="Forgot Your Password?" onclick="recoveryClick()">
+                <a href="recovery-request.php">
+			        <input type="button" value="Forgot Your Password?">
+                </a>
 			</div>
             
 			<div data-role="footer">
 			</div>
 		</div>
 	<script>
-    function registerClick()
-    {
-        window.location.assign("register.php");
-    }
-    function recoveryClick()
-    {
-        window.location.assign("recovery-request.php");
-    }
 	function onLogin(result)
 	{
 		if( result.valid )
