@@ -110,6 +110,13 @@
             // Note the change from $().click to $().on( 'click tap', function( e ) {} );
             $("#register-submit").on( 'click tap', function (e) {
                 // Use e.preventDefault() to stop page redirection!
+
+                //sebastians button fix start
+                var btn = document.getElementById('#register-submit');
+                btn.click();
+                btn.disabled = true;
+                //sebastians button fix end
+
                 e.preventDefault();
                 if( !registerClicked )
                 {
