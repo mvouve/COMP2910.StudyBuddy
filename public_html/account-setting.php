@@ -125,7 +125,7 @@
                 $.ajax
                 ({
                     type: "POST",
-                    url: <?php echo '\'' . AJAX_URL . '/ajax/user/auth.php\''; ?>,
+                    url: <?php echo '\'' . AJAX_URL . 'user/auth.php\''; ?>,
                     data: deactivateAccountForm,
                     datatype: 'json',
                     success: function (json) {
