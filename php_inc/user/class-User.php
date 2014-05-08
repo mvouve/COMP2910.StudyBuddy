@@ -363,6 +363,43 @@ class User
      */
     public function giveNewVerificationString( $email )
     {
+        global $db;
+        $success = FALSE;
+
+        //create a new verification string
+
+        $newVString = generateVerificationString();
+
+        //update USER_TABLE with new verificationString
+        $sql = 'UPDATE ' . User::USER_TABLE . ' 
+                SET verificationString=:newVString
+                WHERE email=:email
+                ;';
+
+        //prepare the sql statement for execution
+        $sql = $db->prepare( $sql );
+
+        //bind the parameter to the variable name
+        $sql->bindParam( ':newVString', $verificationString );
+
+        //update verificationTime in USER_TABLE to CURRENT_TIMESTAMP
+        $sql = 'UPDATE ' . User::USER_TABLE . ' 
+                SET verificationTime=:CURRENT_TIMESTAMP
+                WHERE email=:email
+                ;';
+
+        //prepare the sql statement for execution
+        $sql = $db->prepare( $sql );
+
+        //bind the parameter to the variable name
+        $sql->bindParam( ':CURRENT_TIMESTAMP', $verificationTime );
+
+        //send e-mail
+        $success = emailVerificationString($email, $newVString);
+
+        //return true or false for success
+        return $success;
+        
     }
     
     /** Sebastian
@@ -371,6 +408,7 @@ class User
      */
     public function emailVerificationString( $email, $verificationString )
     {
+        //CODE GOES HERE
     }
     
     /*
