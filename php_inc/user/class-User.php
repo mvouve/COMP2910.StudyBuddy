@@ -309,6 +309,9 @@ class User
 		return $success;
 	}
 	
+    /*
+     * Get a users recent login attempts.
+     */
 	private function getRecentLoginAttempts( $email )
 	{
 		global $db;
@@ -391,6 +394,9 @@ class User
 		return sha1(microtime(true).mt_rand(10000,90000));
 	}
 	
+    /*
+     * Start the session.
+     */
 	private function startSession()
 	{
 		ini_set('session.use_only_cookies', 1);
@@ -407,4 +413,53 @@ class User
 		session_start();
 		session_regenerate_id();
 	}
+    
+    /*
+     * Store a User Token.
+     */
+    private function storeUserToken( $email )
+    {
+        global $db;
+        
+        $token = substr( $this->generateVerificationString(), 0, 32 );
+        
+        $sql = 'INSERT INTO ' . User::USER_TOKEN_TABLE . ' 
+                    (email, token)
+                VALUES
+                    (:email, :token)
+                ;';
+        $sql = $db->prepare( $sql );
+        $sql->bindParam( ':email', $email );
+        $sql->bindParam( ':token', $token );
+        
+        $sql->execute();
+        
+        return $token;
+    }
+    
+    /*
+     * Check if the given token is in use by a user.
+     */
+    private function isTokenValid( $email, $token )
+    {
+        global $db;
+        
+        $sql = 'SELECT email
+                FROM ' . User::USER_TOKEN_TABLE . ' 
+                WHERE email=:email
+                    AND token=:token
+                ;';
+                
+        $sql = $db->prepare( $sql );
+        $sql->bindParam( ':email', $email );
+        $sql->bindParam( ':token', $token );
+        $sql->execute();
+        
+        if ( $sql->fetch() != false )
+        {
+            return true;
+        }
+        
+        return false;
+    }
 }
