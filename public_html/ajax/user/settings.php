@@ -2,7 +2,7 @@
 $retval = array('success' => false );
 
 //Only do something if a method is set.
-if ( isset( $_POST['method']) )
+if ( isset( $_POST['method'] ) )
 {
 	// Update name Function.
 	if( $_POST['method'] == 'update-display-name' )
@@ -38,6 +38,8 @@ function updateDisplayName( $email, $displayName )
 	{
 		$retval = array( 'success' => true );
 	}
+	
+	return $retval;
 }
 
 /*
@@ -52,4 +54,6 @@ function updatePassword( $email, $oldPassword, $newPassword, $confirmPassword )
 	{
 		$retval = array( 'success' => true );
 	}
+	
+	return $retval;
 }
