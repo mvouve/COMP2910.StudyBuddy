@@ -39,9 +39,15 @@ if ( isset( $_POST['method'] ) )
 									$_POST['confirm-password']
 									);
 	}
+	// Verify Account
 	else if ( $_POST['method'] == 'verify' )
 	{
 		$retval = verify( $_POST['verification-code'] );
+	}
+	//Resend verification email
+	else if ( $_POST['method'] == 'resend_verification' )
+	{
+		$retval = resend_verification( $_POST['email'] );
 	}
 	
 	echo json_encode( $retval );
@@ -162,7 +168,7 @@ function registerAccount( $email, $displayName, $password, $confirmPassword )
 		
 		if ($retval['valid'] != false )
 		{
-			//$retval['emailSent'] = $User->emailVerificationString( $reval['valid'] );
+			$retval['emailSent'] = $User->emailVerificationString( $reval['valid'] );
 		}
     }
     
@@ -215,4 +221,10 @@ function verify( $vCode )
 	}
 	
 	return $retval;
+}
+
+function resend_verification( $email )
+{
+	$user = User::instance();
+	
 }
