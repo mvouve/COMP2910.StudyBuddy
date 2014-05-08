@@ -129,8 +129,9 @@
                         {
                             alert('Study Buddy account deactivated.');
                             redirectToMain();
-                        },
-                    error: errorMessage();
+                        }
+						},
+                    error: errorMessage()
                 });
             });
 
