@@ -1,7 +1,7 @@
 <?php
-define( 'APP_PATH', realpath( dirname( __FILE__ ) . '..\\..' ) . '\\' );
-define( 'PHP_INC_PATH', APP_PATH . 'php_inc\\' );
-define( 'WWW_PATH', APP_PATH . 'public_html\\' );
+define( 'APP_PATH', realpath( dirname( __FILE__ ) ) . DIRECTORY_SEPARATOR .'..' . DIRECTORY_SEPARATOR );
+define( 'PHP_INC_PATH', APP_PATH . 'php_inc' . DIRECTORY_SEPARATOR );
+define( 'WWW_PATH', APP_PATH . 'public_html' . DIRECTORY_SEPARATOR );
 
 // Setup and define the AJAX URL
 $ajaxPath = 'http://';
