@@ -12,20 +12,33 @@
                     <a href="http://bcit.ca" data-role="button">bcit.ca</a>
                     <a href="http://learn.bcit.ca" data-role="button">learn.bcit.ca</a>
                 </div>
-
-
-
                 </br>
                 <div data-role="Verification">
-                    <form id="name-change" name="name-change" method="POST">
-                        <label for="display-name">Please enter your verification code:</label>
+                    <form id="verification-form" name="verification" method="POST">
+                        <label for="verifcation">Please enter your verification code:</label>
                         <input type="text" name="display-name" id="display-name">
-                        <input id="update-name" type="button" value="Submit">
-                        <input type="hidden" name="method" value="update-display-name" />
+
+                        <input id="verification-submit" type="button" value="Verify">
+                        <input type="hidden" name="verification-submit" value="verification-submit" />
                     </form>
-                </div>
-                                
+                </div>             
 			</div>
 		</div>
+        <script>
+             $('#verification-submit').click(function () {
+                var verificationCode = $("#verification-form");
+                $.ajax({
+                    type: "POST",
+                    url: "/ajax/user/settings.php",
+                    data: verificationCode,
+                    error: alertTest,
+                    datatype: 'json'
+                });
+            });
+
+            function alertTest(data) {
+                alert('Submitted!');
+            }
+        </script>
 	</body>
 </html>

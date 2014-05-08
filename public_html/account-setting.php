@@ -93,9 +93,6 @@
             function onPasswordChange(data) {
                 alert('HI!');
             }
-
-
-
         </script>
 	</body>
 </html>
