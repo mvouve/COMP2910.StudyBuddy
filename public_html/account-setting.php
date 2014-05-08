@@ -87,7 +87,7 @@
                 var passwordForm = $("#update-password").serializeArray();
                 $.ajax({
                     type: "POST",
-                    url: "/ajax/user/settings.php",
+                    url: <?php echo '\'' . AJAX_URL . 'user/settings.php\''; ?>,
                     data: passwordForm,
                     error: onPasswordChange,
                     datatype: 'json'
@@ -102,7 +102,7 @@
                 $.ajax
                 ({
                     type: "POST",
-                    url: "/ajax/user/settings.php",
+                    url: <?php echo '\'' . AJAX_URL . 'user/settings.php\''; ?>,
                     data: updateNameForm,
                     datatype: 'json',
                     success: function (json) {
