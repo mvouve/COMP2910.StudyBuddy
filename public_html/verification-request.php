@@ -4,7 +4,7 @@
 	<body>
 		<div data-role="page" data-theme="a">
             <?php renderPagelet( 'banner.php', array( '{{title}}' => 'Study Buddy' ) ); ?>
-			<div class="contenta center" data-role="content">
+			<div class="center" data-role="content">
 				<img src="images/mail.png" alt="Check">
 				<br>Your verification email has been sent. Please check your e-mail.
                 <div data-role="controlgroup" data-type="horizontal">
