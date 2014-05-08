@@ -37,6 +37,15 @@ class User
 		$this->startSession();
 	}
 
+    /*
+     * Log the user in
+     *
+     * @param $email the supplied email
+     * @param $password the supplied password
+     * @param $rememberMe whether to remember the user or not.
+     * 
+     * @return true on success, false on failure
+     */
 	public function login( $email, $password, $rememberMe)
 	{
 		if ( $this->checkCredentials( $email, $password ) )
@@ -49,6 +58,9 @@ class User
                 // Store a unique id for session id
                 if ( $rememberMe )
                 {
+                    $token = $this->storeUserToken( $email );
+                    setcookie('sb_id', $email, time()+3600*24*365, '/');
+                    setcookie('sb_token', $token, time()+3600*24*365, '/');
                 }
                 
                 return true;
@@ -58,17 +70,50 @@ class User
         return false;
 	}
 	
+    /*
+     * Log the user out.
+     */
     public function logout()
 	{
         $_SESSION = array();
         session_destroy();
+        
+        // Unset token cookies!
+        if ( isset( $_COOKIE['sb_id'] ) )
+        {
+            setcookie('sb_id', $email, time()-3600, '/');
+            unset( $_COOKIE['sb_id'] );
+        }
+        
+        if ( isset( $_COOKIE['sb_token'] ) )
+        {
+            setcookie('sb_token', $email, time()-3600, '/');
+            unset( $_COOKIE['sb_token'] );
+        }
 	}
     
+    /*
+     * Check if the user is currently logged in.
+     */
     public function isLoggedIn()
     {
+        // Check if the user is explicitly logged in.
         if ( isset( $_SESSION['valid'] ) && $_SESSION['valid'] )
         {
             return true;
+        }
+        else
+        {
+            // Check if the user has a valid token in their cookies
+            if ( isset( $_COOKIE['sb_id'] ) && isset( $_COOKIE['sb_token'] ) )
+            {
+                if ( $this->isTokenValid( $_COOKIE['sb_id'], $_COOKIE['sb_token'] ) )
+                {
+                    $_SESSION['valid'] = 1;
+                    $_SESSION['email'] = $_COOKIE['sb_id'];
+                    return true;
+                }
+            }
         }
         
         return false;
@@ -438,7 +483,7 @@ class User
     }
     
     /*
-     * Check if the given token is in use by a user.
+     * Check if the given token is in use by a user, and will let the user log in.
      */
     private function isTokenValid( $email, $token )
     {
