@@ -1,14 +1,10 @@
 <!--Study Buddy - Account Registration-->
 <?php require_once( 'config.php' ); ?>
-<?php renderPagelet( 'header.php', array( '{{customHeadTags}}' => '<style>.validated-field
- {
-     position: relative;
- }
- </style>' ) ); ?>
+<?php renderPagelet( 'header.php', array( '{{customHeadTags}}' => '' ) ); ?>
     <body>
         <div data-role="page" data-theme="a">
             <?php renderPagelet( 'banner.php', array( '{{title}}' => 'Register Account' ) ); ?>
-			<div class="contenta" data-role="content" id="register">
+			<div data-role="content" id="register">
 				<form id="register-form" name="register-form" method="POST">
 					<label for="email">Email: <span id="invalid-email-span" style="color: #FF0000">Account already exists!</span></label>
                     <div class="ui-icon-delete ui-btn-icon-right validated-field" id="email-div">

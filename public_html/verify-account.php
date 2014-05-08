@@ -4,7 +4,7 @@
 	<body>
 		<div data-role="page" data-theme="a">
             <?php renderPagelet( 'banner.php', array( '{{title}}' => 'Study Buddy' ) ); ?>
-			<div class="contenta" data-role="content">
+			<div data-role="content">
 				<form name="accountverify-" method="POST">
                         <label for="verify">Input Verification Code:</label>
                         <input type="text" name="verify" id="verify">

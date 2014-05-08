@@ -3,7 +3,7 @@
     <body>
         <div data-role="page" data-theme="a">
             <?php renderPagelet( 'banner.php', array( '{{title}}' => 'Password Recovery' ) ); ?>
-            <div data-role="content" class="contenta center">
+            <div data-role="content" class="center">
                 <p>If you have forgotten your password, you can request an email to reset your password by entering your email here.</p>
 			    <form>
                     <label for="email">Email:</label>
