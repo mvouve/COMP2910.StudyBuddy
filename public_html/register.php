@@ -24,7 +24,7 @@
         <script>
             //used to ensure a user-entered email is a valid BCIT e-mail
             function validateEmail() {
-                var emailRegex = /^[0-9a-z_.]@my\\.bcit\\.ca$/gi;
+                var emailRegex = /^[0-9a-z_.]+@my\.bcit\.ca$/gi;
                 var emailLabel = document.getElementById("emailLabel");
                 var validEmail = document.getElementById("email").value.match(emailRegex);
                 if (validEmail == null || validEmail.length != 1) {
