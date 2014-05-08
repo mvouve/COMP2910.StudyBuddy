@@ -52,8 +52,9 @@ class InputValidation
     {
         // define regular expression
         $emailRegex = array(
-                            '/(@my.bcit.ca$)/',
-                            '/(@bcit.ca$)/'
+                            '/(@my.bcit.ca$)/i',
+                            '/(@bcit.ca$)/i',
+                            '/^[a][0-9]{8}@(mybcit.ca|learn.bcit.ca)$/i',
                             );
         
         //check if email matches regular expression
