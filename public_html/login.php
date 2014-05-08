@@ -42,13 +42,13 @@
 		}
 		else
 		{
-			document.getElementById(error).style.display = 'block';
+			document.getElementById( 'error' ).style.display = 'block';
 		}
 	}
 
     function showError()
     {
-        document.getElementById(error).style.display = 'block';
+        document.getElementById( 'error' ).style.display = 'block';
     }
 	
 	$("#login-submit").on( 'click tap', function (e) 
