@@ -39,16 +39,30 @@
 
 
 					    <label for="confirmPassword">Confirm New Password:</label>
-					    <input type="password" name="confirm_password" id="confirmPassword" required><br/>
+					    <input type="password" name="confirm_password" id="confirmPassword" onblur="validatePassword(newPassword,confirmPassword)" required><br/>
 
 
                         <input id="passwordUpdate" type="submit" value="Password Update">
                         <input type="hidden" name="method" value="passwordUpdate" />
 				    </form>
+                    <div id="mismatch" style="display:none">
+                        <p>Please check your new passwords</p>
+                    </div>
                 </div>
 			</div>
 			<div data-role="footer" id="footer">
 			</div>
 		</div>
+        <script>
+            function validatePassword(newPassord, confirmPassword) {
+                document.getElementById('mismatch').display = "none";
+                var match1 = document.getElementById('newPassword').value;
+                var match2 = document.getElementById('confirmPassword').value;
+                if (match1 != match2) {
+                    document.getElementById('mismatch').display ="block";
+                }
+                return false;
+            }
+        </script>
 	</body>
 </html>
