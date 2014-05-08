@@ -48,7 +48,6 @@
             //used to ensure a user-entered display name is not null or empty
             function validateDisplayName() {
                 var displayNameRegex = /^[0-9A-Za-z-]{5,32}$/g;
-                var displayNameLabel = document.getElementById("display-name-label");
                 var displayName = document.getElementById("display-name").value.match(displayNameRegex);
                 if (displayName == null || displayName.length != 1) {
                     $("#display-name-div").removeClass('ui-icon-check').addClass('ui-icon-delete');
@@ -60,8 +59,6 @@
 
             function validatePassword() {
                 var passwordRegex = /^.+$/g;
-                var passwordLabel = document.getElementById("password-label");
-                var confirmLabel = document.getElementById("confirm-label");
                 var password = document.getElementById("password").value.match(passwordRegex);
                 var confirm = document.getElementById("confirm").value;
                 if (password == null || password.length != 1) {

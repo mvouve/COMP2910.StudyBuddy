@@ -23,7 +23,9 @@
                     <h3>Change your display name</h3>
                     <form id="name-change" name="name-change" method="POST">
                         <label for="display-name">New Name:</label>
-                        <input type="text" name="display-name" id="display-name">
+                        <div class="ui-icon-delete ui-btn-icon-right validated-field" id="display-name-div">
+                            <input type="text" name="display-name" id="display-name">
+                        </div>
                         <input id="update-name" type="button" value="Update Name">
                         <input type="hidden" name="method" value="update-display-name" />
                     </form>
@@ -74,19 +76,9 @@
 			</div>
 		</div>
         <script>
-            $('#confirm-password').blur(function () {
-                $('#update-password').attr('disabled', 'disabled');
-                $('#mismatch').hide();
-                var match1 = $('#new-password').val();
-                var match2 = $('#confirm-password').val();
-                if (match1 != match2) {
-                    $('#mismatch').show();
-                    $('#update-password').attr('disabled');
-                }
-                return false;
-            });
-
-            $('#update-password').click(function () {
+            $('#update-password').attr('disabled');
+            $('#update-name').attr('disabled');
+            $('#update-password').on( 'click tap', function () {
                 alert('belly');
                 var passwordForm = $("#update-password").serializeArray();
                 $.ajax({
@@ -99,7 +91,7 @@
                 alert('hello');
             });
 
-            $('#update-name').click(function () {
+            $('#update-name').on( 'click tap', function () {
                 alert('starting updating name');
                 var updateNameForm = $("#update-name").serializeArray();
 
@@ -138,7 +130,20 @@
                     error: errorMessage()
                 });
             });
-            
+
+            function validateDisplayName() {
+                var displayNameRegex = /^[0-9A-Za-z-]{5,32}$/g;
+                var displayName = document.getElementById("display-name").value.match(displayNameRegex);
+                if (displayName == null || displayName.length != 1) {
+                    $("#display-name-div").removeClass('ui-icon-check').addClass('ui-icon-delete');
+                    $('#update-name').attr('disabled');
+                    return false;
+                }
+                $("#display-name-div").removeClass('ui-icon-delete').addClass('ui-icon-check');
+                $('#update-name').removeAttr('disabled');
+                return true;
+            }
+            $("#display-name").keyup( function(e){validateDisplayName();} );
 
             function validatePassword() {
                 var passwordRegex = /^.+$/g;
@@ -146,18 +151,21 @@
                 var confirm = document.getElementById("confirm-password").value;
                 if (password == null || password.length != 1) {
                     $("#password-div").removeClass('ui-icon-check').addClass('ui-icon-delete');
+                    $("#confirm-div").removeClass('ui-icon-check').addClass('ui-icon-delete');
+                    $('#update-password').attr('disabled');
                     return false;
                 }
                 $("#password-div").removeClass('ui-icon-delete').addClass('ui-icon-check');
                 if ( password[0] != confirm ) {
                     $("#confirm-div").removeClass('ui-icon-check').addClass('ui-icon-delete');
+                    $('#update-password').attr('disabled');
                     return false;
                 }
                 $("#confirm-div").removeClass('ui-icon-delete').addClass('ui-icon-check');
+                $('#update-password').removeAttr('disabled');
                 return true;
 
             }
-
             $("#new-password").keyup( function(e){validatePassword();} );
             $("#confirm-password").keyup( function(e){validatePassword();} );
 
