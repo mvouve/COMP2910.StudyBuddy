@@ -5,6 +5,9 @@
 		<div data-role="page" data-theme="a">
             <?php renderPagelet( 'banner.php', array( '{{title}}' => 'Login' ) ); ?>
 			<div class="contenta" data-role="content" id="login">
+				<div id="error" style="display:none">
+					<p>Login failed. Please try again.</p>
+				</div>
 				<form name="login-form" id="login-form" method="POST">
 					<input type="text" name="email" id="email" placeholder="email">
 					<input type="password" name="password" id="password" placeholder="password">
@@ -19,9 +22,7 @@
                 <br>
 			    <input type="button" value="Forgot Your Password?" onclick="recoveryClick()">
 			</div>
-            <div id="error" style="display:none">
-                <p>Login failed. Please try again.</p>
-            </div>
+            
 			<div data-role="footer">
 			</div>
 		</div>
