@@ -447,6 +447,35 @@ class User
         mail($email, $subject, $message);
     }
     
+	/*
+	 * Get a User ID from their email
+	 *
+	 * @param $email the users email
+	 *
+	 * @return the user ID, or false on failure.
+	 */
+	public function getUserID( $email )
+	{
+		global $db;
+		
+		$sql = 'SELECT ID
+				FROM ' . User::USER_TABLE . ' 
+				WHERE email=:email
+				;';
+		$sql = $db->prepare( $sql );
+		$sql->bindParam( ':email', $email );
+		
+		if ( !$sql->execute() )
+		{
+			return false;
+		}
+		
+		$id = $sql->fetch( PDO::FETCH_ASSOC );
+		$id = $id['ID'];
+		
+		return $id;
+	}
+	
     /*
      * Get a users recent login attempts.
      */

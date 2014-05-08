@@ -10,7 +10,7 @@
             <?php renderPagelet( 'banner.php', array( '{{title}}' => 'Register Account' ) ); ?>
 			<div class="contenta" data-role="content" id="register">
 				<form id="register-form" name="register-form" method="POST">
-					<label for="email">Email:</label>
+					<label for="email">Email: <span id="invalid-email-span" style="color: #FF0000">Account already exists!</span></label>
                     <div class="ui-icon-delete ui-btn-icon-right validated-field" id="email-div">
 					<input type="text" name="email" id="email"></div>
 
@@ -36,6 +36,7 @@
 			</div>
 		</div>
         <script>
+            $('#invalid-email-span').hide();
             //used to ensure a user-entered email is a valid BCIT e-mail
             function validateEmail() {
                 var emailRegex = /^(([0-9a-z_.]+@((my\.bcit\.ca)|(bcit.ca)))|(a\d{8}@((mybcit\.ca)|(learn\.bcit\.ca))))$/gi;
@@ -84,19 +85,48 @@
             function onRegister(result) {
                 alert(JSON.stringify(result, null, 4));
 
+                if( result.valid != false )
+                {
+                    window.location.assign('verification-request.php?id=' + result.valid);
+                }
+                else if( result.accountExists )
+                {
+                    $('#invalid-email-span').show();
+                }
+                else if( result.accountNotVerified )
+                {
+                    window.location.assign('verification-request.php?id=' + result.userID);
+                }
+                else if( result.accountDeleted )
+                {
+                    window.location.assign('reactivate-account.php?id=' + result.userID);
+                }
+
                 // Reset the Submit button to inactive after being pressed
                 $.mobile.activePage.find('.ui-btn-active').removeClass('ui-btn-active ui-focus');
             }
             
-            $("#email").keyup( function(e){validateEmail();} );
+            $("#email").keyup( function(e){
+                $('#invalid-email-span').hide();
+                validateEmail();} );
             $("#display-name").keyup( function(e){validateDisplayName();} );
             $("#password").keyup( function(e){validatePassword();} );
             $("#confirm").keyup( function(e){validatePassword();} );
-
+            
+            var registerClicked = false;
             // Note the change from $().click to $().on( 'click tap', function( e ) {} );
             $("#register-submit").on( 'click tap', function (e) {
                 // Use e.preventDefault() to stop page redirection!
                 e.preventDefault();
+                if( !registerClicked )
+                {
+                    registerClicked = true;
+                }
+                else
+                {
+                    return;
+                }
+
                 if( !validateEmail() )
                 {
                     alert("Invalid Email!");
@@ -114,11 +144,11 @@
                 }
                 var formData = $("#register-form").serializeArray();
 
-                $.post( <?php echo '\''.AJAX_URL . 'user/auth.php\''; ?>,
+                $.post( <?php echo '\'' . AJAX_URL . 'user/auth.php\''; ?>,
                         formData,
                         onRegister,
                         "json");
-
+                registerClicked = false;
             });
         </script>
 	</body>
