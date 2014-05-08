@@ -10,11 +10,11 @@
 					<input type="text" name="email" id="email"><br/>
 					<label for="displayName" id="displayNameLabel">Display Name:</label>
 					<input type="text" name="displayName" id="displayName"><br/>
-					<label for="password">Password:</label>
+					<label for="password" id="passwordLabel">Password:</label>
 					<input type="password" name="password" id="password"><br/>
-					<label for="confirm">Confirm Password:</label>
+					<label for="confirm" id="confirmLabel">Confirm Password:</label>
 					<input type="password" name="confirm_password" id="confirm"><br/>
-                    <input id="register-submit" type="button" value="Register">
+                    <input id="register-submit" type="submit" value="Register">
                     <input type="hidden" name="method" value="register" />
 				</form>
 			</div>
@@ -48,6 +48,26 @@
                 return true;
             }
 
+            function validatePassword() {
+                var passwordRegex = /^.+$/g;
+                var passwordLabel = document.getElementById("passwordLabel");
+                var confirmLabel = document.getElementById("confirmLabel");
+                var password = document.getElementById("password").value.match(passwordRegex);
+                var confirm = document.getElementById("confirm").value;
+                if (password == null || password.length != 1) {
+                    passwordLabel.style.color="#FF0000";
+                    return false;
+                }
+                passwordLabel.style.color="#00FF00";
+                if ( password[0] != confirm ) {
+                    confirmLabel.style.color="#FF0000";
+                    return false;
+                }
+                confirmLabel.style.color="#00FF00";
+                return true;
+
+            }
+
             function onRegister(result) {
                 alert(JSON.stringify(result, null, 4));
 
@@ -57,10 +77,14 @@
             
             $("#email").keyup( function(e){validateEmail();} );
             $("#displayName").keyup( function(e){validateDisplayName();} );
+            $("#password").keyup( function(e){validatePassword();} );
+            $("#confirm").keyup( function(e){validatePassword();} );
 
             // Note the change from $().click to $().on( 'click tap', function( e ) {} );
             $("#register-submit").on( 'click tap', function (e) {
-                if( !validateEmail() || !validateDisplayName() )
+                if( !validateEmail()
+                 || !validateDisplayName()
+                 || !validatePasword() )
                 {
                     alert("Invalid email or displayName");
                     return;
