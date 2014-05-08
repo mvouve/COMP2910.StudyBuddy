@@ -31,6 +31,13 @@ if ( isset( $_POST['method'] ) )
 	{
 		$retval = deactivate( $email, $password );
 	}
+	else if( $_POST['method'] == 'password-recovery' )
+	{
+		$retval = passwordRecovery( $_POST['verification-string'],
+									$_POST['new-password'],
+									$_POST['confirm-password']
+									);
+	}
 	
 	echo json_encode( $retval );
 }
@@ -165,6 +172,21 @@ function deactivate( $email, $password )
 	if ( $user->checkCredentials( $email, $password ) )
 	{
 		$retval['deleted'] = $user->deleteAccount( $email );
+	}
+	
+	return $retval;
+}
+
+function passwordRecovery( $verificationString, $newPassword, $confirmPassword );
+{
+	$user = User::instance();
+	$retval = array( 'success' => false );
+	
+	if ( $user->passwordRecovery( $verificationString, 
+								  $newPassword, 
+								  $confirmPassword ) )
+	{
+		$retval['success'] = true;
 	}
 	
 	return $retval;
