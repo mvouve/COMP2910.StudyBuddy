@@ -24,7 +24,7 @@
         <script>
             //used to ensure a user-entered email is a valid BCIT e-mail
             function validateEmail() {
-                var emailRegex = /^[0-9a-z_.]+@my\.bcit\.ca$/gi;
+                var emailRegex = /^(([0-9a-z_.]+@((my\.bcit\.ca)|(bcit.ca)))|(a\d{8}@((mybcit\.ca)|(learn\.bcit\.ca))))$/gi;
                 var emailLabel = document.getElementById("emailLabel");
                 var validEmail = document.getElementById("email").value.match(emailRegex);
                 if (validEmail == null || validEmail.length != 1) {
@@ -82,11 +82,21 @@
 
             // Note the change from $().click to $().on( 'click tap', function( e ) {} );
             $("#register-submit").on( 'click tap', function (e) {
-                if( !validateEmail()
-                 || !validateDisplayName()
-                 || !validatePasword() )
+                // Use e.preventDefault() to stop page redirection!
+                e.preventDefault();
+                if( !validateEmail() )
                 {
-                    alert("Invalid email or displayName");
+                    alert("Invalid email!");
+                    return;
+                }
+                if( !validateDisplayName() )
+                {
+                    alert("Invalid Display Name!");
+                    return;
+                }
+                if( !validatePassword() )
+                {
+                    alert("Invalid Password pair!");
                     return;
                 }
                 var formData = $("#registerForm").serializeArray();
@@ -96,8 +106,6 @@
                         onRegister,
                         "json");
 
-                // Use e.preventDefault() to stop page redirection!
-                e.preventDefault();
             });
         </script>
 	</body>
