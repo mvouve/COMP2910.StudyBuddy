@@ -14,7 +14,7 @@
             <?php define('HAS_MENU',1);
                   renderPagelet( 'banner.php', array( '{{title}}' => 'Account Settings' ) ); ?>
 
-			<div class="contenta" data-role="content" data-theme="b">
+			<div class="contenta" data-role="content" data-theme="a">
                 <div class="center contenta">
                     <p><?php echo $email; ?></p>
                 </div>
