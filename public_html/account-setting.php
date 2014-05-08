@@ -51,6 +51,15 @@
                         <p>Please check your new passwords</p>
                     </div>
                 </div>
+                <div data-role="collapsible">
+                    <h3>Deactivate your account</h3>
+                    <form id="name-change" name="name-change" method="POST">
+                        <label for="password">Password:</label>
+                        <input type="password" name="password" id="password" required><br/>
+                        <input id="deactivate-account" type="button" value="Deactivate Account">
+                        <input type="hidden" name="method" value="deactivate-account" />
+                    </form>
+                </div>
 			</div>
 			<div data-role="footer" id="footer">
 			</div>
