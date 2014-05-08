@@ -155,6 +155,7 @@ class User
                 
         $sql = $db->prepare( $sql );
         $sql->bindParam( ':email', $email );
+		$sql->execute();
         
         $result = $sql->fetch( PDO::FETCH_ASSOC );
         
@@ -490,26 +491,6 @@ class User
 		$id = $id['ID'];
 		
 		return $id;
-	}
-	
-    /*
-     * Get a users recent login attempts.
-     */
-	private function getRecentLoginAttempts( $email )
-	{
-		global $db;
-		
-		$sql = 'SELECT *
-				FROM ' . $LOGIN_ATTEMPT_TABLE . '
-				WHERE email=:email
-					AND time BETWEEN ( NOW() - INTERVAL 5 MINUTE ) AND NOW()
-				;';
-				
-		$sql = $db->prepare( $sql );
-		$sql->bindParam( ':email', $email );
-		$sql->execute();
-		
-		/* COME BACK TO THIS LATER! */
 	}
 	
 	/*
