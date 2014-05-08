@@ -459,7 +459,7 @@ class User
 					using Study Buddy.<br/><br/>Sincerely,<br/>The Study Buddy Team';
 
         // Use wordwrap() to ensure the message is no longer than 70 columns long (industry standard)
-        $message = wordwrap($message, 70, '\r\n');
+        $message = wordwrap($message, 70, '<br/>');
 
         // Send mail
         mail($email, $subject, $message);
