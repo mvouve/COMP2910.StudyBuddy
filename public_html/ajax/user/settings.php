@@ -33,12 +33,10 @@ if ( isset( $_POST['method'] ) )
 function updateDisplayName( $email, $displayName )
 {
 	$user = User::instance();
-	if ( !$user->isLoggedIn() )
-	{
-		return array( 'success' => false );
-	}
+	$retval = array( 'success' => false );
 	
-	if( $user->updateDisplayName( $email, $displayName ) )
+	
+	if( $user->updateDisplayName( $email, $displayName ) && $user->isLoggedIn() )
 	{
 		$retval = array( 'success' => true );
 	}
@@ -53,12 +51,10 @@ function updateDisplayName( $email, $displayName )
 function updatePassword( $email, $oldPassword, $newPassword, $confirmPassword )
 {
 	$user = User::instance();
-	if ( !$user->isLoggedIn() )
-	{
-		return array( 'success' => false );
-	}
+	$retval = array( 'success' => false );
 	
-	if( $user->updatePassword( $email, $oldPassword, $newPassword, $confirmPassword ) )
+	if( $user->updatePassword( $email, $oldPassword, $newPassword, $confirmPassword ) && $user->isLoggedIn()
+	)
 	{
 		$retval = array( 'success' => true );
 	}
