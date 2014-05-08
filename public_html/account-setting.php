@@ -39,7 +39,7 @@
 
 
 					    <label for="confirmPassword">Confirm New Password:</label>
-					    <input type="password" name="confirm_password" id="confirmPassword" onblur="validatePassword(newPassword,confirmPassword)" required><br/>
+					    <input type="password" name="confirm_password" id="confirmPassword" onblur="validatePassword()" required><br/>
 
 
                         <input id="passwordUpdate" type="submit" value="Password Update">
@@ -54,7 +54,7 @@
 			</div>
 		</div>
         <script>
-            function validatePassword(newPassord, confirmPassword) {
+            function validatePassword() {
                 document.getElementById('mismatch').display = "none";
                 var match1 = document.getElementById('newPassword').value;
                 var match2 = document.getElementById('confirmPassword').value;
