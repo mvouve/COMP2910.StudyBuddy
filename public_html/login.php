@@ -4,7 +4,7 @@
 	<body>
 		<div data-role="page" data-theme="a">
             <?php renderPagelet( 'banner.php', array( '{{title}}' => 'Login' ) ); ?>
-			<div class="contenta" data-role="content" id="login">
+			<div data-role="content" id="login">
 				<div id="error" style="display:none">
 					<p>Login failed. Please try again.</p>
 				</div>
