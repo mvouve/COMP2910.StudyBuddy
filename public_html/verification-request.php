@@ -32,7 +32,7 @@
                 var verificationCode = $("#verification-form").serializeArray();
                 $.ajax({
                     type: "POST",
-                    url: <?php echo '\'' . AJAX_URL . 'user/settings.php\''; ?>,
+                    url: <?php echo '\'' . AJAX_URL . 'user/auth.php\''; ?>,
                     data: verificationCode,
                     success: alertTest,
                     datatype: 'json'

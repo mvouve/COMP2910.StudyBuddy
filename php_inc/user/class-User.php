@@ -357,12 +357,15 @@ class User
 		if ( $user != false )
 		{
 			// User waited too long to verify.
+			/* COME BACK TO IT LATER *
 			if ( time() - $user['verificationTime'] > VERIFICATION_EXPIRATION )
 			{
+				require_once( '/../exceptions/class-expired-verification-string-exception.php' );
 				throw new ExpiredVerificationStringException();
 			}
+			*/
 			// Valid String and Time, user is verified!
-			else
+			//else
 			{
 				$success = $this->setVerified( $user[ 'ID' ] );
 			}

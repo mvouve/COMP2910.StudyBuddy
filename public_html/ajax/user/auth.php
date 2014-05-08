@@ -31,12 +31,17 @@ if ( isset( $_POST['method'] ) )
 	{
 		$retval = deactivate( $email, $password );
 	}
+	// Password Recovery
 	else if( $_POST['method'] == 'password-recovery' )
 	{
 		$retval = passwordRecovery( $_POST['verification-string'],
 									$_POST['new-password'],
 									$_POST['confirm-password']
 									);
+	}
+	else if ( $_POST['method'] == 'verify' )
+	{
+		$retval = verify( $_POST['verification-code'] );
 	}
 	
 	echo json_encode( $retval );
@@ -177,7 +182,7 @@ function deactivate( $email, $password )
 	return $retval;
 }
 
-function passwordRecovery( $verificationString, $newPassword, $confirmPassword );
+function passwordRecovery( $verificationString, $newPassword, $confirmPassword )
 {
 	$user = User::instance();
 	$retval = array( 'success' => false );
@@ -187,6 +192,26 @@ function passwordRecovery( $verificationString, $newPassword, $confirmPassword )
 								  $confirmPassword ) )
 	{
 		$retval['success'] = true;
+	}
+	
+	return $retval;
+}
+
+function verify( $vCode )
+{
+	$user = User::instance();
+	$retval = array( 'valid' => false, 'expired' => false );
+	
+	try
+		{
+		if ( $user->verifyAccount( $vCode ) )
+		{
+			$retval['valid'] = true;
+		}
+	}
+	catch ( Exception $e )
+	{
+		$retval['expired'] = true;
 	}
 	
 	return $retval;
