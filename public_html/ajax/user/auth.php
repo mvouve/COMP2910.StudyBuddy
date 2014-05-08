@@ -7,7 +7,7 @@ $retval = array();
 // Only do something if a 'method' was set.
 if ( isset( $_POST['method'] ) )
 {
-	// DUMMY CHECK_CREDENTIALS METHOD!
+	// Login METHOD!
 	if ( $_POST['method'] == 'login' )
 	{
         $retval = login( $_POST['email'], $_POST['password'], isset( $_POST['remember'] ) );
