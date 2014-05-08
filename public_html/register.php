@@ -6,8 +6,9 @@
             <?php renderPagelet( 'banner.php', array( '{{title}}' => 'Register Account' ) ); ?>
 			<div class="contenta" data-role="content" id="register">
 				<form id="register-form" name="register-form" method="POST">
-					<label for="email" id="email-label">Email:</label>
-					<input type="text" name="email" id="email"><br/>
+					<label for="email">Email:</label>
+                    <div class="" style="position:relative;" id="email-div">
+					<input type="text" name="email" id="email"></div>
 					<label for="display-name" id="display-name-label">Display Name:</label>
 					<input type="text" name="display-name" id="display-name"><br/>
 					<label for="password" id="password-label">Password:</label>
@@ -25,13 +26,12 @@
             //used to ensure a user-entered email is a valid BCIT e-mail
             function validateEmail() {
                 var emailRegex = /^(([0-9a-z_.]+@((my\.bcit\.ca)|(bcit.ca)))|(a\d{8}@((mybcit\.ca)|(learn\.bcit\.ca))))$/gi;
-                var emailLabel = document.getElementById("email-label");
                 var validEmail = document.getElementById("email").value.match(emailRegex);
                 if (validEmail == null || validEmail.length != 1) {
-                    emailLabel.style.color="#FF0000";
+                    $("#email-div").attr('class','ui-icon-delete ui-btn-icon-left');
                     return false;
                 }
-                emailLabel.style.color="#00FF00";
+                $("#email-div").attr('class','ui-icon-check ui-btn-icon-left');
                 return true;
             }
 
