@@ -5,16 +5,26 @@
         <div data-role="page" data-theme="a">
             <?php renderPagelet( 'banner.php', array( '{{title}}' => 'Register Account' ) ); ?>
 			<div class="contenta" data-role="content" id="register">
-				<form id="registerForm" name="registerForm" method="POST">
-					<label for="email" id="emailLabel">Email:</label>
-					<input type="text" name="email" id="email"><br/>
-					<label for="displayName" id="displayNameLabel">Display Name:</label>
-					<input type="text" name="displayName" id="displayName"><br/>
-					<label for="password">Password:</label>
-					<input type="password" name="password" id="password"><br/>
-					<label for="confirm">Confirm Password:</label>
-					<input type="password" name="confirm_password" id="confirm"><br/>
-                    <input id="register-submit" type="button" value="Register">
+				<form id="register-form" name="register-form" method="POST">
+					<label for="email">Email:</label>
+                    <div class="ui-icon-delete ui-btn-icon-right" style="position:relative;" id="email-div">
+					<input type="text" name="email" id="email"></div>
+
+					<label for="display-name" id="display-name-label">Display Name:</label>
+                    <div class="ui-icon-delete ui-btn-icon-right" style="position:relative;" id="display-name-div">
+					    <input type="text" name="display-name" id="display-name">
+                    </div>
+
+                    <label for="password" id="password-label">Password:</label>
+					<div class="ui-icon-delete ui-btn-icon-right" style="position:relative;" id="password-div">
+                        <input type="password" name="password" id="password">
+                    </div>
+
+                    <label for="confirm" id="confirm-label">Confirm Password:</label>
+                    <div class="ui-icon-delete ui-btn-icon-right" style="position:relative;" id="confirm-div">
+					    <input type="password" name="confirm-password" id="confirm">
+                    </div>
+                    <input id="register-submit" type="submit" value="Register">
                     <input type="hidden" name="method" value="register" />
 				</form>
 			</div>
@@ -24,28 +34,47 @@
         <script>
             //used to ensure a user-entered email is a valid BCIT e-mail
             function validateEmail() {
-                var emailRegex = /^[0-9a-z_.]+@my\.bcit\.ca$/gi;
-                var emailLabel = document.getElementById("emailLabel");
+                var emailRegex = /^(([0-9a-z_.]+@((my\.bcit\.ca)|(bcit.ca)))|(a\d{8}@((mybcit\.ca)|(learn\.bcit\.ca))))$/gi;
                 var validEmail = document.getElementById("email").value.match(emailRegex);
                 if (validEmail == null || validEmail.length != 1) {
-                    emailLabel.style.color="#FF0000";
+                    $("#email-div").attr('class','ui-icon-delete ui-btn-icon-right');
                     return false;
                 }
-                emailLabel.style.color="#00FF00";
+                $("#email-div").attr('class','ui-icon-check ui-btn-icon-right');
                 return true;
             }
 
             //used to ensure a user-entered display name is not null or empty
             function validateDisplayName() {
                 var displayNameRegex = /^[0-9A-Za-z-]{5,32}$/g;
-                var displayNameLabel = document.getElementById("displayNameLabel");
-                var displayName = document.getElementById("displayName").value.match(displayNameRegex);
+                var displayNameLabel = document.getElementById("display-name-label");
+                var displayName = document.getElementById("display-name").value.match(displayNameRegex);
                 if (displayName == null || displayName.length != 1) {
-                    displayNameLabel.style.color="#FF0000";
+                    $("#display-name-div").attr('class','ui-icon-delete ui-btn-icon-right');
                     return false;
                 }
-                displayNameLabel.style.color="#00FF00";
+                $("#display-name-div").attr('class','ui-icon-check ui-btn-icon-right');
                 return true;
+            }
+
+            function validatePassword() {
+                var passwordRegex = /^.+$/g;
+                var passwordLabel = document.getElementById("password-label");
+                var confirmLabel = document.getElementById("confirm-label");
+                var password = document.getElementById("password").value.match(passwordRegex);
+                var confirm = document.getElementById("confirm").value;
+                if (password == null || password.length != 1) {
+                    $("#password-div").attr('class','ui-icon-delete ui-btn-icon-right');
+                    return false;
+                }
+                $("#password-div").attr('class','ui-icon-check ui-btn-icon-right');
+                if ( password[0] != confirm ) {
+                    $("#confirm-div").attr('class','ui-icon-delete ui-btn-icon-right');
+                    return false;
+                }
+                $("#confirm-div").attr('class','ui-icon-check ui-btn-icon-right');
+                return true;
+
             }
 
             function onRegister(result) {
@@ -56,24 +85,36 @@
             }
             
             $("#email").keyup( function(e){validateEmail();} );
-            $("#displayName").keyup( function(e){validateDisplayName();} );
+            $("#display-name").keyup( function(e){validateDisplayName();} );
+            $("#password").keyup( function(e){validatePassword();} );
+            $("#confirm").keyup( function(e){validatePassword();} );
 
             // Note the change from $().click to $().on( 'click tap', function( e ) {} );
             $("#register-submit").on( 'click tap', function (e) {
-                if( !validateEmail() || !validateDisplayName() )
+                // Use e.preventDefault() to stop page redirection!
+                e.preventDefault();
+                if( !validateEmail() )
                 {
-                    alert("Invalid email or displayName");
+                    alert("Invalid Email!");
                     return;
                 }
-                var formData = $("#registerForm").serializeArray();
+                if( !validateDisplayName() )
+                {
+                    alert("Invalid Display Name!");
+                    return;
+                }
+                if( !validatePassword() )
+                {
+                    alert("Invalid Password pair!");
+                    return;
+                }
+                var formData = $("#register-form").serializeArray();
 
                 $.post( <?php echo '\''.AJAX_URL . 'user/auth.php\''; ?>,
                         formData,
                         onRegister,
                         "json");
 
-                // Use e.preventDefault() to stop page redirection!
-                e.preventDefault();
             });
         </script>
 	</body>

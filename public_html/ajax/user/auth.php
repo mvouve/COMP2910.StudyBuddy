@@ -13,7 +13,7 @@ if ( isset( $_POST['method'] ) )
         $retval = login( $_POST['email'], $_POST['password'], isset( $_POST['remember'] ) );
 	}
 	// DUMMY EMAIL_EXISTS METHOD!
-	else if ( $_POST['method'] == 'email_exists' )
+	else if ( $_POST['method'] == 'email-exists' )
 	{
         $retval = checkEmail( $_POST['email'] );
 	}
@@ -21,9 +21,9 @@ if ( isset( $_POST['method'] ) )
     else if ( $_POST['method'] == 'register' )
     {
         $retval = registerAccount( $_POST['email'],
-                                   $_POST['display_name'],
+                                   $_POST['display-name'],
                                    $_POST['password'],
-                                   $_POST['confirm_password'] 
+                                   $_POST['confirm-password'] 
                                   );
     }
 	

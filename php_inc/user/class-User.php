@@ -260,7 +260,7 @@ class User
      *
      * @return true on success, false on failure.
      */
-    function updatePassword( $email, $oldPassword, $newPassword, $confirmPassword )
+    public function updatePassword( $email, $oldPassword, $newPassword, $confirmPassword )
     {
         // Ensure the password is valid.
         if ( !InputValidation::isValidPassword( $newPassword ) )
@@ -292,7 +292,7 @@ class User
      *
      * @return true on success, false on failure or invalid displayName.
      */
-    function updateDisplayName( $email, $displayName )
+    public function updateDisplayName( $email, $displayName )
     {
         global $db;
         
@@ -354,6 +354,25 @@ class User
 		return $success;
 	}
 	
+    /** Sebastian
+     * change the verification string in the database for the user. (use $this->generateVerificationString(); )
+     * verificationString in USER_TABLE
+     * and set verificationTime in USER_TABLE to CURRENT_TIMESTAMP
+     * send them an email about it
+     * return true or false for success
+     */
+    public function giveNewVerificationString( $email )
+    {
+    }
+    
+    /** Sebastian
+     * send the verificationString to the email address.
+     * return true or false for success
+     */
+    public function emailVerificationString( $email, $verificationString )
+    {
+    }
+    
     /*
      * Get a users recent login attempts.
      */
