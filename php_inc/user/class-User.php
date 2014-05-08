@@ -465,6 +465,44 @@ class User
         mail($email, $subject, $message);
     }
     
+	public function emailPasswordChange( $id )
+	{
+		global $db;
+		
+		$verString = $this->generateVerificationString();
+		
+		$sql = 'SELECT verificationString, email
+				FROM ' . User::USER_TABLE . ' 
+				WHERE ID=:id
+				;';
+				
+		$sql = $db->prepare( $sql );
+		$sql->bindParam( ':id', $id );
+		
+		if ( !$sql->execute() )
+		{
+			return false;
+		}
+		
+		$result = $sql->fetch( PDO::FETCH_ASSOC );
+		$verificationString = $result['verificationString'];
+		$email = $result['email'];
+	
+        //the subject line for the verification e-mail
+        $subject = 'Study Buddy Verification';
+
+        //the message to be sent
+        $message = 'You have requested a verification email for Study Buddy. Your verification 
+					code is provided below:<br/>' . $verificationString . '<br/><br/>Thank you for 
+					using Study Buddy.<br/><br/>Sincerely,<br/>The Study Buddy Team';
+
+        // Use wordwrap() to ensure the message is no longer than 70 columns long (industry standard)
+        $message = wordwrap($message, 70, '<br/>');
+
+        // Send mail
+        mail($email, $subject, $message);
+	}
+	
 	/*
 	 * Get a User ID from their email
 	 *
