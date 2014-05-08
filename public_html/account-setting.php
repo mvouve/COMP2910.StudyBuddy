@@ -42,11 +42,15 @@
 
 
 					    <label for="new-password">New Password:</label>
-					    <input type="password" name="new-password" id="new-password" required><br/>
+                        <div class="ui-icon-delete ui-btn-icon-right validated-field" id="password-div">
+					        <input type="password" name="new-password" id="new-password" required>
+                        </div>
 
 
 					    <label for="confirm-password">Confirm New Password:</label>
-					    <input type="password" name="confirm-password" id="confirm-password" required><br/>
+                        <div class="ui-icon-delete ui-btn-icon-right validated-field" id="confirm-div">
+    					    <input type="password" name="confirm-password" id="confirm-password" required>
+                        </div>
 
 
                         <input id="update-password" type="button" value="Update Password">
@@ -134,6 +138,28 @@
                     error: errorMessage()
                 });
             });
+            
+
+            function validatePassword() {
+                var passwordRegex = /^.+$/g;
+                var password = document.getElementById("new-password").value.match(passwordRegex);
+                var confirm = document.getElementById("confirm-password").value;
+                if (password == null || password.length != 1) {
+                    $("#password-div").removeClass('ui-icon-check').addClass('ui-icon-delete');
+                    return false;
+                }
+                $("#password-div").removeClass('ui-icon-delete').addClass('ui-icon-check');
+                if ( password[0] != confirm ) {
+                    $("#confirm-div").removeClass('ui-icon-check').addClass('ui-icon-delete');
+                    return false;
+                }
+                $("#confirm-div").removeClass('ui-icon-delete').addClass('ui-icon-check');
+                return true;
+
+            }
+
+            $("#new-password").keyup( function(e){validatePassword();} );
+            $("#confirm-password").keyup( function(e){validatePassword();} );
 
             function onPasswordChange(data) {
                 alert('HI!');
