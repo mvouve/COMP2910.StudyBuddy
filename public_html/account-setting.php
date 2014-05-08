@@ -55,26 +55,31 @@
 		</div>
         <script>
             $('#confirm-password').blur(function () {
-                $('update-password').attr('disabled', 'disabled');
+                $('#update-password').attr('disabled', 'disabled');
                 $('#mismatch').hide();
-                var newp = $('#new-password').val();
-                var newp2 = $('#confirm-password').val();
-                if (newp != newp2) {
+                var match1 = $('#new-password').val();
+                var match2 = $('#confirm-password').val();
+                if (match1 != match2) {
                     $('#mismatch').show();
-                    $('update-password').attr('disabled');
+                    $('#update-password').attr('disabled');
                 }
                 return false;
             });
 
-            $('password-change').submit(function(){
-            $.ajax({
-                type:"POST",
-                url:placeholderurl.php, //WHERE DOES THE STUFF GO
-                data: $('password-change').serialize()
-                });
+            $('#update-password').submit(function () {
                 ev.preventDefault();
-            } 
-           
+                $.ajax({
+                    type: "POST",
+                    url: "kok",
+                    data: $('password-change').serialize(),
+                    error: onPasswordChange,
+                    datatype: 'json'
+                });
+            });
+
+            function onPasswordChange(data) {
+                alert('HI!');
+            }
         </script>
 	</body>
 </html>
