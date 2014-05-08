@@ -92,7 +92,11 @@
                 alert('hello');
             });
 
-            $()
+            $('#update-name').click(function () {
+                alert('updating name');
+                var 
+            
+            })
 
             function onPasswordChange(data) {
                 alert('HI!');
