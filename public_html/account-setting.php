@@ -20,48 +20,78 @@
                 </div>
                 <div data-role="collapsible">
                     <h3>Change your display name</h3>
-                    <form id="nameChange" name="nameChange" method="POST">
-                        <label for="newName">New Name:</label>
-                        <input type="text" name="newName" id="newName">
-                        <input id="nameUpdate" type="submit" value="Name Update">
-                        <input type="hidden" name="method" value="nameUpdate" />
+                    <form id="name-change" name="name-change" method="POST">
+                        <label for="display-name">New Name:</label>
+                        <input type="text" name="display-name" id="display-name">
+                        <input id="update-name" type="button" value="Update Name">
+                        <input type="hidden" name="method" value="update-display-name" />
                     </form>
                 </div>
                 <div data-role="collapsible">
                     <h3>Change your password</h3> 
-				    <form id="passwordChange" name="passwordChange" method="POST">
-                        <label for="oldPassword">Current Password:</label>
-					    <input type="password" name="password" id="oldPassword" required><br/>
+				    <form id="password-change" name="password-change" method="POST">
+                        <input type="hidden" name="email" value="placeholder@my.bcit.ca">
+
+                        <label for="old-password">Current Password:</label>
+					    <input type="password" name="old-password" id="old-password" required><br/>
 
 
-					    <label for="newPassword">New Password:</label>
-					    <input type="password" name="password" id="newPassword" required><br/>
+					    <label for="new-password">New Password:</label>
+					    <input type="password" name="new-password" id="new-password" required><br/>
 
 
-					    <label for="confirmPassword">Confirm New Password:</label>
-					    <input type="password" name="confirm_password" id="confirmPassword" onblur="validatePassword()" required><br/>
+					    <label for="confirm-password">Confirm New Password:</label>
+					    <input type="password" name="confirm-password" id="confirm-password" required><br/>
 
 
-                        <input id="passwordUpdate" type="submit" value="Password Update">
-                        <input type="hidden" name="method" value="passwordUpdate" />
+                        <input id="update-password" type="button" value="Update Password">
+                        <input type="hidden" name="method" value="update-password">
 				    </form>
                     <div id="mismatch" style="display:none">
                         <p>Please check your new passwords</p>
                     </div>
+                </div>
+                <div data-role="collapsible">
+                    <h3>Deactivate your account</h3>
+                    <form id="name-change" name="name-change" method="POST">
+                        <label for="password">Password:</label>
+                        <input type="password" name="password" id="password" required><br/>
+                        <input id="deactivate-account" type="button" value="Deactivate Account">
+                        <input type="hidden" name="method" value="deactivate-account" />
+                    </form>
                 </div>
 			</div>
 			<div data-role="footer" id="footer">
 			</div>
 		</div>
         <script>
-            function validatePassword() {
-                document.getElementById('mismatch').display = "none";
-                var match1 = document.getElementById('newPassword').value;
-                var match2 = document.getElementById('confirmPassword').value;
+            $('#confirm-password').blur(function () {
+                $('#update-password').attr('disabled', 'disabled');
+                $('#mismatch').hide();
+                var match1 = $('#new-password').val();
+                var match2 = $('#confirm-password').val();
                 if (match1 != match2) {
-                    document.getElementById('mismatch').display ="block";
+                    $('#mismatch').show();
+                    $('#update-password').attr('disabled');
                 }
                 return false;
+            });
+
+            $('#update-password').click(function () {
+                alert('belly');
+                var passwordForm = $("#update-password").serializeArray();
+                $.ajax({
+                    type: "POST",
+                    url: "/ajax/user/settings.php",
+                    data: passwordForm,
+                    error: onPasswordChange,
+                    datatype: 'json'
+                });
+                alert('hello');
+            });
+
+            function onPasswordChange(data) {
+                alert('HI!');
             }
         </script>
 	</body>

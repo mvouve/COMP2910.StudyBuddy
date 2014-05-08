@@ -361,18 +361,121 @@ class User
      * send them an email about it
      * return true or false for success
      */
-    public function giveNewVerificationString( $email )
+    public function giveNewVerificationString( $id )
     {
+        global $db;
+        $success = FALSE;
+
+		// Get user email
+		$sql = 'SELECT email
+				FROM ' . User::USER_TABLE . ' 
+				WHERE ID=:id
+				;';
+		$sql = $db->prepare( $sql );
+		$sql->bindParam( ':id', $id );
+		if ( !$sql->execute() )
+		{
+			return false;
+		}
+		
+		$email = $sql->fetch( PDO::FETCH_ASSOC );
+		$email = $email['email'];
+		
+        //create a new verification string
+        $newVString = generateVerificationString();
+
+        //update USER_TABLE with new verificationString
+        $sql = 'UPDATE ' . User::USER_TABLE . ' 
+                SET verificationString=:newVString,
+                    verificationTime=CURRENT_TIMESTAMP
+                WHERE email=:email
+                ;';
+
+        //prepare the sql statement for execution
+        $sql = $db->prepare( $sql );
+
+        //bind the parameter to the variable name
+        $sql->bindParam( ':newVString', $newVString );
+		$sql->bindParam( ':email', $email );
+        $success = $sql->execute();
+
+        // If the verification string was created, send it to the email.
+        if ( $success )
+        {
+            $success = emailVerificationString( $email, $newVString );
+        }
+        
+        return $success;
     }
     
     /** Sebastian
      * send the verificationString to the email address.
      * return true or false for success
      */
-    public function emailVerificationString( $email, $verificationString )
+    public function emailVerificationString( $id )
     {
+		global $db;
+		
+		$sql = 'SELECT verificationString
+				FROM ' . User::USER_TABLE . ' 
+				WHERE ID=:id
+				;';
+				
+		$sql = $db->prepare( $sql );
+		$sql->bindParam( ':email', $email );
+		
+		if ( !$sql->execute() )
+		{
+			return false;
+		}
+		
+		$result = $sql->fetch( PDO::FETCH_ASSOC );
+		$verificationString = $result['verificationString'];
+	
+        //the subject line for the verification e-mail
+        $subject = 'Study Buddy Verification';
+
+        //the message to be sent
+        $message = 'You have requested a verification email for Study Buddy. Your verification 
+					code is provided below:<br/>' . $verificationString . '<br/><br/>Thank you for 
+					using Study Buddy.<br/><br/>Sincerely,<br/>The Study Buddy Team';
+
+        // Use wordwrap() to ensure the message is no longer than 70 columns long (industry standard)
+        $message = wordwrap($message, 70, '\r\n');
+
+        // Send mail
+        mail($email, $subject, $message);
     }
     
+	/*
+	 * Get a User ID from their email
+	 *
+	 * @param $email the users email
+	 *
+	 * @return the user ID, or false on failure.
+	 */
+	public function getUserID( $email )
+	{
+		global $db;
+		
+		$sql = 'SELECT ID
+				FROM ' . User::USER_TABLE . ' 
+				WHERE email=:email
+				;';
+		$sql = $db->prepare( $sql );
+		$sql->bindParam( ':email', $email );
+		
+		if ( !$sql->execute() )
+		{
+			return false;
+		}
+		
+		$id = $sql->fetch( PDO::FETCH_ASSOC );
+		$id = $id['ID'];
+		
+		return $id;
+	}
+	
     /*
      * Get a users recent login attempts.
      */

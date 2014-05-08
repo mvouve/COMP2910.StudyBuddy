@@ -7,8 +7,38 @@
 			<div class="contenta center" data-role="content">
 				<img src="images/mail.png" alt="Check">
 				<br>Your verification email has been sent. Please check your e-mail.
-                <a href="my.bcit.ca" data-role="button" data-mini="true">MyBcit</a>
+                <div data-role="controlgroup" data-type="horizontal">
+                    <a href="http://my.bcit.ca" data-role="button">my.bcit.ca</a>
+                    <a href="http://bcit.ca" data-role="button">bcit.ca</a>
+                    <a href="http://learn.bcit.ca" data-role="button">learn.bcit.ca</a>
+                </div>
+                </br>
+                <div data-role="Verification">
+                    <form id="verification-form" name="verification" method="POST">
+                        <label for="verifcation">Please enter your verification code:</label>
+                        <input type="text" name="display-name" id="display-name">
+
+                        <input id="verification-submit" type="button" value="Verify">
+                        <input type="hidden" name="verification-submit" value="verification-submit" />
+                    </form>
+                </div>             
 			</div>
 		</div>
+        <script>
+             $('#verification-submit').click(function () {
+                var verificationCode = $("#verification-form");
+                $.ajax({
+                    type: "POST",
+                    url: "/ajax/user/settings.php",
+                    data: verificationCode,
+                    error: alertTest,
+                    datatype: 'json'
+                });
+            });
+
+            function alertTest(data) {
+                alert('Submitted!');
+            }
+        </script>
 	</body>
 </html>

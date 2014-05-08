@@ -5,12 +5,12 @@
 		<div data-role="page" data-theme="a">
             <?php renderPagelet( 'banner.php', array( '{{title}}' => 'Login' ) ); ?>
 			<div class="contenta" data-role="content" id="login">
-				<form name="loginform" method="POST">
+				<form name="login-form" method="POST">
 					<input type="text" name="email" id="email" placeholder="email">
 					<input type="password" name="password" id="password" placeholder="password">
 					<label for="remember">Remember me</label>
 					<input type="checkbox" name="remember" id="remember">
-					<input type="submit" id="loginbutton" value="Login" onclick="loginClick()">
+					<input type="submit" id="login-submit" value="Login">
 					<input type="hidden" name="method" value="login"/><!-- should do an ajax request checking for correct input, if it is, go to next page -->	
 				</form>
                 <br>
@@ -25,10 +25,6 @@
 			</div>
 		</div>
 	<script>
-	 function loginClick()
-     {
-         window.location.assign("main.php");
-     }
      function registerClick()
      {
          window.location.assign("register.php");
@@ -42,17 +38,14 @@
      {
          document.getElementById(error).style.display = 'block';
      }
-
-     $(document).ready(function()
+     $("#login-submit").on( 'click tap', function (e)
      {
-        $("#loginbutton").click(function()
+		e.defaultPrevented();
+        var formData = $("#login-form").serialize();
+        $.ajax
         {
-
-            var formData = $("#loginform").serialize();
-         $.ajax
-         ({
             type: "POST",
-            url:"/ajax/user/auth.php",
+            url: "ajax/user/auth.php",
             cache: false,
             data: formData,
             datatype:"json",
@@ -71,7 +64,6 @@
             });
             return false;
         });
-    });
 	</script>
 	</body>
 </html>
