@@ -7,7 +7,7 @@
 			<div class="contenta" data-role="content" id="login">
 				<form name="loginform">
 					<input type="text" name="email" id="email" placeholder="email">
-					<input type="text" name="password" id="password" placeholder="password">
+					<input type="password" name="password" id="password" placeholder="password">
 					<label for="remember">Remember me</label>
 					<input type="checkbox" name="remember" id="remember">
 					<input type="submit" id="loginbutton" value="Login" onclick="loginClick()"> <!-- should do an ajax request checking for correct input, if it is, go to next page -->	

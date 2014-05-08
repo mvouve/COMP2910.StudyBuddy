@@ -14,7 +14,7 @@ class InputValidation
         $displayNameRegex = '/(^[0-9A-Za-z._]{5,32}$)/';
         
         //check if displayname matches regular expression
-        if( !preg_match_all( $displayNameRegex, $displayName ) )
+        if( !preg_match_all( $displayNameRegex, $displayName, $matches ) )
         {
             return false;
         }
@@ -34,7 +34,7 @@ class InputValidation
         $passwordRegex = '/(^[0-9A-Za-z._]{5,50}$)/';
         
         //check if password matches regular expression
-        if( !preg_match_all( $passwordRegex, $password ) )
+        if( !preg_match_all( $passwordRegex, $password, $matches ) )
         {
             return false;
         }
@@ -60,7 +60,7 @@ class InputValidation
         //check if email matches regular expression
         foreach ( $emailRegex as $regex )
         {
-            if ( preg_match_all( $regex, $email ) > 0 )
+            if ( preg_match_all( $regex, $email, $matches ) > 0 )
             {
                 return true;
             }
