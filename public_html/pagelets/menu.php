@@ -1,4 +1,4 @@
-            <div data-role='panel' id='menuPanel' data-theme='b' data-position='right' data-display='overlay'>
+            <div data-role='panel' id='menuPanel' data-theme='a' data-position='right' data-display='overlay'>
                 <div class='panel-content'>
                     <h1>Menu</h1><br>
                     <ul data-role='listview'>
