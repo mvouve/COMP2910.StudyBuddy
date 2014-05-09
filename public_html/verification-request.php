@@ -9,9 +9,9 @@
 				<img src="images/mail.png" alt="Check">
 				<br>Your verification email has been sent. Please check your e-mail.
                 <div data-role="controlgroup" data-type="horizontal">
-                    <a href="http://my.bcit.ca" data-role="button">my.bcit.ca</a>
-                    <a href="http://bcit.ca" data-role="button">bcit.ca</a>
-                    <a href="http://learn.bcit.ca" data-role="button">learn.bcit.ca</a>
+                    <a href="http://my.bcit.ca" data-role="button" target="_blank">my.bcit.ca</a>
+                    <a href="http://bcit.ca" data-role="button" target="_blank">bcit.ca</a>
+                    <a href="http://learn.bcit.ca" data-role="button" target="_blank">learn.bcit.ca</a>
                 </div>
                 </br>
                 <div data-role="Verification">
