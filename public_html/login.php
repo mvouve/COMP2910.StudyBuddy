@@ -33,8 +33,11 @@
 			</div>
 		</div>
 	<script>
+    var doingAjax = false;
+    
 	function onLogin(result)
 	{
+        doingAjax = false;
 		if( result.valid )
 		{
 			window.location.assign("main.php");
@@ -52,14 +55,18 @@
 	
 	$("#login-submit").on( 'click tap', function (e) 
 	{
-		e.preventDefault();
-		
-		var formData = $("#login-form").serializeArray();
-		
-		$.post( <?php echo '\'' . AJAX_URL . 'user/auth.php\''; ?>,
-						formData,
-						onLogin,
-						"json" );
+        e.preventDefault();
+        if ( doingAjax == false )
+        {
+            doingAjax = true;
+            
+            var formData = $("#login-form").serializeArray();
+            
+            $.post( <?php echo '\'' . AJAX_URL . 'user/auth.php\''; ?>,
+                            formData,
+                            onLogin,
+                            "json" );
+        }
 	});
 	</script>
 	</body>
