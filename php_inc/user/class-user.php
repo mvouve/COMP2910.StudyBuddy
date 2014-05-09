@@ -83,13 +83,13 @@ class User
         // Unset token cookies!
         if ( isset( $_COOKIE['sb_id'] ) )
         {
-            setcookie('sb_id', $email, time()-3600, '/');
+            setcookie('sb_id', '', time()-3600, '/');
             unset( $_COOKIE['sb_id'] );
         }
         
         if ( isset( $_COOKIE['sb_token'] ) )
         {
-            setcookie('sb_token', $email, time()-3600, '/');
+            setcookie('sb_token', '', time()-3600, '/');
             unset( $_COOKIE['sb_token'] );
         }
 	}

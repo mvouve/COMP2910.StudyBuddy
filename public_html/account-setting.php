@@ -92,18 +92,6 @@
             $('#update-name').addClass('ui-disabled');
             $('#update-password').addClass('ui-disabled');
             $('#update-password').on( 'click tap', function (e) {
-			/*
-                alert('belly');
-                var passwordForm = $("#update-password").serializeArray();
-                $.ajax({
-                    type: "POST",
-                    url: <?php echo '\'' . AJAX_URL . 'user/settings.php\''; ?>,
-                    data: passwordForm,
-                    error: onPasswordChange,
-                    datatype: 'json'
-                });
-                alert('hello');
-			*/
 				e.preventDefault();
 				var formData = $("#password-change").serializeArray();
 				
@@ -115,7 +103,6 @@
 
             
             $('#update-name').on( 'click tap', function () {
-                alert('starting updating name');
                 var updateNameForm = $("#name-change").serializeArray();
 
                 $.ajax
@@ -125,16 +112,15 @@
                     data: updateNameForm,
                     datatype: 'json',
                     success: function (json) {
+                        json = $.parseJSON( json );
                         if (json.success == true) { 
                             nameChangeSuccess();
                         }
-                    },
-                    error: errorMessage()
+                    }
                 });
             });
 
             $('#deactivate-account').on( 'click tap', function () {
-                alert('account deactivation button pressed');
                 var deactivateAccountForm = $("#deactivate-account-form").serializeArray();
 				
                 $.ajax
@@ -144,11 +130,14 @@
                     data: deactivateAccountForm,
                     datatype: 'json',
                     success: function (json) {
+                        json = $.parseJSON( json );
                         if (json.deleted == true)
                         {
+                            alert( 'Your account has been deactivated and may be permanently ' +
+                                   'removed in the near future.' );
                             window.location.assign("login.php");
-                        }},
-                    error: errorMessage()
+                        }
+                    }
                 });
             });
 
@@ -194,10 +183,6 @@
 
             function onPasswordChange(data) {
                 $('#password-change-succcess').show();
-            }
-
-            function errorMessage() {
-                alert('Problem connecting to server');
             }
 
             function nameChangeSuccess() {
