@@ -81,7 +81,7 @@
                     <form id="deactivate-account-form" name="deactivate-account-form" method="POST">
                     
                         <label for="password">Password:</label>
-                        <div class="ui-icon-delete ui-btn-icon-right validated-field" id="delpass-div">
+                        <div id="delpass-div">
                             <input type="password" name="password" id="password" required>
                         </div>
                         
@@ -98,7 +98,6 @@
             var changingPass = false;
             var deactivating = false;
         
-            $('#update-name').addClass('ui-disabled');
             $('#update-password').addClass('ui-disabled');
             $('#deactivate-account').addClass('ui-disabled');
             
@@ -211,13 +210,11 @@
                 var passwordRegex = /^.+$/g;
                 
                 if (delpass == null || delpass.length < 1) {
-                    $("#delpass-div").removeClass('ui-icon-check').addClass('ui-icon-delete');
                     $('#update-password').addClass('ui-disabled');
                     
                     return false;
                 }
                 
-                $("#delpass-div").removeClass('ui-icon-delete').addClass('ui-icon-check');
                 $('#deactivate-account').removeClass('ui-disabled');
                 
                 return true;
