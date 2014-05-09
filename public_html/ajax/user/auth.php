@@ -168,7 +168,7 @@ function registerAccount( $email, $displayName, $password, $confirmPassword )
 		
 		if ($retval['valid'] != false )
 		{
-			$retval['emailSent'] = $User->emailVerificationString( $reval['valid'] );
+			$retval['emailSent'] = $User->emailVerificationString( $retval['valid'] );
 		}
     }
     
