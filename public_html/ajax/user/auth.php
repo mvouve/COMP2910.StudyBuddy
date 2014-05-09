@@ -29,7 +29,7 @@ if ( isset( $_POST['method'] ) )
 	// DEACTIVATE ACCOUNT
 	else if ( $_POST['method'] == 'delete-account' )
 	{
-		$retval = deactivate( $email, $password );
+		$retval = deactivate( $_SESSION['email'], $_POST['password'] );
 	}
 	// Password Recovery
 	else if( $_POST['method'] == 'password-recovery' )

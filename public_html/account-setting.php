@@ -123,7 +123,7 @@
             $('#deactivate-account').on( 'click tap', function () {
                 alert('account deactivation button pressed');
                 var deactivateAccountForm = $("#deactivate-account-form").serializeArray();
-
+				
                 $.ajax
                 ({
                     type: "POST",
