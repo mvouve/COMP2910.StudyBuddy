@@ -72,6 +72,9 @@
                         <p>Please check your new passwords</p>
                     </div>
                 </div>
+				<div id="password-change-success" style="display:none">
+                        <p>Password Change Successful!</p>
+                </div>
                 <div data-role="collapsible">
                     <h3>Deactivate your account</h3>
                     <form id="deactivate-account-form" name="deactivate-account-form" method="POST">
@@ -143,8 +146,7 @@
                     success: function (json) {
                         if (json.deleted == true)
                         {
-                            alert('Study Buddy account deactivated.');
-                            redirectToMain();
+                            window.location.assign("login.php");
                         }},
                     error: errorMessage()
                 });
@@ -191,20 +193,15 @@
             $("#confirm-password").keyup( function(e){validatePassword();} );
 
             function onPasswordChange(data) {
-                alert('password changed');
+                $('#password-change-succcess').show();
             }
 
             function errorMessage() {
-                alert('error message');
+                alert('Problem connecting to server');
             }
 
             function nameChangeSuccess() {
                 $('#name-change-succcess').show();
-            }
-
-            function redirectToMain()
-            {
-                window.location.assign("main.php");
             }
         </script>
 	</body>
