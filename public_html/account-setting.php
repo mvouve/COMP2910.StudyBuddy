@@ -90,15 +90,17 @@
 			</div>
 		</div>
         <script>
-            var doingAjax = false;
+            var changingName = false;
+            var changingPass = false;
+            var deactivating = false;
         
             $('#update-name').addClass('ui-disabled');
             $('#update-password').addClass('ui-disabled');
             $('#update-password').on( 'click tap', function (e) {
 				e.preventDefault();
                 
-                if ( doingAjax == false ) {
-                    doingAjax = true;
+                if ( changingPass == false ) {
+                    changingPass = true;
                     var formData = $("#password-change").serializeArray();
                     
                     $.post( <?php echo '\'' . AJAX_URL . 'user/settings.php\''; ?>,
@@ -110,8 +112,8 @@
 
             
             $('#update-name').on( 'click tap', function () {
-                if ( doingAjax == false ) {
-                    doingAjax = true;
+                if ( changingName == false ) {
+                    changingName = true;
                     var updateNameForm = $("#name-change").serializeArray();
 
                     $.ajax
@@ -121,7 +123,7 @@
                         data: updateNameForm,
                         datatype: 'json',
                         success: function (json) {
-                            doingAjax = false;
+                            changingName = false;
                             json = $.parseJSON( json );
                             if (json.success == true) { 
                                 nameChangeSuccess();
@@ -132,8 +134,8 @@
             });
 
             $('#deactivate-account').on( 'click tap', function () {
-                if ( doingAjax == false ) {
-                    doingAjax = true;
+                if ( deactivating == false ) {
+                    deactivating = true;
                     var deactivateAccountForm = $("#deactivate-account-form").serializeArray();
                     
                     $.ajax
@@ -143,7 +145,7 @@
                         data: deactivateAccountForm,
                         datatype: 'json',
                         success: function (json) {
-                            doingAjax = false;
+                            deactivating = false;
                             json = $.parseJSON( json );
                             if (json.deleted == true)
                             {
@@ -198,12 +200,11 @@
 
             function onPasswordChange(data) {
                 $('#password-change-success').show();
-                doingAjax = false;
+                changingPass = false;
             }
 
             function nameChangeSuccess() {
                 $('#name-change-success').show();
-                doingAjax=false;
             }
         </script>
 	</body>
