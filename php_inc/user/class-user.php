@@ -488,12 +488,12 @@ class User
         $subject = 'Study Buddy Verification';
 
         //the message to be sent
-        $message = 'You have requested a verification email for Study Buddy. Your verification 
-					code is provided below:<br/>' . $verificationString . '<br/><br/>Thank you for 
-					using Study Buddy.<br/><br/>Sincerely,<br/>The Study Buddy Team';
+        $message = 'You have requested a verification email for Study Buddy. Your verification ' 
+                  .'code is provided below:\r\n\r\n' . $verificationString . '\r\n\r\nThank you for' 
+				  .' using Study Buddy.\r\n\r\nSincerely,\r\nThe Study Buddy Team';
 
         // Use wordwrap() to ensure the message is no longer than 70 columns long (industry standard)
-        $message = wordwrap($message, 70, '<br/>');
+        $message = wordwrap($message, 70, '\r\n');
 
         // Send mail
         return mail($email, $subject, $message, 'From: bcit.study.buddy@gmail.com');
@@ -523,12 +523,12 @@ class User
         $subject = 'Study Buddy Verification';
 
         //the message to be sent
-        $message = 'You have requested a password change email for Study Buddy. Your verification 
-					code is provided below:<br/>' . $verString . '<br/><br/>Thank you for 
-					using Study Buddy.<br/><br/>Sincerely,<br/>The Study Buddy Team';
+        $message = 'You have requested a password change email for Study Buddy. Your verification '
+					.'code is provided below:\r\n\r\n' . $verString . '\r\n\r\nThank you for '
+					.'using Study Buddy.\r\n\r\nSincerely,\r\nThe Study Buddy Team';
 
         // Use wordwrap() to ensure the message is no longer than 70 columns long (industry standard)
-        $message = wordwrap($message, 70, '<br/>');
+        $message = wordwrap($message, 70, '\r\n');
 
         // Send mail
         return mail($email, $subject, $message, 'From: bcit.study.buddy@gmail.com');
