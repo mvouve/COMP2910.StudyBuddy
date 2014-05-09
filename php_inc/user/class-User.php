@@ -303,6 +303,8 @@ class User
      */
     public function updatePassword( $email, $oldPassword, $newPassword, $confirmPassword )
     {
+		require_once( '/../class-input-validation.php' );
+	
         // Ensure the password is valid.
         if ( !InputValidation::isValidPassword( $newPassword ) )
         {
