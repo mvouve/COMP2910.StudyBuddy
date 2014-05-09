@@ -46,7 +46,7 @@
                 <div data-role="collapsible">
                     <h3>Change your password</h3> 
 				    <form id="password-change" name="password-change" method="POST">
-                        <input type="hidden" name="email" value="placeholder@my.bcit.ca">
+                        <input type="hidden" name="email" value="<?php echo $email; ?>">
 
                         <label for="old-password">Current Password:</label>
 					    <input type="password" name="old-password" id="old-password" required><br/>

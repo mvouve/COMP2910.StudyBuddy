@@ -316,13 +316,13 @@ class User
         {
             return false;
         }
-        
+		
         // Ensure the user has permission to do this
         if ( !$this->checkCredentials( $email, $oldPassword ) )
         {
             return false;
         }
-        
+		
         // Try to change the password.
         return $this->changePassword( $email, $newPassword );
     }
