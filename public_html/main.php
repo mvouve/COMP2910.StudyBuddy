@@ -36,7 +36,7 @@
     </head>
 -->
     <body>
-        <div data-role="page" id="page">
+        <div data-role="page" id="page" data-theme="a">
             <?php define('HAS_MENU',1);
                   renderPagelet( 'banner.php', array( '{{title}}' => 'Main Page' ) ); ?>
             <div class="center" data-role="main">
