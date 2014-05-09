@@ -38,16 +38,23 @@ else
 		</div>
     </div>
     <script>
+            var doingAjax = false;
+            
             $('#recovery-submit').on( 'click tap', function () {
-                var passwordForm = $("#recovery-form").serializeArray();
-                
-                $.post( <?php echo '\'' . AJAX_URL . 'user/auth.php\''; ?>,
-						passwordForm,
-						onPasswordChange,
-						"json" );
+                if ( doingAjax == false )
+                {
+                    doingAjax = true;
+                    var passwordForm = $("#recovery-form").serializeArray();
+                    
+                    $.post( <?php echo '\'' . AJAX_URL . 'user/auth.php\''; ?>,
+                            passwordForm,
+                            onPasswordChange,
+                            "json" );
+                }
             });
 
             function onPasswordChange( data ) {
+                doingAjax = false;
                 if (data.success == true){
                     window.location.assign("login.php");
                 }
