@@ -87,7 +87,7 @@
         <script>
             $('#update-name').addClass('ui-disabled');
             $('#update-password').addClass('ui-disabled');
-            $('#update-password').on( 'click tap', function () {
+            $('#update-password').on( 'click tap', function (e) {
 			/*
                 alert('belly');
                 var passwordForm = $("#update-password").serializeArray();
@@ -100,6 +100,7 @@
                 });
                 alert('hello');
 			*/
+				e.preventDefault();
 				var formData = $("#update-password").serializeArray();
 				
 				$.post( <?php echo '\'' . AJAX_URL . 'user/auth.php\''; ?>,
