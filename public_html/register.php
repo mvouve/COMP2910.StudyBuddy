@@ -24,7 +24,7 @@
                     <div class="ui-icon-delete ui-btn-icon-right validated-field" id="confirm-div">
 					    <input type="password" name="confirm-password" id="confirm">
                     </div>
-                    <input id="register-submit" type="button" value="Register">
+                    <a href="#" data-role="button" id="register-submit">Register</a>
                     <input type="hidden" name="method" value="register" />
 				</form>
 			</div>
@@ -32,7 +32,23 @@
 			</div>
 		</div>
         <script>
+            $('#register-submit').addClass('ui-disabled');
             $('#invalid-email-span').hide();
+
+            function validateAll()
+            {
+                if( validateEmail()
+                 && validateDisplayName()
+                 && validatePassword() )
+                {
+                    $('#register-submit').removeClass('ui-disabled');
+                }
+                else
+                {
+                    $('#register-submit').addClass('ui-disabled');
+                }
+            }
+
             //used to ensure a user-entered email is a valid BCIT e-mail
             function validateEmail() {
                 var emailRegex = /^(([0-9a-z_.]+@((my\.bcit\.ca)|(bcit.ca)))|(a\d{8}@((mybcit\.ca)|(learn\.bcit\.ca))))$/gi;
@@ -75,6 +91,7 @@
 
             }
 
+            
             function onRegister(result) {
                 alert(JSON.stringify(result, null, 4));
 
@@ -97,14 +114,15 @@
 
                 // Reset the Submit button to inactive after being pressed
                 $.mobile.activePage.find('.ui-btn-active').removeClass('ui-btn-active ui-focus');
+                registerClicked = false;
             }
             
             $("#email").keyup( function(e){
                 $('#invalid-email-span').hide();
-                validateEmail();} );
-            $("#display-name").keyup( function(e){validateDisplayName();} );
-            $("#password").keyup( function(e){validatePassword();} );
-            $("#confirm").keyup( function(e){validatePassword();} );
+                validateAll();} );
+            $("#display-name").keyup( function(e){validateAll();} );
+            $("#password").keyup( function(e){validateAll();} );
+            $("#confirm").keyup( function(e){validateAll();} );
             
             var registerClicked = false;
             // Note the change from $().click to $().on( 'click tap', function( e ) {} );
@@ -147,7 +165,6 @@
                         formData,
                         onRegister,
                         "json");
-                registerClicked = false;
             });
         </script>
 	</body>

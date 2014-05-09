@@ -26,7 +26,7 @@
                         <div class="ui-icon-delete ui-btn-icon-right validated-field" id="display-name-div">
                             <input type="text" name="display-name" id="display-name">
                         </div>
-                        <input id="update-name" type="button" value="Update Name">
+                        <a href="#" data-role="button" id="update-name">Update Name</a>
                         <input type="hidden" name="method" value="update-display-name" />
                     </form>
                 </div>
@@ -55,7 +55,7 @@
                         </div>
 
 
-                        <input id="update-password" type="button" value="Update Password">
+                        <a href="#" data-role="button" id="update-password">Update Password</a>
                         <input type="hidden" name="method" value="update-password">
 				    </form>
                     <div id="mismatch" style="display:none">
@@ -76,6 +76,8 @@
 			</div>
 		</div>
         <script>
+            $('#update-name').addClass('ui-disabled');
+            $('#update-password').addClass('ui-disabled');
             $('#update-password').on( 'click tap', function () {
                 alert('belly');
                 var passwordForm = $("#update-password").serializeArray();
@@ -135,9 +137,11 @@
                 var displayName = document.getElementById("display-name").value.match(displayNameRegex);
                 if (displayName == null || displayName.length != 1) {
                     $("#display-name-div").removeClass('ui-icon-check').addClass('ui-icon-delete');
+                    $('#update-name').addClass('ui-disabled');
                     return false;
                 }
                 $('#display-name-div').removeClass('ui-icon-delete').addClass('ui-icon-check');
+                $('#update-name').removeClass('ui-disabled');
                 return true;
             }
             $("#display-name").keyup( function(e){validateDisplayName();} );
@@ -150,18 +154,18 @@
                 if (password == null || password.length != 1) {
                     $("#password-div").removeClass('ui-icon-check').addClass('ui-icon-delete');
                     $("#confirm-div").removeClass('ui-icon-check').addClass('ui-icon-delete');
-
+                    $('#update-password').addClass('ui-disabled');
                     return false;
                 }
                 $("#password-div").removeClass('ui-icon-delete').addClass('ui-icon-check');
 
                 if ( password[0] != confirm ) {
                     $("#confirm-div").removeClass('ui-icon-check').addClass('ui-icon-delete');
-
+                    $('#update-password').addClass('ui-disabled');
                     return false;
                 }
                 $("#confirm-div").removeClass('ui-icon-delete').addClass('ui-icon-check');
-
+                $('#update-password').removeClass('ui-disabled');
                 return true;
 
             }
