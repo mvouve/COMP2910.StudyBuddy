@@ -9,7 +9,7 @@
                     <label for="email">Email:</label>
                     <input type="email" name="email" id="email" placeholder="You@my.bcit.ca">
                     <input type="hidden" name="recovery-request" value="true">
-                    <input type="submit" value="Submit" id="recovery-request-submit">
+                    <input type="button" value="Submit" id="recovery-request-submit">
                 </form>
             </div>
         </div>
@@ -18,7 +18,7 @@
 	        {
 		        if( result.success == true )
 		        {
-			        window.location.assign('password-reset.php?eamil=' + encodeURIComponent(document.getElementById('email').value));
+			        window.location.assign('password-reset.php?email=' + encodeURIComponent(document.getElementById('email').value));
 		        }
 		        else
 		        {
