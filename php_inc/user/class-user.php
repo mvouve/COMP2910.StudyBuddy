@@ -56,6 +56,7 @@ class User
             {
                 $_SESSION['valid'] = 1;
                 $_SESSION['email'] = $email;
+				$_SESSION['display_name'] = getDisplayName();
                 
                 // Store a unique id for session id
                 if ( $rememberMe )
@@ -113,6 +114,7 @@ class User
                 {
                     $_SESSION['valid'] = 1;
                     $_SESSION['email'] = $_COOKIE['sb_id'];
+					$_SESSION['display_name'] = getDisplayName();
                     return true;
                 }
             }
@@ -345,6 +347,9 @@ class User
             return false;
         }
         
+		//update display name in the session
+		$_SESSION['display_name'] = $displayName;
+		
         $sql = 'UPDATE ' . User::USER_TABLE . ' 
                 SET displayName=:displayName
                 WHERE email=:email
@@ -692,4 +697,30 @@ class User
         
         return false;
     }
+	
+	/*
+	 * Fetches the users display name from SQL.
+	 *
+	 * @return displayname
+	 */
+	private function getDisplayName()
+	{
+		global $db;
+		
+		$sql = 'SELECT displayName 
+					FROM ' . User::USER_TABLE . '
+					WHERE email = :email;';
+		$sql = $db->prepare( $sql );			
+		$sql->bindParam( ':email', $_SESSION['email'] );
+		
+		if ( !$sql->execute() )
+		{
+			return false;
+		}
+		
+		$displayName = $sql->fetch( PDO::FETCH_ASSOC );
+		$displayName = $displayName['displayName'];
+		
+		return $displayName;
+	}
 }
