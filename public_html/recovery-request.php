@@ -14,8 +14,11 @@
             </div>
         </div>
         <script>
+            var doingAjax = false;
+        
             function onResponse(result)
 	        {
+                doingAjax = false;
 		        if( result.success == true )
 		        {
 			        window.location.assign('password-reset.php?email=' + encodeURIComponent(document.getElementById('email').value));
@@ -30,14 +33,17 @@
 	        {
 		        e.preventDefault();
                 e.stopImmediatePropagation();
-                alert('double click check');
-            		
-    		    var formData = $("#recovery-request-form").serializeArray();
-		
-		        $.post( <?php echo '\'' . AJAX_URL . 'user/auth.php\''; ?>,
-						formData,
-						onResponse,
-						"json" );
+                
+                if ( doingAjax == false )
+                {
+                    doingAjax = true;
+                    var formData = $("#recovery-request-form").serializeArray();
+            
+                    $.post( <?php echo '\'' . AJAX_URL . 'user/auth.php\''; ?>,
+                            formData,
+                            onResponse,
+                            "json" );
+                }
 	        });
         </script>
     </body>
