@@ -236,7 +236,6 @@ function resend_verification( $id )
 {
 	$user = User::instance();
     $retval = array();
-    $user->giveNewVerificationString( $id );
-	$retval['emailSent'] = $user->emailVerificationString( $id );
+    $retval['emailSent'] = $user->giveNewVerificationString( $id );
     return $retval;
 }

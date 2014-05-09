@@ -22,7 +22,7 @@
 		        }
 		        else
 		        {
-			        alert('An error occurred. Perhaps the email is not currently in use.);
+			        alert('An error occurred. Perhaps the email is not currently in use.');
 		        }
 	        }
 

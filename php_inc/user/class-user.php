@@ -56,7 +56,7 @@ class User
             {
                 $_SESSION['valid'] = 1;
                 $_SESSION['email'] = $email;
-				$_SESSION['display_name'] = getDisplayName();
+				$_SESSION['display_name'] = $this->getDisplayName();
                 
                 // Store a unique id for session id
                 if ( $rememberMe )
@@ -114,7 +114,7 @@ class User
                 {
                     $_SESSION['valid'] = 1;
                     $_SESSION['email'] = $_COOKIE['sb_id'];
-					$_SESSION['display_name'] = getDisplayName();
+					$_SESSION['display_name'] = $this->getDisplayName();
                     return true;
                 }
             }
@@ -433,7 +433,7 @@ class User
 		$email = $email['email'];
 		
         //create a new verification string
-        $newVString = generateVerificationString();
+        $newVString = $this->generateVerificationString();
 
         //update USER_TABLE with new verificationString
         $sql = 'UPDATE ' . User::USER_TABLE . ' 
@@ -453,7 +453,7 @@ class User
         // If the verification string was created, send it to the email.
         if ( $success )
         {
-            $success = emailVerificationString( $email, $newVString );
+            $success = $this->emailVerificationString( $email, $newVString );
         }
         
         return $success;
@@ -705,6 +705,11 @@ class User
 	 */
 	private function getDisplayName()
 	{
+        if ( !isset( $_SESSION['email'] ) )
+        {
+            return false;
+        }
+    
 		global $db;
 		
 		$sql = 'SELECT displayName 
