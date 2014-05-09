@@ -77,7 +77,7 @@
                         <label for="password">Password:</label>
                         <input type="password" name="password" id="password" required><br/>
                         <input id="deactivate-account" type="button" value="Deactivate Account">
-                        <input type="hidden" name="method" value="deactivate-account" />
+                        <input type="hidden" name="method" value="delete-account" />
                     </form>
                 </div>
 			</div>
