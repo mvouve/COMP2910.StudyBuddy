@@ -93,8 +93,6 @@
 
             
             function onRegister(result) {
-                alert(JSON.stringify(result, null, 4));
-
                 if( result.valid != false )
                 {
                     window.location.assign('verification-request.php?id=' + result.valid);

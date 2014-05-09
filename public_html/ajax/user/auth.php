@@ -52,9 +52,9 @@ if ( isset( $_POST['method'] ) )
 		$retval = verify( $_POST['verification-code'] );
 	}
 	//Resend verification email
-	else if ( $_POST['method'] == 'resend_verification' )
+	else if ( $_POST['method'] == 'resend-verification' )
 	{
-		$retval = resend_verification( $_POST['email'] );
+		$retval = resend_verification( $_POST['id'] );
 	}
 	
 	echo json_encode( $retval );
@@ -232,8 +232,11 @@ function verify( $vCode )
 	return $retval;
 }
 
-function resend_verification( $email )
+function resend_verification( $id )
 {
 	$user = User::instance();
-	
+    $retval = array();
+    $user->giveNewVerificationString( $id );
+	$retval['emailSent'] = $user->emailVerificationString( $id );
+    return $retval;
 }
