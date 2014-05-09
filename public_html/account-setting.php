@@ -90,56 +90,70 @@
 			</div>
 		</div>
         <script>
+            var doingAjax = false;
+        
             $('#update-name').addClass('ui-disabled');
             $('#update-password').addClass('ui-disabled');
             $('#update-password').on( 'click tap', function (e) {
 				e.preventDefault();
-				var formData = $("#password-change").serializeArray();
-				
-				$.post( <?php echo '\'' . AJAX_URL . 'user/settings.php\''; ?>,
-						formData,
-						onPasswordChange,
-						"json" );
+                
+                if ( doingAjax == false ) {
+                    doingAjax = true;
+                    var formData = $("#password-change").serializeArray();
+                    
+                    $.post( <?php echo '\'' . AJAX_URL . 'user/settings.php\''; ?>,
+                            formData,
+                            onPasswordChange,
+                            "json" );
+                }
             });
 
             
             $('#update-name').on( 'click tap', function () {
-                var updateNameForm = $("#name-change").serializeArray();
+                if ( doingAjax == false ) {
+                    doingAjax = true;
+                    var updateNameForm = $("#name-change").serializeArray();
 
-                $.ajax
-                ({
-                    type: "POST",
-                    url: <?php echo '\'' . AJAX_URL . 'user/settings.php\''; ?>,
-                    data: updateNameForm,
-                    datatype: 'json',
-                    success: function (json) {
-                        json = $.parseJSON( json );
-                        if (json.success == true) { 
-                            nameChangeSuccess();
+                    $.ajax
+                    ({
+                        type: "POST",
+                        url: <?php echo '\'' . AJAX_URL . 'user/settings.php\''; ?>,
+                        data: updateNameForm,
+                        datatype: 'json',
+                        success: function (json) {
+                            doingAjax = false;
+                            json = $.parseJSON( json );
+                            if (json.success == true) { 
+                                nameChangeSuccess();
+                            }
                         }
-                    }
-                });
+                    });
+                }
             });
 
             $('#deactivate-account').on( 'click tap', function () {
-                var deactivateAccountForm = $("#deactivate-account-form").serializeArray();
-				
-                $.ajax
-                ({
-                    type: "POST",
-                    url: <?php echo '\'' . AJAX_URL . 'user/auth.php\''; ?>,
-                    data: deactivateAccountForm,
-                    datatype: 'json',
-                    success: function (json) {
-                        json = $.parseJSON( json );
-                        if (json.deleted == true)
-                        {
-                            alert( 'Your account has been deactivated and may be permanently ' +
-                                   'removed in the near future.' );
-                            window.location.assign("login.php");
+                if ( doingAjax == false ) {
+                    doingAjax = true;
+                    var deactivateAccountForm = $("#deactivate-account-form").serializeArray();
+                    
+                    $.ajax
+                    ({
+                        type: "POST",
+                        url: <?php echo '\'' . AJAX_URL . 'user/auth.php\''; ?>,
+                        data: deactivateAccountForm,
+                        datatype: 'json',
+                        success: function (json) {
+                            doingAjax = false;
+                            json = $.parseJSON( json );
+                            if (json.deleted == true)
+                            {
+                                alert( 'Your account has been deactivated and may be permanently ' +
+                                       'removed in the near future.' );
+                                window.location.assign("login.php");
+                            }
                         }
-                    }
-                });
+                    });
+                }
             });
 
             function validateDisplayName() {
@@ -183,11 +197,13 @@
             $("#confirm-password").keyup( function(e){validatePassword();} );
 
             function onPasswordChange(data) {
-                $('#password-change-succcess').show();
+                $('#password-change-success').show();
+                doingAjax = false;
             }
 
             function nameChangeSuccess() {
-                $('#name-change-succcess').show();
+                $('#name-change-success').show();
+                doingAjax=false;
             }
         </script>
 	</body>
