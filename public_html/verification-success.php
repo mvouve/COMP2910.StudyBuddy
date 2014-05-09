@@ -8,7 +8,7 @@
 				<img src="images/check-mark.png" alt="Check">
 				<br>Account Verified!
                 <br>
-                <a href="main.php" data-role="button" rel='external' data-mini="true">Let's Begin!</a>
+                <a href="login.php" data-role="button" rel='external' data-mini="true">Let's Begin!</a>
 			</div>
 		</div>
 	</body>
