@@ -1,12 +1,12 @@
 <?php require_once( 'config.php' ); ?>
 <?php require_once( PHP_INC_PATH . 'common.php' ); ?>
 <?php
-	$user = User::instance();
-	if ( !$user->isLoggedIn() )
-	{
-		include( 'login.php' );
-		die();
-	}
+    $user = User::instance();
+    if ( !$user->isLoggedIn() )
+    {
+        include( 'login.php' );
+        die();
+    }
 ?>
 <?php $sliderHeader = array( '{{customHeadTags}}' => '
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
@@ -15,6 +15,7 @@
     ');
 
     $email = $_SESSION['email'];
+    $display_name = $_SESSION['display_name'];
 ?>
 <?php renderPagelet( 'header.php', array( '{{customHeadTags}}' => '' ) ); ?>
 
@@ -23,7 +24,7 @@
             <?php define('HAS_MENU',1);
                   renderPagelet( 'banner.php', array( '{{title}}' => 'Account Settings' ) ); ?>
 
-			<div data-role="content" data-theme="a">
+            <div data-role="content" data-theme="a">
                 <div class="center">
                     <p><?php echo $email; ?></p>
                 </div>
@@ -31,9 +32,10 @@
                 <div data-role="collapsible">
                     <h3>Change your display name</h3>
                     <form id="name-change" name="name-change" method="POST">
+                        <input type="hidden" name="email" value="<?php echo $email; ?>">
                         <label for="display-name">New Name:</label>
-                        <div class="ui-icon-delete ui-btn-icon-right validated-field" id="display-name-div">
-                            <input type="text" name="display-name" id="display-name">
+                        <div class="ui-icon-check ui-btn-icon-right validated-field" id="display-name-div">
+                            <input type="text" name="display-name" id="display-name" value="<?php echo $display_name ?>">
                         </div>
                         <a href="#" data-role="button" id="update-name">Update Name</a>
                         <input type="hidden" name="method" value="update-display-name" />
@@ -45,99 +47,120 @@
                       
                 <div data-role="collapsible">
                     <h3>Change your password</h3> 
-				    <form id="password-change" name="password-change" method="POST">
-                        <input type="hidden" name="email" value="placeholder@my.bcit.ca">
+                    <form id="password-change" name="password-change" method="POST">
+                        <input type="hidden" name="email" value="<?php echo $email; ?>">
 
                         <label for="old-password">Current Password:</label>
-					    <input type="password" name="old-password" id="old-password" required><br/>
+                        <input type="password" name="old-password" id="old-password" required><br/>
 
 
-					    <label for="new-password">New Password:</label>
+                        <label for="new-password">New Password:</label>
                         <div class="ui-icon-delete ui-btn-icon-right validated-field" id="password-div">
-					        <input type="password" name="new-password" id="new-password" required>
+                            <input type="password" name="new-password" id="new-password" required>
                         </div>
 
 
-					    <label for="confirm-password">Confirm New Password:</label>
+                        <label for="confirm-password">Confirm New Password:</label>
                         <div class="ui-icon-delete ui-btn-icon-right validated-field" id="confirm-div">
-    					    <input type="password" name="confirm-password" id="confirm-password" required>
+                            <input type="password" name="confirm-password" id="confirm-password" required>
                         </div>
 
 
                         <a href="#" data-role="button" id="update-password">Update Password</a>
                         <input type="hidden" name="method" value="update-password">
-				    </form>
+                    </form>
                     <div id="mismatch" style="display:none">
                         <p>Please check your new passwords</p>
                     </div>
                 </div>
+                <div id="password-change-success" style="display:none">
+                        <p>Password Change Successful!</p>
+                </div>
                 <div data-role="collapsible">
                     <h3>Deactivate your account</h3>
                     <form id="deactivate-account-form" name="deactivate-account-form" method="POST">
+                    
                         <label for="password">Password:</label>
-                        <input type="password" name="password" id="password" required><br/>
-                        <input id="deactivate-account" type="button" value="Deactivate Account">
+                        <div id="delpass-div">
+                            <input type="password" name="password" id="password" required>
+                        </div>
+                        
+                        <a href="#" data-role="button" id="deactivate-account">Deactivate Account</a>
                         <input type="hidden" name="method" value="delete-account" />
                     </form>
                 </div>
-			</div>
-			<div data-role="footer" id="footer">
-			</div>
-		</div>
+            </div>
+            <div data-role="footer" id="footer">
+            </div>
+        </div>
         <script>
-            $('#update-name').addClass('ui-disabled');
+            var changingName = false;
+            var changingPass = false;
+            var deactivating = false;
+        
             $('#update-password').addClass('ui-disabled');
-            $('#update-password').on( 'click tap', function () {
-                alert('belly');
-                var passwordForm = $("#update-password").serializeArray();
-                $.ajax({
-                    type: "POST",
-                    url: <?php echo '\'' . AJAX_URL . 'user/settings.php\''; ?>,
-                    data: passwordForm,
-                    error: onPasswordChange,
-                    datatype: 'json'
-                });
-                alert('hello');
+            $('#deactivate-account').addClass('ui-disabled');
+            
+            $('#update-password').on( 'click tap', function (e) {
+                e.preventDefault();
+                
+                if ( changingPass == false ) {
+                    changingPass = true;
+                    var formData = $("#password-change").serializeArray();
+                    
+                    $.post( <?php echo '\'' . AJAX_URL . 'user/settings.php\''; ?>,
+                            formData,
+                            onPasswordChange,
+                            "json" );
+                }
             });
 
             
             $('#update-name').on( 'click tap', function () {
-                alert('starting updating name');
-                var updateNameForm = $("#update-name").serializeArray();
+                if ( changingName == false ) {
+                    changingName = true;
+                    var updateNameForm = $("#name-change").serializeArray();
 
-                $.ajax
-                ({
-                    type: "POST",
-                    url: <?php echo '\'' . AJAX_URL . 'user/settings.php\''; ?>,
-                    data: updateNameForm,
-                    datatype: 'json',
-                    success: function (json) {
-                        if (json.success == true) { 
-                            nameChangeSuccess();
+                    $.ajax
+                    ({
+                        type: "POST",
+                        url: <?php echo '\'' . AJAX_URL . 'user/settings.php\''; ?>,
+                        data: updateNameForm,
+                        datatype: 'json',
+                        success: function (json) {
+                            changingName = false;
+                            json = $.parseJSON( json );
+                            if (json.success == true) { 
+                                nameChangeSuccess();
+                            }
                         }
-                    },
-                    error: errorMessage()
-                });
+                    });
+                }
             });
 
             $('#deactivate-account').on( 'click tap', function () {
-                alert('account deactivation button pressed');
-                var deactivateAccountForm = $("#deactivate-account-form").serializeArray();
-				
-                $.ajax
-                ({
-                    type: "POST",
-                    url: <?php echo '\'' . AJAX_URL . 'user/auth.php\''; ?>,
-                    data: deactivateAccountForm,
-                    datatype: 'json',
-                    success: function (json) {
-                        if (json.deleted == true)
-                        {
-                            alert('Study Buddy account deactivated.');
-                            redirectToMain();
-                        }},
-                    error: errorMessage()
-                });
+                if ( deactivating == false ) {
+                    deactivating = true;
+                    var deactivateAccountForm = $("#deactivate-account-form").serializeArray();
+                    
+                    $.ajax
+                    ({
+                        type: "POST",
+                        url: <?php echo '\'' . AJAX_URL . 'user/auth.php\''; ?>,
+                        data: deactivateAccountForm,
+                        datatype: 'json',
+                        success: function (json) {
+                            deactivating = false;
+                            json = $.parseJSON( json );
+                            if (json.deleted == true)
+                            {
+                                alert( 'Your account has been deactivated and may be permanently ' +
+                                       'removed in the near future.' );
+                                window.location.assign("login.php");
+                            }
+                        }
+                    });
+                }
             });
 
             function validateDisplayName() {
@@ -177,25 +200,39 @@
                 return true;
 
             }
+            
+            /*
+             * Checks if password in deactivation area could be correct.
+             */
+            function validateDeactivation()
+            {
+                var delpass = document.getElementById("password").value;
+                var passwordRegex = /^.+$/g;
+                
+                if (delpass == null || delpass.length < 1) {
+                    $('#update-password').addClass('ui-disabled');
+                    
+                    return false;
+                }
+                
+                $('#deactivate-account').removeClass('ui-disabled');
+                
+                return true;
+            }
+            
+            
             $("#new-password").keyup( function(e){validatePassword();} );
             $("#confirm-password").keyup( function(e){validatePassword();} );
+            $("#password").keyup( function(e){ validateDeactivation();} );
 
             function onPasswordChange(data) {
-                alert('HI!');
-            }
-
-            function errorMessage() {
-                alert('error message');
+                $('#password-change-success').show();
+                changingPass = false;
             }
 
             function nameChangeSuccess() {
-                $('#name-change-succcess').show();
-            }
-
-            function redirectToMain()
-            {
-                window.location.assign("main.php");
+                $('#name-change-success').show();
             }
         </script>
-	</body>
+    </body>
 </html>

@@ -31,11 +31,18 @@ if ( isset( $_POST['method'] ) )
 	{
 		$retval = deactivate( $_SESSION['email'], $_POST['password'] );
 	}
+	// Request Password Recovery
+	else if ( $_POST['method'] == 'recovery-request' )
+	{
+		$user = User::instance();
+		$retval['success'] = $user->emailPasswordChange( $_POST['email'] );
+	}
 	// Password Recovery
 	else if( $_POST['method'] == 'password-recovery' )
 	{
-		$retval = passwordRecovery( $_POST['verification-string'],
-									$_POST['new-password'],
+		$retval = passwordRecovery( $_POST['email'],
+									$_POST['verification-string'],
+									$_POST['password'],
 									$_POST['confirm-password']
 									);
 	}
@@ -45,9 +52,9 @@ if ( isset( $_POST['method'] ) )
 		$retval = verify( $_POST['verification-code'] );
 	}
 	//Resend verification email
-	else if ( $_POST['method'] == 'resend_verification' )
+	else if ( $_POST['method'] == 'resend-verification' )
 	{
-		$retval = resend_verification( $_POST['email'] );
+		$retval = resend_verification( $_POST['id'] );
 	}
 	
 	echo json_encode( $retval );
@@ -183,21 +190,23 @@ function deactivate( $email, $password )
 	if ( $user->checkCredentials( $email, $password ) )
 	{
 		$retval['deleted'] = $user->deleteAccount( $email );
+		$user->logout();
 	}
 	
 	return $retval;
 }
 
-function passwordRecovery( $verificationString, $newPassword, $confirmPassword )
+function passwordRecovery( $email, $verificationString, $newPassword, $confirmPassword )
 {
 	$user = User::instance();
 	$retval = array( 'success' => false );
-	
-	if ( $user->passwordRecovery( $verificationString, 
-								  $newPassword, 
-								  $confirmPassword ) )
+    
+	if ( $user->checkVerificationString( $email, $verificationString ) )
 	{
-		$retval['success'] = true;
+		if ( $newPassword === $confirmPassword && $user->changePassword( $email, $newPassword ) )
+		{
+			$retval['success'] = true;
+		}
 	}
 	
 	return $retval;
@@ -223,8 +232,10 @@ function verify( $vCode )
 	return $retval;
 }
 
-function resend_verification( $email )
+function resend_verification( $id )
 {
 	$user = User::instance();
-	
+    $retval = array();
+    $retval['emailSent'] = $user->giveNewVerificationString( $id );
+    return $retval;
 }

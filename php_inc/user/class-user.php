@@ -1,6 +1,9 @@
 <?php
 
 require_once( PHP_INC_PATH . 'lib/PasswordHash.php' );
+require_once( PHP_INC_PATH . 'class-input-validation.php' );
+require_once( PHP_INC_PATH . 'lib/PHPMailerAutoload.php' );
+	
 
 class User
 {
@@ -54,6 +57,7 @@ class User
             {
                 $_SESSION['valid'] = 1;
                 $_SESSION['email'] = $email;
+				$_SESSION['display_name'] = $this->getDisplayName();
                 
                 // Store a unique id for session id
                 if ( $rememberMe )
@@ -81,13 +85,13 @@ class User
         // Unset token cookies!
         if ( isset( $_COOKIE['sb_id'] ) )
         {
-            setcookie('sb_id', $email, time()-3600, '/');
+            setcookie('sb_id', '', time()-3600, '/');
             unset( $_COOKIE['sb_id'] );
         }
         
         if ( isset( $_COOKIE['sb_token'] ) )
         {
-            setcookie('sb_token', $email, time()-3600, '/');
+            setcookie('sb_token', '', time()-3600, '/');
             unset( $_COOKIE['sb_token'] );
         }
 	}
@@ -111,6 +115,7 @@ class User
                 {
                     $_SESSION['valid'] = 1;
                     $_SESSION['email'] = $_COOKIE['sb_id'];
+					$_SESSION['display_name'] = $this->getDisplayName();
                     return true;
                 }
             }
@@ -170,6 +175,30 @@ class User
         }
         
         return false;
+	}
+	
+	public function checkVerificationString( $email, $vString )
+	{
+		global $db;
+		
+		$sql = 'SELECT verificationString
+				FROM ' . User::USER_TABLE . ' 
+				WHERE email=:email
+				;';
+		$sql = $db->prepare( $sql );
+		$sql->bindParam( ':email', $email );
+        
+		if ( $sql->execute() )
+		{
+            $result = $sql->fetch( PDO::FETCH_ASSOC );
+            
+			if ( $result != false && $result['verificationString'] === $vString )
+			{
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	/*
@@ -290,13 +319,13 @@ class User
         {
             return false;
         }
-        
+		
         // Ensure the user has permission to do this
         if ( !$this->checkCredentials( $email, $oldPassword ) )
         {
             return false;
         }
-        
+		
         // Try to change the password.
         return $this->changePassword( $email, $newPassword );
     }
@@ -319,6 +348,9 @@ class User
             return false;
         }
         
+		//update display name in the session
+		$_SESSION['display_name'] = $displayName;
+		
         $sql = 'UPDATE ' . User::USER_TABLE . ' 
                 SET displayName=:displayName
                 WHERE email=:email
@@ -402,7 +434,7 @@ class User
 		$email = $email['email'];
 		
         //create a new verification string
-        $newVString = generateVerificationString();
+        $newVString = $this->generateVerificationString();
 
         //update USER_TABLE with new verificationString
         $sql = 'UPDATE ' . User::USER_TABLE . ' 
@@ -422,7 +454,7 @@ class User
         // If the verification string was created, send it to the email.
         if ( $success )
         {
-            $success = emailVerificationString( $email, $newVString );
+            $success = $this->emailVerificationString( $email, $newVString );
         }
         
         return $success;
@@ -452,58 +484,84 @@ class User
 		$result = $sql->fetch( PDO::FETCH_ASSOC );
 		$verificationString = $result['verificationString'];
 		$email = $result['email'];
-	
+        
+        /* ---------------- OLD EMAIL STUFF ----------------------------- 
+        $mail = new PHPMailer();
+         
+        $mail->isSMTP();                                      // Set mailer to use SMTP
+        $mail->Host = 'smtp.gmail.com';                       // Specify main and backup server
+        $mail->SMTPAuth = true;                               // Enable SMTP authentication
+        $mail->Username = 'bcit.study.buddy@gmail.com';       // SMTP username
+        $mail->Password = 'buddypass';                        // SMTP password
+        $mail->SMTPSecure = 'tls';                            // Enable encryption, 'ssl' also accepted
+        $mail->Port = 587;                                    //Set the SMTP port number - 587 for authenticated TLS
+        $mail->setFrom('bcit.study.buddy@gmail.com', 'The Study Buddy Team'); //Set who the message is to be sent from
+        $mail->addAddress( $email );               // Name is optional
+        $mail->WordWrap = 50;                                 // Set word wrap to 50 characters
+         
+        $mail->Subject = 'Study Buddy Verification';
+        $mail->Body    = 'You have requested a verification email for Study Buddy. Your verification ' 
+                          .'code is provided below:\r\n\r\n' . $verificationString . '\r\n\r\nThank you for' 
+                          .' using Study Buddy.\r\n\r\nSincerely,\r\nThe Study Buddy Team';
+         
+        return $mail->send();
+        */
+    
+        /*  -------------- OLD EMAIL STUFF ------------------------ */
         //the subject line for the verification e-mail
         $subject = 'Study Buddy Verification';
 
         //the message to be sent
-        $message = 'You have requested a verification email for Study Buddy. Your verification 
-					code is provided below:<br/>' . $verificationString . '<br/><br/>Thank you for 
-					using Study Buddy.<br/><br/>Sincerely,<br/>The Study Buddy Team';
+        $message = 'You have requested a verification email for Study Buddy. Your verification ' 
+                  .'code is provided below:\r\n\r\n' . $verificationString . '\r\n\r\nThank you for' 
+				  .' using Study Buddy.\r\n\r\nSincerely,\r\nThe Study Buddy Team';
 
         // Use wordwrap() to ensure the message is no longer than 70 columns long (industry standard)
-        $message = wordwrap($message, 70, '<br/>');
+        $message = wordwrap($message, 70, '\r\n');
 
+        // Temporary for presentation
+        //$email = 'study.buddy.bcit@gmail.com';
+        
         // Send mail
-        return mail($email, $subject, $message, 'From: bcit.study.buddy@gmail.com');
+        return mail($email, $subject, $message, 'From: study.buddy.bcit@gmail.com');
     }
     
-	public function emailPasswordChange( $id )
+	public function emailPasswordChange( $email )
 	{
 		global $db;
 		
 		$verString = $this->generateVerificationString();
 		
-		$sql = 'SELECT verificationString, email
-				FROM ' . User::USER_TABLE . ' 
-				WHERE ID=:id
+		$sql = 'UPDATE ' . User::USER_TABLE. ' 
+				SET verificationString=:vString
+				WHERE email=:email
 				;';
 				
 		$sql = $db->prepare( $sql );
-		$sql->bindParam( ':id', $id );
+		$sql->bindParam( ':email', $email );
+		$sql->bindParam( ':vString', $verString );
 		
 		if ( !$sql->execute() )
 		{
 			return false;
 		}
-		
-		$result = $sql->fetch( PDO::FETCH_ASSOC );
-		$verificationString = $result['verificationString'];
-		$email = $result['email'];
 	
         //the subject line for the verification e-mail
         $subject = 'Study Buddy Verification';
 
         //the message to be sent
-        $message = 'You have requested a verification email for Study Buddy. Your verification 
-					code is provided below:<br/>' . $verificationString . '<br/><br/>Thank you for 
-					using Study Buddy.<br/><br/>Sincerely,<br/>The Study Buddy Team';
+        $message = 'You have requested a password change email for Study Buddy. Your verification '
+					.'code is provided below:'. PHP_EOL . PHP_EOL . $verString . PHP_EOL . 'Thank you for '
+					.'using Study Buddy.' . PHP_EOL . PHP_EOL . 'Sincerely,' . PHP_EOL . 'The Study Buddy Team';
 
         // Use wordwrap() to ensure the message is no longer than 70 columns long (industry standard)
-        $message = wordwrap($message, 70, '<br/>');
+        $message = wordwrap($message, 70, PHP_EOL);
 
+        // Temporary for presentation
+        //$email = 'study.buddy.bcit@gmail.com';
+        
         // Send mail
-        mail($email, $subject, $message);
+        return mail($email, $subject, $message, 'From: study.buddy.bcit@gmail.com');
 	}
 	
 	/*
@@ -583,7 +641,8 @@ class User
 		global $db;
 		
 		$sql = 'UPDATE ' . User::USER_TABLE . ' 
-				SET verified=\'T\', verificationTime=CURRENT_TIMESTAMP
+				SET verified=\'T\', verificationTime=CURRENT_TIMESTAMP,
+					deleted=\'F\'
 				WHERE ID=:id
 				;';
 				
@@ -668,4 +727,35 @@ class User
         
         return false;
     }
+	
+	/*
+	 * Fetches the users display name from SQL.
+	 *
+	 * @return displayname
+	 */
+	private function getDisplayName()
+	{
+        if ( !isset( $_SESSION['email'] ) )
+        {
+            return false;
+        }
+    
+		global $db;
+		
+		$sql = 'SELECT displayName 
+					FROM ' . User::USER_TABLE . '
+					WHERE email = :email;';
+		$sql = $db->prepare( $sql );			
+		$sql->bindParam( ':email', $_SESSION['email'] );
+		
+		if ( !$sql->execute() )
+		{
+			return false;
+		}
+		
+		$displayName = $sql->fetch( PDO::FETCH_ASSOC );
+		$displayName = $displayName['displayName'];
+		
+		return $displayName;
+	}
 }

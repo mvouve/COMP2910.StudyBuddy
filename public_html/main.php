@@ -14,7 +14,7 @@
         <link rel="stylesheet" type="text/css" href="css/jquery.slidepanel.css">
     ');
 ?>
-<?php renderPagelet( 'header.php', array( '{{customHeadTags}}' => $sliderHeader ) ); ?>
+<?php renderPagelet( 'header.php', $sliderHeader ); ?>
 
 <!--doctype html>
 <html>
@@ -36,9 +36,9 @@
     </head>
 -->
     <body>
-        <div data-role="page" id="page">
+        <div data-role="page" id="page" data-theme="a">
             <?php define('HAS_MENU',1);
-                  renderPagelet( 'banner.php', array( '{{title}}' => 'MiAn pAije' ) ); ?>
+                  renderPagelet( 'banner.php', array( '{{title}}' => 'Main Page' ) ); ?>
             <div class="center" data-role="main">
                     <p>Main Page</p>
             </div>     

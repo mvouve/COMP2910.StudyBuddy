@@ -1,4 +1,7 @@
 <?php
+require( '../../config.php' );
+require( PHP_INC_PATH . 'common.php' );
+
 $retval = array('success' => false );
 
 //Only do something if a method is set.
