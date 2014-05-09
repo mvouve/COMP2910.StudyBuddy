@@ -73,11 +73,11 @@
                 </div>
                 <div data-role="collapsible">
                     <h3>Deactivate your account</h3>
-                    <form id="name-change" name="name-change" method="POST">
+                    <form id="deactivate-account-form" name="deactivate-account-form" method="POST">
                         <label for="password">Password:</label>
                         <input type="password" name="password" id="password" required><br/>
                         <input id="deactivate-account" type="button" value="Deactivate Account">
-                        <input type="hidden" name="method" value="deactivate-account" />
+                        <input type="hidden" name="method" value="delete-account" />
                     </form>
                 </div>
 			</div>
@@ -122,7 +122,7 @@
 
             $('#deactivate-account').on( 'click tap', function () {
                 alert('account deactivation button pressed');
-                var deactivateAccountForm = $("#deactivate-account").serializeArray();
+                var deactivateAccountForm = $("#deactivate-account-form").serializeArray();
 
                 $.ajax
                 ({
@@ -135,8 +135,7 @@
                         {
                             alert('Study Buddy account deactivated.');
                             redirectToMain();
-                        }
-						},
+                        }},
                     error: errorMessage()
                 });
             });
