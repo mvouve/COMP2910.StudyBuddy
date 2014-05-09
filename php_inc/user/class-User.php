@@ -1,6 +1,8 @@
 <?php
 
 require_once( PHP_INC_PATH . 'lib/PasswordHash.php' );
+require_once( PHP_INC_PATH . 'class-input-validation.php' );
+	
 
 class User
 {
@@ -303,8 +305,6 @@ class User
      */
     public function updatePassword( $email, $oldPassword, $newPassword, $confirmPassword )
     {
-		require_once( '../class-input-validation.php' );
-	
         // Ensure the password is valid.
         if ( !InputValidation::isValidPassword( $newPassword ) )
         {
