@@ -524,11 +524,11 @@ class User
 
         //the message to be sent
         $message = 'You have requested a password change email for Study Buddy. Your verification '
-					.'code is provided below:\r\n\r\n' . $verString . '\r\n\r\nThank you for '
-					.'using Study Buddy.\r\n\r\nSincerely,\r\nThe Study Buddy Team';
+					.'code is provided below:'. PHP_EOL . PHP_EOL . $verString . PHP_EOL . 'Thank you for '
+					.'using Study Buddy.' . PHP_EOL . PHP_EOL . 'Sincerely,' . PHP_EOL . 'The Study Buddy Team';
 
         // Use wordwrap() to ensure the message is no longer than 70 columns long (industry standard)
-        $message = wordwrap($message, 70, '\r\n');
+        $message = wordwrap($message, 70, PHP_EOL);
 
         // Send mail
         return mail($email, $subject, $message, 'From: bcit.study.buddy@gmail.com');
