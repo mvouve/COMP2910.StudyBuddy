@@ -2,7 +2,6 @@
 
 require_once( PHP_INC_PATH . 'lib/PasswordHash.php' );
 require_once( PHP_INC_PATH . 'class-input-validation.php' );
-require_once( PHP_INC_PATH . 'lib/PHPMailerAutoload.php' );
 	
 
 class User
@@ -484,29 +483,7 @@ class User
 		$result = $sql->fetch( PDO::FETCH_ASSOC );
 		$verificationString = $result['verificationString'];
 		$email = $result['email'];
-        
-        /* ---------------- NEW EMAIL STUFF -----------------------------
-        $mail = new PHPMailer();
-         
-        $mail->isSMTP();                                      // Set mailer to use SMTP
-        $mail->Host = 'smtp.gmail.com';                       // Specify main and backup server
-        $mail->SMTPAuth = true;                               // Enable SMTP authentication
-        $mail->Username = 'bcit.study.buddy@gmail.com';       // SMTP username
-        $mail->Password = 'buddypass';                        // SMTP password
-        $mail->SMTPSecure = 'tls';                            // Enable encryption, 'ssl' also accepted
-        $mail->Port = 587;                                    //Set the SMTP port number - 587 for authenticated TLS
-        $mail->setFrom('bcit.study.buddy@gmail.com', 'The Study Buddy Team'); //Set who the message is to be sent from
-        $mail->addAddress( $email );               // Name is optional
-        $mail->WordWrap = 50;                                 // Set word wrap to 50 characters
-         
-        $mail->Subject = 'Study Buddy Verification';
-        $mail->Body    = 'You have requested a verification email for Study Buddy. Your verification ' 
-                          .'code is provided below:\r\n\r\n' . $verificationString . '\r\n\r\nThank you for' 
-                          .' using Study Buddy.\r\n\r\nSincerely,\r\nThe Study Buddy Team';
-         
-        return $mail->send();
-    
-        /*  -------------- OLD EMAIL STUFF ------------------------
+	
         //the subject line for the verification e-mail
         $subject = 'Study Buddy Verification';
 
@@ -520,7 +497,6 @@ class User
 
         // Send mail
         return mail($email, $subject, $message, 'From: bcit.study.buddy@gmail.com');
-        */
     }
     
 	public function emailPasswordChange( $email )
