@@ -485,7 +485,7 @@ class User
 		$verificationString = $result['verificationString'];
 		$email = $result['email'];
         
-        /* ---------------- NEW EMAIL STUFF -----------------------------
+        /* ---------------- NEW EMAIL STUFF ----------------------------- */
         $mail = new PHPMailer();
          
         $mail->isSMTP();                                      // Set mailer to use SMTP
