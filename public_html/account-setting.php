@@ -1,12 +1,12 @@
 <?php require_once( 'config.php' ); ?>
 <?php require_once( PHP_INC_PATH . 'common.php' ); ?>
 <?php
-	$user = User::instance();
-	if ( !$user->isLoggedIn() )
-	{
-		include( 'login.php' );
-		die();
-	}
+    $user = User::instance();
+    if ( !$user->isLoggedIn() )
+    {
+        include( 'login.php' );
+        die();
+    }
 ?>
 <?php $sliderHeader = array( '{{customHeadTags}}' => '
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
@@ -15,7 +15,7 @@
     ');
 
     $email = $_SESSION['email'];
-	$display_name = $_SESSION['display_name'];
+    $display_name = $_SESSION['display_name'];
 ?>
 <?php renderPagelet( 'header.php', array( '{{customHeadTags}}' => '' ) ); ?>
 
@@ -24,7 +24,7 @@
             <?php define('HAS_MENU',1);
                   renderPagelet( 'banner.php', array( '{{title}}' => 'Account Settings' ) ); ?>
 
-			<div data-role="content" data-theme="a">
+            <div data-role="content" data-theme="a">
                 <div class="center">
                     <p><?php echo $email; ?></p>
                 </div>
@@ -32,9 +32,9 @@
                 <div data-role="collapsible">
                     <h3>Change your display name</h3>
                     <form id="name-change" name="name-change" method="POST">
-						<input type="hidden" name="email" value="<?php echo $email; ?>">
+                        <input type="hidden" name="email" value="<?php echo $email; ?>">
                         <label for="display-name">New Name:</label>
-                        <div class="ui-icon-delete ui-btn-icon-right validated-field" id="display-name-div">
+                        <div class="ui-icon-check ui-btn-icon-right validated-field" id="display-name-div">
                             <input type="text" name="display-name" id="display-name" value="<?php echo $display_name ?>">
                         </div>
                         <a href="#" data-role="button" id="update-name">Update Name</a>
@@ -47,57 +47,62 @@
                       
                 <div data-role="collapsible">
                     <h3>Change your password</h3> 
-				    <form id="password-change" name="password-change" method="POST">
+                    <form id="password-change" name="password-change" method="POST">
                         <input type="hidden" name="email" value="<?php echo $email; ?>">
 
                         <label for="old-password">Current Password:</label>
-					    <input type="password" name="old-password" id="old-password" required><br/>
+                        <input type="password" name="old-password" id="old-password" required><br/>
 
 
-					    <label for="new-password">New Password:</label>
+                        <label for="new-password">New Password:</label>
                         <div class="ui-icon-delete ui-btn-icon-right validated-field" id="password-div">
-					        <input type="password" name="new-password" id="new-password" required>
+                            <input type="password" name="new-password" id="new-password" required>
                         </div>
 
 
-					    <label for="confirm-password">Confirm New Password:</label>
+                        <label for="confirm-password">Confirm New Password:</label>
                         <div class="ui-icon-delete ui-btn-icon-right validated-field" id="confirm-div">
-    					    <input type="password" name="confirm-password" id="confirm-password" required>
+                            <input type="password" name="confirm-password" id="confirm-password" required>
                         </div>
 
 
                         <a href="#" data-role="button" id="update-password">Update Password</a>
                         <input type="hidden" name="method" value="update-password">
-				    </form>
+                    </form>
                     <div id="mismatch" style="display:none">
                         <p>Please check your new passwords</p>
                     </div>
                 </div>
-				<div id="password-change-success" style="display:none">
+                <div id="password-change-success" style="display:none">
                         <p>Password Change Successful!</p>
                 </div>
                 <div data-role="collapsible">
                     <h3>Deactivate your account</h3>
                     <form id="deactivate-account-form" name="deactivate-account-form" method="POST">
+                    
                         <label for="password">Password:</label>
-                        <input type="password" name="password" id="password" required><br/>
-                        <input id="deactivate-account" type="button" value="Deactivate Account">
+                        <div id="delpass-div">
+                            <input type="password" name="password" id="password" required>
+                        </div>
+                        
+                        <a href="#" data-role="button" id="deactivate-account">Deactivate Account</a>
                         <input type="hidden" name="method" value="delete-account" />
                     </form>
                 </div>
-			</div>
-			<div data-role="footer" id="footer">
-			</div>
-		</div>
+            </div>
+            <div data-role="footer" id="footer">
+            </div>
+        </div>
         <script>
             var changingName = false;
             var changingPass = false;
             var deactivating = false;
         
-            $('#update-name').addClass('ui-disabled');
             $('#update-password').addClass('ui-disabled');
+            $('#deactivate-account').addClass('ui-disabled');
+            
             $('#update-password').on( 'click tap', function (e) {
-				e.preventDefault();
+                e.preventDefault();
                 
                 if ( changingPass == false ) {
                     changingPass = true;
@@ -195,8 +200,30 @@
                 return true;
 
             }
+            
+            /*
+             * Checks if password in deactivation area could be correct.
+             */
+            function validateDeactivation()
+            {
+                var delpass = document.getElementById("password").value;
+                var passwordRegex = /^.+$/g;
+                
+                if (delpass == null || delpass.length < 1) {
+                    $('#update-password').addClass('ui-disabled');
+                    
+                    return false;
+                }
+                
+                $('#deactivate-account').removeClass('ui-disabled');
+                
+                return true;
+            }
+            
+            
             $("#new-password").keyup( function(e){validatePassword();} );
             $("#confirm-password").keyup( function(e){validatePassword();} );
+            $("#password").keyup( function(e){ validateDeactivation();} );
 
             function onPasswordChange(data) {
                 $('#password-change-success').show();
@@ -207,5 +234,5 @@
                 $('#name-change-success').show();
             }
         </script>
-	</body>
+    </body>
 </html>
