@@ -44,23 +44,20 @@ else
                     type: "POST",
                     url: <?php echo '\'' . AJAX_URL . 'user/auth.php\''; ?>,
                     data: passwordForm,
-                    error: failedSubmit(),
                     datatype: 'json',
                     success: function(json){
                         if(json.success == true){
+                            console.log( 'success' );
                             window.location.assign("login.php");
                         }
                         else{
-                            alert( 'json.success == false' );
+                            alert( 'Could not change password. Perhaps your verification code is ' +
+                                   'incorrect?' );
                         }
                     }
 
                 });
             });
-            
-            function failedSubmit(){
-                alert('Please double check passwords');
-            }
 
             function validatePassword() {
                 var passwordRegex = /^.+$/g;

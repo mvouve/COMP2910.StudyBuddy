@@ -14,7 +14,7 @@
         <link rel="stylesheet" type="text/css" href="css/jquery.slidepanel.css">
     ');
 ?>
-<?php renderPagelet( 'header.php', array( '{{customHeadTags}}' => $sliderHeader ) ); ?>
+<?php renderPagelet( 'header.php', $sliderHeader ); ?>
 
 <!--doctype html>
 <html>
