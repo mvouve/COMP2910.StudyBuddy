@@ -7,8 +7,10 @@
 		<div data-role="content" id="recovery">
 			<form id="recovery-form" name="recovery-form" method="POST">
                 <input type="hidden" name="email" value="<?php echo urldecode($_GET[ 'eamil' ]); ?>">
+
                 <label for="verification-code">Verification Code:</label>
                 <input type="text" name="verification-string" id="verification-string">
+
                 <label for="new-password" id="password-label">Password:</label>
 				<div class="ui-icon-delete ui-btn-icon-right validated-field" id="password-div">
                     <input type="password" name="password" id="new-password">
@@ -39,7 +41,7 @@
                             window.location.assign("login.php");
                         }
                         else{
-                            failedSubmit();
+                            alert( 'json.success == false' );
                         }
                     }
 
