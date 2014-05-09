@@ -5,11 +5,11 @@
             <?php renderPagelet( 'banner.php', array( '{{title}}' => 'Password Recovery' ) ); ?>
             <div data-role="content" class="center">
                 <p>If you have forgotten your password, you can request an email to reset your password by entering your email here.</p>
-			    <form name="recovery-request-form" id="recovery-request-form" method="POST">
+			    <form name="recovery-request-form" id="recovery-request-form" method="POST" onsubmit='return false;'>
                     <label for="email">Email:</label>
                     <input type="email" name="email" id="email" placeholder="You@my.bcit.ca">
                     <input type="hidden" name="method" value="recovery-request">
-                    <input type="button" value="Submit" id="recovery-request-submit">
+                    <a href="#" data-role="button" id="recovery-request-submit">Send Email</a>
                 </form>
             </div>
         </div>
@@ -29,6 +29,7 @@
             $("#recovery-request-submit").on( 'click tap', function (e) 
 	        {
 		        e.preventDefault();
+                e.stopImmediatePropagation();
                 alert('double click check');
             		
     		    var formData = $("#recovery-request-form").serializeArray();

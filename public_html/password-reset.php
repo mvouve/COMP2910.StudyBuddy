@@ -1,12 +1,22 @@
 <!--Study Buddy - Account Registration-->
 <?php require_once( 'config.php' ); ?>
+<?php
+if ( !isset( $_GET['email'] ) )
+{
+    $email = '';
+}
+else
+{
+    $email = $_GET['email'];
+}
+?>
 <?php renderPagelet( 'header.php', array( '{{customHeadTags}}' => '' ) ); ?>
 <body>
     <div data-role="page" data-theme="a">
         <?php renderPagelet( 'banner.php', array( '{{title}}' => 'Password Reset' ) ); ?>
 		<div data-role="content" id="recovery">
-			<form id="recovery-form" name="recovery-form" method="POST">
-                <input type="hidden" name="email" value="<?php echo urldecode($_GET[ 'eamil' ]); ?>">
+			<form id="recovery-form" name="recovery-form" method="POST" onsubmit='return false;'>
+                <input type="hidden" name="email" value="<?php echo urldecode($email); ?>">
 
                 <label for="verification-code">Verification Code:</label>
                 <input type="text" name="verification-string" id="verification-string">

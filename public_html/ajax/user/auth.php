@@ -42,7 +42,7 @@ if ( isset( $_POST['method'] ) )
 	{
 		$retval = passwordRecovery( $_POST['email'],
 									$_POST['verification-string'],
-									$_POST['new-password'],
+									$_POST['password'],
 									$_POST['confirm-password']
 									);
 	}
@@ -200,12 +200,10 @@ function passwordRecovery( $email, $verificationString, $newPassword, $confirmPa
 {
 	$user = User::instance();
 	$retval = array( 'success' => false );
-	
+    
 	if ( $user->checkVerificationString( $email, $verificationString ) )
 	{
-		if ( $user->passwordRecovery( $verificationString, 
-								  $newPassword, 
-								  $confirmPassword ) )
+		if ( $newPassword === $confirmPassword && $user->changePassword( $email, $newPassword ) )
 		{
 			$retval['success'] = true;
 		}

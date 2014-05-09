@@ -178,18 +178,18 @@ class User
 	{
 		global $db;
 		
-		$sql = 'SELECT *
+		$sql = 'SELECT verificationString
 				FROM ' . User::USER_TABLE . ' 
 				WHERE email=:email
-					AND verificationString=:vString
 				;';
 		$sql = $db->prepare( $sql );
 		$sql->bindParam( ':email', $email );
-		$sql->bindParam( ':vString', $vString );
-		
+        
 		if ( $sql->execute() )
 		{
-			if ( $sql->fetch() )
+            $result = $sql->fetch( PDO::FETCH_ASSOC );
+            
+			if ( $result != false && $result['verificationString'] === $vString )
 			{
 				return true;
 			}
