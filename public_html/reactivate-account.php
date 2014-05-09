@@ -1,11 +1,5 @@
 <?php require_once( 'config.php' ); ?>
-<?php $sliderHeader = array( '{{customHeadTags}}' => '
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-        <script type="text/javascript" src="js/jquery.slidepanel.js"></script>
-        <link rel="stylesheet" type="text/css" href="css/jquery.slidepanel.css">
-    ');
-?>
-<?php renderPagelet( 'header.php', array( '{{customHeadTags}}' => $sliderHeader ) ); ?>
+<?php renderPagelet( 'header.php', array() ); ?>
 
     <body>
         <div data-role="page" id="page">
