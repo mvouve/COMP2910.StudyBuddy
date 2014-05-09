@@ -88,6 +88,7 @@
             $('#update-name').addClass('ui-disabled');
             $('#update-password').addClass('ui-disabled');
             $('#update-password').on( 'click tap', function () {
+			/*
                 alert('belly');
                 var passwordForm = $("#update-password").serializeArray();
                 $.ajax({
@@ -98,6 +99,13 @@
                     datatype: 'json'
                 });
                 alert('hello');
+			*/
+				var formData = $("#update-password").serializeArray();
+				
+				$.post( <?php echo '\'' . AJAX_URL . 'user/auth.php\''; ?>,
+						formData,
+						onPasswordChange,
+						"json" );
             });
 
             
