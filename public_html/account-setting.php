@@ -101,9 +101,9 @@
                 alert('hello');
 			*/
 				e.preventDefault();
-				var formData = $("#update-password").serializeArray();
+				var formData = $("#password-change").serializeArray();
 				
-				$.post( <?php echo '\'' . AJAX_URL . 'user/auth.php\''; ?>,
+				$.post( <?php echo '\'' . AJAX_URL . 'user/settings.php\''; ?>,
 						formData,
 						onPasswordChange,
 						"json" );
