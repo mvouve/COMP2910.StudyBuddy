@@ -485,7 +485,7 @@ class User
 		$verificationString = $result['verificationString'];
 		$email = $result['email'];
         
-        /* ---------------- NEW EMAIL STUFF ----------------------------- */
+        /* ---------------- OLD EMAIL STUFF ----------------------------- 
         $mail = new PHPMailer();
          
         $mail->isSMTP();                                      // Set mailer to use SMTP
@@ -505,8 +505,9 @@ class User
                           .' using Study Buddy.\r\n\r\nSincerely,\r\nThe Study Buddy Team';
          
         return $mail->send();
+        */
     
-        /*  -------------- OLD EMAIL STUFF ------------------------
+        /*  -------------- OLD EMAIL STUFF ------------------------ */
         //the subject line for the verification e-mail
         $subject = 'Study Buddy Verification';
 
@@ -519,8 +520,7 @@ class User
         $message = wordwrap($message, 70, '\r\n');
 
         // Send mail
-        return mail($email, $subject, $message, 'From: bcit.study.buddy@gmail.com');
-        */
+        return mail($email, $subject, $message, 'From: study.buddy.bcit@gmail.com');
     }
     
 	public function emailPasswordChange( $email )
@@ -555,7 +555,7 @@ class User
         $message = wordwrap($message, 70, PHP_EOL);
 
         // Send mail
-        return mail($email, $subject, $message, 'From: bcit.study.buddy@gmail.com');
+        return mail($email, $subject, $message, 'From: study.buddy.bcit@gmail.com');
 	}
 	
 	/*
