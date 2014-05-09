@@ -1,6 +1,8 @@
 <?php
 
 require_once( PHP_INC_PATH . 'lib/PasswordHash.php' );
+require_once( PHP_INC_PATH . 'class-input-validation.php' );
+	
 
 class User
 {
@@ -118,6 +120,22 @@ class User
         
         return false;
     }
+	
+	/*
+	 * Mark an account as deleted.
+	 */
+	public function deleteAccount( $email )
+	{
+		global $db;
+		
+		$sql = 'UPDATE ' . User::USER_TABLE . ' 
+				SET deleted=\'T\'
+				WHERE email=:email
+				;';
+		$sql = $db->prepare( $sql );
+		$sql->bindParam( ':email', $email );
+		return $sql->execute();
+	}
     
     /*
      * Check if a users credentials are correct.
@@ -139,9 +157,10 @@ class User
                 
         $sql = $db->prepare( $sql );
         $sql->bindParam( ':email', $email );
+		$sql->execute();
         
         $result = $sql->fetch( PDO::FETCH_ASSOC );
-        
+		
         // Only check if the user exists!
         if ( $result != false )
         {
@@ -153,6 +172,30 @@ class User
         }
         
         return false;
+	}
+	
+	public function checkVerificationString( $email, $vString )
+	{
+		global $db;
+		
+		$sql = 'SELECT *
+				FROM ' . User::USER_TABLE . ' 
+				WHERE email=:email
+					AND verificationString=:vString
+				;';
+		$sql = $db->prepare( $sql );
+		$sql->bindParam( ':email', $email );
+		$sql->bindParam( ':vString', $vString );
+		
+		if ( $sql->execute() )
+		{
+			if ( $sql->fetch() )
+			{
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	/*
@@ -273,13 +316,13 @@ class User
         {
             return false;
         }
-        
+		
         // Ensure the user has permission to do this
         if ( !$this->checkCredentials( $email, $oldPassword ) )
         {
             return false;
         }
-        
+		
         // Try to change the password.
         return $this->changePassword( $email, $newPassword );
     }
@@ -340,12 +383,15 @@ class User
 		if ( $user != false )
 		{
 			// User waited too long to verify.
+			/* COME BACK TO IT LATER *
 			if ( time() - $user['verificationTime'] > VERIFICATION_EXPIRATION )
 			{
+				require_once( '/../exceptions/class-expired-verification-string-exception.php' );
 				throw new ExpiredVerificationStringException();
 			}
+			*/
 			// Valid String and Time, user is verified!
-			else
+			//else
 			{
 				$success = $this->setVerified( $user[ 'ID' ] );
 			}
@@ -361,11 +407,26 @@ class User
      * send them an email about it
      * return true or false for success
      */
-    public function giveNewVerificationString( $email )
+    public function giveNewVerificationString( $id )
     {
         global $db;
         $success = FALSE;
 
+		// Get user email
+		$sql = 'SELECT email
+				FROM ' . User::USER_TABLE . ' 
+				WHERE ID=:id
+				;';
+		$sql = $db->prepare( $sql );
+		$sql->bindParam( ':id', $id );
+		if ( !$sql->execute() )
+		{
+			return false;
+		}
+		
+		$email = $sql->fetch( PDO::FETCH_ASSOC );
+		$email = $email['email'];
+		
         //create a new verification string
         $newVString = generateVerificationString();
 
@@ -381,6 +442,7 @@ class User
 
         //bind the parameter to the variable name
         $sql->bindParam( ':newVString', $newVString );
+		$sql->bindParam( ':email', $email );
         $success = $sql->execute();
 
         // If the verification string was created, send it to the email.
@@ -396,29 +458,104 @@ class User
      * send the verificationString to the email address.
      * return true or false for success
      */
-    public function emailVerificationString( $email, $verificationString )
+    public function emailVerificationString( $id )
     {
-        //CODE GOES HERE
+		global $db;
+		
+		$sql = 'SELECT verificationString, email
+				FROM ' . User::USER_TABLE . ' 
+				WHERE ID=:id
+				;';
+				
+		$sql = $db->prepare( $sql );
+		$sql->bindParam( ':id', $id );
+		
+		if ( !$sql->execute() )
+		{
+			return false;
+		}
+		
+		$result = $sql->fetch( PDO::FETCH_ASSOC );
+		$verificationString = $result['verificationString'];
+		$email = $result['email'];
+	
+        //the subject line for the verification e-mail
+        $subject = 'Study Buddy Verification';
+
+        //the message to be sent
+        $message = 'You have requested a verification email for Study Buddy. Your verification 
+					code is provided below:<br/>' . $verificationString . '<br/><br/>Thank you for 
+					using Study Buddy.<br/><br/>Sincerely,<br/>The Study Buddy Team';
+
+        // Use wordwrap() to ensure the message is no longer than 70 columns long (industry standard)
+        $message = wordwrap($message, 70, '<br/>');
+
+        // Send mail
+        return mail($email, $subject, $message, 'From: bcit.study.buddy@gmail.com');
     }
     
-    /*
-     * Get a users recent login attempts.
-     */
-	private function getRecentLoginAttempts( $email )
+	public function emailPasswordChange( $email )
 	{
 		global $db;
 		
-		$sql = 'SELECT *
-				FROM ' . $LOGIN_ATTEMPT_TABLE . '
+		$verString = $this->generateVerificationString();
+		
+		$sql = 'UPDATE ' . User::USER_TABLE. ' 
+				SET verificationString=:vString
 				WHERE email=:email
-					AND time BETWEEN ( NOW() - INTERVAL 5 MINUTE ) AND NOW()
 				;';
 				
 		$sql = $db->prepare( $sql );
 		$sql->bindParam( ':email', $email );
-		$sql->execute();
+		$sql->bindParam( ':vString', $verString );
 		
-		/* COME BACK TO THIS LATER! */
+		if ( !$sql->execute() )
+		{
+			return false;
+		}
+	
+        //the subject line for the verification e-mail
+        $subject = 'Study Buddy Verification';
+
+        //the message to be sent
+        $message = 'You have requested a password change email for Study Buddy. Your verification 
+					code is provided below:<br/>' . $verString . '<br/><br/>Thank you for 
+					using Study Buddy.<br/><br/>Sincerely,<br/>The Study Buddy Team';
+
+        // Use wordwrap() to ensure the message is no longer than 70 columns long (industry standard)
+        $message = wordwrap($message, 70, '<br/>');
+
+        // Send mail
+        return mail($email, $subject, $message, 'From: bcit.study.buddy@gmail.com');
+	}
+	
+	/*
+	 * Get a User ID from their email
+	 *
+	 * @param $email the users email
+	 *
+	 * @return the user ID, or false on failure.
+	 */
+	public function getUserID( $email )
+	{
+		global $db;
+		
+		$sql = 'SELECT ID
+				FROM ' . User::USER_TABLE . ' 
+				WHERE email=:email
+				;';
+		$sql = $db->prepare( $sql );
+		$sql->bindParam( ':email', $email );
+		
+		if ( !$sql->execute() )
+		{
+			return false;
+		}
+		
+		$id = $sql->fetch( PDO::FETCH_ASSOC );
+		$id = $id['ID'];
+		
+		return $id;
 	}
 	
 	/*
@@ -469,7 +606,8 @@ class User
 		global $db;
 		
 		$sql = 'UPDATE ' . User::USER_TABLE . ' 
-				SET verified=\'T\', verificationTime=CURRENT_TIMESTAMP
+				SET verified=\'T\', verificationTime=CURRENT_TIMESTAMP,
+					deleted=\'F\'
 				WHERE ID=:id
 				;';
 				

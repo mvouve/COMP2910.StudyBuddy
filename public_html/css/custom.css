@@ -3,8 +3,17 @@
     text-align:center;
 }
 
-.contenta
+#logo-btn
 {
-    width:90%;
-    margin: 0px auto;
+	padding: 5px 10px;
+}
+
+a
+{
+    text-decoration:none;
+}
+
+.validated-field
+{
+    position: relative;
 }

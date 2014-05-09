@@ -1,6 +1,6 @@
 
 			<div data-role="header">
-				<img src="images/sb-logo.png" alt="Study Buddy" class="ui-btn-left" />
+				<a href='index.php' rel='external' id='logo-btn' data-role='button' data-inline='true' class="ui-btn-left" ><img src="images/sb-logo.png" alt="Study Buddy"/></a>
                 <h1>{{title}}</h1>
                 <?php
                     if( defined('HAS_MENU') )

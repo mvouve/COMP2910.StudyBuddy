@@ -7,7 +7,7 @@ $retval = array();
 // Only do something if a 'method' was set.
 if ( isset( $_POST['method'] ) )
 {
-	// DUMMY CHECK_CREDENTIALS METHOD!
+	// Login METHOD!
 	if ( $_POST['method'] == 'login' )
 	{
         $retval = login( $_POST['email'], $_POST['password'], isset( $_POST['remember'] ) );
@@ -26,6 +26,36 @@ if ( isset( $_POST['method'] ) )
                                    $_POST['confirm-password'] 
                                   );
     }
+	// DEACTIVATE ACCOUNT
+	else if ( $_POST['method'] == 'delete-account' )
+	{
+		$retval = deactivate( $_SESSION['email'], $_POST['password'] );
+	}
+	// Request Password Recovery
+	else if ( $_POST['method'] == 'recovery-request' )
+	{
+		$user = User::instance();
+		$retval['success'] = $user->emailPasswordChange( $_POST['email'] );
+	}
+	// Password Recovery
+	else if( $_POST['method'] == 'password-recovery' )
+	{
+		$retval = passwordRecovery( $_POST['email'],
+									$_POST['verification-string'],
+									$_POST['new-password'],
+									$_POST['confirm-password']
+									);
+	}
+	// Verify Account
+	else if ( $_POST['method'] == 'verify' )
+	{
+		$retval = verify( $_POST['verification-code'] );
+	}
+	//Resend verification email
+	else if ( $_POST['method'] == 'resend_verification' )
+	{
+		$retval = resend_verification( $_POST['email'] );
+	}
 	
 	echo json_encode( $retval );
 }
@@ -82,7 +112,8 @@ function registerAccount( $email, $displayName, $password, $confirmPassword )
         'accountExists'      => false,
         'accountDeleted'     => false,
         'accountNotVerified' => false,
-        'userID'             => false
+		'userID'			 => false,
+		'emailSent'			 => false
     );
     
     // Check if Email is valid.
@@ -96,7 +127,9 @@ function registerAccount( $email, $displayName, $password, $confirmPassword )
     if ( $retval['valid'] )
     {
         $accountStatus = $User->getAccountStatus( $email );
-        
+        $id = $User->getUserID( $email );
+		$retval['userID'] = $id;
+		
         if ( $accountStatus === User::ACCOUNT_EXISTS )
         {
             $retval['valid'] = false;
@@ -139,7 +172,70 @@ function registerAccount( $email, $displayName, $password, $confirmPassword )
     if ( $retval['valid'])
     {
         $retval['valid'] = $User->register( $email, $displayName, $password );
+		
+		if ($retval['valid'] != false )
+		{
+			$retval['emailSent'] = $User->emailVerificationString( $retval['valid'] );
+		}
     }
     
     return $retval;
+}
+
+function deactivate( $email, $password )
+{
+	$user = User::instance();
+	$retval = array( 'deleted' => false );
+	
+	if ( $user->checkCredentials( $email, $password ) )
+	{
+		$retval['deleted'] = $user->deleteAccount( $email );
+		$user->logout();
+	}
+	
+	return $retval;
+}
+
+function passwordRecovery( $email, $verificationString, $newPassword, $confirmPassword )
+{
+	$user = User::instance();
+	$retval = array( 'success' => false );
+	
+	if ( $user->checkVerificationString( $email, $verificationString ) )
+	{
+		if ( $user->passwordRecovery( $verificationString, 
+								  $newPassword, 
+								  $confirmPassword ) )
+		{
+			$retval['success'] = true;
+		}
+	}
+	
+	return $retval;
+}
+
+function verify( $vCode )
+{
+	$user = User::instance();
+	$retval = array( 'valid' => false, 'expired' => false );
+	
+	try
+		{
+		if ( $user->verifyAccount( $vCode ) )
+		{
+			$retval['valid'] = true;
+		}
+	}
+	catch ( Exception $e )
+	{
+		$retval['expired'] = true;
+	}
+	
+	return $retval;
+}
+
+function resend_verification( $email )
+{
+	$user = User::instance();
+	
 }
