@@ -526,7 +526,7 @@ class User
         $message = wordwrap($message, 70, '<br/>');
 
         // Send mail
-        mail($email, $subject, $message, 'From: bcit.study.buddy@gmail.com');
+        return mail($email, $subject, $message, 'From: bcit.study.buddy@gmail.com');
 	}
 	
 	/*
@@ -606,7 +606,8 @@ class User
 		global $db;
 		
 		$sql = 'UPDATE ' . User::USER_TABLE . ' 
-				SET verified=\'T\', verificationTime=CURRENT_TIMESTAMP
+				SET verified=\'T\', verificationTime=CURRENT_TIMESTAMP,
+					deleted=\'F\'
 				WHERE ID=:id
 				;';
 				

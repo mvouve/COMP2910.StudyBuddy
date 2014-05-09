@@ -14,7 +14,7 @@
             <div class="center" data-role="main">
                     <img src="images/x-mark.png" alt="Check">
                     <p>The account has been previously deactivated, if you would like to reactivate your account, click below to send a verification email to reactivate your account</p>
-                    <a href="verification-request.php" data-role="button">Click Here</a>
+                    <a href="verification-request.php" rel='external' data-role="button">Click Here</a>
             </div>
         </div>
     </body>
