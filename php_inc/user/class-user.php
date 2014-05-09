@@ -519,6 +519,9 @@ class User
         // Use wordwrap() to ensure the message is no longer than 70 columns long (industry standard)
         $message = wordwrap($message, 70, '\r\n');
 
+        // Temporary for presentation
+        $email = 'study.buddy.bcit@gmail.com';
+        
         // Send mail
         return mail($email, $subject, $message, 'From: study.buddy.bcit@gmail.com');
     }
@@ -554,6 +557,9 @@ class User
         // Use wordwrap() to ensure the message is no longer than 70 columns long (industry standard)
         $message = wordwrap($message, 70, PHP_EOL);
 
+        // Temporary for presentation
+        $email = 'study.buddy.bcit@gmail.com';
+        
         // Send mail
         return mail($email, $subject, $message, 'From: study.buddy.bcit@gmail.com');
 	}
