@@ -30,7 +30,7 @@ else
                 <div class="ui-icon-delete ui-btn-icon-right validated-field" id="confirm-div">
 					<input type="password" name="confirm-password" id="confirm-password">
                 </div>
-                <input id="recovery-submit" type="submit" value="Set New Passwords">
+                <input id="recovery-submit" type="submit" value="Change Password">
                 <input type="hidden" name="method" value="password-recovery" />
 			</form>
 		</div>
