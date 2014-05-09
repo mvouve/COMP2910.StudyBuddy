@@ -8,7 +8,7 @@
 			    <form name="recovery-request-form" id="recovery-request-form" method="POST">
                     <label for="email">Email:</label>
                     <input type="email" name="email" id="email" placeholder="You@my.bcit.ca">
-                    <input type="hidden" name="recovery-request" value="true">
+                    <input type="hidden" name="method" value="recovery-request">
                     <input type="button" value="Submit" id="recovery-request-submit">
                 </form>
             </div>
