@@ -33,18 +33,26 @@
 			</div>
 		</div>
         <script>
+            var sendingEmail = false;
+            var verifying = false;
+            
             $('#verification-submit').click(function () {
-                var verificationCode = $("#verification-form").serializeArray();
-                $.ajax({
-                    type: "POST",
-                    url: <?php echo '\'' . AJAX_URL . 'user/auth.php\''; ?>,
-                    data: verificationCode,
-                    success: onVerify,
-                    datatype: 'json'
-                });
+                if ( verifying == false )
+                {
+                    verifying = true;
+                    var verificationCode = $("#verification-form").serializeArray();
+                    $.ajax({
+                        type: "POST",
+                        url: <?php echo '\'' . AJAX_URL . 'user/auth.php\''; ?>,
+                        data: verificationCode,
+                        success: onVerify,
+                        datatype: 'json'
+                    });
+                }
             });
 
             function onVerify(data) {
+                varifying = false;
                 data = $.parseJSON( data );
                 if ( data.valid == true ) {
                     location.href="verification-success.php";
@@ -55,16 +63,22 @@
             }
 
             function sendAgain() {
-                $.post( <?php echo '\'' . AJAX_URL . 'user/auth.php\''; ?>,
-                        $( '#resend-form').serializeArray(),
-                        onSend,
-                        'json'
-                );
+                if ( sendingEmail == false )
+                {
+                    sendingEmail = true;
+                    
+                    $.post( <?php echo '\'' . AJAX_URL . 'user/auth.php\''; ?>,
+                            $( '#resend-form').serializeArray(),
+                            onSend,
+                            'json'
+                    );
+                }
                 
                 return false;
             }
             
             function onSend() {
+                sendingEmail = false;
                 alert( 'An email has been sent.' );
             }
 
