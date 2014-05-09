@@ -31,6 +31,7 @@
                 <div data-role="collapsible">
                     <h3>Change your display name</h3>
                     <form id="name-change" name="name-change" method="POST">
+						<input type="hidden" name="email" value="<?php echo $email; ?>">
                         <label for="display-name">New Name:</label>
                         <div class="ui-icon-delete ui-btn-icon-right validated-field" id="display-name-div">
                             <input type="text" name="display-name" id="display-name">
@@ -112,7 +113,7 @@
             
             $('#update-name').on( 'click tap', function () {
                 alert('starting updating name');
-                var updateNameForm = $("#update-name").serializeArray();
+                var updateNameForm = $("#name-change").serializeArray();
 
                 $.ajax
                 ({
@@ -190,7 +191,7 @@
             $("#confirm-password").keyup( function(e){validatePassword();} );
 
             function onPasswordChange(data) {
-                alert('HI!');
+                alert('password changed');
             }
 
             function errorMessage() {
