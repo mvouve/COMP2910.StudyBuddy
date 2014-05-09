@@ -172,6 +172,30 @@ class User
         return false;
 	}
 	
+	public function checkVerificationString( $email, $vString )
+	{
+		global $db;
+		
+		$sql = 'SELECT *
+				FROM ' . User::USER_TABLE . ' 
+				WHERE email=:email
+					AND verificationString=:vString
+				;';
+		$sql = $db->prepare( $sql );
+		$sql->bindParam( ':email', $email );
+		$sql->bindParam( ':vString', $vString );
+		
+		if ( $sql->execute() )
+		{
+			if ( $sql->fetch() )
+			{
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
 	/*
 	 * Get the status of an account indicated by an email address.
 	 *
@@ -465,45 +489,42 @@ class User
         $message = wordwrap($message, 70, '<br/>');
 
         // Send mail
-        return mail($email, $subject, $message);
+        return mail($email, $subject, $message, 'From: bcit.study.buddy@gmail.com');
     }
     
-	public function emailPasswordChange( $id )
+	public function emailPasswordChange( $email )
 	{
 		global $db;
 		
 		$verString = $this->generateVerificationString();
 		
-		$sql = 'SELECT verificationString, email
-				FROM ' . User::USER_TABLE . ' 
-				WHERE ID=:id
+		$sql = 'UPDATE ' . User::USER_TABLE. ' 
+				SET verificationString=:vString
+				WHERE email=:email
 				;';
 				
 		$sql = $db->prepare( $sql );
-		$sql->bindParam( ':id', $id );
+		$sql->bindParam( ':email', $email );
+		$sql->bindParam( ':vString', $verString );
 		
 		if ( !$sql->execute() )
 		{
 			return false;
 		}
-		
-		$result = $sql->fetch( PDO::FETCH_ASSOC );
-		$verificationString = $result['verificationString'];
-		$email = $result['email'];
 	
         //the subject line for the verification e-mail
         $subject = 'Study Buddy Verification';
 
         //the message to be sent
-        $message = 'You have requested a verification email for Study Buddy. Your verification 
-					code is provided below:<br/>' . $verificationString . '<br/><br/>Thank you for 
+        $message = 'You have requested a password change email for Study Buddy. Your verification 
+					code is provided below:<br/>' . $verString . '<br/><br/>Thank you for 
 					using Study Buddy.<br/><br/>Sincerely,<br/>The Study Buddy Team';
 
         // Use wordwrap() to ensure the message is no longer than 70 columns long (industry standard)
         $message = wordwrap($message, 70, '<br/>');
 
         // Send mail
-        mail($email, $subject, $message);
+        mail($email, $subject, $message, 'From: bcit.study.buddy@gmail.com');
 	}
 	
 	/*

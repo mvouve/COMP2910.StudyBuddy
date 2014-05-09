@@ -1,11 +1,20 @@
 <?php require_once( 'config.php' ); ?>
-                                                                            <?php $sliderHeader = array( '{{customHeadTags}}' => '
+<?php require_once( PHP_INC_PATH . 'common.php' ); ?>
+<?php
+	$user = User::instance();
+	if ( !$user->isLoggedIn() )
+	{
+		include( 'login.php' );
+		die();
+	}
+?>
+<?php $sliderHeader = array( '{{customHeadTags}}' => '
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
         <script type="text/javascript" src="js/jquery.slidepanel.js"></script>
         <link rel="stylesheet" type="text/css" href="css/jquery.slidepanel.css">
     ');
 
-    $email = "you@my.bcit.ca";
+    $email = $_SESSION['email'];
 ?>
 <?php renderPagelet( 'header.php', array( '{{customHeadTags}}' => '' ) ); ?>
 
@@ -64,11 +73,11 @@
                 </div>
                 <div data-role="collapsible">
                     <h3>Deactivate your account</h3>
-                    <form id="name-change" name="name-change" method="POST">
+                    <form id="deactivate-account-form" name="deactivate-account-form" method="POST">
                         <label for="password">Password:</label>
                         <input type="password" name="password" id="password" required><br/>
                         <input id="deactivate-account" type="button" value="Deactivate Account">
-                        <input type="hidden" name="method" value="deactivate-account" />
+                        <input type="hidden" name="method" value="delete-account" />
                     </form>
                 </div>
 			</div>
@@ -79,6 +88,7 @@
             $('#update-name').addClass('ui-disabled');
             $('#update-password').addClass('ui-disabled');
             $('#update-password').on( 'click tap', function () {
+			/*
                 alert('belly');
                 var passwordForm = $("#update-password").serializeArray();
                 $.ajax({
@@ -89,6 +99,13 @@
                     datatype: 'json'
                 });
                 alert('hello');
+			*/
+				var formData = $("#update-password").serializeArray();
+				
+				$.post( <?php echo '\'' . AJAX_URL . 'user/auth.php\''; ?>,
+						formData,
+						onPasswordChange,
+						"json" );
             });
 
             
@@ -113,8 +130,8 @@
 
             $('#deactivate-account').on( 'click tap', function () {
                 alert('account deactivation button pressed');
-                var deactivateAccountForm = $("#deactivate-account").serializeArray();
-
+                var deactivateAccountForm = $("#deactivate-account-form").serializeArray();
+				
                 $.ajax
                 ({
                     type: "POST",
@@ -126,8 +143,7 @@
                         {
                             alert('Study Buddy account deactivated.');
                             redirectToMain();
-                        }
-						},
+                        }},
                     error: errorMessage()
                 });
             });

@@ -39,7 +39,7 @@
                 });
 
                 if (verified == true) {
-                    window.location.replace("verification-success.php")
+                    alert('Working');
                 } else {
                     alert("The verification code is incorrect, please try again");
                 }
@@ -47,6 +47,7 @@
 
             function alertTest(data) {
                 alert('Submitted!');
+                location.href="verification-success.php";
             }
 
 
