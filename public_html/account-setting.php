@@ -34,7 +34,7 @@
                     <form id="name-change" name="name-change" method="POST">
                         <input type="hidden" name="email" value="<?php echo $email; ?>">
                         <label for="display-name">New Name:</label>
-                        <div class="ui-icon-delete ui-btn-icon-right validated-field" id="display-name-div">
+                        <div class="ui-icon-check ui-btn-icon-right validated-field" id="display-name-div">
                             <input type="text" name="display-name" id="display-name" value="<?php echo $display_name ?>">
                         </div>
                         <a href="#" data-role="button" id="update-name">Update Name</a>
