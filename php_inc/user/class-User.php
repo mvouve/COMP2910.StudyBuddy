@@ -465,7 +465,7 @@ class User
         $message = wordwrap($message, 70, '<br/>');
 
         // Send mail
-        return mail($email, $subject, $message);
+        return mail('rempel.calvin@gmail.com', $subject, $message);
     }
     
 	public function emailPasswordChange( $id )
