@@ -40,25 +40,23 @@ else
     <script>
             $('#recovery-submit').on( 'click tap', function () {
                 var passwordForm = $("#recovery-form").serializeArray();
-                $.ajax({
-                    type: "POST",
-                    url: <?php echo '\'' . AJAX_URL . 'user/auth.php\''; ?>,
-                    data: passwordForm,
-                    datatype: 'json',
-                    success: function(json){
-                        if(json.success == true){
-                            console.log( 'success' );
-                            window.location.assign("login.php");
-                        }
-                        else{
-                            alert( 'Could not change password. Perhaps your verification code is ' +
-                                   'incorrect?' );
-                        }
-                    }
-
-                });
+                
+                $.post( <?php echo '\'' . AJAX_URL . 'user/auth.php\''; ?>,
+						passwordForm,
+						onPasswordChange,
+						"json" );
             });
 
+            function onPasswordChange( data ) {
+                if (data.success == true){
+                    window.location.assign("login.php");
+                }
+                else {
+                    alert( 'Could not change password. Perhaps your verification code is ' +
+                           'incorrect?' );
+                }
+            }
+            
             function validatePassword() {
                 var passwordRegex = /^.+$/g;
                 var password = document.getElementById("new-password").value.match(passwordRegex);
