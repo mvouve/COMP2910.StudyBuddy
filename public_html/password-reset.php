@@ -21,7 +21,7 @@
 					<input type="password" name="confirm-password" id="confirm-password">
                 </div>
                 <input id="recovery-submit" type="submit" value="Set New Passwords">
-                <input type="hidden" name="method" value="recovery" />
+                <input type="hidden" name="method" value="password-recovery" />
 			</form>
 		</div>
 		<div data-role="footer" id="footer">
@@ -32,7 +32,7 @@
                 var passwordForm = $("#recovery-form").serializeArray();
                 $.ajax({
                     type: "POST",
-                    url: <?php echo '\'' . AJAX_URL . 'user/settings.php\''; ?>,
+                    url: <?php echo '\'' . AJAX_URL . 'user/auth.php\''; ?>,
                     data: passwordForm,
                     error: failedSubmit(),
                     datatype: 'json',
