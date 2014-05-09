@@ -27,7 +27,7 @@
     </div>
     <script>
             $('#recovery-submit').on( 'click tap', function () {
-                var passwordForm = $("#recovery-submit").serializeArray();
+                var passwordForm = $("#recovery-form").serializeArray();
                 $.ajax({
                     type: "POST",
                     url: <?php echo '\'' . AJAX_URL . 'user/settings.php\''; ?>,
@@ -49,5 +49,31 @@
             function failedSubmit(){
                 alert('Please double check passwords');
             }
+
+            function validatePassword() {
+                var passwordRegex = /^.+$/g;
+                var password = document.getElementById("new-password").value.match(passwordRegex);
+                var confirm = document.getElementById("confirm-password").value;
+
+                if (password == null || password.length != 1) {
+                    $("#password-div").removeClass('ui-icon-check').addClass('ui-icon-delete');
+                    $("#confirm-div").removeClass('ui-icon-check').addClass('ui-icon-delete');
+                    $('#update-password').addClass('ui-disabled');
+                    return false;
+                }
+                $("#password-div").removeClass('ui-icon-delete').addClass('ui-icon-check');
+
+                if ( password[0] != confirm ) {
+                    $("#confirm-div").removeClass('ui-icon-check').addClass('ui-icon-delete');
+                    $('#update-password').addClass('ui-disabled');
+                    return false;
+                }
+                $("#confirm-div").removeClass('ui-icon-delete').addClass('ui-icon-check');
+                $('#update-password').removeClass('ui-disabled');
+                return true;
+
+            }
+            $("#new-password").keyup( function(e){validatePassword();} );
+            $("#confirm-password").keyup( function(e){validatePassword();} );
     </script>
 </body>
