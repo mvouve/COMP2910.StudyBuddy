@@ -520,7 +520,7 @@ class User
         $message = wordwrap($message, 70, '\r\n');
 
         // Temporary for presentation
-        $email = 'study.buddy.bcit@gmail.com';
+        //$email = 'study.buddy.bcit@gmail.com';
         
         // Send mail
         return mail($email, $subject, $message, 'From: study.buddy.bcit@gmail.com');
@@ -558,7 +558,7 @@ class User
         $message = wordwrap($message, 70, PHP_EOL);
 
         // Temporary for presentation
-        $email = 'study.buddy.bcit@gmail.com';
+        //$email = 'study.buddy.bcit@gmail.com';
         
         // Send mail
         return mail($email, $subject, $message, 'From: study.buddy.bcit@gmail.com');
