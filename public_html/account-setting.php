@@ -28,63 +28,83 @@
                 <div class="center">
                     <p><?php echo $email; ?></p>
                 </div>
-
+                <!-- Colapsable change your display name div -->
                 <div data-role="collapsible">
                     <h3>Change your display name</h3>
                     <form id="name-change" name="name-change" method="POST">
+                        <!-- accounts email address, used to reference account in the database -->
                         <input type="hidden" name="email" value="<?php echo $email; ?>">
+                        
+                        <!-- display name, automaticly renders current display name to be edited directly-->
                         <label for="display-name">New Name:</label>
                         <div class="ui-icon-check ui-btn-icon-right validated-field" id="display-name-div">
                             <input type="text" name="display-name" id="display-name" value="<?php echo $display_name ?>">
                         </div>
+                        
+                        <!-- Submit button for updating display name -->
                         <a href="#" data-role="button" id="update-name">Update Name</a>
+                        
+                        <!-- Tells the PHP which method to use with this information -->
                         <input type="hidden" name="method" value="update-display-name" />
                     </form>
-                </div>
-                <div id="name-change-success" style="display:none">
+                    <!-- appears if the name change was successful, made visible via javascript -->
+                    <div id="name-change-success" style="display:none">
                         <p>Name Change Successful!</p>
+                    </div>
                 </div>
-                      
+                
+                
+                
+                <!-- password change div -->
                 <div data-role="collapsible">
                     <h3>Change your password</h3> 
                     <form id="password-change" name="password-change" method="POST">
                         <input type="hidden" name="email" value="<?php echo $email; ?>">
-
+                        
+                        <!-- FLAG FOR RENAME "current-password" -->
+                        <!-- Field for the users current password-->
                         <label for="old-password">Current Password:</label>
                         <input type="password" name="old-password" id="old-password" required><br/>
 
-
+                        <!-- Field for the new password. -->
                         <label for="new-password">New Password:</label>
                         <div class="ui-icon-delete ui-btn-icon-right validated-field" id="password-div">
                             <input type="password" name="new-password" id="new-password" required>
                         </div>
-
-
+                        
+                        <!-- Field to double confirm the new password. -->
                         <label for="confirm-password">Confirm New Password:</label>
                         <div class="ui-icon-delete ui-btn-icon-right validated-field" id="confirm-div">
                             <input type="password" name="confirm-password" id="confirm-password" required>
                         </div>
-
-
+                        
+                        <!-- FLAG FOR ID CHANGE -->
+                        <!-- Submit button for password change -->
                         <a href="#" data-role="button" id="update-password">Update Password</a>
                         <input type="hidden" name="method" value="update-password">
                     </form>
+                    
+                    <!-- FLAG FOR ID CHANGE -->
+                    <!-- displayed when theres an issue with the password change -->
                     <div id="mismatch" style="display:none">
                         <p>Please check your new passwords</p>
                     </div>
-                </div>
-                <div id="password-change-success" style="display:none">
+                    
+                    <!-- displayed when password is successfully changed -->
+                    <div id="password-change-success" style="display:none">
                         <p>Password Change Successful!</p>
+                    </div>
                 </div>
+                
+                <!-- account deactivation area -->
                 <div data-role="collapsible">
                     <h3>Deactivate your account</h3>
                     <form id="deactivate-account-form" name="deactivate-account-form" method="POST">
-                    
+                        <!-- Text area to enter password for deactivation -->
                         <label for="password">Password:</label>
-                        <div id="delpass-div">
-                            <input type="password" name="password" id="password" required>
-                        </div>
+                        <input type="password" name="password" id="password" required>
                         
+                        <!-- submit button for deactivating account -->
                         <a href="#" data-role="button" id="deactivate-account">Deactivate Account</a>
                         <input type="hidden" name="method" value="delete-account" />
                     </form>
