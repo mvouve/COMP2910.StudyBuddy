@@ -18,7 +18,25 @@ if( isset( $_POST['method'] ) )
         default:
     }
     echo json_encode( $retval );
-}
+} 
+else if( isset( $_GET['method'] ) )
+{
+    //Add course function
+    switch( $_GET['method'] )
+    {
+        case 'add-course':
+            $retval = addCourse( $_GET['id'], $_GET['title'] );
+            break;
+            
+        case 'get-courses':
+            $retval = getCourse();
+            break;
+            
+        default:
+    }
+    echo json_encode( $retval );
+} 
+
 
 /*
  * Add a course to the database.
