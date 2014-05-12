@@ -1,88 +1,21 @@
 <?php require_once( 'config.php' ); ?>
 <?php renderPagelet( 'header.php', array( '{{customHeadTags}}' => '' ) ); ?>
     <body>
+        <form id="get-courses-form" name="get-courses-form" method="POST">
+            <input type="hidden" name="method" value="get-courses" />
+		</form>
         <div data-role="page" data-theme="a">
             <?php define('HAS_MENU',1);
                   renderPagelet( 'banner.php', array( '{{title}}' => 'All courses' ) ); ?>
             <div data-role="content">
-                <p><label for="all-courses-list">Course search:</label><input type="text" id="search-field"></p>
-                <br>
-                <ul data-role="listview" id="all-courses-list">
-    	            <li data-icon="check"><a href="#">Acura</a></li>
-	                <li data-icon="false"><a href="#">Audi</a></li>
-    	            <li data-icon="check"><a href="#">Acura</a></li>
-	                <li data-icon="false"><a href="#">Audi</a></li>
-    	            <li data-icon="check"><a href="#">Acura</a></li>
-	                <li data-icon="false"><a href="#">Audi</a></li>
-    	            <li data-icon="check"><a href="#">Acura</a></li>
-	                <li data-icon="false"><a href="#">Audi</a></li>
-    	            <li data-icon="check"><a href="#">Acura</a></li>
-	                <li data-icon="false"><a href="#">Audi</a></li>
-    	            <li data-icon="check"><a href="#">Acura</a></li>
-	                <li data-icon="false"><a href="#">Audi</a></li>
-    	            <li data-icon="check"><a href="#">Acura</a></li>
-	                <li data-icon="false"><a href="#">Audi</a></li>
-    	            <li data-icon="check"><a href="#">Acura</a></li>
-	                <li data-icon="false"><a href="#">Audi</a></li>
-    	            <li data-icon="check"><a href="#">Acura</a></li>
-	                <li data-icon="false"><a href="#">Audi</a></li>
-    	            <li data-icon="check"><a href="#">Acura</a></li>
-	                <li data-icon="false"><a href="#">Audi</a></li>
-    	            <li data-icon="check"><a href="#">Acura</a></li>
-	                <li data-icon="false"><a href="#">Audi</a></li>
-    	            <li data-icon="check"><a href="#">Acura</a></li>
-	                <li data-icon="false"><a href="#">Audi</a></li>
-    	            <li data-icon="check"><a href="#">Acura</a></li>
-	                <li data-icon="false"><a href="#">Audi</a></li>
-    	            <li data-icon="check"><a href="#">Acura</a></li>
-	                <li data-icon="false"><a href="#">Audi</a></li>
-    	            <li data-icon="check"><a href="#">Acura</a></li>
-	                <li data-icon="false"><a href="#">Audi</a></li>
-    	            <li data-icon="check"><a href="#">Acura</a></li>
-	                <li data-icon="false"><a href="#">Audi</a></li>
-    	            <li data-icon="check"><a href="#">Acura</a></li>
-	                <li data-icon="false"><a href="#">Audi</a></li>
-    	            <li data-icon="check"><a href="#">Acura</a></li>
-	                <li data-icon="false"><a href="#">Audi</a></li>
-    	            <li data-icon="check"><a href="#">Acura</a></li>
-	                <li data-icon="false"><a href="#">Audi</a></li>
-    	            <li data-icon="check"><a href="#">Acura</a></li>
-	                <li data-icon="false"><a href="#">Audi</a></li>
-    	            <li data-icon="check"><a href="#">Acura</a></li>
-	                <li data-icon="false"><a href="#">Audi</a></li>
-    	            <li data-icon="check"><a href="#">Acura</a></li>
-	                <li data-icon="false"><a href="#">Audi</a></li>
-    	            <li data-icon="check"><a href="#">Acura</a></li>
-	                <li data-icon="false"><a href="#">Audi</a></li>
-    	            <li data-icon="check"><a href="#">Acura</a></li>
-	                <li data-icon="false"><a href="#">Audi</a></li>
-    	            <li data-icon="check"><a href="#">Acura</a></li>
-	                <li data-icon="false"><a href="#">Audi</a></li>
-    	            <li data-icon="check"><a href="#">Acura</a></li>
-	                <li data-icon="false"><a href="#">Audi</a></li>
-    	            <li data-icon="check"><a href="#">Acura</a></li>
-	                <li data-icon="false"><a href="#">Audi</a></li>
-    	            <li data-icon="check"><a href="#">Acura</a></li>
-	                <li data-icon="false"><a href="#">Audi</a></li>
-    	            <li data-icon="check"><a href="#">Acura</a></li>
-	                <li data-icon="false"><a href="#">Audi</a></li>
-    	            <li data-icon="check"><a href="#">Acura</a></li>
-	                <li data-icon="false"><a href="#">Audi</a></li>
-    	            <li data-icon="check"><a href="#">Acura</a></li>
-	                <li data-icon="false"><a href="#">Audi</a></li>
-    	            <li data-icon="check"><a href="#">Acura</a></li>
-	                <li data-icon="false"><a href="#">Audi</a></li>
-    	            <li data-icon="check"><a href="#">Acura</a></li>
-	                <li data-icon="false"><a href="#">Audi</a></li>
-    	            <li data-icon="check"><a href="#">Acura</a></li>
-	                <li data-icon="false"><a href="#">Audi</a></li>
-    	            <li data-icon="check"><a href="#">Acura</a></li>
-	                <li data-icon="false"><a href="#">Audi</a></li>
-    	            <li data-icon="check"><a href="#">Acura</a></li>
-	                <li data-icon="false"><a href="#">Audi</a></li>
-    	            <li data-icon="check"><a href="#">Acura</a></li>
-	                <li data-icon="false"><a href="#">Audi</a></li>
-	                <li><a href="#">BMW</a></li>
+                <ul data-role="listview" data-filter="true" id="all-courses-list">
+	                <li data-icon="false"><a href="#">BUSA2720<br>Business in a Networked Economy</a></li>
+	                <li data-icon="false"><a href="#">COMP1116<br>Business Communications 1</a></li>
+	                <li data-icon="false"><a href="#">COMP1100<br>CST Program Fundamentals</a></li>
+	                <li data-icon="false"><a href="#">COMP1111<br>Essential Skills for Computing</a></li>
+	                <li data-icon="check"><a href="#">COMP1113<br>Applied Mathematics</a></li>
+    	            <li data-icon="false"><a href="#">COMP1510<br>Programming Methods</a></li>
+    	            <li data-icon="false"><a href="#">COMP1536<br>Introduction to Web Development</a></li>
                 </ul>
             </div>
             <div data-role="footer" data-position="fixed">
@@ -94,5 +27,25 @@
 	            </div>
             </div>
         </div>
+        <script>
+            var formData = $("#get-courses-form").serializeArray();
+            $.post( <?php echo '\'' . AJAX_URL . 'user/auth.php\''; ?>,
+                        formData,
+                        pupulateCourseList,
+                        "json");
+
+            function pupulateCourseList(result)
+            {
+                var allCoursesList = document.getElementById('all-courses-list');
+                for( var i = 0; i < result.length; ++i )
+                {
+                    var newLI = document.createElement('li');
+                    newLI.setAttribute( 'data-icon', result[i][2].toString() );
+                    newLI.setAttribute( 'id', result[i][0].toString().toLowerCase() );
+                    newLI.innerHTML = '<a href="#">' + result[i][0].toString() + '<br>' + result[i][1].toString() + '</a>';
+                    allCoursesList.appendChild(newLI);
+                }
+            }
+        </script>
     </body>
 </html>
