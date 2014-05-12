@@ -17,7 +17,6 @@ if( isset( $_POST['method'] ) )
             
         default:
     }
-    echo json_encode( $retval );
 } 
 else if( isset( $_GET['method'] ) )
 {
@@ -34,10 +33,12 @@ else if( isset( $_GET['method'] ) )
             
         default:
     }
-    echo json_encode( $retval );
+    
 } 
 
+echo json_encode( $retval );
 
+return;
 /*
  * Add a course to the database.
  *

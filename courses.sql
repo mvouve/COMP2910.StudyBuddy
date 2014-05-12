@@ -1,7 +1,7 @@
-CREATE TABLE Courses
+CREATE TABLE Course
 (
     ID      CHAR(8)     NOT NULL,
-    name    VARCHAR(20) NOT NULL,
+    name    VARCHAR(80) NOT NULL,
     PRIMARY KEY( ID )
 ) ENGINE = InnoDB DEFAULT CHARSET = UTF8;
 
