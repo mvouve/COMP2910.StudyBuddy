@@ -10,12 +10,14 @@ if( isset( $_POST['method'] ) )
         case 'add-course':
             $retval = addCourse( $_POST['id'], $_POST['title'] );
             break;
+            
         case 'get-courses':
             $retval = getCourse();
-        
+            break;
+            
         default:
     }
-    return $retval;
+    echo json_encode( $retval );
 }
 
 /*
@@ -23,6 +25,7 @@ if( isset( $_POST['method'] ) )
  *
  * @param id the ID of the course
  * @param title 
+ *
  * @return true | false
  */
 function addCourse( $id, $title )
@@ -40,6 +43,23 @@ function addCourse( $id, $title )
 }
 
 /*
+ * Fetch all courses from database.
  *
- *
+ * @return array of all courses.
  */
+function getCoursesList( $email )
+{
+    global $courses;
+    global $user;
+    
+    if( $user->isLoggedIn() )
+    {
+        $retval = getCourses( $_SESSION['email'] );
+    }
+    else
+    {
+        $retval = getCourses( NULL );
+    }
+    
+    return $retval;
+}
