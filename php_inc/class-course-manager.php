@@ -44,7 +44,7 @@ class CourseManager
 		$retval = array();
 		$sql = '';
 		
-		if ( $user == null )
+		if ( $userEmail == null )
 		{
 			$sql = 'SELECT *
 					FROM ' . CourseManager::COURSE_TABLE . ' 
@@ -53,7 +53,7 @@ class CourseManager
 			$sql->execute();
 			$result = null;
 			
-			while ( ( $result = $db->fetch( PDO::FETCH_ASSOC ) ) != null )
+			while ( ( $result = $sql->fetch( PDO::FETCH_ASSOC ) ) != null )
 			{
 				$retval[] = array( 'id' => $result['ID'], 'title' => $result['name'] );
 			}
@@ -67,7 +67,7 @@ class CourseManager
 			$sql->execute();
 			$result = null;
 			
-			while ( ( $result = $db->fetch( PDO::FETCH_ASSOC ) ) != null )
+			while ( ( $result = $sql->fetch( PDO::FETCH_ASSOC ) ) != null )
 			{
 				$retval[] = array( 'id' => $result['ID'], 'title' => $result['name'], 'inCourse' => true );
 			}
