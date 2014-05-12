@@ -41,9 +41,8 @@
                 for( var i = 0; i < result.length; ++i )
                 {
                     var newLI = document.createElement('li');
-                    newLI.setAttribute( 'data-icon', (result[i][2]?'check':'false') );
-                    newLI.setAttribute( 'id', result[i][0].toString().toLowerCase() );
-                    newLI.innerHTML = '<a href="#">' + result[i][0].toString() + '<br>' + result[i][1].toString() + '</a>';
+                    newLI.setAttribute( 'data-icon', (result[i].inCourse?'check':'false') );
+                    newLI.innerHTML = '<a href="#">' + result[i].id + '<br>' + result[i].title + '</a>';
                     allCoursesList.appendChild(newLI);
                 }
             }

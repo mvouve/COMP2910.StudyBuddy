@@ -8,7 +8,7 @@
             <?php define('HAS_MENU',1);
                   renderPagelet( 'banner.php', array( '{{title}}' => 'My courses' ) ); ?>
             <div data-role="content">
-                <ul data-role="listview" data-filter="true" id="all-courses-list">
+                <ul data-role="listview" data-filter="true" id="my-courses-list">
 	                <li data-icon="false"><a href="#">BUSA2720<br>Business in a Networked Economy</a></li>
 	                <li data-icon="false"><a href="#">COMP1116<br>Business Communications 1</a></li>
 	                <li data-icon="false"><a href="#">COMP1100<br>CST Program Fundamentals</a></li>
@@ -21,9 +21,8 @@
             <div data-role="footer" data-position="fixed">
                 <div data-role="navbar">
 		            <ul>
-			            <li><a href="#">Create Course</a></li>
-			            <li><a href="#">My Courses</a></li>
-			            <li><a href="#">Clear All</a></li>
+			            <li><a href="#">Add Courses</a></li>
+			            <li><a href="#">Remove Courses</a></li>
 		            </ul>
 	            </div>
             </div>
@@ -41,9 +40,8 @@
                 for( var i = 0; i < result.length; ++i )
                 {
                     var newLI = document.createElement('li');
-                    newLI.setAttribute( 'data-icon', (result[i][2]?'check':'false') );
-                    newLI.setAttribute( 'id', result[i][0].toString().toLowerCase() );
-                    newLI.innerHTML = '<a href="#">' + result[i][0].toString() + '<br>' + result[i][1].toString() + '</a>';
+                    newLI.setAttribute( 'data-icon', (result[i].inCourse?'check':'false') );
+                    newLI.innerHTML = '<a href="#">' + result[i].id + '<br>' + result[i].title + '</a>';
                     allCoursesList.appendChild(newLI);
                 }
             }
