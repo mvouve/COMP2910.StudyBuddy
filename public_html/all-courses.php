@@ -21,6 +21,7 @@
             <div data-role="footer" data-position="fixed">
                 <div data-role="navbar">
 		            <ul>
+			            <li><a href="#">Create Course</a></li>
 			            <li><a href="#">My Courses</a></li>
 			            <li><a href="#">Clear All</a></li>
 		            </ul>
@@ -40,7 +41,7 @@
                 for( var i = 0; i < result.length; ++i )
                 {
                     var newLI = document.createElement('li');
-                    newLI.setAttribute( 'data-icon', result[i][2].toString() );
+                    newLI.setAttribute( 'data-icon', (result[i][2]?'check':'false') );
                     newLI.setAttribute( 'id', result[i][0].toString().toLowerCase() );
                     newLI.innerHTML = '<a href="#">' + result[i][0].toString() + '<br>' + result[i][1].toString() + '</a>';
                     allCoursesList.appendChild(newLI);
