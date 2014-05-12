@@ -101,6 +101,14 @@ class User
      */
     public function isLoggedIn()
     {
+		if ( defined( 'SB_DEBUG' ) )
+		{
+			$_SESSION['valid'] = 1;
+			$_SESSION['email'] = 'debug@debug.db';
+			$_SESSION['display_name'] = 'Debugger';
+			return true;
+		}
+	
         // Check if the user is explicitly logged in.
         if ( isset( $_SESSION['valid'] ) && $_SESSION['valid'] )
         {
@@ -484,46 +492,28 @@ class User
 		$result = $sql->fetch( PDO::FETCH_ASSOC );
 		$verificationString = $result['verificationString'];
 		$email = $result['email'];
-        
-        /* ---------------- OLD EMAIL STUFF ----------------------------- 
+		
+        /* ---------------- EMAIL STUFF ----------------------------- */
         $mail = new PHPMailer();
          
-        $mail->isSMTP();                                      // Set mailer to use SMTP
-        $mail->Host = 'smtp.gmail.com';                       // Specify main and backup server
-        $mail->SMTPAuth = true;                               // Enable SMTP authentication
-        $mail->Username = 'bcit.study.buddy@gmail.com';       // SMTP username
-        $mail->Password = 'buddypass';                        // SMTP password
-        $mail->SMTPSecure = 'tls';                            // Enable encryption, 'ssl' also accepted
-        $mail->Port = 587;                                    //Set the SMTP port number - 587 for authenticated TLS
-        $mail->setFrom('bcit.study.buddy@gmail.com', 'The Study Buddy Team'); //Set who the message is to be sent from
-        $mail->addAddress( $email );               // Name is optional
-        $mail->WordWrap = 50;                                 // Set word wrap to 50 characters
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'bcit.study.buddy@gmail.com';
+        $mail->Password = 'buddypass';
+        $mail->SMTPSecure = 'tls';
+        $mail->Port = 587;
+        $mail->setFrom('bcit.study.buddy@gmail.com', 'The Study Buddy Team');
+        $mail->addAddress( $email );
+        $mail->WordWrap = 50;
          
         $mail->Subject = 'Study Buddy Verification';
         $mail->Body    = 'You have requested a verification email for Study Buddy. Your verification ' 
-                          .'code is provided below:\r\n\r\n' . $verificationString . '\r\n\r\nThank you for' 
-                          .' using Study Buddy.\r\n\r\nSincerely,\r\nThe Study Buddy Team';
+                          . 'code is provided below:' . PHP_EOL . PHP_EOL . $verificationString
+						  . PHP_EOL . PHP_EOL . 'Thank you for using Study Buddy.' . PHP_EOL . PHP_EOL 
+                          . 'Sincerely,' . PHP_EOL . 'The Study Buddy Team';
          
         return $mail->send();
-        */
-    
-        /*  -------------- OLD EMAIL STUFF ------------------------ */
-        //the subject line for the verification e-mail
-        $subject = 'Study Buddy Verification';
-
-        //the message to be sent
-        $message = 'You have requested a verification email for Study Buddy. Your verification ' 
-                  .'code is provided below:\r\n\r\n' . $verificationString . '\r\n\r\nThank you for' 
-				  .' using Study Buddy.\r\n\r\nSincerely,\r\nThe Study Buddy Team';
-
-        // Use wordwrap() to ensure the message is no longer than 70 columns long (industry standard)
-        $message = wordwrap($message, 70, '\r\n');
-
-        // Temporary for presentation
-        //$email = 'study.buddy.bcit@gmail.com';
-        
-        // Send mail
-        return mail($email, $subject, $message, 'From: study.buddy.bcit@gmail.com');
     }
     
 	public function emailPasswordChange( $email )
@@ -545,23 +535,28 @@ class User
 		{
 			return false;
 		}
-	
-        //the subject line for the verification e-mail
-        $subject = 'Study Buddy Verification';
-
-        //the message to be sent
-        $message = 'You have requested a password change email for Study Buddy. Your verification '
-					.'code is provided below:'. PHP_EOL . PHP_EOL . $verString . PHP_EOL . 'Thank you for '
-					.'using Study Buddy.' . PHP_EOL . PHP_EOL . 'Sincerely,' . PHP_EOL . 'The Study Buddy Team';
-
-        // Use wordwrap() to ensure the message is no longer than 70 columns long (industry standard)
-        $message = wordwrap($message, 70, PHP_EOL);
-
-        // Temporary for presentation
-        //$email = 'study.buddy.bcit@gmail.com';
-        
-        // Send mail
-        return mail($email, $subject, $message, 'From: study.buddy.bcit@gmail.com');
+		
+		/* ---------------- EMAIL STUFF ----------------------------- */
+        $mail = new PHPMailer();
+         
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'bcit.study.buddy@gmail.com';
+        $mail->Password = 'buddypass';
+        $mail->SMTPSecure = 'tls';
+        $mail->Port = 587;
+        $mail->setFrom('bcit.study.buddy@gmail.com', 'The Study Buddy Team');
+        $mail->addAddress( $email );
+        $mail->WordWrap = 50;
+         
+        $mail->Subject = 'Study Buddy Password Change Request';
+        $mail->Body    = 'You have requested a password recovery code for Study Buddy. Your verification ' 
+                          . 'code is provided below:' . PHP_EOL . PHP_EOL . $verificationString
+						  . PHP_EOL . PHP_EOL . 'Thank you for using Study Buddy.' . PHP_EOL . PHP_EOL 
+                          . 'Sincerely,' . PHP_EOL . 'The Study Buddy Team';
+         
+        return $mail->send();
 	}
 	
 	/*
