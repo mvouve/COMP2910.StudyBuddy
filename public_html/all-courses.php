@@ -45,6 +45,8 @@
                     newLI.innerHTML = '<a href="#">' + result[i].id + '<br>' + result[i].title + '</a>';
                     allCoursesList.appendChild(newLI);
                 }
+				
+				$('#all-courses-list').listview('refresh');
             }
         </script>
     </body>
