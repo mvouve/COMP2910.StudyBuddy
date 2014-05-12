@@ -10,10 +10,82 @@
                 <ul data-role="listview" id="all-courses-list">
     	            <li data-icon="check"><a href="#">Acura</a></li>
 	                <li data-icon="false"><a href="#">Audi</a></li>
+    	            <li data-icon="check"><a href="#">Acura</a></li>
+	                <li data-icon="false"><a href="#">Audi</a></li>
+    	            <li data-icon="check"><a href="#">Acura</a></li>
+	                <li data-icon="false"><a href="#">Audi</a></li>
+    	            <li data-icon="check"><a href="#">Acura</a></li>
+	                <li data-icon="false"><a href="#">Audi</a></li>
+    	            <li data-icon="check"><a href="#">Acura</a></li>
+	                <li data-icon="false"><a href="#">Audi</a></li>
+    	            <li data-icon="check"><a href="#">Acura</a></li>
+	                <li data-icon="false"><a href="#">Audi</a></li>
+    	            <li data-icon="check"><a href="#">Acura</a></li>
+	                <li data-icon="false"><a href="#">Audi</a></li>
+    	            <li data-icon="check"><a href="#">Acura</a></li>
+	                <li data-icon="false"><a href="#">Audi</a></li>
+    	            <li data-icon="check"><a href="#">Acura</a></li>
+	                <li data-icon="false"><a href="#">Audi</a></li>
+    	            <li data-icon="check"><a href="#">Acura</a></li>
+	                <li data-icon="false"><a href="#">Audi</a></li>
+    	            <li data-icon="check"><a href="#">Acura</a></li>
+	                <li data-icon="false"><a href="#">Audi</a></li>
+    	            <li data-icon="check"><a href="#">Acura</a></li>
+	                <li data-icon="false"><a href="#">Audi</a></li>
+    	            <li data-icon="check"><a href="#">Acura</a></li>
+	                <li data-icon="false"><a href="#">Audi</a></li>
+    	            <li data-icon="check"><a href="#">Acura</a></li>
+	                <li data-icon="false"><a href="#">Audi</a></li>
+    	            <li data-icon="check"><a href="#">Acura</a></li>
+	                <li data-icon="false"><a href="#">Audi</a></li>
+    	            <li data-icon="check"><a href="#">Acura</a></li>
+	                <li data-icon="false"><a href="#">Audi</a></li>
+    	            <li data-icon="check"><a href="#">Acura</a></li>
+	                <li data-icon="false"><a href="#">Audi</a></li>
+    	            <li data-icon="check"><a href="#">Acura</a></li>
+	                <li data-icon="false"><a href="#">Audi</a></li>
+    	            <li data-icon="check"><a href="#">Acura</a></li>
+	                <li data-icon="false"><a href="#">Audi</a></li>
+    	            <li data-icon="check"><a href="#">Acura</a></li>
+	                <li data-icon="false"><a href="#">Audi</a></li>
+    	            <li data-icon="check"><a href="#">Acura</a></li>
+	                <li data-icon="false"><a href="#">Audi</a></li>
+    	            <li data-icon="check"><a href="#">Acura</a></li>
+	                <li data-icon="false"><a href="#">Audi</a></li>
+    	            <li data-icon="check"><a href="#">Acura</a></li>
+	                <li data-icon="false"><a href="#">Audi</a></li>
+    	            <li data-icon="check"><a href="#">Acura</a></li>
+	                <li data-icon="false"><a href="#">Audi</a></li>
+    	            <li data-icon="check"><a href="#">Acura</a></li>
+	                <li data-icon="false"><a href="#">Audi</a></li>
+    	            <li data-icon="check"><a href="#">Acura</a></li>
+	                <li data-icon="false"><a href="#">Audi</a></li>
+    	            <li data-icon="check"><a href="#">Acura</a></li>
+	                <li data-icon="false"><a href="#">Audi</a></li>
+    	            <li data-icon="check"><a href="#">Acura</a></li>
+	                <li data-icon="false"><a href="#">Audi</a></li>
+    	            <li data-icon="check"><a href="#">Acura</a></li>
+	                <li data-icon="false"><a href="#">Audi</a></li>
+    	            <li data-icon="check"><a href="#">Acura</a></li>
+	                <li data-icon="false"><a href="#">Audi</a></li>
+    	            <li data-icon="check"><a href="#">Acura</a></li>
+	                <li data-icon="false"><a href="#">Audi</a></li>
+    	            <li data-icon="check"><a href="#">Acura</a></li>
+	                <li data-icon="false"><a href="#">Audi</a></li>
+    	            <li data-icon="check"><a href="#">Acura</a></li>
+	                <li data-icon="false"><a href="#">Audi</a></li>
+    	            <li data-icon="check"><a href="#">Acura</a></li>
+	                <li data-icon="false"><a href="#">Audi</a></li>
+    	            <li data-icon="check"><a href="#">Acura</a></li>
+	                <li data-icon="false"><a href="#">Audi</a></li>
+    	            <li data-icon="check"><a href="#">Acura</a></li>
+	                <li data-icon="false"><a href="#">Audi</a></li>
+    	            <li data-icon="check"><a href="#">Acura</a></li>
+	                <li data-icon="false"><a href="#">Audi</a></li>
 	                <li><a href="#">BMW</a></li>
                 </ul>
             </div>
-            <div data-role="footer">
+            <div data-role="footer" data-position="fixed">
                 <div data-role="navbar">
 		            <ul>
 			            <li><a href="#">My Courses</a></li>
