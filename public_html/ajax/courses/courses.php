@@ -12,7 +12,7 @@ if( isset( $_POST['method'] ) )
             break;
             
         case 'get-courses':
-            $retval = getCourse();
+            $retval = getCourses();
             break;
             
         default:
@@ -72,11 +72,11 @@ function getCoursesList( $email )
     
     if( $user->isLoggedIn() )
     {
-        $retval = getCourses( $_SESSION['email'] );
+        $retval = $courses->getCourseList( $_SESSION['email'] );
     }
     else
     {
-        $retval = getCourses( NULL );
+        $retval = $courses->getCourseList( NULL );
     }
     
     return $retval;
