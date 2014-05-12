@@ -101,6 +101,14 @@ class User
      */
     public function isLoggedIn()
     {
+		if ( defined( 'SB_DEBUG' ) )
+		{
+			$_SESSION['valid'] = 1;
+			$_SESSION['email'] = 'debug@debug.db';
+			$_SESSION['display_name'] = 'Debugger';
+			return true;
+		}
+	
         // Check if the user is explicitly logged in.
         if ( isset( $_SESSION['valid'] ) && $_SESSION['valid'] )
         {

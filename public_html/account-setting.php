@@ -32,9 +32,6 @@
                 <div data-role="collapsible">
                     <h3>Change your display name</h3>
                     <form id="name-change" name="name-change" method="POST">
-                        <!-- accounts email address, used to reference account in the database -->
-                        <input type="hidden" name="email" value="<?php echo $email; ?>">
-                        
                         <!-- display name, automaticly renders current display name to be edited directly-->
                         <label for="display-name">New Name:</label>
                         <div class="ui-icon-check ui-btn-icon-right validated-field" id="display-name-div">
@@ -42,8 +39,10 @@
                         </div>
                         
                         <!-- Submit button for updating display name -->
-                        <a href="#" data-role="button" id="update-name">Update Name</a>
+                        <a href="#" data-role="button" id="submit-display-name">Update Name</a>
                         
+                        <!-- accounts email address, used to reference account in the database -->
+                        <input type="hidden" name="email" value="<?php echo $email; ?>">
                         <!-- Tells the PHP which method to use with this information -->
                         <input type="hidden" name="method" value="update-display-name" />
                     </form>
@@ -149,7 +148,7 @@
              * When user updates their name, update on the server as well.
              *
              */
-            $('#update-name').on( 'click tap', function () {
+            $('#submit-display-name').on( 'click tap', function () {
                 if ( changingName == false ) {
                     changingName = true;
                     var updateNameForm = $("#name-change").serializeArray();
@@ -210,11 +209,11 @@
                 var displayName = document.getElementById("display-name").value.match(displayNameRegex);
                 if (displayName == null || displayName.length != 1) {
                     $('#display-name-div').removeClass('ui-icon-check').addClass('ui-icon-delete');
-                    $('#update-name').addClass('ui-disabled');
+                    $('#submit-display-name').addClass('ui-disabled');
                     return false;
                 }
                 $('#display-name-div').removeClass('ui-icon-delete').addClass('ui-icon-check');
-                $('#update-name').removeClass('ui-disabled');
+                $('#submit-display-name').removeClass('ui-disabled');
                 return true;
             }
             
