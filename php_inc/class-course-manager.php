@@ -56,7 +56,18 @@ class CourseManager
 		}
 		else
 		{
+			$sql = 'SELECT *
+					FROM ' . CourseManager::COURSE_TABLE . ' c
+						LEFT JOIN
+					;';
+			$sql = $db->prepare( $sql );
+			$sql->execute();
+			$result = null;
 			
+			while ( ( $result = $db->fetch( PDO::FETCH_ASSOC ) ) != null )
+			{
+				$retval[] = array( 'id' => $result['ID'], 'title' => $result['name'] );
+			}
 		}
 		
 		return $retval;
