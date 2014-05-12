@@ -10,5 +10,5 @@ CREATE TABLE UserCourse
     userID      INTEGER         NOT NULL,
     courseID    CHAR(8)         NOT NULL,
     visable     enum( 'T','F' ) NOT NULL    DEFAULT 'T',
-    PRIMARY KEY( id )
+    PRIMARY KEY( userID, courseID )
 ) ENGINE = InnoDB DEFAULT CHARSET = UTF8;
