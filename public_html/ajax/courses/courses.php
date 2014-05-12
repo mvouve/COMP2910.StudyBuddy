@@ -65,7 +65,7 @@ function addCourse( $id, $title )
  *
  * @return array of all courses.
  */
-function getCoursesList( $email )
+function getCourses( $email )
 {
     global $courses;
     global $user;
