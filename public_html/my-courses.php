@@ -1,12 +1,12 @@
 <?php require_once( 'config.php' ); ?>
 <?php renderPagelet( 'header.php', array( '{{customHeadTags}}' => '' ) ); ?>
     <body>
-        <form id="get-all-courses-form" name="get-all-courses-form" method="POST">
+        <form id="get-my-courses-form" name="get-my-courses-form" method="POST">
             <input type="hidden" name="method" value="get-courses" />
 		</form>
         <div data-role="page" data-theme="a">
             <?php define('HAS_MENU',1);
-                  renderPagelet( 'banner.php', array( '{{title}}' => 'All courses' ) ); ?>
+                  renderPagelet( 'banner.php', array( '{{title}}' => 'My courses' ) ); ?>
             <div data-role="content">
                 <ul data-role="listview" data-filter="true" id="all-courses-list">
 	                <li data-icon="false"><a href="#">BUSA2720<br>Business in a Networked Economy</a></li>
@@ -29,8 +29,8 @@
             </div>
         </div>
         <script>
-            var formData = $("#get-all-courses-form").serializeArray();
-            $.post( <?php echo '\'' . AJAX_URL . 'courses/courses.php\''; ?>,
+            var formData = $("#get-courses-form").serializeArray();
+            $.post( <?php echo '\'' . AJAX_URL . 'courses/user-courses.php\''; ?>,
                         formData,
                         pupulateCourseList,
                         "json");
