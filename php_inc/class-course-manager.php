@@ -1,9 +1,13 @@
-<?
+<?php
 class CourseManager
 {
 	const COURSE_TABLE = 'Course';
 	const USER_COURSE_TABLE = 'UserCourse';
 
+	function __construct()
+	{
+	}
+	
 	/*
 	 * Add a course to the database.
 	 *
@@ -34,7 +38,7 @@ class CourseManager
 	 * @userID the ID of the User (null if not logged in)
 	 * @returns array( id, title ) of courses.
 	 */
-	public function getCourseList( $userID )
+	public function getCourseList( $userEmail )
 	{
 		global $db;
 		$retval = array();
@@ -58,7 +62,6 @@ class CourseManager
 		{
 			$sql = 'SELECT *
 					FROM ' . CourseManager::COURSE_TABLE . ' c
-						LEFT JOIN
 					;';
 			$sql = $db->prepare( $sql );
 			$sql->execute();
@@ -66,7 +69,7 @@ class CourseManager
 			
 			while ( ( $result = $db->fetch( PDO::FETCH_ASSOC ) ) != null )
 			{
-				$retval[] = array( 'id' => $result['ID'], 'title' => $result['name'] );
+				$retval[] = array( 'id' => $result['ID'], 'title' => $result['name'], 'inCourse' => true );
 			}
 		}
 		
@@ -96,7 +99,7 @@ class CourseManager
 		
 		return $sql->execute();
 	}
-	
+
 	/*
 	 * Remove a Course from a User list.
 	 *
