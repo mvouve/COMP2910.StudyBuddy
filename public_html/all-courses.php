@@ -30,7 +30,6 @@
 		
 			function allCoursesOnReady()
 			{
-			
 				var getAllCoursesFormData = $("#get-all-courses-form").serializeArray();
 				$( '#all-courses-list' ).listview();
 				$.post( <?php echo '\'' . AJAX_URL . 'courses/courses.php\''; ?>,
@@ -51,7 +50,7 @@
                     allCoursesList.appendChild(newLI);
                 }
 				
-				$('#all-courses-list').listview().listview('refresh');
+				$('#all-courses-list').listview('refresh');
             }
         </script>
 <!--End of all-courses.php-->
