@@ -53,7 +53,8 @@
             function validateEmail() {
                 var emailRegex = /^(([0-9a-z_.]+@((my\.bcit\.ca)|(bcit.ca)))|(a\d{8}@((mybcit\.ca)|(learn\.bcit\.ca))))$/gi;
                 var validEmail = document.getElementById("email").value.match(emailRegex);
-                if (validEmail == null || validEmail.length != 1) {
+                if( validEmail == null || validEmail.length != 1 )
+                {
                     $("#email-div").removeClass('ui-icon-check').addClass('ui-icon-delete');
                     return false;
                 }
