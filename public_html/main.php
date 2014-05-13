@@ -30,4 +30,10 @@
 		<?php include( 'add-course.php' ); ?>
 		<?php /* Change for the sake of change. */ ?>
     </body>
+	
+	<script>
+		addCourseOnReady();
+		myCourseOnReady();
+	</script>
+	
 </html>
