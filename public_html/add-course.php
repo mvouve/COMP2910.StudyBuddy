@@ -36,9 +36,9 @@
         <script>
             var iDFormat = /^([A-Z]{4}[0-9]{4})$/
             var userEntry = document.getElementById("new-course-id");
-            var invalid-format-boolean = false;
+            var invalidFormatBoolean = false;
             var btn = $('#add-submit');
-            $(document).load(function(){
+            $(document).on("pagecreate",function(){
                 alert('ready');
                 $('document').on('pagecreate', function(e){
                     alert('LOADED');
@@ -56,12 +56,12 @@
             function validateID() {
                 $('#invalid-format').show();
                 if (iDFormat.value.match(userEntry)!=null) {
-                    invalid-format-boolean=false;
+                    invalidFormatBoolean=false;
                     btn.disabled = true;
                 }
                 else {
                     $('#invalid-format').show();
-                    invalid-format-boolean=true;
+                    invalidFormatBoolean=true;
                     btn.disabled = false;
                 }
             }
