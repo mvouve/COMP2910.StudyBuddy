@@ -18,7 +18,7 @@ function getUserCourses( ajax_URL )
                 var courseID = courseArray[i].id;
                 var courseTitle = courseArray[i].title;
                 var userInCourse = courseArray[i].inCourse;
-                //MUST USE THESE IN HTML NOW, WAITING FOR FRONT END
+                CourseListAdd(courseID, courseTitle, userInCourse);
             }
         }
     });
