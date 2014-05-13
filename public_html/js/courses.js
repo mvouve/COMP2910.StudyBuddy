@@ -94,7 +94,7 @@ function removeCourse (ajax_URL, courseID)
 }
 
 /* toggle course watch visibility */
-function toggle (ajax_URL, courseID)
+function toggleVisibility (ajax_URL, courseID)
 {
     $.ajax
     ({
