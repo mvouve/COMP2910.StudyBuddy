@@ -1,3 +1,4 @@
+<!--Beginning of account-settings.php-->
 <?php
     $email = $_SESSION['email'];
     $display_name = $_SESSION['display_name'];
@@ -293,3 +294,4 @@
                 $('#name-change-success').show();
             }
         </script>
+<!--End of account-settings.php-->

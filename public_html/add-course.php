@@ -1,3 +1,4 @@
+<!--Beginning of add-courses.php-->
 <?php
     $email = $_SESSION['email'];
     $display_name = $_SESSION['display_name'];
@@ -65,3 +66,4 @@
             }
         </script>
     </body>
+<!--End of add-courses.php-->

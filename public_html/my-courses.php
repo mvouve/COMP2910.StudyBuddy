@@ -1,3 +1,4 @@
+<!--Beginning of my-courses.php-->
         <div data-role="page" data-theme="a" id="page-my-courses">
             <?php renderPagelet( 'banner.php', array( '{{title}}' => 'My courses' ) ); ?>
 		    <form id="get-my-courses-form" name="get-my-courses-form" method="POST">
@@ -66,3 +67,4 @@
                 removeMode = !removeMode;
             });
         </script>
+<!--End of my-courses.php-->

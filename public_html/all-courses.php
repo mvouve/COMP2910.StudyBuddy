@@ -1,8 +1,13 @@
+<!--Beginning of all-courses.php-->
+<?php require_once( 'config.php' ); ?>
+<?php renderPagelet( 'header.php', array( '{{customHeadTags}}' => '' ) ); ?>
+    <body>
         <form id="get-all-courses-form" name="get-all-courses-form" method="POST">
             <input type="hidden" name="method" value="get-courses" />
 		</form>
-        <div data-role="page" data-theme="a" id="page-all-courses">
-            <?php renderPagelet( 'banner.php', array( '{{title}}' => 'All courses' ) ); ?>
+        <div data-role="page" data-theme="a">
+            <?php define('HAS_MENU',1);
+                  renderPagelet( 'banner.php', array( '{{title}}' => 'All courses' ) ); ?>
             <div data-role="content">
                 <ul data-role="listview" data-filter="true" id="all-courses-list">
 	                <!--li data-icon="false"><a href="#">BUSA2720<br>Business in a Networked Economy</a></li>
@@ -17,8 +22,8 @@
             <div data-role="footer" data-position="fixed">
                 <div data-role="navbar">
 		            <ul>
-			            <li><a href="#page-add-course">Create Course</a></li>
-			            <li><a href="#page-my-courses">My Courses</a></li>
+			            <li><a href="#">Create Course</a></li>
+			            <li><a href="#">My Courses</a></li>
 			            <li><a href="#">Clear All</a></li>
 		            </ul>
 	            </div>
@@ -45,3 +50,6 @@
 				$('#all-courses-list').listview('refresh');
             }
         </script>
+    </body>
+</html>
+<!--End of all-courses.php-->
