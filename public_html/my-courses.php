@@ -30,10 +30,10 @@
                         getMyCoursesFormData,
                         pupulateMyCourseList,
                         "json");
-
+            
+            var myCoursesList = document.getElementById('my-courses-list');
             function pupulateMyCourseList(result)
             {
-                var myCoursesList = document.getElementById('my-courses-list');
                 for( var i = 0; i < result.length; ++i )
                 {
                     var newLI = document.createElement('li');

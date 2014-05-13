@@ -27,15 +27,15 @@
             </div>
         </div>
         <script>
-            var formData = $("#get-all-courses-form").serializeArray();
+            var getAllCoursesFormData = $("#get-all-courses-form").serializeArray();
             $.post( <?php echo '\'' . AJAX_URL . 'courses/courses.php\''; ?>,
-                        formData,
-                        pupulateCourseList,
+                        getAllCoursesFormData,
+                        pupulateAllCourseList,
                         "json");
-
-            function pupulateCourseList(result)
+            
+            var allCoursesList = document.getElementById('all-courses-list');
+            function pupulateAllCourseList(result)
             {
-                var allCoursesList = document.getElementById('all-courses-list');
                 for( var i = 0; i < result.length; ++i )
                 {
                     var newLI = document.createElement('li');
