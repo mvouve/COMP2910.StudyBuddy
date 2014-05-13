@@ -1,28 +1,5 @@
-<?php require_once( 'config.php' ); ?>
-<?php require_once( PHP_INC_PATH . 'common.php' ); ?>
-<?php
-    $user = User::instance();
-    if ( !$user->isLoggedIn() )
-    {
-        include( 'login.php' );
-        die();
-    }
-?>
-<?php $sliderHeader = array( '{{customHeadTags}}' => '
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-        <script type="text/javascript" src="js/jquery.slidepanel.js"></script>
-        <link rel="stylesheet" type="text/css" href="css/jquery.slidepanel.css">
-    ');
-
-    $email = $_SESSION['email'];
-    $display_name = $_SESSION['display_name'];
-?>
-<?php renderPagelet( 'header.php', array( '{{customHeadTags}}' => '' ) ); ?>
-
-    <body>
-        <div data-role="page" data-theme="a">
-            <?php define('HAS_MENU',1);
-                  renderPagelet( 'banner.php', array( '{{title}}' => 'Account Settings' ) ); ?>
+        <div data-role="page" data-theme="a" id='page-account-settings'>
+            <?php renderPagelet( 'banner.php', array( '{{title}}' => 'Account Settings' ) ); ?>
 
             <div data-role="content" data-theme="a">
                 <div class="center">
@@ -311,5 +288,3 @@
                 $('#name-change-success').show();
             }
         </script>
-    </body>
-</html>
