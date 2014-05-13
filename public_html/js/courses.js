@@ -30,7 +30,7 @@ function getUserCourses( ajax_URL )
 
 /* Adds course data to list elements in HTML 
     @param id the 4-letter and 4-number course code
-    @param title
+    @param title a brief description / the name of the course
     @param inCourse boolean, true if the user in the course*/
 function courseListAdd (id, title, inCourse)
 {
