@@ -27,5 +27,6 @@
 		<?php include( 'all-courses.php' ); ?>
 		<?php include( 'my-courses.php' ); ?>
 		<?php include( 'add-course.php' ); ?>
+		<?php /* Change for the sake of change. */ ?>
     </body>
 </html>
