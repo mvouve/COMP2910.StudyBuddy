@@ -20,7 +20,7 @@
                         </div>
 
                         <label for="new-course-title">New Course Title:</label>
-                        <div id="new-course-title">
+                        <div id="new-course-title-div">
                             <input type="text" name="new-course-title" id="new-course-title">
                         </div>
 
