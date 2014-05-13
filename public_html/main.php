@@ -15,8 +15,8 @@
     ');
 ?>
 <?php renderPagelet( 'header.php', $sliderHeader ); ?>
-    <body>
-        <div data-role="page" id="page" data-theme="a">
+    <body id='page-container'>
+        <div data-role="page" id="page-test-main" data-theme="a">
             <?php define('HAS_MENU',1);
                   renderPagelet( 'banner.php', array( '{{title}}' => 'Main Page' ) ); ?>
             <div class="center" data-role="main">
