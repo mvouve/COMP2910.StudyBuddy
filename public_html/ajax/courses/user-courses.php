@@ -59,8 +59,7 @@ function getCourses()
     global $courses;
     
     
-    return getUserCourseList( getUID() ) );
-    
+    return $courses->getUserCourseList( getUID() ) );
 }
 
 /*
