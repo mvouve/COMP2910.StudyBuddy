@@ -126,11 +126,11 @@ class CourseManager
 	/*
 	 * Get the Course List of a specific User
 	 *
-	 * @param $userID the ID of the user whose list to retrieve.
+	 * @param $userEmail the email of the user whose list to retrieve.
 	 * 
 	 * @returns array( id, title ) of courses.
 	 */
-	public function getUserCourseList( $userID )
+	public function getUserCourseList( $userEmail )
 	{
 		global $db;
 		
@@ -138,10 +138,10 @@ class CourseManager
 				FROM ' . CourseManager::COURSE_TABLE . ' c
 					JOIN ' . CourseManager::USER_COURSE_TABLE . ' uc
 						ON c.ID = uc.courseID
-				WHERE uc.userID=:uid
+				WHERE uc.email=:email
 				;';
 		$sql = $db->prepare( $sql );
-		$sql->bindParam( ':uid', $userID );
+		$sql->bindParam( ':email', $userEmail );
 		$sql->execute();
 		
 		$result = null;

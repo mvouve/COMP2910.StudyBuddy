@@ -1,3 +1,4 @@
+<!--Beginning of add-courses.php-->
 <?php
     $email = $_SESSION['email'];
     $display_name = $_SESSION['display_name'];
@@ -37,11 +38,19 @@
             var userEntry = document.getElementById("new-course-id");
             var invalid-format-boolean = false;
             var btn = $('#add-submit');
-            
-            $('#new-course-id').keyup( function(e){
-                validateID();
-            } );
-            $('#invalid-format').hide();
+            $(document).load(function(){
+                alert('ready');
+                $('document').on('pagecreate', function(e){
+                    alert('LOADED');
+                   $('#invalid-format').hide(); 
+                });
+
+
+                $('#new-course-id').keyup( function(e){
+                    alert('test');
+                    validateID();
+                });
+            });
 
 
             function validateID() {
@@ -58,3 +67,4 @@
             }
         </script>
     </body>
+<!--End of add-courses.php-->
