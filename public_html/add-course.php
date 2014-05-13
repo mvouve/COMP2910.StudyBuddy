@@ -38,6 +38,7 @@
             var userEntry;
             var invalidFormatBoolean;
             var btn;
+            var formatMatch;
 			
             function addCourseOnReady(){
 				$('#invalid-format').hide();
@@ -46,8 +47,8 @@
                     validateID();
                 });
 				
-				iDFormat = /^([A-Z]{4}[0-9]{4})$/
-				userEntry = document.getElementById("new-course-id");
+				iDFormat = /^([A-Z]{4}[0-9]{4})$/;
+				
 				invalidFormatBoolean = false;
 				btn = $('#add-submit');
             }
@@ -55,7 +56,16 @@
 
             function validateID() {
                 $('#invalid-format').show();
-                if (iDFormat.value.match(userEntry)!=null) {
+                userEntry = document.getElementById("new-course-id");
+                formatMatch = iDFormat.value.match(userEntry);
+                if(formatMatch == null)
+                {
+                alert('messagenull');   
+                }
+                else{    
+                alert(formatMatch);
+                }
+                if (formatMatch != null) {
                     invalidFormatBoolean=false;
                     btn.disabled = true;
                 }
