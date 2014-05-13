@@ -1,6 +1,6 @@
 /* Fetch user course list from server by ajax */
 
-function getUserCourses(ajax_URL)
+function getUserCourses( ajax_URL )
 {
     $.ajax
     ({
@@ -10,15 +10,22 @@ function getUserCourses(ajax_URL)
             method: get-courses
         },
         dataType: json,
-        success: function (json)
+        success: function ( json )
         {
-            //PLACEHOLDER
+            var courseArray = json;
+            for ( i = 0 ; courseArray.length ; i++ )
+            {
+                var courseID = courseArray[i].id;
+                var courseTitle = courseArray[i].title;
+                var userInCourse = courseArray[i].inCourse;
+                //MUST USE THESE IN HTML NOW, WAITING FOR FRONT END
+            }
         }
     });
 }
 
 /* Fetch master course list from the server*/
-function getCourseList(ajax_URL)
+function getCourseList( ajax_URL )
 {
     $.ajax
     ({
@@ -28,7 +35,7 @@ function getCourseList(ajax_URL)
             method: get-courses,
         },
         dataType: json,
-        success: function (json)
+        success: function ( json )
         {
             //PLACEHOLDER
         }
@@ -36,7 +43,7 @@ function getCourseList(ajax_URL)
 }
 /* Add a course to the master course list */
 
-function createCourse(ajax_URL, courseID, description)
+function createCourse( ajax_URL, courseID, description )
 {
         $.ajax
         ({
@@ -48,15 +55,15 @@ function createCourse(ajax_URL, courseID, description)
                 title: description
         },
         dataType: json,
-        success: function (json)
+        success: function ( json )
         {
             //PLACEHOLDER
         }
     });
 }
 
-/* removes a course from the user list */
-function addCourse(ajax_URL, courseID)
+/* adds a course to the user list */
+function addUserCourse( ajax_URL, courseID )
 {
     $.ajax
     ({
@@ -67,7 +74,7 @@ function addCourse(ajax_URL, courseID)
             id: courseID
         },
         dataType: json,
-        success: function (json)
+        success: function ( json )
         {
             //PLACEHOLDER
         }
@@ -76,7 +83,7 @@ function addCourse(ajax_URL, courseID)
 }
 
 /* removes a course from the user list */
-function removeCourse (ajax_URL, courseID)
+function removeCourse ( ajax_URL, courseID )
 {
     $.ajax
     ({
@@ -87,7 +94,7 @@ function removeCourse (ajax_URL, courseID)
             id: courseID
         },
         datatype: json,
-        success: function (json)
+        success: function ( json )
         {
             //PLACEHOLDER
         }
@@ -95,7 +102,7 @@ function removeCourse (ajax_URL, courseID)
 }
 
 /* toggle course watch visibility */
-function toggleVisibility (ajax_URL, courseID)
+function toggleVisibility ( ajax_URL, courseID )
 {
     $.ajax
     ({
@@ -106,7 +113,7 @@ function toggleVisibility (ajax_URL, courseID)
             id: courseID
         },
         datatype: json,
-        success: function (json)
+        success: function ( json )
         {
             //PLACEHOLDER
         }
