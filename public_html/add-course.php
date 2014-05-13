@@ -33,9 +33,11 @@
         </div>
 
         <script>
-
             var iDFormat = /^([A-Z]{4}[0-9]{4})$/
             var userEntry = document.getElementById("new-course-id");
+            var invalid-format-boolean = false;
+            var btn = $('#add-submit');
+            
             $('#new-course-id').keyup( function(e){
                 validateID();
             } );
@@ -45,10 +47,13 @@
             function validateID() {
                 $('#invalid-format').show();
                 if (iDFormat.value.match(userEntry)!=null) {
-                    alert('PLACEHOLDER, needs to send to server');
+                    invalid-format-boolean=false;
+                    btn.disabled = true;
                 }
                 else {
                     $('#invalid-format').show();
+                    invalid-format-boolean=true;
+                    btn.disabled = false;
                 }
             }
         </script>
