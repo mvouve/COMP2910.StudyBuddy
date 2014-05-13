@@ -8,10 +8,25 @@ if( isset( $_POST['method'] ) )
     {
         case 'add-course':
             $retval = addCourse( $_POST['id'] );
+            
             break;
             
-        
+        case 'get-courses':
+            $retval = getCourses();
+            
+            break;
+            
+        case 'remove-course':
+            $retval = removeCourse( $_POST['id'] );
+            
+            break;
+            
+        case 'toggle-visibility':
+            $retval = toggleVisibility( $_POST['id'] );
+            
+            break;
         default:
+        
             break;
     }
 }
@@ -30,6 +45,24 @@ else if( isset( $_GET['method'] )
 
 echo json_encode( $retval ); 
 
+
+// just in case!
+return;
+
+/* 
+ * gets the courses the current user is enrolled in.
+ *
+ * @return an array of the current users courses.
+ */
+function getCourses()
+{
+    global $courses;
+    
+    
+    return getUserCourseList( getUID() ) );
+    
+}
+
 /*
  * Adds a course a user in the DB
  * 
@@ -38,11 +71,11 @@ echo json_encode( $retval );
  */
 function addCourse( $id )
 {
-    global $user;
+    global $courses;
     
     $retval = array( 'success' => false );
     
-    if( addUserCouse( $user->getUserID( $_SESSION['email'] ), $id ) )
+    if( $courses->addUserCouse( getUID(), $id ) )
     {
         $retval = array( 'success' => true );
     }
@@ -51,5 +84,53 @@ function addCourse( $id )
 }
 
 /*
+ * remove a course from a user in the DB
+ * 
+ * @param $id the courseID to be added
+ * @return true | false 
+ */
+function removeCourse( $id )
+{
+    global $courses;
+    $retval = array( 'success' => false ); 
+    
+    if( $courses->removeUserCourse( getUID(), $id ) )
+    {
+        $retval = array( 'success' => true ); 
+    }
+    
+    return $retval;
+
+}
+
+/*
+ * toggles the visiblity of a course in the DB
+ * 
+ * @param $id the courseID to be added
+ * @return true | false 
+ */
+function toggleVisibility
+{
+    global $courses;
+    $retval = array( 'success' => false ); 
+    
+    if( $courses->toggleVisibility( getUID(), $id ) )
+    {
+        $retval = array( 'success' => true ); 
+    }
+    
+    return $retval;
+
+}
+
+/*
+ * Helper function to get current sessions UserID.
  *
- *
+ * @return UID
+ */
+function getUID()
+{
+    global $user;
+    
+    return $user->getUserID( $_SESSION['email'] );
+}

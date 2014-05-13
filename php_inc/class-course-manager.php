@@ -43,6 +43,8 @@ class CourseManager
 		global $db;
 		$retval = array();
 		$sql = '';
+        //this some how fixed a issue on the server, I have no idea why.
+        $null = null;
 		
 		if ( $userEmail == null )
 		{
@@ -151,4 +153,69 @@ class CourseManager
 		
 		return $retval;
 	}
+
+    /*
+	 * Toggles the visibility of a course for a specific user.
+	 *
+	 * @param $userID the ID of the user who's course will be toggled.
+     * @param $courseID the ID of the course to toggle.
+     * @throws SQLFailure if there's an issue connecting to the SQL.
+	 * 
+	 * @returns true|false on success/failure.
+	 */
+    public function toggleVisibility( $userID, $courseID )
+    {
+        global $db
+        
+        // ¯\_(ツ)_/¯ seems legit. really needs testing.
+        try
+        {
+            $sql = 'UPDATE ' . CourseManager::USER_COURSE_TABLE .'
+                        SET visible= ' getVisibility( $userID, $courseID )?'F':'T' . '
+                        WHERE userID = :userID AND courseID = :courseID';
+            $sql->bindParam( ':userID', $userID );
+            $sql->bindParam( ':courseID', $courseID );
+            
+            return $sql->execute;
+        }
+        catch( SQLFailure() )
+        {            
+            return false;
+        }
+    }
+    /*
+	 * Checks courses current visibility.
+	 *
+	 * @param $userID the ID of the user who's course is being checked.
+     * @param $courseID the ID of the course that's being checked.
+	 * 
+	 * @returns true|false on the visiblity.
+	 */
+    private function getVisibility( $userID, $courseID )
+    {
+        global $db
+        
+        $sql = 'SELECT visible
+                    FROM' . CourseManager::USER_COURSE_TABLE .'
+                    WHERE userID =:userID AND courseID = :courseID;'
+        $sql =  $db->prepare( $sql );
+        $sql->bindParam( ':userID', $userID );
+        $sql->bindParam( ':courseID', $courseID );
+        if( !$sql->execute() )
+        {
+            require_once( '/../exceptions/class-sql-failure.php' );
+            
+            throw new SQLFailure();
+        }
+        
+        $visible = $sql->fetch( PDO::FETCH_ASSOC );
+        $visible = $visible['visible'];
+        
+        if( $visible == 'T' )
+        {
+            return true;
+        }
+        
+        return false;
+    }
 }

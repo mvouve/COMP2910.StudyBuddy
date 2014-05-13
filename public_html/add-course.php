@@ -33,13 +33,13 @@
                 <div>
                     <div data-role="form">
                         <label for="newCourseID">New Course ID: <span id="invalid-format" style="color: #FF0000">Please enter in the format COMP0000</span></label>
-                        <div id="newCourseID">
-                            <input type="text" name="newCourseID" id="newCourseID">
+                        <div id="new-course-id">
+                            <input type="text" name="new-course-id" id="new-course-id">
                         </div>
 
-                        <label for="newCourseTitle">New Course Title:</label>
-                        <div id="newCourseTitle">
-                            <input type="text" name="newCourseTitle" id="newCourseTitle">
+                        <label for="new-course-title">New Course Title:</label>
+                        <div id="new-course-title">
+                            <input type="text" name="new-course-title" id="new-course-title">
                         </div>
 
                         <a href="#" data-role="button" id="add-submit">Add</a>
@@ -54,23 +54,21 @@
         <script>
 
             var iDFormat = /^([A-Z]{4}[0-9]{4})$/
-            var userEntry = document.getElementById("newCourseID");
+            var userEntry = document.getElementById("new-course-id");
+            $('#new-course-id').keyup( function(e){
+                validateID();
+            } );
+            $('#invalid-format').hide();
 
-            $(document).ready(
-                function(){
-                    $('#invalid-format').hide()
-                }
-            );   
-
-            $("newCourseID").keyup(validateID());
 
             function validateID() {
-                if (iDFormat.test(userEntry)) {
+                $('#invalid-format').show();
+                if (iDFormat.value.match(userEntry)!=null) {
                     alert('PLACEHOLDER, needs to send to server');
                 }
                 else {
                     $('#invalid-format').show();
                 }
-            };
+            }
         </script>
     </body>
