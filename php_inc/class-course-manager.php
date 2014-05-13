@@ -46,7 +46,7 @@ class CourseManager
         //this some how fixed a issue on the server, I have no idea why.
         $null = null;
 		
-		if ( $userEmail == null )
+		if ( $userID == null )
 		{
 			$sql = 'SELECT *
 					FROM ' . CourseManager::COURSE_TABLE . ' 
@@ -64,7 +64,7 @@ class CourseManager
 		{
 			$sql = 'SELECT *
 					FROM ' . CourseManager::COURSE_TABLE . ' c
-						LEFT JOIN ' . CourseManager::USER_COURSE . ' uc
+						LEFT JOIN ' . CourseManager::USER_COURSE_TABLE . ' uc
 							ON uc.courseID = c.ID
 					WHERE uc.userID=:id
 					;';

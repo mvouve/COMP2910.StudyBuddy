@@ -27,14 +27,20 @@
             </div>
         </div>
         <script>
-            var getAllCoursesFormData = $("#get-all-courses-form").serializeArray();
-            $.post( <?php echo '\'' . AJAX_URL . 'courses/courses.php\''; ?>,
-                        getAllCoursesFormData,
-                        pupulateAllCourseList,
-                        "json");
-            
-            var allCoursesList = document.getElementById('all-courses-list');
-            function pupulateAllCourseList(result)
+			var allCoursesList;
+		
+			function allCoursesOnReady()
+			{
+				var getAllCoursesFormData = $("#get-all-courses-form").serializeArray();
+				$.post( <?php echo '\'' . AJAX_URL . 'courses/courses.php\''; ?>,
+							getAllCoursesFormData,
+							populateAllCourseList,
+							"json");
+							
+				allCoursesList = document.getElementById('all-courses-list');
+			}
+			
+            function populateAllCourseList(result)
             {
                 for( var i = 0; i < result.length; ++i )
                 {

@@ -35,7 +35,7 @@
                 var getMyCoursesFormData = $("#get-my-courses-form").serializeArray();
                 $.post( <?php echo '\'' . AJAX_URL . 'courses/user-courses.php\''; ?>,
                             getMyCoursesFormData,
-                            pupulateMyCourseList,
+                            populateMyCourseList,
                             "json");
                             
                 $('#remove-course-button').on( 'click tap', function(e)
@@ -59,7 +59,7 @@
                 });
             }
             
-            function pupulateMyCourseList(result)
+            function populateMyCourseList(result)
             {
                 for( var i = 0; i < result.length; ++i )
                 {
