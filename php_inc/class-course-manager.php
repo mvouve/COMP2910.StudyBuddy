@@ -38,7 +38,7 @@ class CourseManager
 	 * @userID the ID of the User (null if not logged in)
 	 * @returns array( id, title ) of courses.
 	 */
-	public function getCourseList( $userEmail )
+	public function getCourseList( $userID )
 	{
 		global $db;
 		$retval = array();
@@ -64,8 +64,12 @@ class CourseManager
 		{
 			$sql = 'SELECT *
 					FROM ' . CourseManager::COURSE_TABLE . ' c
+						LEFT JOIN ' . CourseManager::USER_COURSE . ' uc
+							ON uc.courseID = c.ID
+					WHERE uc.userID=:id
 					;';
 			$sql = $db->prepare( $sql );
+			$sql->bindParam( ':id', $userID );
 			$sql->execute();
 			$result = null;
 			

@@ -4,8 +4,7 @@
     $display_name = $_SESSION['display_name'];
 ?>
         <div data-role="page" data-theme="a" id='page-account-settings'>
-            <?php define('HAS_MENU',1);
-                  renderPagelet( 'banner.php', array( '{{title}}' => 'Account Settings' ) ); ?>
+            <?php renderPagelet( 'banner.php', array( '{{title}}' => 'Account Settings' ) ); ?>
 
             <div data-role="content" data-theme="a">
                 <div class="center">

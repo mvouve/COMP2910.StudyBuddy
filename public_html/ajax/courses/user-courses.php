@@ -57,9 +57,10 @@ return;
 function getCourses()
 {
     global $courses;
+    global $user;
     
-    
-    return $courses->getUserCourseList( getUID() ) );
+	$uid = $user->getUserID( $_SESSION[ 'email' ] );
+    return $courses->getUserCourseList( $uid );
 }
 
 /*
