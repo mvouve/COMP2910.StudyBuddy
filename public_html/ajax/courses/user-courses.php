@@ -98,6 +98,8 @@ function removeCourse( $id )
     {
         $retval = array( 'success' => true ); 
     }
+    
+    return $retval;
 
 }
 
@@ -116,6 +118,8 @@ function toggleVisibility
     {
         $retval = array( 'success' => true ); 
     }
+    
+    return $retval;
 
 }
 
