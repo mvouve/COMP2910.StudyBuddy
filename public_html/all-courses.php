@@ -18,7 +18,7 @@
             <div data-role="footer" data-position="fixed">
                 <div data-role="navbar">
 		            <ul>
-			            <li><a href="#">Create Course</a></li>
+			            <li><a href="#page-add-course">Create Course</a></li>
 			            <li><a href="#">My Courses</a></li>
 			            <li><a href="#">Clear All</a></li>
 		            </ul>

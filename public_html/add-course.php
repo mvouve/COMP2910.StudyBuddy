@@ -34,42 +34,31 @@
         </div>
 
         <script>
-            var iDFormat = /^([A-Z]{4}[0-9]{4})$/i;
+            var idRegex = /^([A-Z]{4}[0-9]{4})$/i;
             var userEntry;
             var invalidFormatBoolean = false;
             var btn;
             var formatMatch;
-			
-            function addCourseOnReady(){
-				$('#invalid-format').hide();
 
-                $('#new-course-id').keyup( function(e){
+            function addCourseOnReady() {
+                $('#invalid-format').hide();
+
+                $('#new-course-id').keyup(function (e) {
                     validateID();
                 });
-				btn = $('#add-submit');
+                btn = $('#add-submit');
             }
 
 
             function validateID() {
                 $('#invalid-format').show();
-                userEntry = document.getElementById("new-course-id").value;
-                formatMatch = userEntry.match( iDFormat );
-                if(formatMatch == null)
-                {
-                alert('messagenull');   
+                var validID = document.getElementById("new-course-id").value.match(idRegex);
+                if (validID == null || validID.length != 1) {
+                    alert('message null');
+                    return false;
                 }
-                else{    
-                alert(formatMatch);
-                }
-                if (formatMatch != null) {
-                    invalidFormatBoolean=false;
-                    btn.disabled = true;
-                }
-                else {
-                    $('#invalid-format').show();
-                    invalidFormatBoolean=true;
-                    btn.disabled = false;
-                }
+                alert(validID);
+                return true;
             }
         </script>
     </body>
