@@ -43,6 +43,8 @@ class CourseManager
 		global $db;
 		$retval = array();
 		$sql = '';
+        //this some how fixed a issue on the server, I have no idea why.
+        $null = null;
 		
 		if ( $userEmail == null )
 		{
