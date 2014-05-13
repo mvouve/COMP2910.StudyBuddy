@@ -1,7 +1,4 @@
 <!--Beginning of all-courses.php-->
-<?php require_once( 'config.php' ); ?>
-<?php renderPagelet( 'header.php', array( '{{customHeadTags}}' => '' ) ); ?>
-    <body>
         <form id="get-all-courses-form" name="get-all-courses-form" method="POST">
             <input type="hidden" name="method" value="get-courses" />
 		</form>
@@ -50,6 +47,4 @@
 				$('#all-courses-list').listview('refresh');
             }
         </script>
-    </body>
-</html>
 <!--End of all-courses.php-->
