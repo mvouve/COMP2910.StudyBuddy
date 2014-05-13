@@ -1,12 +1,9 @@
 <?php require_once( 'config.php' ); ?>
-<?php renderPagelet( 'header.php', array( '{{customHeadTags}}' => '' ) ); ?>
-    <body>
-        <form id="get-my-courses-form" name="get-my-courses-form" method="POST">
-            <input type="hidden" name="method" value="get-courses" />
-		</form>
-        <div data-role="page" data-theme="a">
-            <?php define('HAS_MENU',1);
-                  renderPagelet( 'banner.php', array( '{{title}}' => 'My courses' ) ); ?>
+        <div data-role="page" data-theme="a" id="page-my-courses">
+            <?php renderPagelet( 'banner.php', array( '{{title}}' => 'My courses' ) ); ?>
+		    <form id="get-my-courses-form" name="get-my-courses-form" method="POST">
+				<input type="hidden" name="method" value="get-courses" />
+			</form>
             <div data-role="content">
                 <ul data-role="listview" data-filter="true" id="my-courses-list">
 	                <li data-icon="false"><a href="#">BUSA2720<br>Business in a Networked Economy</a></li>
@@ -21,7 +18,7 @@
             <div data-role="footer" data-position="fixed">
                 <div data-role="navbar">
 		            <ul>
-			            <li><a href="#" id="add-course-button">Add Courses</a></li>
+			            <li><a href="#page-all-courses" id="add-course-button">Add Courses</a></li>
 			            <li><a href="#" id="remove-course-button">Remove Courses</a></li>
 		            </ul>
 	            </div>
@@ -55,5 +52,3 @@
 				$('#my-courses-list').listview('refresh');
             } )
         </script>
-    </body>
-</html>

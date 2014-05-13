@@ -165,20 +165,21 @@ class CourseManager
 	 */
     public function toggleVisibility( $userID, $courseID )
     {
-        global $db
+        global $db;
+		$vis = $this->getVisibility( $userID, $courseID )?'\'F\'':'\'T\'';
         
         // ¯\_(ツ)_/¯ seems legit. really needs testing.
         try
         {
             $sql = 'UPDATE ' . CourseManager::USER_COURSE_TABLE .'
-                        SET visible= ' getVisibility( $userID, $courseID )?'F':'T' . '
+                        SET visible= ' . $vis . '
                         WHERE userID = :userID AND courseID = :courseID';
             $sql->bindParam( ':userID', $userID );
             $sql->bindParam( ':courseID', $courseID );
             
             return $sql->execute;
         }
-        catch( SQLFailure() )
+        catch( SQLFailure $e )
         {            
             return false;
         }
@@ -193,11 +194,11 @@ class CourseManager
 	 */
     private function getVisibility( $userID, $courseID )
     {
-        global $db
+        global $db;
         
         $sql = 'SELECT visible
-                    FROM' . CourseManager::USER_COURSE_TABLE .'
-                    WHERE userID =:userID AND courseID = :courseID;'
+                    FROM ' . CourseManager::USER_COURSE_TABLE .'
+                    WHERE userID =:userID AND courseID = :courseID;';
         $sql =  $db->prepare( $sql );
         $sql->bindParam( ':userID', $userID );
         $sql->bindParam( ':courseID', $courseID );

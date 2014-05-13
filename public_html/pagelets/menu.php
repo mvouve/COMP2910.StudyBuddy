@@ -5,7 +5,7 @@
                         <li><a href='main.php' rel='external'>My Meetings</a></li>
                         <li><a href='#' rel='external'>Create Meetings</a></li>
                         <li><br></li>
-                        <li><a href='#' rel='external'>My Courses</a></li>
+                        <li><a href='#page-my-courses'>My Courses</a></li>
                         <li><a href='account-setting.php' rel='external'>Account Settings</a></li>
                         <li><a href='login.php?logout=true' rel='external'>Logout</a></li>
                     </ul>
