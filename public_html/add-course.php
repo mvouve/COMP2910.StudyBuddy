@@ -34,9 +34,9 @@
         </div>
 
         <script>
-            var iDFormat;
+            var iDFormat = /^([A-Z]{4}[0-9]{4})$/i;
             var userEntry;
-            var invalidFormatBoolean;
+            var invalidFormatBoolean = false;
             var btn;
             var formatMatch;
 			
@@ -46,18 +46,14 @@
                 $('#new-course-id').keyup( function(e){
                     validateID();
                 });
-				
-				iDFormat = /^([A-Z]{4}[0-9]{4})$/;
-				
-				invalidFormatBoolean = false;
 				btn = $('#add-submit');
             }
 
 
             function validateID() {
                 $('#invalid-format').show();
-                userEntry = document.getElementById("new-course-id");
-                formatMatch = iDFormat.value.match(userEntry);
+                userEntry = document.getElementById("new-course-id").value;
+                formatMatch = userEntry.match( iDFormat );
                 if(formatMatch == null)
                 {
                 alert('messagenull');   
