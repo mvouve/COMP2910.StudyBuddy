@@ -18,10 +18,28 @@ function getUserCourses( ajax_URL )
                 var courseID = courseArray[i].id;
                 var courseTitle = courseArray[i].title;
                 var userInCourse = courseArray[i].inCourse;
-                CourseListAdd(courseID, courseTitle, userInCourse);
+
+                //calls a separate function to add this data to the HTML
+                courseListAdd(courseID, courseTitle, userInCourse);
             }
         }
     });
+}
+
+
+/* Adds course data to list elements in HTML */
+function courseListAdd (id, title, inCourse)
+{
+    var list = getElementById("my-courses-list");
+    var listItem = document.createElmeent('li');
+
+    //create inner anchor element in list item and set its attribute and data
+    var anchor = document.createElement('a');
+    anchor.setAttribute('href', '#');
+    anchor.innerHTML='' + id + '<br/>' + title;
+
+    //put the anchor element inside the list item element
+    listItem.innerHTML = anchor;
 }
 
 /* Fetch master course list from the server*/
@@ -41,8 +59,8 @@ function getCourseList( ajax_URL )
         }
     })
 }
-/* Add a course to the master course list */
 
+/* Add a course to the master course list */
 function createCourse( ajax_URL, courseID, description )
 {
         $.ajax
