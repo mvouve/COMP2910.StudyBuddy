@@ -2,9 +2,8 @@
         <form id="get-all-courses-form" name="get-all-courses-form" method="POST">
             <input type="hidden" name="method" value="get-courses" />
 		</form>
-        <div data-role="page" data-theme="a">
-            <?php define('HAS_MENU',1);
-                  renderPagelet( 'banner.php', array( '{{title}}' => 'All courses' ) ); ?>
+        <div data-role="page" data-theme="a" id='page-all-courses'>
+            <?php renderPagelet( 'banner.php', array( '{{title}}' => 'All courses' ) ); ?>
             <div data-role="content">
                 <ul data-role="listview" data-filter="true" id="all-courses-list">
 	                <!--li data-icon="false"><a href="#">BUSA2720<br>Business in a Networked Economy</a></li>
@@ -38,6 +37,9 @@
 							"json");
 							
 				allCoursesList = document.getElementById('all-courses-list');
+				console.log( $('#all-courses-list') );
+				
+				$('#all-courses-list').listview();
 			}
 			
             function populateAllCourseList(result)

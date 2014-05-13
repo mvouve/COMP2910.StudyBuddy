@@ -34,6 +34,7 @@
 	<script>
 		addCourseOnReady();
 		myCourseOnReady();
+		allCoursesOnReady();
 	</script>
 	
 </html>
