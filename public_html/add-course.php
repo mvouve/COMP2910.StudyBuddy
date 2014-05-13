@@ -33,15 +33,22 @@
         </div>
 
         <script>
+            $('#invalid-format').hide();
             var iDFormat = /^([A-Z]{4}[0-9]{4})$/
             var userEntry = document.getElementById("new-course-id");
             var invalid-format-boolean = false;
             var btn = $('#add-submit');
             
+            
+            $('body').on('pagecreate', function(e){
+                alert('LOADED');
+               $('#invalid-format').hide(); 
+            });
+            
+            
             $('#new-course-id').keyup( function(e){
                 validateID();
             } );
-            $('#invalid-format').hide();
 
 
             function validateID() {

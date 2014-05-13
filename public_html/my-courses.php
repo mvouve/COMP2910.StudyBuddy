@@ -18,19 +18,19 @@
                 <div data-role="navbar">
 		            <ul>
 			            <li><a href="#page-all-courses" id="add-course-button">Add Courses</a></li>
-			            <li><a href="#" id="remove-course-button">Remove Courses</a></li>
+			            <li><a href="#" id="remove-course-button">Bleh</a></li>
 		            </ul>
 	            </div>
             </div>
         </div>
         <script>
-            var formData = $("#get-courses-form").serializeArray();
+            var getMyCoursesFormData = $("#get-my-courses-form").serializeArray();
             $.post( <?php echo '\'' . AJAX_URL . 'courses/user-courses.php\''; ?>,
-                        formData,
-                        pupulateCourseList,
+                        getMyCoursesFormData,
+                        pupulateMyCourseList,
                         "json");
 
-            function pupulateCourseList(result)
+            function pupulateMyCourseList(result)
             {
                 var myCoursesList = document.getElementById('my-courses-list');
                 for( var i = 0; i < result.length; ++i )
@@ -44,10 +44,25 @@
 				$('#my-courses-list').listview('refresh');
             }
 
-            $('#remove-course-button').on( 'click tap', function(e){
+            var removeMode = false;
+            $('#remove-course-button').on( 'click tap', function(e)
+            {
                 //alert('tapped');
-                $('#my-courses-list>li').attr('data-icon', 'delete');
-                $('#my-courses-list a').addClass('ui-btn-icon-right ui-icon-delete');
-				$('#my-courses-list').listview('refresh');
-            } )
+                if( removeMode )
+                {
+                    $('#my-courses-list>li').attr('data-icon', 'false');
+                    $('#my-courses-list a').removeClass('ui-btn-icon-right ui-icon-delete');
+				    $('#my-courses-list').listview('refresh');
+                    $('#remove-course-button').html('Remove Courses');
+                    
+                }
+                else
+                {
+                    $('#my-courses-list>li').attr('data-icon', 'delete');
+                    $('#my-courses-list a').addClass('ui-btn-icon-right ui-icon-delete');
+				    $('#my-courses-list').listview('refresh');
+                    $('#remove-course-button').html('Finish');
+                }
+                removeMode = !removeMode;
+            });
         </script>
