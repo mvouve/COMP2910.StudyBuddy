@@ -34,23 +34,23 @@
         </div>
 
         <script>
-            var iDFormat = /^([A-Z]{4}[0-9]{4})$/
-            var userEntry = document.getElementById("new-course-id");
-            var invalidFormatBoolean = false;
-            var btn = $('#add-submit');
-            $(document).on("pagecreate",function(){
-                alert('ready');
-                $('document').on('pagecreate', function(e){
-                    alert('LOADED');
-                   $('#invalid-format').hide(); 
-                });
-
+            var iDFormat;
+            var userEntry;
+            var invalidFormatBoolean;
+            var btn;
+			
+            function addCourseOnReady(){
+				$('#invalid-format').hide();
 
                 $('#new-course-id').keyup( function(e){
-                    alert('test');
                     validateID();
                 });
-            });
+				
+				iDFormat = /^([A-Z]{4}[0-9]{4})$/
+				userEntry = document.getElementById("new-course-id");
+				invalidFormatBoolean = false;
+				btn = $('#add-submit');
+            }
 
 
             function validateID() {
