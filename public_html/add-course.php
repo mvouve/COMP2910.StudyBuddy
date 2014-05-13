@@ -15,7 +15,7 @@
                 <div>
                     <div data-role="form">
                         <label for="newCourseID">New Course ID: <span id="invalid-format" style="color: #FF0000">Please enter in the format COMP0000</span></label>
-                        <div id="new-course-id">
+                        <div id="new-course-id-div">
                             <input type="text" name="new-course-id" id="new-course-id">
                         </div>
 
@@ -52,6 +52,7 @@
 
             function validateID() {
                 $('#invalid-format').show();
+				console.log( document.getElementById( 'new-course-id').value );
                 var validID = document.getElementById("new-course-id").value.match(idRegex);
                 if (validID == null || validID.length != 1) {
                     alert('message null');
