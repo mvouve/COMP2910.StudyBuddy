@@ -24,6 +24,7 @@
             </div>     
         </div>
 		
+		<?php include( 'account-setting.php' ) ?>
 		<?php include( 'all-courses.php' ); ?>
 		<?php include( 'my-courses.php' ); ?>
 		<?php include( 'add-course.php' ); ?>
