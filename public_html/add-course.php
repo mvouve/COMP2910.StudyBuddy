@@ -39,7 +39,7 @@
             var invalidFormatBoolean;
             var btn;
 			
-            $(document).ready( function(){
+            function addCourseOnReady(){
 				$('#invalid-format').hide();
 
                 $('#new-course-id').keyup( function(e){
@@ -50,7 +50,7 @@
 				userEntry = document.getElementById("new-course-id");
 				invalidFormatBoolean = false;
 				btn = $('#add-submit');
-            });
+            }
 
 
             function validateID() {
