@@ -36,7 +36,7 @@ function getCourseList(ajax_URL)
 }
 /* Add a course to the master course list */
 
-function createCourse(ajax_URL, courseID)
+function createCourse(ajax_URL, courseID, description)
 {
         $.ajax
         ({
@@ -44,7 +44,8 @@ function createCourse(ajax_URL, courseID)
             data:
             {
                 method: add-course,
-                id: courseID
+                id: courseID,
+                title: description
         },
         dataType: json,
         success: function (json)
