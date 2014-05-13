@@ -1,4 +1,5 @@
-/* Fetch user course list from server by ajax */
+/* Fetch user course list from server by ajax
+    @param ajax_URL the URI location where the ajax folder is located */
 
 function getUserCourses( ajax_URL )
 {
@@ -27,7 +28,10 @@ function getUserCourses( ajax_URL )
 }
 
 
-/* Adds course data to list elements in HTML */
+/* Adds course data to list elements in HTML 
+    @param id the 4-letter and 4-number course code
+    @param title
+    @param inCourse boolean, true if the user in the course*/
 function courseListAdd (id, title, inCourse)
 {
     var list = getElementById("my-courses-list");
@@ -40,9 +44,12 @@ function courseListAdd (id, title, inCourse)
 
     //put the anchor element inside the list item element
     listItem.innerHTML = anchor;
+
+    //MUST STILL DEAL WITH IN_COURSE BOOLEAN; BUTTON IS NOT IMPLEMENTED AS OF WRITING
 }
 
-/* Fetch master course list from the server*/
+/* Fetch master course list from the serverajax
+    @param ajax_URL the URI location where the ajax folder is located */
 function getCourseList( ajax_URL )
 {
     $.ajax
@@ -60,7 +67,10 @@ function getCourseList( ajax_URL )
     })
 }
 
-/* Add a course to the master course list */
+/* Add a course to the master course list ajax
+    @param ajax_URL the URI location where the ajax folder is located
+    @param courseID the 4-letter and 4-number course code
+    @param description a brief description / the name of the course */
 function createCourse( ajax_URL, courseID, description )
 {
         $.ajax
@@ -80,7 +90,9 @@ function createCourse( ajax_URL, courseID, description )
     });
 }
 
-/* adds a course to the user list */
+/* adds a course to the user list 
+    @param ajax_URL the URI location where the ajax folder is located
+    @param courseID the 4-letter and 4-number course code */
 function addUserCourse( ajax_URL, courseID )
 {
     $.ajax
@@ -100,7 +112,9 @@ function addUserCourse( ajax_URL, courseID )
 
 }
 
-/* removes a course from the user list */
+/* removes a course from the user list 
+    @param ajax_URL the URI location where the ajax folder is located
+    @param courseID the 4-letter and 4-number course code */
 function removeCourse ( ajax_URL, courseID )
 {
     $.ajax
@@ -119,7 +133,9 @@ function removeCourse ( ajax_URL, courseID )
     });
 }
 
-/* toggle course watch visibility */
+/* toggle course watch visibility 
+    @param ajax_URL the URI location where the ajax folder is located
+    @param courseID the 4-letter and 4-number course code */
 function toggleVisibility ( ajax_URL, courseID )
 {
     $.ajax
