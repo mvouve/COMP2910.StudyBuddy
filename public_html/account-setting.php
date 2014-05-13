@@ -1,5 +1,10 @@
+<?php
+    $email = $_SESSION['email'];
+    $display_name = $_SESSION['display_name'];
+?>
         <div data-role="page" data-theme="a" id='page-account-settings'>
-            <?php renderPagelet( 'banner.php', array( '{{title}}' => 'Account Settings' ) ); ?>
+            <?php define('HAS_MENU',1);
+                  renderPagelet( 'banner.php', array( '{{title}}' => 'Account Settings' ) ); ?>
 
             <div data-role="content" data-theme="a">
                 <div class="center">

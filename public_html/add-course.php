@@ -1,16 +1,7 @@
 <?php
-    $user = User::instance();
-    if ( !$user->isLoggedIn() )
-    {
-        include( 'login.php' );
-        die();
-    }
-?>
-<?php
     $email = $_SESSION['email'];
     $display_name = $_SESSION['display_name'];
 ?>
-<?php renderPagelet( 'header.php', array( '{{customHeadTags}}' => '' ) ); ?>
         <div data-role="page" data-theme="a" id="page-add-course">
             <?php renderPagelet( 'banner.php', array( '{{title}}' => 'Account Settings' ) ); ?>
 
