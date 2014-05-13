@@ -18,7 +18,7 @@
             <div data-role="footer" data-position="fixed">
                 <div data-role="navbar">
 		            <ul>
-			            <li><a href="#">Create Course</a></li>
+			            <li><a href="#page-add-course">Create Course</a></li>
 			            <li><a href="#">My Courses</a></li>
 			            <li><a href="#">Clear All</a></li>
 		            </ul>
@@ -30,16 +30,15 @@
 		
 			function allCoursesOnReady()
 			{
+			
 				var getAllCoursesFormData = $("#get-all-courses-form").serializeArray();
+				$( '#all-courses-list' ).listview();
 				$.post( <?php echo '\'' . AJAX_URL . 'courses/courses.php\''; ?>,
 							getAllCoursesFormData,
 							populateAllCourseList,
 							"json");
 							
 				allCoursesList = document.getElementById('all-courses-list');
-				console.log( $('#all-courses-list') );
-				
-				$('#all-courses-list').listview();
 			}
 			
             function populateAllCourseList(result)
@@ -52,7 +51,7 @@
                     allCoursesList.appendChild(newLI);
                 }
 				
-				$('#all-courses-list').listview('refresh');
+				$('#all-courses-list').listview().listview('refresh');
             }
         </script>
 <!--End of all-courses.php-->
