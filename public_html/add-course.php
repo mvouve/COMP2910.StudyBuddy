@@ -14,19 +14,20 @@
 
                 <div>
                     <div data-role="form">
-                        <label for="newCourseID">New Course ID: <span id="invalid-format" style="color: #FF0000">Please enter in the format COMP0000</span></label>
-                        <div id="new-course-id-div">
-                            <input type="text" name="new-course-id" id="new-course-id">
-                        </div>
+                        <form id="new-course-form" name="new-course-form" method="POST">
+                            <label for="newCourseID">New Course ID: <span id="invalid-format" style="color: #FF0000">Please enter in the format COMP0000</span> </label>
+                            <div id="new-course-id-div">
+                                <input type="text" name="new-course-id" id="new-course-id">
+                            </div>
 
-                        <label for="new-course-title">New Course Title:</label>
-                        <div id="new-course-title-div">
-                            <input type="text" name="new-course-title" id="new-course-title">
-                        </div>
+                            <label for="new-course-title">New Course Title:</label>
+                            <div id="new-course-title-div">
+                                <input type="text" name="new-course-title" id="new-course-title">
+                            </div>
 
-                        <a href="#" data-role="button" id="add-submit">Add</a>
-                        <input type="hidden" name="method" value="add" />
-
+                            <a href="#" data-role="button" id="add-submit">Add</a>
+                            <input type="hidden" name="method" value="add" />
+                        </form>
                     </div>
                 </div>
 
@@ -39,7 +40,9 @@
             var invalidFormatBoolean = false;
             var btn;
             var formatMatch;
+            var newCourse;
 
+            //On ready function so stuff loads
             function addCourseOnReady() {
                 $('#invalid-format').hide();
 
@@ -49,17 +52,29 @@
                 btn = $('#add-submit');
             }
 
-
+            //Validating course ID to reg ex
             function validateID() {
                 $('#invalid-format').show();
 				console.log( document.getElementById( 'new-course-id').value );
                 var validID = document.getElementById("new-course-id").value.match(idRegex);
                 if (validID == null || validID.length != 1) {
-                    alert('message null');
                     return false;
                 }
                 alert(validID);
                 return true;
+            }
+            
+            //form submit function
+            $("#register-submit").on( 'click tap', function (e) {
+                        newCourse = $("#new-course-form").serializeArray();
+                        $.post( <?php echo '\'' . AJAX_URL . 'courses/course.php\''; ?>,
+                        newCourse,
+                        onCourseCreate,
+                        "json");    
+            }
+                                     
+            function onCourseCreate(result){
+                //PLACEHOLDER
             }
         </script>
     </body>
