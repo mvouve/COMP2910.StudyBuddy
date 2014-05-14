@@ -3,7 +3,8 @@ class CourseManager
 {
 	const COURSE_TABLE = 'Course';
 	const USER_COURSE_TABLE = 'UserCourse';
-
+    const PUSHER_CHANNEL = 'study_buddy';
+    
 	function __construct()
 	{
 	}
@@ -57,7 +58,10 @@ class CourseManager
 			
 			while ( ( $result = $sql->fetch( PDO::FETCH_ASSOC ) ) != null )
 			{
-				$retval[] = array( 'id' => $result['ID'], 'title' => $result['name'] );
+				$retval[] = array( 'id' => $result['ID'],
+                                   'title' => $result['name'],
+                                   'inCourse' =>false
+                                 );
 			}
 		}
 		else
@@ -66,8 +70,9 @@ class CourseManager
 					FROM ' . CourseManager::COURSE_TABLE . ' c
 						LEFT JOIN ' . CourseManager::USER_COURSE_TABLE . ' uc
 							ON uc.courseID = c.ID
-					WHERE uc.userID=:id
+								AND uc.userID=:id;
 					;';
+
 			$sql = $db->prepare( $sql );
 			$sql->bindParam( ':id', $userID );
 			$sql->execute();
@@ -75,7 +80,9 @@ class CourseManager
 			
 			while ( ( $result = $sql->fetch( PDO::FETCH_ASSOC ) ) != null )
 			{
-				$retval[] = array( 'id' => $result['ID'], 'title' => $result['name'], 'inCourse' => true );
+				$retval[] = array( 'id' => $result['ID'],
+                                   'title' => $result['name'],
+                                   'inCourse' => !is_null( $result['userID'] ) );
 			}
 		}
 		
@@ -137,7 +144,8 @@ class CourseManager
 	public function getUserCourseList( $userEmail )
 	{
 		global $db;
-		
+		$retval = array();
+        
 		$sql = 'SELECT c.ID, c.name
 				FROM ' . CourseManager::COURSE_TABLE . ' c
 					JOIN ' . CourseManager::USER_COURSE_TABLE . ' uc
@@ -150,7 +158,7 @@ class CourseManager
 		
 		$result = null;
 		
-		while ( ( $result = $db->fetch( PDO::FETCH_ASSOC ) ) != null )
+		while ( ( $result = $sql->fetch( PDO::FETCH_ASSOC ) ) != null )
 		{
 			$retval[] = array( 'id' => $result['ID'], 'title' => $result['name'] );
 		}
@@ -181,13 +189,23 @@ class CourseManager
             $sql->bindParam( ':userID', $userID );
             $sql->bindParam( ':courseID', $courseID );
             
-            return $sql->execute;
+            return $sql->execute();
         }
         catch( SQLFailure $e )
         {            
             return false;
         }
     }
+    
+    /*
+     * Use Pusher to push a newly created Course to connected clients.
+     */
+    public function pushNewCourseToClients( $pusher, $courseID, $courseTitle )
+    {
+        $data = array( 'id' => $courseID, 'title' => $courseTitle );
+        $pusher->trigger( CourseManager::PUSHER_CHANNEL, 'course_added', $data ); 
+    }
+    
     /*
 	 * Checks courses current visibility.
 	 *

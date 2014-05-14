@@ -50,11 +50,14 @@ return;
 function addCourse( $id, $title )
 {
     global $courses;
+    global $pusher;
+    
     $retval = array( 'success' => false );
     
     if ( $courses->createCourse( $id, $title ) )
     {
-        $retval = array( 'success' => true );
+        $retval['success'] = true;
+        //$courses->pushNewCourseToClients( $pusher, $id, $title );
     }
     
     return $retval;
@@ -73,8 +76,8 @@ function getCourses()
     
     if( $user->isLoggedIn() )
     {
-		$retval = $courses->getCourseList( null );
-        //$retval = $courses->getCourseList( $user->getUserID( $_SESSION['email'] ) );
+		//$retval = $courses->getCourseList( null );
+        $retval = $courses->getCourseList( $user->getUserID( $_SESSION['email'] ) );
     }
     else
     {

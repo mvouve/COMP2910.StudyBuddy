@@ -30,9 +30,9 @@ function getUserCourses( ajax_URL )
 /* Adds course data to list elements in HTML 
     @param id the 4-letter and 4-number course code
     @param title a brief description / the name of the course*/
-function addToUserCourses (id, title)
+function addToUserCourses ( id, title )
 {
-    var list = getElementById('my-courses-list');
+    var list = getElementById( 'my-courses-list' );
     var listItem = document.createElmeent('li');
 
     //create inner anchor element in list item and set its attribute and data
@@ -42,6 +42,9 @@ function addToUserCourses (id, title)
 
     //put the anchor element inside the list item element
     listItem.innerHTML = anchor;
+
+    //ASSIGN A id="my-courseID" to each list item made for easier removal with the removal helper function
+    listItem.setAttribute('id', 'my-' + id);
 }
 
 /* Fetch master course list from the server
@@ -53,18 +56,18 @@ function getCourseList( ajax_URL )
         url: ajax_URL + '/courses/courses.php',
         data:
         {
-            method: get - courses
+            method: get-courses
         },
         dataType: json,
         success: function (json) {
             var courseArray = json;
-            for (i = 0; courseArray.length; i++) {
+            for ( i = 0 ; courseArray.length ; i++ ) {
                 var courseID = courseArray[i].id;
                 var courseTitle = courseArray[i].title;
                 var userInCourse = courseArray[i].inCourse;
 
                 //calls a separate function to add this data to the HTML
-                masterCourseListAdd(courseID, courseTitle, userInCourse);
+                masterCourseListAdd( courseID, courseTitle, userInCourse );
             }
         }
     });
@@ -74,18 +77,21 @@ function getCourseList( ajax_URL )
     @param id the 4-letter and 4-number course code
     @param title a brief description / the name of the course
     @param inCourse boolean, true if the user in the course*/
-function masterCourseListAdd (id, title, inCourse)
+function masterCourseListAdd ( id, title, inCourse )
 {
-    var list = getElementById(/*PLACEHOLDER_FOR_LIST_ID*/);         //*****REPLACE PLACEHOLDER ID IN THIS LINE
-    var listItem = document.createElmeent('li');
+    var list = getElementById( 'all-courses-list' );
+    var listItem = document.createElmeent( 'li' );
 
     //create inner anchor element in list item and set its attribute and data
-    var anchor = document.createElement('a');
-    anchor.setAttribute('href', '#');
+    var anchor = document.createElement( 'a' );
+    anchor.setAttribute( 'href', '#' );
     anchor.innerHTML='' + id + '<br/>' + title;
 
     //put the anchor element inside the list item element
     listItem.innerHTML = anchor;
+
+    //ASSIGN A id="my-courseID" to each list item made for easier removal with the removal helper function
+    listItem.setAttribute('id', 'master-' + id);
 
     //MUST STILL DEAL WITH IN_COURSE BOOLEAN; BUTTON IS NOT IMPLEMENTED AS OF WRITING
 }
@@ -96,24 +102,28 @@ function masterCourseListAdd (id, title, inCourse)
     @param description a brief description / the name of the course */
 function createCourse( ajax_URL, courseID, description )
 {
-        $.ajax
+    $.ajax
         ({
             url: ajax_URL + '/courses/courses.php',
             data:
             {
-                method: add-course,
+                method: add - course,
                 id: courseID,
                 title: description
-        },
-        dataType: json,
-        success: function ( json )
-        {
-            //PLACEHOLDER
-        }
-    });
+            },
+            dataType: json,
+            success: function (json) {
+                var courseID = json.id;
+                var description = json.title;
+                var inCourse = true;
+
+                //calls a separate function to add this data to the HTML
+                masterCourseListAdd(courseID, description, inCourse);
+            }
+        });
 }
 
-/* adds a course to the user list in the 
+/* adds a course to the user list in the database
     @param ajax_URL the URI location where the ajax folder is located
     @param courseID the 4-letter and 4-number course code */
 function addUserCourse( ajax_URL, courseID )
@@ -129,13 +139,17 @@ function addUserCourse( ajax_URL, courseID )
         dataType: json,
         success: function ( json )
         {
-            //PLACEHOLDER
+            var courseID = json.id;
+			var description = json.title;
+			
+			/* helper function, adds the course to the HTML */
+			addToUserCourses (courseID, description);
         }
     });
 
 }
 
-/* removes a course from the user list 
+/* removes a course from the user list in the database
     @param ajax_URL the URI location where the ajax folder is located
     @param courseID the 4-letter and 4-number course code */
 function removeUserCourse ( ajax_URL, courseID )
@@ -151,9 +165,23 @@ function removeUserCourse ( ajax_URL, courseID )
         datatype: json,
         success: function ( json )
         {
-            //PLACEHOLDER
+            var CourseID = json.id;
+			
+			/* helper function called to remove HTML elements referencing this course */
+			removeFromUserCourses ( id );
         }
     });
+}
+
+/* helper function. Removes list elements in HTML
+	@param courseID the 4-letter and 4-number course code
+    @param mode valid entries are 'my' or 'master
+        my: specifies removal from an individual user course list
+        master: specifies removal from the master course list */
+function removeFromUserCourses ( courseID, mode )
+{
+    var element = getElementById( '' + mode + '-' + CourseID );
+    element.parentNode.removeChild( element );
 }
 
 /* toggle course watch visibility 
@@ -172,7 +200,7 @@ function toggleVisibility ( ajax_URL, courseID )
         datatype: json,
         success: function ( json )
         {
-            //PLACEHOLDER
+            //PLACEHOLDER, backklog for next sprint
         }
     });
 }

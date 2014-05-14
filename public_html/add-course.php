@@ -51,6 +51,11 @@
                     validateID();
                 });
                 btn = $('#add-submit');
+                
+                //form submit function
+                $("#add-submit").on( 'click tap', function (e) {
+                    // AJAX MADNESS HERE
+                });
             }
 
             //Validating course ID to reg ex
@@ -68,6 +73,7 @@
                 }
                 return true;
             }
+<<<<<<< HEAD
             
             //form submit function
             $("#add-course-submit").on( 'click tap', function (e) {
@@ -78,6 +84,12 @@
                 e.preventDefault();
             });
 
+=======
+                                     
+            function onCourseCreate(result){
+                //PLACEHOLDER
+            }
+>>>>>>> FETCH_HEAD
         </script>
     </body>
 <!--End of add-courses.php-->
