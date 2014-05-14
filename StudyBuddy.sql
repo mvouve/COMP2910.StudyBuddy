@@ -45,9 +45,9 @@ CREATE TABLE Meeting
 	creatorID	INTEGER			NOT NULL,
 	comment		VARCHAR(140)	NOT NULL,
 	location	VARCHAR(140)	NOT NULL,
-	maxBuddys	INTEGER			NOT NULL,
-	startDate	DATE			NOT NULL,
-	endDate		DATE			NOT NULL,
+	maxBuddies	INTEGER			NOT NULL,
+	startDate	TIMESTAMP		NOT NULL,
+	endDate		TIMESTAMP		NOT NULL,
 	PRIMARY KEY( ID )
 ) ENGINE = InnoDB DEFAULT CHARSET = UTF8;
 
