@@ -119,7 +119,7 @@ function createCourse( ajax_URL, courseID, description )
                 
                 if(json.success == true){
                     document.getElementById("user-course-form").reset();
-                    $.mobile.changePage("page-all-courses");
+                    $.mobile.changePage("#page-all-courses");
                 }
 
                 //calls a separate function to add this data to the HTML

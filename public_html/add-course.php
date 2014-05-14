@@ -66,7 +66,7 @@
                 }); 
                 $("#cancel-add-course").on( 'click tap', function (e) {
                     document.getElementById("user-course-form").reset();
-                    $.mobile.changePage("page-all-courses");
+                    $.mobile.changePage("#page-all-courses");
                 });
             }
 
