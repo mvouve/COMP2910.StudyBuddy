@@ -42,6 +42,8 @@ function addToUserCourses ( id, title )
 
     //put the anchor element inside the list item element
     listItem.innerHTML = anchor;
+
+    //ASSIGN A id="my-courseID" to each list item made for easier removal with the removal helper function
 }
 
 /* Fetch master course list from the server
@@ -53,7 +55,7 @@ function getCourseList( ajax_URL )
         url: ajax_URL + '/courses/courses.php',
         data:
         {
-            method: get - courses
+            method: get-courses
         },
         dataType: json,
         success: function (json) {
@@ -87,6 +89,8 @@ function masterCourseListAdd ( id, title, inCourse )
     //put the anchor element inside the list item element
     listItem.innerHTML = anchor;
 
+    //ASSIGN A id="my-courseID" to each list item made for easier removal with the removal helper function
+
     //MUST STILL DEAL WITH IN_COURSE BOOLEAN; BUTTON IS NOT IMPLEMENTED AS OF WRITING
 }
 
@@ -96,21 +100,25 @@ function masterCourseListAdd ( id, title, inCourse )
     @param description a brief description / the name of the course */
 function createCourse( ajax_URL, courseID, description )
 {
-        $.ajax
+    $.ajax
         ({
             url: ajax_URL + '/courses/courses.php',
             data:
             {
-                method: add-course,
+                method: add - course,
                 id: courseID,
                 title: description
-        },
-        dataType: json,
-        success: function ( json )
-        {
-            //PLACEHOLDER
-        }
-    });
+            },
+            dataType: json,
+            success: function (json) {
+                var courseID = json.id;
+                var description = json.title;
+                var inCourse = true;
+
+                //calls a separate function to add this data to the HTML
+                masterCourseListAdd(courseID, description, inCourse);
+            }
+        });
 }
 
 /* adds a course to the user list in the database
@@ -167,7 +175,8 @@ function removeUserCourse ( ajax_URL, courseID )
 	@param courseID the 4-letter and 4-number course code */
 function removeFromUserCourses ( courseID )
 {
-	$("li:contains('' + id)").remove()
+	//$("li:contains('' + id)").remove()
+    //user getElemenyByID to target li for removal
 }
 
 /* toggle course watch visibility 
@@ -186,7 +195,7 @@ function toggleVisibility ( ajax_URL, courseID )
         datatype: json,
         success: function ( json )
         {
-            //PLACEHOLDER
+            //PLACEHOLDER, backklog for next sprint
         }
     });
 }
