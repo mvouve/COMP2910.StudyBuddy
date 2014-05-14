@@ -76,8 +76,8 @@ function getCourses()
     
     if( $user->isLoggedIn() )
     {
-		$retval = $courses->getCourseList( null );
-        //$retval = $courses->getCourseList( $user->getUserID( $_SESSION['email'] ) );
+		//$retval = $courses->getCourseList( null );
+        $retval = $courses->getCourseList( $user->getUserID( $_SESSION['email'] ) );
     }
     else
     {
