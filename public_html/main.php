@@ -33,18 +33,24 @@
             $( "#page-container" ).pagecontainer({ defaults: true });
         
             // Close the Menu Panel when the page is changed.
-            $( '#page-container' ).on( "pagecontainerhide", function( event, ui ) {
-                var menuPanel = $( '#' + $( "#page-container" ).pagecontainer( 'getActivePage')[0].id + " .menu-panel" );
+            $( '#page-container' ).on( "pagecontainerhide", function() {
+                var menuPanel = $.mobile.activePage.find(".menu-panel" );
                 
-                $( 'a .ui-btn-active' ).removeClass( 'ui-btn-active' );
+                $.mobile.activePage.find('.ui-btn-active').each( function() { console.log("ASFA"); } );
+                $.mobile.activePage.find('.ui-btn-active').removeClass('ui-state-persist');
                 menuPanel.panel( "close" );
+            });
+            
+            $( '#page-container' ).on( 'pagecontainerbeforehide', function() {
+                $.mobile.activePage.find('.ui-btn-active').each( function() { console.log("ASFA"); } );
             });
             
             // Open the Menu Panel when the Menu button is clicked on a specific page.
             $( '.menu-toggle' ).on( "click tap", function() {
-                $( '#' + $( "#page-container" ).pagecontainer( 'getActivePage')[0].id + " .menu-panel" ).panel( "open" );
+                $.mobile.activePage.find(".menu-panel" ).panel( "open" );
             });
         
+            // Various Page "onReady" functions
             accountSettingsOnReady();
             addCourseOnReady();
             myCourseOnReady();

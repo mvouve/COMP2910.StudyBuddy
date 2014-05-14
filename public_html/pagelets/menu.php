@@ -6,7 +6,7 @@
                         <li><a href='#' >Create Meetings</a></li>
                         <li><br></li>
                         <li><a href='#page-my-courses'>My Courses</a></li>
-                        <li><a href='#page-account-settings' >Account Settings</a></li>
+                        <li><a href='#page-account-settings'>Account Settings</a></li>
                         <li><a href='login.php?logout=true' rel='external'>Logout</a></li>
                     </ul>
                 </div>
