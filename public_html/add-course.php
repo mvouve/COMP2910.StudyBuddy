@@ -50,6 +50,11 @@
                     validateID();
                 });
                 btn = $('#add-submit');
+                
+                //form submit function
+                $("#add-submit").on( 'click tap', function (e) {
+                    // AJAX MADNESS HERE
+                }
             }
 
             //Validating course ID to reg ex
@@ -62,15 +67,6 @@
                 }
                 alert(validID);
                 return true;
-            }
-            
-            //form submit function
-            $("#register-submit").on( 'click tap', function (e) {
-                        newCourse = $("#new-course-form").serializeArray();
-                        $.post( <?php echo '\'' . AJAX_URL . 'courses/course.php\''; ?>,
-                        newCourse,
-                        onCourseCreate,
-                        "json");    
             }
                                      
             function onCourseCreate(result){
