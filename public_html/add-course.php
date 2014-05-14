@@ -56,7 +56,14 @@
                 $('#user-course-title').keyup(function (e) {
                     validateTitle();
                 });
-                btn = $('#add-course-submit');
+               //form submit function
+                $("#add-course-submit").on( 'click tap', function (e) {
+                    userNewCourseID = $("#user-course-id").val();
+                    userNewCourseTItle = $("#user-course-title").val();
+                    createCourse("<?php echo AJAX_URL; ?>", userNewCourseId, userNewCourseTitle);
+                    e.stopImmediatePropagation();
+                    e.preventDefault();
+                }); 
 
             }
 
@@ -95,14 +102,7 @@
                 }
             }
             
-            //form submit function
-            $("#add-course-submit").on( 'click tap', function (e) {
-                userNewCourseID = $("#user-course-id").val();
-                userNewCourseTItle = $("#user-course-title").val();
-                createCourse("<?php echo AJAX_URL; ?>", userNewCourseId, userNewCourseTitle);
-                e.stopImmediatePropagation();
-                e.preventDefault();
-            });
+
         </script>
     </body>
 <!--End of add-courses.php-->
