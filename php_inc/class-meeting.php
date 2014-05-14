@@ -42,4 +42,7 @@ class Meeting
 		$sql = bindParam( ':comment',	$comment );
 		$sql = bindParam( ':location',	$location );
 		$sql = bindParam( ':maxBuddies',$maxBuddies );
-		$sql = bindParam( ':
+		$sql = bindParam( ':startDate', $startDate );
+		$sql = bindParam( ':endDate', $endDate );
+		
+		return $sql->execute();
