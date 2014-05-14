@@ -12,18 +12,18 @@ class Meeting
 	 * Add a meeting to the database.
 	 *
 	 * @param $courseID		the course the meeting will be studdying.
-	 * @param $creatorID	the ID of the creator of the course.
+	 * @param $masterID		the ID of the creator of the course.
 	 * @param $comment		the comment associated with the meeting.
 	 * @param $location		where the meeting will be.
-	 * @param maxBuddies	the maximum number of people for the meeting.
-	 * @param startTime		The time the meeting starts.
-	 * @param endTime		The time the meeting ends.
+	 * @param $maxBuddies	the maximum number of people for the meeting.
+	 * @param $startTime	The time the meeting starts.
+	 * @param $endTime		The time the meeting ends.
 	 *
 	 * @returns true on success, false on failure.
 	 */
 	 // TRANSACTIONS UNTESTED.
 	public function createMeeting( $courseID,
-								   $creatorID,
+								   $masterID,
 								   $comment,
 								   $location,
 								   $maxBuddies,
@@ -34,13 +34,14 @@ class Meeting
 		
 		$db->beginTransaction();
 		
+		// create event.
 		$sql = ' INSERT INTO ' . Meeting::MEETING_TABLE . '
-					( courseID, creatorID, comment, location, maxBuddies, startDate, endDate )
+					( courseID, masterID, comment, location, maxBuddies, startDate, endDate )
 				VALUES
-					( :courseID, :creatorID, :comment, :location, :maxBuddies, :startTime, :endTime );'
+					( :courseID, :masterID, :comment, :location, :maxBuddies, :startTime, :endTime );';
 		$sql = $db->prepare( $sql );
 		$sql->bindParam( ':courseID',	$courseID );
-		$sql->bindParam( ':creatorID',	$creatorID );
+		$sql->bindParam( ':masterID',	$masterID );
 		$sql->bindParam( ':comment',	$comment );
 		$sql->bindParam( ':location',	$location );
 		$sql->bindParam( ':maxBuddies',	$maxBuddies );
@@ -48,14 +49,35 @@ class Meeting
 		$sql->bindParam( ':endDate',	$endDate );
 		$sql->execute();
 		
-		//add user to the event they just created.
+		// add user to the event they just created.
 		$sql = 'INSERT INTO  ' . Meeting::USER_MEETING_TABLE . '
 					VALUES ( ' . $db->lastInsertId . ', :userID );';
 		$sql = $db->prepare( $sql );
-		$sql->bindParam( ':userID', $creatorID );
+		$sql->bindParam( ':userID', $masterID );
 		$sql->execute();
 		
 		return $db->commit();
+	}
+	
+	/*
+	 * Join an existing meeting.
+	 *
+	 * @param $meetingID	the meeting to join.
+	 * @param $userID		the id of the user joining the group.
+	 *
+	 * @return true on success false on failure.
+	 */
+	public function joinMeeting( $meetingID, $userID )
+	{
+		global $db;
+		
+		$sql = 'INSERT INTO' . Meeting::USER_MEETING_TABLE . '
+					VALUES ( :meetingID, :userID );';
+		$sql = $db->prepare( $sql );
+		$sql-> bindParam( ':meetingID', $meetingID );
+		$sql-> bindParam( ':userID',	$userID );
+		
+		return $sql->execute();
 	}
 
 }
