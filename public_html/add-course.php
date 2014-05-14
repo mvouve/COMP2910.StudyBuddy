@@ -54,7 +54,7 @@
                 //form submit function
                 $("#add-submit").on( 'click tap', function (e) {
                     // AJAX MADNESS HERE
-                }
+                });
             }
 
             //Validating course ID to reg ex

@@ -3,7 +3,8 @@ class CourseManager
 {
 	const COURSE_TABLE = 'Course';
 	const USER_COURSE_TABLE = 'UserCourse';
-
+    const PUSHER_CHANNEL = 'study_buddy';
+    
 	function __construct()
 	{
 	}
@@ -188,6 +189,16 @@ class CourseManager
             return false;
         }
     }
+    
+    /*
+     * Use Pusher to push a newly created Course to connected clients.
+     */
+    public function pushNewCourseToClients( $pusher, $courseID, $courseTitle )
+    {
+        $data = array( 'id' => $courseID, 'title' => $courseTitle );
+        $pusher->trigger( CourseManager::PUSHER_CHANNEL, 'course_added', $data ); 
+    }
+    
     /*
 	 * Checks courses current visibility.
 	 *
