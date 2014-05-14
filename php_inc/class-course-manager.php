@@ -70,8 +70,9 @@ class CourseManager
 					FROM ' . CourseManager::COURSE_TABLE . ' c
 						LEFT JOIN ' . CourseManager::USER_COURSE_TABLE . ' uc
 							ON uc.courseID = c.ID
-					WHERE uc.userID=:id
+								AND uc.userID=:id;
 					;';
+
 			$sql = $db->prepare( $sql );
 			$sql->bindParam( ':id', $userID );
 			$sql->execute();
@@ -81,7 +82,7 @@ class CourseManager
 			{
 				$retval[] = array( 'id' => $result['ID'],
                                    'title' => $result['name'],
-                                   'inCourse' => !is_null( $result['ID'] ) );       /* PLACEHOLDER -- NEEDS TO CHECK NULL ON USER ID */
+                                   'inCourse' => !is_null( $result['userID'] ) );
 			}
 		}
 		
