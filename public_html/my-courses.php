@@ -42,6 +42,7 @@
                             
                 $('#remove-course-button').on( 'click tap', function(e)
                 {
+                    
                     alert('tapped');
                     if( removeMode )
                     {

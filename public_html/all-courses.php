@@ -1,7 +1,4 @@
 <!--Beginning of all-courses.php-->
-        <form id="get-all-courses-form" name="get-all-courses-form" method="POST">
-            <input type="hidden" name="method" value="get-courses" />
-		</form>
         <div data-role="page" data-theme="a" id='page-all-courses'>
             <?php renderPagelet( 'banner.php', array( '{{title}}' => 'All courses' ) ); ?>
             <div data-role="content">
@@ -30,10 +27,11 @@
 		
 			function allCoursesOnReady()
 			{
-				var getAllCoursesFormData = $("#get-all-courses-form").serializeArray();
 				$( '#all-courses-list' ).listview();
 				$.post( <?php echo '\'' . AJAX_URL . 'courses/courses.php\''; ?>,
-							getAllCoursesFormData,
+							{
+                                method: "get-courses"
+                            },
 							populateAllCourseList,
 							"json");
 							
@@ -46,11 +44,15 @@
                 {
                     var newLI = document.createElement('li');
                     newLI.setAttribute( 'data-icon', (result[i].inCourse?'check':'false') );
-                    newLI.innerHTML = '<a href="#">' + result[i].id + '<br>' + result[i].title + '</a>';
+                    newLI.innerHTML = '<a href="#" onclcick="addToUserCourseList(\''+result[i].id+'\')">' + result[i].id + '<br>' + result[i].title + '</a>';
                     allCoursesList.appendChild(newLI);
                 }
 				
 				$('#all-courses-list').listview('refresh');
+            }
+
+            function addToUserCourseList( courseID )
+            {
             }
         </script>
 <!--End of all-courses.php-->
