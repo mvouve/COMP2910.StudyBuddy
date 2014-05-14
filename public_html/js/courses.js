@@ -44,6 +44,7 @@ function addToUserCourses ( id, title )
     listItem.innerHTML = anchor;
 
     //ASSIGN A id="my-courseID" to each list item made for easier removal with the removal helper function
+    listItem.setAttribute('id', 'my-' + id);
 }
 
 /* Fetch master course list from the server
@@ -90,6 +91,7 @@ function masterCourseListAdd ( id, title, inCourse )
     listItem.innerHTML = anchor;
 
     //ASSIGN A id="my-courseID" to each list item made for easier removal with the removal helper function
+    listItem.setAttribute('id', 'master-' + id);
 
     //MUST STILL DEAL WITH IN_COURSE BOOLEAN; BUTTON IS NOT IMPLEMENTED AS OF WRITING
 }
@@ -172,11 +174,14 @@ function removeUserCourse ( ajax_URL, courseID )
 }
 
 /* helper function. Removes list elements in HTML
-	@param courseID the 4-letter and 4-number course code */
-function removeFromUserCourses ( courseID )
+	@param courseID the 4-letter and 4-number course code
+    @param mode valid entries are 'my' or 'master
+        my: specifies removal from an individual user course list
+        master: specifies removal from the master course list */
+function removeFromUserCourses ( courseID, mode )
 {
-	//$("li:contains('' + id)").remove()
-    //user getElemenyByID to target li for removal
+    var element = getElementById( '' + mode + '-' + CourseID );
+    element.parentNode.removeChild( element );
 }
 
 /* toggle course watch visibility 

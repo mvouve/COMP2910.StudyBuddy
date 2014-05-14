@@ -14,18 +14,18 @@
 
                 <div>
                     <div data-role="form">
-                        <form id="new-course-form" name="new-course-form" method="POST">
-                            <label for="newCourseID">New Course ID: <span id="invalid-format" style="color: #FF0000">Please enter in the format COMP0000</span> </label>
-                            <div id="new-course-id-div">
-                                <input type="text" name="new-course-id" id="new-course-id">
+                        <form id="user-course-form" name="user-course-form" method="POST">
+                            <label for="userCourseID">user Course ID: <span id="invalid-format" style="color: #FF0000">Please enter in the format COMP0000</span> </label>
+                            <div id="user-course-id-div">
+                                <input type="text" name="user-course-id" id="user-course-id">
                             </div>
 
-                            <label for="new-course-title">New Course Title:</label>
-                            <div id="new-course-title-div">
-                                <input type="text" name="new-course-title" id="new-course-title">
+                            <label for="user-course-title">user Course Title:</label>
+                            <div id="user-course-title-div">
+                                <input type="text" name="user-course-title" id="user-course-title">
                             </div>
 
-                            <a href="#" data-role="button" id="add-submit">Add</a>
+                            <a href="#" data-role="button" id="add-course-submit">Add</a>
                             <input type="hidden" name="method" value="add" />
                         </form>
                     </div>
@@ -35,18 +35,19 @@
         </div>
 
         <script>
-            var idRegex = /^([A-Z]{4}[0-9]{4})$/i;
+            var idRegex = /^([A-Z]{4}[0-9]{4})$/gi;
             var userEntry;
             var invalidFormatBoolean = false;
             var btn;
             var formatMatch;
-            var newCourse;
+            var userNewCourseId;
+            var userNewCourseTitle;
 
             //On ready function so stuff loads
             function addCourseOnReady() {
                 $('#invalid-format').hide();
 
-                $('#new-course-id').keyup(function (e) {
+                $('#user-course-id').keyup(function (e) {
                     validateID();
                 });
                 btn = $('#add-submit');
@@ -60,18 +61,35 @@
             //Validating course ID to reg ex
             function validateID() {
                 $('#invalid-format').show();
-				console.log( document.getElementById( 'new-course-id').value );
-                var validID = document.getElementById("new-course-id").value.match(idRegex);
+                var validID = document.getElementById("user-course-id").value.match(idRegex);
+				//console.log( (validID == null?'null':validID[0]) );
                 if (validID == null || validID.length != 1) {
+                    //$(":button:contains('add-submit')").prop("disabled", true).addClass("ui-state-disabled");
                     return false;
                 }
-                alert(validID);
+                else{
+                    $('#invalid-format').hide();
+                    //$(":button:contains('add-submit')").prop("disabled", false).addClass("ui-state-enabled");
+                }
                 return true;
             }
+<<<<<<< HEAD
+            
+            //form submit function
+            $("#add-course-submit").on( 'click tap', function (e) {
+                userNewCourseID = $("#user-course-id").val();
+                userNewCourseTItle = $("#user-course-title").val();
+                createCourse("<?php echo AJAX_URL; ?>", userNewCourseId, userNewCourseTitle);
+                e.stopImmediatePropagation();
+                e.preventDefault();
+            });
+
+=======
                                      
             function onCourseCreate(result){
                 //PLACEHOLDER
             }
+>>>>>>> FETCH_HEAD
         </script>
     </body>
 <!--End of add-courses.php-->
