@@ -58,7 +58,10 @@ class CourseManager
 			
 			while ( ( $result = $sql->fetch( PDO::FETCH_ASSOC ) ) != null )
 			{
-				$retval[] = array( 'id' => $result['ID'], 'title' => $result['name'] );
+				$retval[] = array( 'id' => $result['ID'],
+                                   'title' => $result['name'],
+                                   'inCourse' =>false
+                                 );
 			}
 		}
 		else
@@ -76,7 +79,9 @@ class CourseManager
 			
 			while ( ( $result = $sql->fetch( PDO::FETCH_ASSOC ) ) != null )
 			{
-				$retval[] = array( 'id' => $result['ID'], 'title' => $result['name'], 'inCourse' => true );
+				$retval[] = array( 'id' => $result['ID'],
+                                   'title' => $result['name'],
+                                   'inCourse' => !is_null( $result['ID'] ) );       /* PLACEHOLDER -- NEEDS TO CHECK NULL ON USER ID */
 			}
 		}
 		
@@ -182,7 +187,7 @@ class CourseManager
             $sql->bindParam( ':userID', $userID );
             $sql->bindParam( ':courseID', $courseID );
             
-            return $sql->execute;
+            return $sql->execute();
         }
         catch( SQLFailure $e )
         {            
