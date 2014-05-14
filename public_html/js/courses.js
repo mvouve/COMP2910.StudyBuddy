@@ -113,7 +113,7 @@ function createCourse( ajax_URL, courseID, description )
     });
 }
 
-/* adds a course to the user list in the 
+/* adds a course to the user list in the database
     @param ajax_URL the URI location where the ajax folder is located
     @param courseID the 4-letter and 4-number course code */
 function addUserCourse( ajax_URL, courseID )
@@ -135,7 +135,7 @@ function addUserCourse( ajax_URL, courseID )
 
 }
 
-/* removes a course from the user list 
+/* removes a course from the user list in the database
     @param ajax_URL the URI location where the ajax folder is located
     @param courseID the 4-letter and 4-number course code */
 function removeUserCourse ( ajax_URL, courseID )
