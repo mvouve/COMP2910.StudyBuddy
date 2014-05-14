@@ -137,30 +137,32 @@ class CourseManager
 	/*
 	 * Get the Course List of a specific User
 	 *
-	 * @param $userEmail the email of the user whose list to retrieve.
+	 * @param $userID the id of the user whose list to retrieve.
 	 * 
 	 * @returns array( id, title ) of courses.
 	 */
-	public function getUserCourseList( $userEmail )
+	public function getUserCourseList( $userID )
 	{
 		global $db;
 		$retval = array();
         
-		$sql = 'SELECT c.ID, c.name
+		$sql = 'SELECT c.ID, c.name, uc.visible
 				FROM ' . CourseManager::COURSE_TABLE . ' c
 					JOIN ' . CourseManager::USER_COURSE_TABLE . ' uc
 						ON c.ID = uc.courseID
-				WHERE uc.email=:email
+				WHERE uc.userID=:id
 				;';
 		$sql = $db->prepare( $sql );
-		$sql->bindParam( ':email', $userEmail );
+		$sql->bindParam( ':id', $userID );
 		$sql->execute();
 		
 		$result = null;
 		
 		while ( ( $result = $sql->fetch( PDO::FETCH_ASSOC ) ) != null )
 		{
-			$retval[] = array( 'id' => $result['ID'], 'title' => $result['name'] );
+			$retval[] = array( 'id' 	 => $result['ID'],
+							   'title'   => $result['name'],
+							   'visible' => ( $result['visible'] === 'T' ) );
 		}
 		
 		return $retval;
