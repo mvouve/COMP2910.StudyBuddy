@@ -74,7 +74,7 @@
                 {
                     var newLI = document.createElement('li');
                     newLI.setAttribute( 'data-icon', (serverResponse[i].visible?'check':'false') );
-                    newLI.innerHTML = '<a href="#" id="'+serverResponse[i].id+'">' + serverResponse[i].id + '<br>' + serverResponse[i].title + '</a>';
+                    newLI.innerHTML = '<a href="#" id="my-course-'+serverResponse[i].id+'">' + serverResponse[i].id + '<br>' + serverResponse[i].title + '</a>';
                     myCoursesList.appendChild(newLI);
                 }
 
@@ -87,8 +87,8 @@
                 {
                     if( serverResponse[i].visible )
                     {
-                        $('#'+serverResponse[i].id).parent().attr('data-icon', 'check');
-                        $('#'+serverResponse[i].id).addClass('ui-icon-check');
+                        $('#my-course-'+serverResponse[i].id).parent().attr('data-icon', 'check');
+                        $('#my-course-'+serverResponse[i].id).addClass('ui-icon-check');
                     }
                 }
             }

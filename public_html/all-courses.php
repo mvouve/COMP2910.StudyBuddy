@@ -38,21 +38,50 @@
 				allCoursesList = document.getElementById('all-courses-list');
 			}
 			
+            var wasSuccessful;
             function populateAllCourseList(result)
             {
                 for( var i = 0; i < result.length; ++i )
                 {
                     var newLI = document.createElement('li');
                     newLI.setAttribute( 'data-icon', (result[i].inCourse?'check':'false') );
-                    newLI.innerHTML = '<a href="#" onclcick="addToUserCourseList(\''+result[i].id+'\')">' + result[i].id + '<br>' + result[i].title + '</a>';
+                    newLI.innerHTML = '<a href="#" id="all-course-'+result[i].id+'">' + result[i].id + '<br>' + result[i].title + '</a>';
                     allCoursesList.appendChild(newLI);
+                    $('#all-course-'+result[i].id).on( 'click tap', function(e)
+                    {
+                        var parentLI = e.target.parent();
+                        var inUserList = parentLI.attr('data-icon') == 'check';
+                        $.post( <?php echo '\'' . AJAX_URL . 'courses/user-courses.php\''; ?>,
+				    	{
+                            method: (inUserList ? "remove-course" : "add-course"),
+                            id: courseID
+                        },
+					    checkSuccess( result ),
+						"json");
+
+                        if( wasSuccessful )
+                        {
+                            parentLI.attr('data-icon',(inUserList ? 'false' : 'check'))
+				            $('#all-courses-list').listview('refresh');
+                        }
+                    } );
                 }
 				
 				$('#all-courses-list').listview('refresh');
             }
 
-            function addToUserCourseList( courseID )
+            function checkSuccess( result )
             {
+                if( result.success )
+                {
+                    wasSuccessful = true;
+                }
+                else
+                {
+                    wasSuccessful = false;
+                }
             }
+
+            function 
         </script>
 <!--End of all-courses.php-->
