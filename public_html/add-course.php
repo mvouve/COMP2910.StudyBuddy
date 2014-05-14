@@ -10,23 +10,22 @@
                 <div>
                     <div data-role="form">
                         <form id="user-course-form" name="user-course-form" method="POST">
-                            <label for="userCourseID">user Course ID: <span id="invalid-format" style="color: #FF0000">Please verify your format</span> </label>
+                            <label for="userCourseID">user Course ID: <span id="invalid-format" style="color: #FF0000">Please enter in the format COMP0000</span> </label>
                             <div id="user-course-id-div">
-                                <input type="text" name="user-course-id" id="user-course-id" placeholder="COMP0000">
+                                <input type="text" name="user-course-id" id="user-course-id">
                             </div>
 
                             <label for="user-course-title">user Course Title:</label>
                             <div id="user-course-title-div">
-                                <input type="text" name="user-course-title" id="user-course-title" placeholder="At least 4 letter description">
+                                <input type="text" name="user-course-title" id="user-course-title">
                             </div>
 
                             <a href="#" data-role="button" id="add-course-submit">Add</a>
                             <input type="hidden" name="method" value="add" />
                         </form>
                     </div>
-                    
+                    <a href="index.php#page-all-courses" data-role="button">Cancel</a>
                 </div>
-
             </div>
         </div>
 
@@ -38,11 +37,6 @@
             var formatMatch;
             var userNewCourseId;
             var userNewCourseTitle;
-            
-            
-            
-            var courseIdFilled;
-            var courseTitleFilled;
 
             //On ready function so stuff loads
             function addCourseOnReady() {
@@ -52,47 +46,21 @@
                 $('#user-course-id').keyup(function (e) {
                     validateID();
                 });
-                
-                $('#user-course-title').keyup(function (e) {
-                    validateTitle();
-                });
                 btn = $('#add-course-submit');
 
             }
 
             //Validating course ID to reg ex
             function validateID() {
-                courseIdFilled = false;
                 $('#add-course-submit').addClass('ui-disabled');
-                
                 $('#invalid-format').show();
                 var validID = document.getElementById("user-course-id").value.match(idRegex);
                 if (validID == null || validID.length != 1) {
                     return false;
                 }
                 $('#invalid-format').hide();
-                //$('#add-course-submit').removeClass('ui-disabled');
-                courseIdFilled = true;
-                checkFormFilled();
+                $('#add-course-submit').removeClass('ui-disabled');
                 return true;
-            }
-            
-            function validateTitle() {
-                courseTitleFilled = false;
-                $('#add-course-submit').addClass('ui-disabled');
-                
-                var titleEntry = document.getElementById("user-course-title").value;
-                if(titleEntry.length > 3){
-                    courseTitleFilled = true;
-                }
-                checkFormFilled();
-                return true;
-            }
-            //Verify both fields are filled
-            function checkFormFilled(){
-                if(courseIdFilled == true && courseTitleFilled == true){
-                    $('#add-course-submit').removeClass('ui-disabled');
-                }
             }
             
             //form submit function
@@ -103,6 +71,10 @@
                 e.stopImmediatePropagation();
                 e.preventDefault();
             });
+                                     
+            function onCourseCreate(result){
+                //PLACEHOLDER
+            }
         </script>
     </body>
 <!--End of add-courses.php-->
