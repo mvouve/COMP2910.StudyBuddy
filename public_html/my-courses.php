@@ -39,7 +39,6 @@
                             getMyCoursesFormData,
                             storeResult,
                             "json");
-                populateMyCourseList();
                             
                 $('#remove-course-button').on( 'click tap', function(e)
                 {
@@ -65,6 +64,7 @@
             function storeResult(result)
             {
                 serverResponse = result;
+                populateMyCourseList();
             }
             
             function populateMyCourseList()
