@@ -129,7 +129,11 @@ function addUserCourse( ajax_URL, courseID )
         dataType: json,
         success: function ( json )
         {
-            //PLACEHOLDER
+            var courseID = json.id;
+			var description = json.title;
+			
+			/* helper function, adds the course to the HTML */
+			addToUserCourses (courseID, description);
         }
     });
 
@@ -151,9 +155,19 @@ function removeUserCourse ( ajax_URL, courseID )
         datatype: json,
         success: function ( json )
         {
-            //PLACEHOLDER
+            var CourseID = json.id;
+			
+			/* helper function called to remove HTML elements referencing this course */
+			removeFromUserCourses (id);
         }
     });
+}
+
+/* helper function. Removes list elements in HTML
+	@param courseID the 4-letter and 4-number course code */
+function removeFromUserCourses (courseID)
+{
+	$("li:contains('' + id)").remove()
 }
 
 /* toggle course watch visibility 
