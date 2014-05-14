@@ -6,13 +6,13 @@
 			</form>
             <div data-role="content">
                 <ul data-role="listview" data-filter="true" id="my-courses-list">
-	                <li data-icon="false"><a href="#">BUSA2720<br>Business in a Networked Economy</a></li>
+	                <!--li data-icon="false"><a href="#">BUSA2720<br>Business in a Networked Economy</a></li>
 	                <li data-icon="false"><a href="#">COMP1116<br>Business Communications 1</a></li>
 	                <li data-icon="false"><a href="#">COMP1100<br>CST Program Fundamentals</a></li>
 	                <li data-icon="false"><a href="#">COMP1111<br>Essential Skills for Computing</a></li>
 	                <li data-icon="false"><a href="#">COMP1113<br>Applied Mathematics</a></li>
     	            <li data-icon="false"><a href="#">COMP1510<br>Programming Methods</a></li>
-    	            <li data-icon="false"><a href="#">COMP1536<br>Introduction to Web Development</a></li>
+    	            <li data-icon="false"><a href="#">COMP1536<br>Introduction to Web Development</a></li-->
                 </ul>
             </div>
             <div data-role="footer" data-position="fixed">
@@ -27,6 +27,7 @@
         <script>
             var myCoursesList;
             var removeMode;
+            var serverResponse;
             function myCourseOnReady()
             {
                 myCoursesList = document.getElementById('my-courses-list');
@@ -36,16 +37,17 @@
                 var getMyCoursesFormData = $("#get-my-courses-form").serializeArray();
                 $.post( <?php echo '\'' . AJAX_URL . 'courses/user-courses.php\''; ?>,
                             getMyCoursesFormData,
-                            populateMyCourseList,
+                            storeResult,
                             "json");
+                populateMyCourseList();
                             
                 $('#remove-course-button').on( 'click tap', function(e)
                 {
                     alert('tapped');
                     if( removeMode )
                     {
-                        $('#my-courses-list>li').attr('data-icon', 'false');
-                        $('#my-courses-list a').removeClass('ui-btn-icon-right ui-icon-delete');
+                        $('#my-courses-list a').removeClass('ui-icon-delete');
+                        updateTrackedCheckMarks();
 				        $('#my-courses-list').listview('refresh');
                         $('#remove-course-button').html('Remove Courses');                    
                     }
@@ -59,18 +61,35 @@
                     removeMode = !removeMode;
                 });
             }
-            
-            function populateMyCourseList(result)
+
+            function storeResult(result)
             {
-                for( var i = 0; i < result.length; ++i )
+                serverResponse = result;
+            }
+            
+            function populateMyCourseList()
+            {
+                for( var i = 0; i < serverResponse.length; ++i )
                 {
                     var newLI = document.createElement('li');
-                    newLI.setAttribute( 'data-icon', (result[i].inCourse?'check':'false') );
-                    newLI.innerHTML = '<a href="#">' + result[i].id + '<br>' + result[i].title + '</a>';
+                    newLI.setAttribute( 'data-icon', (serverResponse[i].visible?'check':'false') );
+                    newLI.innerHTML = '<a href="#" id="'+serverResponse[i].id+'">' + serverResponse[i].id + '<br>' + serverResponse[i].title + '</a>';
                     myCoursesList.appendChild(newLI);
                 }
 
 				$('#my-courses-list').listview('refresh');
+            }
+
+            function updateTrackedCheckMarks()
+            {
+                for( var i = 0; i < serverResponse.length; ++i )
+                {
+                    if( serverResponse[i].visible )
+                    {
+                        $('#'+serverResponse[i].id).parent().attr('data-icon', 'check');
+                        $('#'+serverResponse[i].id).addClass('ui-icon-check');
+                    }
+                }
             }
 
             
