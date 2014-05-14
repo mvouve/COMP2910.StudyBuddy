@@ -81,7 +81,7 @@ class Meeting
     }
     
     /*
-     * leave a meeting.
+     * removes a user from the meeting.
      *
      * @param $userID
      * @param $meetingID
@@ -95,15 +95,46 @@ class Meeting
         
         $db->beginTransaction();
         
+        // remove the user from the meeting.
         $sql = 'DELETE FROM' . Meeting::USER_MEETING_TABLE . '
                     WHERE meetingID = :meetingID AND userID = :userID;';
+        $sql = $db->prepare( $sql );
         $sql->bindParam( ':meetingID',  $meetingID );
         $sql->bindParam( ':userID',     $userID );
         $sql->execute();
         
+        // If the user leaving the meeting is the current master, change the master.
         if( $masterID == $userID )
         {
-            //todo
+            $sql = 'SELECT userID
+                        FROM' . Meeting::USER_MEETING_TABLE . '
+                        WHERE meetingID = :meetingID;';
+            $sql = $db->prepare( $sql );
+            $sql->bindParam( ':meetingID', $meetingID );
+            $sql->execute();
+            $newMasterID = $sql->fetch( PDO::FETCH_ASSOC );
+            $newMasterID = $newMasterID['userID'];
+            
+            // automaticly make someone in the meeting the new master.
+            if( $newMasterID )
+            {
+                $sql = 'UPDATE' . Meeting::USER_MEETING_TABLE . '
+                            SET masterID = :newMasterID
+                            WHERE meetingID = :meetingID'
+                $sql = $db->prepare( $sql );
+                $sql->bindParam( ':newMasterID', $newMasterID );
+                $sql->bindParam( ':meetingID', $meetingID );
+                $sql->execute();
+            }
+            // if there's no one else in the meeting delete the meeting.
+            else
+            {
+                $sql = 'DELETE FROM' .Meeting::MEETING_TABLE . '
+                            WHERE meetingID = :meetingID;';
+                $sql->$db->prepare( $sql );
+                $sql->bindParam( ':meetingID', $meetingID );
+                $sql->execute();
+            }
         }
         
         return $db->commit();
