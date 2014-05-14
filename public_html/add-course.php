@@ -4,14 +4,9 @@
     $display_name = $_SESSION['display_name'];
 ?>
         <div data-role="page" data-theme="a" id="page-add-course">
-            <?php renderPagelet( 'banner.php', array( '{{title}}' => 'Account Settings' ) ); ?>
+            <?php renderPagelet( 'banner.php', array( '{{title}}' => 'Add Course' ) ); ?>
 
             <div data-role="content" data-theme="a">
-                <div class="center">
-                    <p>Add Course</p>
-                    <p><?php echo $email; ?></p>
-                </div>
-
                 <div>
                     <div data-role="form">
                         <form id="user-course-form" name="user-course-form" method="POST">
@@ -45,31 +40,26 @@
 
             //On ready function so stuff loads
             function addCourseOnReady() {
+                $('#add-course-submit').addClass('ui-disabled');
                 $('#invalid-format').hide();
 
                 $('#user-course-id').keyup(function (e) {
                     validateID();
                 });
-                btn = $('#add-submit');
-                
-                //form submit function
-                $("#add-submit").on( 'click tap', function (e) {
-                    // AJAX MADNESS HERE
-                });
+                btn = $('#add-course-submit');
+
             }
 
             //Validating course ID to reg ex
             function validateID() {
+                $('#add-course-submit').addClass('ui-disabled');
                 $('#invalid-format').show();
                 var validID = document.getElementById("user-course-id").value.match(idRegex);
                 if (validID == null || validID.length != 1) {
-                    $('#add-submit').addClass('ui-disabled');
                     return false;
                 }
-                else{
-                    $('#invalid-format').hide();
-                    $('#add-submit').removeClass('ui-disabled');
-                }
+                $('#invalid-format').hide();
+                $('#add-course-submit').removeClass('ui-disabled');
                 return true;
             }
             

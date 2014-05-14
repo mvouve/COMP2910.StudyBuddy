@@ -107,11 +107,11 @@ function createCourse( ajax_URL, courseID, description )
             url: ajax_URL + '/courses/courses.php',
             data:
             {
-                method: add - course,
+                method: "add-course",
                 id: courseID,
                 title: description
             },
-            dataType: json,
+            dataType: "json",
             success: function (json) {
                 var courseID = json.id;
                 var description = json.title;
@@ -133,10 +133,10 @@ function addUserCourse( ajax_URL, courseID )
         url: ajax_URL + '/courses/user-courses.php',
         data:
         {
-            method: add-course,
+            method: "add-course",
             id: courseID
         },
-        dataType: json,
+        dataType: "json",
         success: function ( json )
         {
             var courseID = json.id;
