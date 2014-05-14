@@ -62,14 +62,13 @@
             function validateID() {
                 $('#invalid-format').show();
                 var validID = document.getElementById("user-course-id").value.match(idRegex);
-				//console.log( (validID == null?'null':validID[0]) );
                 if (validID == null || validID.length != 1) {
-                    //$(":button:contains('add-submit')").prop("disabled", true).addClass("ui-state-disabled");
+                    $('#add-submit').addClass('ui-disabled');
                     return false;
                 }
                 else{
                     $('#invalid-format').hide();
-                    //$(":button:contains('add-submit')").prop("disabled", false).addClass("ui-state-enabled");
+                    $('#add-submit').removeClass('ui-disabled');
                 }
                 return true;
             }
