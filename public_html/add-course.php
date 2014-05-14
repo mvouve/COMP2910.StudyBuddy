@@ -59,7 +59,7 @@
                //form submit function
                 $("#add-course-submit").on( 'click tap', function (e) {
                     userNewCourseID = $("#user-course-id").val();
-                    userNewCourseTItle = $("#user-course-title").val();
+                    userNewCourseTitle = $("#user-course-title").val();
                     createCourse("<?php echo AJAX_URL; ?>", userNewCourseID, userNewCourseTitle);
                     e.stopImmediatePropagation();
                     e.preventDefault();
