@@ -73,7 +73,6 @@
                 }
                 return true;
             }
-<<<<<<< HEAD
             
             //form submit function
             $("#add-course-submit").on( 'click tap', function (e) {
@@ -83,13 +82,10 @@
                 e.stopImmediatePropagation();
                 e.preventDefault();
             });
-
-=======
                                      
             function onCourseCreate(result){
                 //PLACEHOLDER
             }
->>>>>>> FETCH_HEAD
         </script>
     </body>
 <!--End of add-courses.php-->
