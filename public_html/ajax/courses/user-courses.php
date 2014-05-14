@@ -30,7 +30,7 @@ if( isset( $_POST['method'] ) )
             break;
     }
 }
-else if( isset( $_GET['method'] )
+else if( isset( $_GET['method'] ) )
 {
     switch( $_GET['method'] )
     {
@@ -109,7 +109,7 @@ function removeCourse( $id )
  * @param $id the courseID to be added
  * @return true | false 
  */
-function toggleVisibility
+function toggleVisibility( $id )
 {
     global $courses;
     $retval = array( 'success' => false ); 

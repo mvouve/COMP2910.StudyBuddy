@@ -143,7 +143,8 @@ class CourseManager
 	public function getUserCourseList( $userEmail )
 	{
 		global $db;
-		
+		$retval = array();
+        
 		$sql = 'SELECT c.ID, c.name
 				FROM ' . CourseManager::COURSE_TABLE . ' c
 					JOIN ' . CourseManager::USER_COURSE_TABLE . ' uc
@@ -156,7 +157,7 @@ class CourseManager
 		
 		$result = null;
 		
-		while ( ( $result = $db->fetch( PDO::FETCH_ASSOC ) ) != null )
+		while ( ( $result = $sql->fetch( PDO::FETCH_ASSOC ) ) != null )
 		{
 			$retval[] = array( 'id' => $result['ID'], 'title' => $result['name'] );
 		}
