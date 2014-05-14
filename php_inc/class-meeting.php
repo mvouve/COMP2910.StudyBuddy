@@ -22,6 +22,7 @@ class Meeting
      * @returns true on success, false on failure.
      */
      // TRANSACTIONS UNTESTED.
+	 // TODO: VALIDATE DATE & TIMES
     public function createMeeting( $courseID,
                                    $masterID,
                                    $comment,
@@ -139,5 +140,20 @@ class Meeting
         
         return $db->commit();
     }
-
+	
+	/*
+	 * Gets a list of all the meetings in the future from the server, and if the user is
+	 * attending/the meetings master. ( can be used to see if the user is the master. )
+	 *
+	 * @return all meetings as an array.
+	 *
+	 */
+	public function getAllMeetings()
+	{
+		global $db;
+		$retval = array();
+		
+		$sql = 'SELECT *
+					FROM' . Meetings::MEETINGS_TABLE . '
+					WHERE endDate > ' . date('Y-m-d H:i:s') . ';';
 }
