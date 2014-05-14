@@ -79,7 +79,7 @@ function getCourseList( ajax_URL )
     @param inCourse boolean, true if the user in the course*/
 function masterCourseListAdd ( id, title, inCourse )
 {
-    var list = getElementById( 'all-courses-list' );
+    var list = document.getElementById( 'all-courses-list' );
     var listItem = document.createElmeent( 'li' );
 
     //create inner anchor element in list item and set its attribute and data

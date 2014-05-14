@@ -81,7 +81,5 @@
                     wasSuccessful = false;
                 }
             }
-
-            function 
         </script>
 <!--End of all-courses.php-->
