@@ -174,10 +174,13 @@ function removeUserCourse ( ajax_URL, courseID )
 }
 
 /* helper function. Removes list elements in HTML
-	@param courseID the 4-letter and 4-number course code */
-function removeFromUserCourses ( courseID )
+	@param courseID the 4-letter and 4-number course code
+    @param mode valid entries are 'my' or 'master
+        my: specifies removal from an individual user course list
+        master: specifies removal from the master course list */
+function removeFromUserCourses ( courseID, mode )
 {
-    var element = getElementById( CourseID );
+    var element = getElementById( '' + mode + '-' + CourseID );
     element.parentNode.removeChild( element );
 }
 
