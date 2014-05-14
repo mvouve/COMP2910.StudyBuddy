@@ -10,22 +10,23 @@
                 <div>
                     <div data-role="form">
                         <form id="user-course-form" name="user-course-form" method="POST">
-                            <label for="userCourseID">user Course ID: <span id="invalid-format" style="color: #FF0000">Please enter in the format COMP0000</span> </label>
+                            <label for="userCourseID">user Course ID: <span id="invalid-format" style="color: #FF0000">Please verify your format</span> </label>
                             <div id="user-course-id-div">
-                                <input type="text" name="user-course-id" id="user-course-id">
+                                <input type="text" name="user-course-id" id="user-course-id" placeholder="COMP0000">
                             </div>
 
                             <label for="user-course-title">user Course Title:</label>
                             <div id="user-course-title-div">
-                                <input type="text" name="user-course-title" id="user-course-title">
+                                <input type="text" name="user-course-title" id="user-course-title" placeholder="At least 4 letter description">
                             </div>
 
                             <a href="#" data-role="button" id="add-course-submit">Add</a>
                             <input type="hidden" name="method" value="add" />
                         </form>
                     </div>
-                    <a href="index.php#page-all-courses" data-role="button">Cancel</a>
+                    <a href="page-all-courses" data-role="button" id="cancel-add-course">Cancel</a>
                 </div>
+
             </div>
         </div>
 
@@ -37,6 +38,11 @@
             var formatMatch;
             var userNewCourseId;
             var userNewCourseTitle;
+            
+            
+            
+            var courseIdFilled;
+            var courseTitleFilled;
 
             //On ready function so stuff loads
             function addCourseOnReady() {
@@ -46,35 +52,60 @@
                 $('#user-course-id').keyup(function (e) {
                     validateID();
                 });
-                btn = $('#add-course-submit');
-
+                
+                $('#user-course-title').keyup(function (e) {
+                    validateTitle();
+                });
+               //form submit function
+                $("#add-course-submit").on( 'click tap', function (e) {
+                    userNewCourseID = $("#user-course-id").val();
+                    userNewCourseTitle = $("#user-course-title").val();
+                    createCourse("<?php echo AJAX_URL; ?>", userNewCourseID, userNewCourseTitle);
+                    e.stopImmediatePropagation();
+                    e.preventDefault();
+                }); 
+                $("#cancel-add-course").on( 'click tap', function (e) {
+                    document.getElementById("user-course-form").reset();
+                    $.mobile.changePage("#page-all-courses");
+                });
             }
 
             //Validating course ID to reg ex
             function validateID() {
+                courseIdFilled = false;
                 $('#add-course-submit').addClass('ui-disabled');
+                
                 $('#invalid-format').show();
                 var validID = document.getElementById("user-course-id").value.match(idRegex);
                 if (validID == null || validID.length != 1) {
                     return false;
                 }
                 $('#invalid-format').hide();
-                $('#add-course-submit').removeClass('ui-disabled');
+                //$('#add-course-submit').removeClass('ui-disabled');
+                courseIdFilled = true;
+                checkFormFilled();
                 return true;
             }
             
-            //form submit function
-            $("#add-course-submit").on( 'click tap', function (e) {
-                userNewCourseID = $("#user-course-id").val();
-                userNewCourseTItle = $("#user-course-title").val();
-                createCourse("<?php echo AJAX_URL; ?>", userNewCourseId, userNewCourseTitle);
-                e.stopImmediatePropagation();
-                e.preventDefault();
-            });
-                                     
-            function onCourseCreate(result){
-                //PLACEHOLDER
+            function validateTitle() {
+                courseTitleFilled = false;
+                $('#add-course-submit').addClass('ui-disabled');
+                
+                var titleEntry = document.getElementById("user-course-title").value;
+                if(titleEntry.length > 3){
+                    courseTitleFilled = true;
+                }
+                checkFormFilled();
+                return true;
             }
+            //Verify both fields are filled
+            function checkFormFilled(){
+                if(courseIdFilled == true && courseTitleFilled == true){
+                    $('#add-course-submit').removeClass('ui-disabled');
+                }
+            }
+            
+
         </script>
     </body>
 <!--End of add-courses.php-->
