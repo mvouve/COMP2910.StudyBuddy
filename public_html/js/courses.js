@@ -30,9 +30,9 @@ function getUserCourses( ajax_URL )
 /* Adds course data to list elements in HTML 
     @param id the 4-letter and 4-number course code
     @param title a brief description / the name of the course*/
-function addToUserCourses (id, title)
+function addToUserCourses ( id, title )
 {
-    var list = getElementById('my-courses-list');
+    var list = getElementById( 'my-courses-list' );
     var listItem = document.createElmeent('li');
 
     //create inner anchor element in list item and set its attribute and data
@@ -58,13 +58,13 @@ function getCourseList( ajax_URL )
         dataType: json,
         success: function (json) {
             var courseArray = json;
-            for (i = 0; courseArray.length; i++) {
+            for ( i = 0 ; courseArray.length ; i++ ) {
                 var courseID = courseArray[i].id;
                 var courseTitle = courseArray[i].title;
                 var userInCourse = courseArray[i].inCourse;
 
                 //calls a separate function to add this data to the HTML
-                masterCourseListAdd(courseID, courseTitle, userInCourse);
+                masterCourseListAdd( courseID, courseTitle, userInCourse );
             }
         }
     });
@@ -74,14 +74,14 @@ function getCourseList( ajax_URL )
     @param id the 4-letter and 4-number course code
     @param title a brief description / the name of the course
     @param inCourse boolean, true if the user in the course*/
-function masterCourseListAdd (id, title, inCourse)
+function masterCourseListAdd ( id, title, inCourse )
 {
-    var list = getElementById(/*PLACEHOLDER_FOR_LIST_ID*/);         //*****REPLACE PLACEHOLDER ID IN THIS LINE
-    var listItem = document.createElmeent('li');
+    var list = getElementById( 'all-courses-list' );
+    var listItem = document.createElmeent( 'li' );
 
     //create inner anchor element in list item and set its attribute and data
-    var anchor = document.createElement('a');
-    anchor.setAttribute('href', '#');
+    var anchor = document.createElement( 'a' );
+    anchor.setAttribute( 'href', '#' );
     anchor.innerHTML='' + id + '<br/>' + title;
 
     //put the anchor element inside the list item element
@@ -158,14 +158,14 @@ function removeUserCourse ( ajax_URL, courseID )
             var CourseID = json.id;
 			
 			/* helper function called to remove HTML elements referencing this course */
-			removeFromUserCourses (id);
+			removeFromUserCourses ( id );
         }
     });
 }
 
 /* helper function. Removes list elements in HTML
 	@param courseID the 4-letter and 4-number course code */
-function removeFromUserCourses (courseID)
+function removeFromUserCourses ( courseID )
 {
 	$("li:contains('' + id)").remove()
 }
