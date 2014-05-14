@@ -1,4 +1,4 @@
-/* Fetch user course list from server by ajax
+/* Fetch user course list from server
     @param ajax_URL the URI location where the ajax folder is located */
 
 function getUserCourses( ajax_URL )
@@ -20,7 +20,7 @@ function getUserCourses( ajax_URL )
                 var courseTitle = courseArray[i].title; 
 
                 //calls a separate function to add this data to the HTML
-                userCourseListAdd(courseID, courseTitle);
+                addToUserCourses(courseID, courseTitle);
             }
         }
     });
@@ -29,9 +29,8 @@ function getUserCourses( ajax_URL )
 
 /* Adds course data to list elements in HTML 
     @param id the 4-letter and 4-number course code
-    @param title a brief description / the name of the course
-    @param inCourse boolean, true if the user in the course*/
-function userCourseListAdd (id, title)
+    @param title a brief description / the name of the course*/
+function addToUserCourses (id, title)
 {
     var list = getElementById('my-courses-list');
     var listItem = document.createElmeent('li');
@@ -43,8 +42,6 @@ function userCourseListAdd (id, title)
 
     //put the anchor element inside the list item element
     listItem.innerHTML = anchor;
-
-    //MUST STILL DEAL WITH IN_COURSE BOOLEAN; BUTTON IS NOT IMPLEMENTED AS OF WRITING
 }
 
 /* Fetch master course list from the server
@@ -56,20 +53,19 @@ function getCourseList( ajax_URL )
         url: ajax_URL + '/courses/courses.php',
         data:
         {
-            method: get-courses
+            method: get - courses
         },
         dataType: json,
-        success: function ( json )
-        {
+        success: function (json) {
             var courseArray = json;
-            for ( i = 0 ; courseArray.length ; i++ )
-            {
+            for (i = 0; courseArray.length; i++) {
                 var courseID = courseArray[i].id;
                 var courseTitle = courseArray[i].title;
                 var userInCourse = courseArray[i].inCourse;
 
                 //calls a separate function to add this data to the HTML
                 masterCourseListAdd(courseID, courseTitle, userInCourse);
+            }
         }
     });
 }
@@ -117,7 +113,7 @@ function createCourse( ajax_URL, courseID, description )
     });
 }
 
-/* adds a course to the user list 
+/* adds a course to the user list in the 
     @param ajax_URL the URI location where the ajax folder is located
     @param courseID the 4-letter and 4-number course code */
 function addUserCourse( ajax_URL, courseID )
