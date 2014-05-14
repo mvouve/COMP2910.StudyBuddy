@@ -4,7 +4,7 @@
                 <h1>{{title}}</h1>
                 <?php
                     if( defined('HAS_MENU') )
-                        echo "<a href='#menuPanel' data-role='button' data-inline='true' data-icon='bars' class='ui-btn-right' data-position='right' data-display='overlay'>Menu</a>";
+                        echo "<a href='#' class='menu-toggle' data-role='button' data-inline='true' data-icon='bars' class='ui-btn-right' data-position='right' data-display='overlay'>Menu</a>";
                 ?>
 			</div>
             <?php

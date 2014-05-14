@@ -103,83 +103,106 @@
             var changingPass = false;
             var deactivating = false;
             
-            /* disable the buttons for updating password */
-            $('#update-password').addClass('ui-disabled');
-            /* disable the button for deactivating account.*/
-            $('#deactivate-account').addClass('ui-disabled');
-            
-            /*
-             * When the user enters in a password to be changed. Send info to server.
-             *
-             */
-            $('#update-password').on( 'click tap', function (e) {
-                e.preventDefault();
+            function accountSettingsOnReady() {
+                /* disable the buttons for updating password */
+                $('#update-password').addClass('ui-disabled');
+                /* disable the button for deactivating account.*/
+                $('#deactivate-account').addClass('ui-disabled');
                 
-                if ( changingPass == false ) {
-                    changingPass = true;
-                    var formData = $("#password-change").serializeArray();
+                /*
+                 * When the user enters in a password to be changed. Send info to server.
+                 *
+                 */
+                $('#update-password').on( 'click tap', function (e) {
+                    e.preventDefault();
                     
-                    $.post( <?php echo '\'' . AJAX_URL . 'user/settings.php\''; ?>,
-                            formData,
-                            onPasswordChange,
-                            "json" );
-                }
-            });
+                    if ( changingPass == false ) {
+                        changingPass = true;
+                        var formData = $("#password-change").serializeArray();
+                        
+                        $.post( <?php echo '\'' . AJAX_URL . 'user/settings.php\''; ?>,
+                                formData,
+                                onPasswordChange,
+                                "json" );
+                    }
+                });
 
-            /* 
-             * When user updates their name, update on the server as well.
-             *
-             */
-            $('#submit-display-name').on( 'click tap', function () {
-                if ( changingName == false ) {
-                    changingName = true;
-                    var updateNameForm = $("#name-change").serializeArray();
+                /* 
+                 * When user updates their name, update on the server as well.
+                 *
+                 */
+                $('#submit-display-name').on( 'click tap', function () {
+                    if ( changingName == false ) {
+                        changingName = true;
+                        var updateNameForm = $("#name-change").serializeArray();
 
-                    $.ajax
-                    ({
-                        type: "POST",
-                        url: <?php echo '\'' . AJAX_URL . 'user/settings.php\''; ?>,
-                        data: updateNameForm,
-                        datatype: 'json',
-                        success: function (json) {
-                            changingName = false;
-                            json = $.parseJSON( json );
-                            if (json.success == true) { 
-                                nameChangeSuccess();
+                        $.ajax
+                        ({
+                            type: "POST",
+                            url: <?php echo '\'' . AJAX_URL . 'user/settings.php\''; ?>,
+                            data: updateNameForm,
+                            datatype: 'json',
+                            success: function (json) {
+                                changingName = false;
+                                json = $.parseJSON( json );
+                                if (json.success == true) { 
+                                    nameChangeSuccess();
+                                }
                             }
-                        }
-                    });
-                }
-            });
+                        });
+                    }
+                });
+                
+                /*
+                 * If the user wishes to deactivate their account, verify their password and notify them
+                 * that their account has been deleted. else, do nothing.
+                 */
+                $('#deactivate-account').on( 'click tap', function () {
+                    if ( deactivating == false ) {
+                        deactivating = true;
+                        var deactivateAccountForm = $("#deactivate-account-form").serializeArray();
+                        
+                        $.ajax
+                        ({
+                            type: "POST",
+                            url: <?php echo '\'' . AJAX_URL . 'user/auth.php\''; ?>,
+                            data: deactivateAccountForm,
+                            datatype: 'json',
+                            success: function (json) {
+                                deactivating = false;
+                                json = $.parseJSON( json );
+                                if (json.deleted == true)
+                                {
+                                    alert( 'Your account has been deactivated and may be permanently ' +
+                                           'removed in the near future.' );
+                                    window.location.assign("login.php");
+                                }
+                            }
+                        });
+                    }
+                });
+                
+                /*
+                 * Calls function to validate displayname when user types in the box.
+                 */
+                $("#display-name").keyup( function(e){validateDisplayName();} );
+                
+                /*
+                 * Calls function to validate passwords when user types in new-password
+                 */
+                $("#new-password").keyup( function(e){validatePassword();} );
+                
+                /*
+                 * Calls function to validate passwords when user types in confirm password
+                 */
+                $("#confirm-password").keyup( function(e){validatePassword();} );
+                
+                /*
+                 * Calls function to validate passwords when user types in the old password
+                 */
+                $("#old-password").keyup( function(e){ validateDeactivation();} );
+            }
             
-            /*
-             * If the user wishes to deactivate their account, verify their password and notify them
-             * that their account has been deleted. else, do nothing.
-             */
-            $('#deactivate-account').on( 'click tap', function () {
-                if ( deactivating == false ) {
-                    deactivating = true;
-                    var deactivateAccountForm = $("#deactivate-account-form").serializeArray();
-                    
-                    $.ajax
-                    ({
-                        type: "POST",
-                        url: <?php echo '\'' . AJAX_URL . 'user/auth.php\''; ?>,
-                        data: deactivateAccountForm,
-                        datatype: 'json',
-                        success: function (json) {
-                            deactivating = false;
-                            json = $.parseJSON( json );
-                            if (json.deleted == true)
-                            {
-                                alert( 'Your account has been deactivated and may be permanently ' +
-                                       'removed in the near future.' );
-                                window.location.assign("login.php");
-                            }
-                        }
-                    });
-                }
-            });
             
             /*
              * Validates the display name, and changes the button and the icon to be on or off.
@@ -198,11 +221,6 @@
                 $('#submit-display-name').removeClass('ui-disabled');
                 return true;
             }
-            
-            /*
-             * Calls function to validate displayname when user types in the box.
-             */
-            $("#display-name").keyup( function(e){validateDisplayName();} );
                
             /*
              * Checks for valid password syntax.
@@ -262,21 +280,6 @@
                 
                 return true;
             }
-            
-            /*
-             * Calls function to validate passwords when user types in new-password
-             */
-            $("#new-password").keyup( function(e){validatePassword();} );
-            
-            /*
-             * Calls function to validate passwords when user types in confirm password
-             */
-            $("#confirm-password").keyup( function(e){validatePassword();} );
-            
-            /*
-             * Calls function to validate passwords when user types in the old password
-             */
-            $("#old-password").keyup( function(e){ validateDeactivation();} );
             
             /*
              * Displays message that password change was successful.

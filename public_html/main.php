@@ -28,9 +28,28 @@
     </body>
 	
 	<script>
-		addCourseOnReady();
-		myCourseOnReady();
-		allCoursesOnReady();
+        $( 'document' ).ready( function () {
+            // Setup the pagecontainer widger
+            $( "#page-container" ).pagecontainer({ defaults: true });
+        
+            // Close the Menu Panel when the page is changed.
+            $( '#page-container' ).on( "pagecontainerhide", function( event, ui ) {
+                var menuPanel = $( '#' + $( "#page-container" ).pagecontainer( 'getActivePage')[0].id + " .menu-panel" );
+                
+                $( 'a .ui-btn-active' ).removeClass( 'ui-btn-active' );
+                menuPanel.panel( "close" );
+            });
+            
+            // Open the Menu Panel when the Menu button is clicked on a specific page.
+            $( '.menu-toggle' ).on( "click tap", function() {
+                $( '#' + $( "#page-container" ).pagecontainer( 'getActivePage')[0].id + " .menu-panel" ).panel( "open" );
+            });
+        
+            accountSettingsOnReady();
+            addCourseOnReady();
+            myCourseOnReady();
+            allCoursesOnReady();
+        });
 	</script>
 	
 </html>
