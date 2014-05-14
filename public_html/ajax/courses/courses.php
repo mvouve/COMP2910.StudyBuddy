@@ -57,7 +57,7 @@ function addCourse( $id, $title )
     if ( $courses->createCourse( $id, $title ) )
     {
         $retval['success'] = true;
-        //$courses->pushNewCourseToClients( $pusher, $id, $title );
+        $courses->pushNewCourseToClients( $pusher, $id, $title );
     }
     
     return $retval;
