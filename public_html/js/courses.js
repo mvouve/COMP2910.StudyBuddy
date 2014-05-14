@@ -116,6 +116,11 @@ function createCourse( ajax_URL, courseID, description )
                 var courseID = json.id;
                 var description = json.title;
                 var inCourse = true;
+                
+                if(json.success == true){
+                    document.getElementById("user-course-form").reset();
+                    $.mobile.changePage("page-all-courses");
+                }
 
                 //calls a separate function to add this data to the HTML
                 masterCourseListAdd(courseID, description, inCourse);

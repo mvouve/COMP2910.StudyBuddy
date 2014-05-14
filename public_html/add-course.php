@@ -24,7 +24,7 @@
                             <input type="hidden" name="method" value="add" />
                         </form>
                     </div>
-                    
+                    <a href="page-all-courses" data-role="button" id="cancel-add-course">Cancel</a>
                 </div>
 
             </div>
@@ -60,11 +60,14 @@
                 $("#add-course-submit").on( 'click tap', function (e) {
                     userNewCourseID = $("#user-course-id").val();
                     userNewCourseTItle = $("#user-course-title").val();
-                    createCourse("<?php echo AJAX_URL; ?>", userNewCourseId, userNewCourseTitle);
+                    createCourse("<?php echo AJAX_URL; ?>", userNewCourseID, userNewCourseTitle);
                     e.stopImmediatePropagation();
                     e.preventDefault();
                 }); 
-
+                $("#cancel-add-course").on( 'click tap', function (e) {
+                    document.getElementById("user-course-form").reset();
+                    $.mobile.changePage("page-all-courses");
+                });
             }
 
             //Validating course ID to reg ex
