@@ -52,6 +52,7 @@
         
 			// Setup Pusher for receiving events.
 			setupPusher( ajaxURL );
+            colorChange();
 		
             // Various Page "onReady" functions
             accountSettingsOnReady();
