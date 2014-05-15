@@ -28,8 +28,10 @@
             var myCoursesList;
             var removeMode;
             var serverResponse;
+			var removeClicked = false;
             function myCourseOnReady()
             {
+				removeClicked = false;
                 myCoursesList = document.getElementById('my-courses-list');
                 removeMode = false;
 				$('#my-courses-list').listview();
@@ -42,8 +44,16 @@
                             
                 $('#remove-course-button').on( 'click tap', function(e)
                 {
-                    
-                    alert('tapped');
+					if ( removeClicked === true )
+					{
+						return;
+					}
+				
+					removeClicked = true;
+					
+					// Hacky Reset for Remove button duoble click bug fix
+					setTimeout( function() { removeClicked = false; }, 400 );
+				
                     if( removeMode )
                     {
                         $('#my-courses-list a').removeClass('ui-btn-icon-right ui-icon-delete');
