@@ -16,6 +16,8 @@
                                    id="green-button">Green</a>
                                 <a href="serversideSwitch.html?style=styles3" rel="styles3" class="styleswitch" data-role="button" 
                                    id="dark-button">Dark</a>
+                                <a href="serversideSwitch.html?style=styles4" rel="styles4" class="styleswitch" data-role="button" 
+                                   id="dark-button">ColorBlindOption</a>                                
                             </div>
                         </li>
                     </ul>

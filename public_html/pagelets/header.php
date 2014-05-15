@@ -30,7 +30,8 @@
         <link rel="stylesheet" type="text/css" href="css/study-buddy-theme-5.min.css" title="styles1"/>
         <link rel="alternate stylesheet" type="text/css" href="css/StudyBuddyV2.css" title="styles2"/>
         <link rel="alternate stylesheet" type="text/css" href="css/NightTheme.css" title="styles3"/>
-        
+        <link rel="alternate stylesheet" type="text/css" href="css/ColorBlindOption.css" title="styles4"/>
+
         <link rel="stylesheet" href="css/jquery.mobile.icons.min.css" />
         <link rel="stylesheet" href="css/custom.css"/>
         {{customHeadTags}}
