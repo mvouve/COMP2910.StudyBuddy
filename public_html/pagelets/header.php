@@ -2,7 +2,11 @@
 <html>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script>var ajaxURL = "<?php echo AJAX_URL; ?>";</script>
+        <script>
+            <?php global $user; ?>
+            var ajaxURL = "<?php echo AJAX_URL; ?>";
+            var uid = <?php echo $user->getUserID( $_SESSION['email'] ); ?>;
+        </script>
         <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
         <script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
 		<script src="http://js.pusher.com/2.2/pusher.min.js"></script>

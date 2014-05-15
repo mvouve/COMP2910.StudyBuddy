@@ -12,7 +12,7 @@
     	            <li data-icon="false"><a href="#">COMP1536<br>Introduction to Web Development</a></li-->
                 </ul>
             </div>
-            <div data-role="footer" data-position="fixed">
+            <div data-role="footer" data-position="fixed" data-tap-toggle="false">
                 <div data-role="navbar">
 		            <ul>
 			            <li><a href="#page-add-course">Create Course</a></li>
