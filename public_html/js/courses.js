@@ -98,7 +98,7 @@ function masterCourseListAdd ( ajax_URL, id, title, inCourse )
         function (result) {
             if( result.success )
             {
-                parentLI.setAttribute('data-icon',(inUserList ? 'false' : 'check'))
+                parentLI.setAttribute('data-icon', ( inUserList ? 'false' : 'check' ) )
                 $('#all-courses-list').listview('refresh');
             }
         },

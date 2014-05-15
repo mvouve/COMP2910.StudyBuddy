@@ -11,6 +11,8 @@ function setupPusher()
 
 function pusherCourseAdded( data )
 {
-    masterCourseListAdd( ajaxURL, data.id, data.title, data.creator == uid );
+    var isCreator = ( data.creator == uid );
+    
+    masterCourseListAdd( ajaxURL, data.id, data.title, isCreator );
     $('#all-courses-list').listview('refresh');
 }
