@@ -20,6 +20,11 @@ if( isset( $_POST['method'] ) )
             $retval = removeCourse( $_POST['id'] );
             
             break;
+			
+		case 'remove-all-courses':
+            $retval = removeAllCourses();
+            
+            break;
             
         case 'toggle-visibility':
             $retval = toggleVisibility( $_POST['id'] );
@@ -101,6 +106,20 @@ function removeCourse( $id )
     
     return $retval;
 
+}
+
+/*
+ * remove all courses from the logged in user in the DB
+ * 
+ * @return true | false 
+ */
+function removeAllCourses()
+{
+	global $courses;
+	$retval = array();
+	
+	$retval['success'] = $courses->removeAllUserCourses( getUID() );
+	return $retval;
 }
 
 /*
