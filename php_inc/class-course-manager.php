@@ -130,6 +130,8 @@ class CourseManager
 					AND courseID=:cid
 				;';
 		$sql = $db->prepare( $sql );
+        $sql->bindParam( ':uid', $userID );
+        $sql->bindParam( ':cid', $courseID );
 		
 		return $sql->execute();
 	}
