@@ -14,7 +14,7 @@
 		<script src="js/courses.js"></script>
         <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile.structure-1.4.2.min.css" />
         <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css">
-        <link rel="stylesheet" href="css/study-buddy-theme-4.min.css" />
+        <link rel="stylesheet" href="css/study-buddy-theme-5.min.css" />
         <link rel="stylesheet" href="css/jquery.mobile.icons.min.css" />
         <link rel="stylesheet" href="css/custom.css"/>
         {{customHeadTags}}

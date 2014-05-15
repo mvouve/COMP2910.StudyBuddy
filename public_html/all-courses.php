@@ -15,9 +15,9 @@
             <div data-role="footer" data-position="fixed" data-tap-toggle="false">
                 <div data-role="navbar">
 		            <ul>
-			            <li><a href="#page-add-course">Create Course</a></li>
-			            <li><a href="#page-my-courses">My Courses</a></li>
-			            <li><a href="#">Clear All</a></li>
+			            <li><a href="#page-my-courses" data-icon="back" data-iconpos="top">My Courses</a></li>
+			            <li><a href="#page-add-course" data-icon="plus" data-iconpos="top">Create Course</a></li>
+			            <li><a href="#" data-icon="minus" data-iconpos="top">Clear All</a></li>
 		            </ul>
 	            </div>
             </div>
