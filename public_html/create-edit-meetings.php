@@ -1,4 +1,9 @@
 <!-- create and edit meetings page-->
+<?php require_once( 'config.php' ); ?>
+<?php require_once( PHP_INC_PATH . 'common.php' ); ?>
+<?php if ( isset( $_GET['logout'] ) ) { User::instance()->logout(); } ?>
+<?php renderPagelet( 'header.php', array( '{{customHeadTags}}' => '' ) ); ?>
+
 <div data-role="page">
     <div data-role="header">
     </div>
