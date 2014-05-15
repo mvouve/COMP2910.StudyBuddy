@@ -73,7 +73,7 @@ class Meeting
     public function joinMeeting( $meetingID, $userID )
     {
         global $db;
-        
+		
         $sql = 'INSERT INTO' . Meeting::USER_MEETING_TABLE . '
                     VALUES ( :meetingID, :userID );';
         $sql = $db->prepare( $sql );
@@ -288,5 +288,19 @@ class Meeting
 					GROUP BY m.ID;';
 		$sql = $db->prepare( $sql );
 		$sql-> bindParam( ':meetingID', $meetingID );
+	}
+	
+	private function getCurrentUsers( $meetingID )
+	{
+		$sql = 'SELECT COUNT(1) AS TotalUsers
+					FROM' . Meeting::USER_MEETING_TABLE . '
+					WHERE meetingID = :meetingID';
+		$sql = $db->prepare( $sql );
+		$sql->bindParam( ':meetingID', $meetingID );
+		$sql->execute();
+		
+		$totalUsers = $sql->fetch( PDO::FETCH_ASSOC );
+		
+		return $totalUsers['TotalUsers'];
 	}
 }
