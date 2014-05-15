@@ -245,10 +245,8 @@ function removeFromUserCourses ( id )
 {
     $('#all-course-' + id).removeClass('ui-icon-check ui-btn-icon-right');
     $('#all-course-' + id).parent().attr('data-icon', 'false');
-    /*
-    var element = getElementById( '' + mode + '-' + CourseID );
+    var element = getElementById( 'my-course-' + id );
     element.parentNode.removeChild( element );
-    */
 }
 
 /* toggle course watch visibility 
