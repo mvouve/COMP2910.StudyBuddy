@@ -11,5 +11,5 @@ function setupPusher()
 
 function pusherCourseAdded( $data )
 {
-	alert( $data );
+    masterCourseListAdd( $data.id, $data.title, false );
 }

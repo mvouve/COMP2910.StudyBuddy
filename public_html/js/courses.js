@@ -80,7 +80,7 @@ function getCourseList( ajax_URL )
 function masterCourseListAdd ( id, title, inCourse )
 {
     var list = document.getElementById( 'all-courses-list' );
-    var listItem = document.createElmeent( 'li' );
+    var listItem = document.createElement( 'li' );
 
     //create inner anchor element in list item and set its attribute and data
     var anchor = document.createElement( 'a' );
