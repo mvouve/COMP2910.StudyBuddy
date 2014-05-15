@@ -1,6 +1,6 @@
 .center
 {
-    text-align:center;
+    text-align: center;
 }
 
 #logo-btn
@@ -22,4 +22,19 @@ a
 {
     border-top: 3px solid #a808e2;
     box-shadow: 0px -1px 10px #333;
+}
+
+.listview-wrapper {
+    padding-top : 60px;
+}
+.listview-wrapper form {
+    position: fixed;
+    top: 40px;
+    left: 0px;
+    width: 80%;
+    padding: 10px 10% 5px;
+    z-index: 1;
+    background: #fbf9fb;
+    border-bottom: 1px solid #a808e2;
+    box-shadow: 0px 1px 10px #333;
 }

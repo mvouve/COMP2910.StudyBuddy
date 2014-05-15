@@ -1,7 +1,7 @@
 <!--Beginning of all-courses.php-->
         <div data-role="page" data-theme="a" id='page-all-courses'>
             <?php renderPagelet( 'banner.php', array( '{{title}}' => 'All courses' ) ); ?>
-            <div data-role="content">
+            <div data-role="content" class="listview-wrapper">
                 <ul data-role="listview" data-filter="true" id="all-courses-list">
 	                <!--li data-icon="false"><a href="#">BUSA2720<br>Business in a Networked Economy</a></li>
 	                <li data-icon="false"><a href="#">COMP1116<br>Business Communications 1</a></li>
