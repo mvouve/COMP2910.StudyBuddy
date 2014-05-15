@@ -5,7 +5,7 @@
 
 #logo-btn
 {
-	padding: 5px 10px;
+	padding: 5px 10px 0px;
 }
 
 a
@@ -52,6 +52,27 @@ a
     margin-top: -11px !important;
     margin-right: -7px !important;
 }
+
+.green-ui-navbar
+{
+    border-top: 3px solid #5ca028;
+}
+
+.green-listview-wrapper-form
+{
+    border-bottom: 1px solid #5ca028;
+}
+
+.black-ui-navbar
+{
+     border-top: 3px solid #737373;
+}
+
+.black-listview-wrapper-form
+{
+    border-bottom: 1px solid #737373;
+}
+
 .img-resize
 {
     width:70%;

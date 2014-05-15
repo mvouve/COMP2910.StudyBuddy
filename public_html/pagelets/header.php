@@ -21,7 +21,8 @@
 		<script src="http://js.pusher.com/2.2/pusher.min.js"></script>
         <script src="js/pusher-events.js"></script>
 		<script src="js/courses.js"></script>
-	 <script type="text/javascript" src="js/styleswitch.js"></script><!--Source: http://www.kelvinluck.com/assets/jquery/styleswitch/-->
+        <script src="js/misc.js"></script>
+	    <script type="text/javascript" src="js/styleswitch.js"></script><!--Source: http://www.kelvinluck.com/assets/jquery/styleswitch/-->
 	 
         <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile.structure-1.4.2.min.css" />
         <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css">

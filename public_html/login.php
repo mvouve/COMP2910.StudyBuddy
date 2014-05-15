@@ -1,7 +1,10 @@
 <!--Study Buddy - Login Page-->
 <?php require_once( 'config.php' ); ?>
 <?php require_once( PHP_INC_PATH . 'common.php' ); ?>
-<?php if ( isset( $_GET['logout'] ) ) { User::instance()->logout(); } ?>
+<?php 
+	global $user;
+	if ( isset( $_GET['logout'] ) && $user ) { $user->logout(); }
+?>
 <?php renderPagelet( 'header.php', array( '{{customHeadTags}}' => '' ) ); ?>
 	<body>
 		<div data-role="page" data-theme="a">
