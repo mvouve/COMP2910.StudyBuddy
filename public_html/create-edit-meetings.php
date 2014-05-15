@@ -1,4 +1,9 @@
 <!-- create and edit meetings page-->
+<?php require_once( 'config.php' ); ?>
+<?php require_once( PHP_INC_PATH . 'common.php' ); ?>
+<?php if ( isset( $_GET['logout'] ) ) { User::instance()->logout(); } ?>
+<?php renderPagelet( 'header.php', array( '{{customHeadTags}}' => '' ) ); ?>
+
 <div data-role="page">
     <div data-role="header">
     </div>
@@ -26,7 +31,7 @@
     <div data-role="footer" data-position="fixed" data-tap-toggle="false">
                 <div data-role="navbar">
 		            <ul>
-			            <li><a href="#page-my-courses" data-icon="back" data-iconpos="top">Cancek</a></li>
+			            <li><a href="#page-my-courses" data-icon="back" data-iconpos="top">Cancel</a></li>
 			            <li><a href="#page-add-course" data-icon="plus" data-iconpos="top">Create Meeting</a></li>
 		            </ul>
 	            </div>
