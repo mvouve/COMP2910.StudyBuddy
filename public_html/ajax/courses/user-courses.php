@@ -49,10 +49,17 @@ else if( isset( $_GET['method'] ) )
             $retval = addCourse( $_GET['id'] );
             
             break;
+
+        case 'get-courses':
+            $retval = getCourses();
+            
+            break;
+
         case 'remove-all-courses':
             $retval = removeAllCourses();
             
             break;
+
         default:
             break;
     }

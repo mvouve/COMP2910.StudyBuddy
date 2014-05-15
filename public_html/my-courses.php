@@ -25,22 +25,14 @@
             </div>
         </div>
         <script>
-            var myCoursesList;
-            var removeMode;
-            var serverResponse;
+            var removeMode = false;
 			var removeClicked = false;
             function myCourseOnReady()
             {
-				removeClicked = false;
                 myCoursesList = document.getElementById('my-courses-list');
+				removeClicked = false;
                 removeMode = false;
 				$('#my-courses-list').listview();
-
-                var getMyCoursesFormData = $("#get-my-courses-form").serializeArray();
-                $.post( <?php echo '\'' . AJAX_URL . 'courses/user-courses.php\''; ?>,
-                            getMyCoursesFormData,
-                            storeResult,
-                            "json");
                             
                 $('#remove-course-button').on( 'click tap', function(e)
                 {
@@ -64,6 +56,7 @@
                     else
                     {
                         $('#my-courses-list>li').attr('data-icon', 'delete');
+                        $('#my-courses-list a').removeClass('ui-icon-eye');
                         $('#my-courses-list a').addClass('ui-btn-icon-right ui-icon-delete');
 				        $('#my-courses-list').listview('refresh');
                         $('#remove-course-button').html('Finish');
@@ -75,33 +68,14 @@
                 
             }
 
-            function storeResult(result)
-            {
-                serverResponse = result;
-                populateMyCourseList();
-            }
-            
-            function populateMyCourseList()
-            {
-                for( var i = 0; i < serverResponse.length; ++i )
-                {
-                    var newLI = document.createElement('li');
-                    newLI.setAttribute( 'data-icon', (serverResponse[i].visible?'check':'false') );
-                    newLI.innerHTML = '<a href="#" id="my-course-'+serverResponse[i].id+'">' + serverResponse[i].id + '<br>' + serverResponse[i].title + '</a>';
-                    myCoursesList.appendChild(newLI);
-                }
-
-				$('#my-courses-list').listview('refresh');
-            }
-
             function updateTrackedCheckMarks()
             {
-                for( var i = 0; i < serverResponse.length; ++i )
+                for( var key in myCoursesServerResponse )
                 {
-                    if( serverResponse[i].visible )
+                    if( myCoursesServerResponse[key].visible )
                     {
-                        $('#my-course-'+serverResponse[i].id).parent().attr('data-icon', 'check');
-                        $('#my-course-'+serverResponse[i].id).addClass('ui-icon-check');
+                        $('#my-course-'+key).parent().attr('data-icon', 'eye');
+                        $('#my-course-'+key).addClass('ui-btn-icon-right ui-icon-eye');
                     }
                 }
             }

@@ -30,7 +30,6 @@
                 
 				$( '#all-courses-list' ).listview();
 				allCoursesList = document.getElementById('all-courses-list');
-				getCourseList(ajaxURL);
 
                 $( '#clear-my-courses' ).on( 'click tap', function(e)
                 {
