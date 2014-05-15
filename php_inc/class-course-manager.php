@@ -142,6 +142,26 @@ class CourseManager
 	}
 	
 	/*
+	 * Remove all courses from a users course list.
+	 *
+	 * @param $userID the users ID
+	 *
+	 * @returns TRUE if courses were deleted, false if nothing was deleted.
+	 */
+	public function removeAllUserCourses( $userID )
+	{
+		global $db;
+		
+		$sql = 'DELETE FROM ' . CourseManager::USER_COURSE_TABLE . ' 
+				WHERE userID=:id
+				;';
+		$sql = $db->prepare( $sql );
+		$sql->bindParam( ':id', $userID );
+		
+		return ( $sql->execute() && $sql->rowCount() >= 1 );
+	}
+	
+	/*
 	 * Get the Course List of a specific User
 	 *
 	 * @param $userID the id of the user whose list to retrieve.
