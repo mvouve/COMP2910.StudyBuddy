@@ -27,12 +27,21 @@
 		
 			function allCoursesOnReady()
 			{
+                
 				$( '#all-courses-list' ).listview();
 				allCoursesList = document.getElementById('all-courses-list');
 				getCourseList(ajaxURL);
 
                 $( '#clear-my-courses' ).on( 'click tap', function(e)
                 {
+                    if( clearing )
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        clearing = true;
+                    }
                     $.ajax
                     ({
                         url: ajaxURL + 'courses/user-courses.php',
@@ -47,8 +56,9 @@
                             {
                                 $( '#all-courses-list>li' ).attr( 'data-icon', 'false' );
                                 $( '#all-courses-list a' ).removeClass('ui-icon-check ui-btn-icon-right');
-                                $('#all-courses-list').listview('refresh');
+                                $( '#all-courses-list' ).listview('refresh');
                             }
+                            clearing = false;
                         }
                     });
                 } );

@@ -46,7 +46,7 @@
                     alert('tapped');
                     if( removeMode )
                     {
-                        $('#my-courses-list a').removeClass('ui-icon-delete');
+                        $('#my-courses-list a').removeClass('ui-btn-icon-right ui-icon-delete');
                         updateTrackedCheckMarks();
 				        $('#my-courses-list').listview('refresh');
                         $('#remove-course-button').html('Remove Courses');                    

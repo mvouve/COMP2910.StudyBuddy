@@ -32,6 +32,7 @@ function getUserCourses( ajax_URL )
     @param title a brief description / the name of the course*/
 function addToUserCourses ( id, title )
 {
+    /*
     var list = getElementById( 'my-courses-list' );
     var listItem = document.createElmeent('li');
 
@@ -45,7 +46,10 @@ function addToUserCourses ( id, title )
 
     //ASSIGN A id="my-courseID" to each list item made for easier removal with the removal helper function
     listItem.setAttribute('id', 'my-' + id);
+    */
 }
+
+var allCoursesServerResponse = {};
 /* Fetch master course list from the server
     @param ajax_URL the URI location where the ajax folder is located */
 function getCourseList( ajax_URL )
@@ -59,21 +63,19 @@ function getCourseList( ajax_URL )
         },
         dataType: "json",
         success: function (json) {
-            var courseArray = json;
-            for (var i = 0; i < courseArray.length; i++) {
-                var courseID = courseArray[i].id;
-                var courseTitle = courseArray[i].title;
-                var userInCourse = courseArray[i].inCourse;
-                
+            for (var i = 0; i < json.length; i++) {
+                allCoursesServerResponse[json[i].id] = { 'title':json[i].title, 'inCourse':json[i].inCourse };
+
 
                 //calls a separate function to add this data to the HTML
-                masterCourseListAdd(ajax_URL, courseID, courseTitle, userInCourse);
+                masterCourseListAdd(ajax_URL, json[i].id, json[i].title, json[i].inCourse);
             }
         }
     });
     $( '#all-courses-list' ).listview( 'refresh' );
 }
 
+var clearing = false;
 var loading = {};
 /* Adds course data to list elements in HTML 
     @param id the 4-letter and 4-number course code
@@ -100,7 +102,7 @@ function masterCourseListAdd ( ajax_URL, id, title, inCourse )
     // Add Event Handler to added List Item
     $('#all-course-' + id).on('click tap', function (e)
     {
-        if( loading[id] )
+        if( loading[id] || clearing )
         {
             return;
         }
@@ -109,7 +111,7 @@ function masterCourseListAdd ( ajax_URL, id, title, inCourse )
             loading[id] = true;
         }
         //show loading image
-        e.target.innerHTML = e.target.innerHTML + '<img class="loading" src="css/images/ajax-loader.gif" alt="loading">';
+        e.target.innerHTML = e.target.innerHTML + '<img class="course-loading" src="css/images/ajax-loader.gif" alt="loading...">';
 
         var parentLI = e.target.parentNode;
         var inUserList = parentLI.getAttribute('data-icon') == 'check';
