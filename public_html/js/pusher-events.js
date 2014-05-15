@@ -9,7 +9,8 @@ function setupPusher()
 	channel.bind( 'course_added', pusherCourseAdded );
 }
 
-function pusherCourseAdded( $data )
+function pusherCourseAdded( data )
 {
-    masterCourseListAdd( $data.id, $data.title, false );
+    masterCourseListAdd( data.id, data.title, false );
+    $('#all-courses-list').listview('refresh');
 }

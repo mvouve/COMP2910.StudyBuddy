@@ -81,19 +81,14 @@ function masterCourseListAdd ( id, title, inCourse )
 {
     var list = document.getElementById( 'all-courses-list' );
     var listItem = document.createElement( 'li' );
-
-    //create inner anchor element in list item and set its attribute and data
-    var anchor = document.createElement( 'a' );
-    anchor.setAttribute( 'href', '#' );
-    anchor.innerHTML='' + id + '<br/>' + title;
-
-    //put the anchor element inside the list item element
-    listItem.innerHTML = anchor;
-
-    //ASSIGN A id="my-courseID" to each list item made for easier removal with the removal helper function
-    listItem.setAttribute('id', 'master-' + id);
-
-    //MUST STILL DEAL WITH IN_COURSE BOOLEAN; BUTTON IS NOT IMPLEMENTED AS OF WRITING
+    var inCourseString = ( inCourse ) ? "true" : "false";
+    
+    listItem.setAttribute( 'data-icon', inCourseString );
+    
+    listItem.innerHTML = '<a href="#" id="all-course-' + id + '" class="ui-btn">' + id +
+                         '<br />' + title + '</a>';
+    
+    list.appendChild( listItem );
 }
 
 /* Add a course to the master course list
@@ -121,9 +116,6 @@ function createCourse( ajax_URL, courseID, description )
                     document.getElementById("user-course-form").reset();
                     $.mobile.changePage("#page-all-courses");
                 }
-
-                //calls a separate function to add this data to the HTML
-                masterCourseListAdd(courseID, description, inCourse);
             }
         });
 }
