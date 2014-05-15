@@ -60,12 +60,14 @@
                 $("#add-course-submit").on( 'click tap', function (e) {
                     userNewCourseID = $("#user-course-id").val();
                     userNewCourseTitle = $("#user-course-title").val();
+					$('#add-course-submit').addClass('ui-disabled');
                     createCourse("<?php echo AJAX_URL; ?>", userNewCourseID, userNewCourseTitle);
                     e.stopImmediatePropagation();
                     e.preventDefault();
                 }); 
                 $("#cancel-add-course").on( 'click tap', function (e) {
                     document.getElementById("user-course-form").reset();
+					$('#add-course-submit').addClass('ui-disabled');
                     $.mobile.changePage("#page-all-courses");
                     return false;
                     

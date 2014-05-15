@@ -56,8 +56,9 @@ a
     border-top: 3px solid #5ca028;
 }
 
-.green-listview-wrapper-form
+.green-listview-wrapper
 {
+    background: #5ca028;
     border-bottom: 1px solid #5ca028;
 }
 
@@ -66,8 +67,9 @@ a
      border-top: 3px solid #737373;
 }
 
-.black-listview-wrapper-form
+.black-listview-wrapper
 {
+    background: #737373;
     border-bottom: 1px solid #737373;
 }
 
