@@ -98,7 +98,7 @@
                     if( serverResponse[i].visible )
                     {
                         $('#my-course-'+serverResponse[i].id).parent().attr('data-icon', 'check');
-                        $('#my-course-'+serverResponse[i].id).addClass('ui-icon-check');
+                        $('#my-course-'+serverResponse[i].id).addClass('ui-btn-icon-right ui-icon-check');
                     }
                 }
             }

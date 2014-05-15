@@ -26,29 +26,6 @@ function getUserCourses( ajax_URL )
     });
 }
 
-
-/* Adds course data to list elements in HTML 
-    @param id the 4-letter and 4-number course code
-    @param title a brief description / the name of the course*/
-function addToUserCourses ( id, title )
-{
-    /*
-    var list = getElementById( 'my-courses-list' );
-    var listItem = document.createElmeent('li');
-
-    //create inner anchor element in list item and set its attribute and data
-    var anchor = document.createElement('a');
-    anchor.setAttribute('href', '#');
-    anchor.innerHTML='' + id + '<br/>' + title;
-
-    //put the anchor element inside the list item element
-    listItem.innerHTML = anchor;
-
-    //ASSIGN A id="my-courseID" to each list item made for easier removal with the removal helper function
-    listItem.setAttribute('id', 'my-' + id);
-    */
-}
-
 var allCoursesServerResponse = {};
 /* Fetch master course list from the server
     @param ajax_URL the URI location where the ajax folder is located */
@@ -122,7 +99,7 @@ function masterCourseListAdd ( ajax_URL, id, title, inCourse )
         $.post(ajax_URL + 'courses/user-courses.php',
         {
             method: (inUserList ? "remove-course" : "add-course"),
-            id: e.target.id.substring(11)
+            id: e.target.id.substring('all-course-'.length)
         },
         function (result)
         {
@@ -130,13 +107,11 @@ function masterCourseListAdd ( ajax_URL, id, title, inCourse )
             {
                 if( inUserList )
                 {
-                    parentLI.setAttribute('data-icon', 'false')
-                    $('#' + e.target.id).removeClass('ui-icon-check ui-btn-icon-right');
+                    removeFromUserCourses( id );
                 }
                 else
                 {
-                    parentLI.setAttribute('data-icon', 'check')
-                    $('#' + e.target.id).addClass('ui-icon-check ui-btn-icon-right');
+                    addToUserCourses ( id );
                 }
             }
             //remove loading image
@@ -213,6 +188,30 @@ function addUserCourse( ajax_URL, courseID )
 
 }
 
+/* Adds course data to list elements in HTML 
+    @param id the 4-letter and 4-number course code
+    @param title a brief description / the name of the course*/
+function addToUserCourses ( id, title )
+{
+    $('#all-course-' + id).addClass('ui-icon-check ui-btn-icon-right');
+    $('#all-course-' + id).parent().attr('data-icon', 'check');
+    /*
+    var list = getElementById( 'my-courses-list' );
+    var listItem = document.createElmeent('li');
+
+    //create inner anchor element in list item and set its attribute and data
+    var anchor = document.createElement('a');
+    anchor.setAttribute('href', '#');
+    anchor.innerHTML='' + id + '<br/>' + title;
+
+    //put the anchor element inside the list item element
+    listItem.innerHTML = anchor;
+
+    //ASSIGN A id="my-courseID" to each list item made for easier removal with the removal helper function
+    listItem.setAttribute('id', 'my-' + id);
+    */
+}
+
 /* removes a course from the user list in the database
     @param ajax_URL the URI location where the ajax folder is located
     @param courseID the 4-letter and 4-number course code */
@@ -242,10 +241,14 @@ function removeUserCourse ( ajax_URL, courseID )
     @param mode valid entries are 'my' or 'master
         my: specifies removal from an individual user course list
         master: specifies removal from the master course list */
-function removeFromUserCourses ( courseID, mode )
+function removeFromUserCourses ( id )
 {
+    $('#all-course-' + id).removeClass('ui-icon-check ui-btn-icon-right');
+    $('#all-course-' + id).parent().attr('data-icon', 'false');
+    /*
     var element = getElementById( '' + mode + '-' + CourseID );
     element.parentNode.removeChild( element );
+    */
 }
 
 /* toggle course watch visibility 
