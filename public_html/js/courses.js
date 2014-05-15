@@ -88,7 +88,6 @@ function masterCourseListAdd ( ajax_URL, id, title, inCourse )
     if( inCourse )
     {
         newLI.setAttribute( 'data-icon', 'check');
-        alert('all-course-' + id);
         $('#all-course-' + id).addClass('ui-icon-check ui-btn-icon-right');
     }
     else
