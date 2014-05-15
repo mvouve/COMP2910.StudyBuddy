@@ -8,7 +8,7 @@
             var uid = <?php echo $user->getUserID( $_SESSION['email'] ); ?>;
         </script>
         <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-        <script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
+        <script src="js/jqm.js"></script>
 		<script src="http://js.pusher.com/2.2/pusher.min.js"></script>
         <script src="js/pusher-events.js"></script>
 		<script src="js/courses.js"></script>
