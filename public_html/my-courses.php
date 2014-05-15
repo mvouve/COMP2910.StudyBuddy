@@ -69,7 +69,10 @@
                         $('#remove-course-button').html('Finish');
                     }
                     removeMode = !removeMode;
+                    setTimeout(function(){$('#remove-course-button').removeClass( 'ui-btn-active' );},200);
+                    $('#remove-course-button').removeClass( 'ui-btn-active' );
                 });
+                
             }
 
             function storeResult(result)
