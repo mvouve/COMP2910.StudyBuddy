@@ -38,3 +38,8 @@ a
     border-bottom: 1px solid #a808e2;
     box-shadow: 0px 1px 10px #333;
 }
+
+.img-resize {
+    width:70%;
+    height:auto;
+}

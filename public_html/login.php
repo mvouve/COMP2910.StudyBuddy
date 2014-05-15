@@ -8,7 +8,7 @@
             <?php renderPagelet( 'banner.php', array( '{{title}}' => 'Login' ) ); ?>
 			<div data-role="content" id="login">
                 <div class="center">
-                    <img src="images/StudyBuddyBanner.png">
+                    <img class="img-resize" src="images/StudyBuddyBanner.png">
                 </div>
 				<div id="error" style="display:none">
 					<p>Login failed. Please try again.</p>
