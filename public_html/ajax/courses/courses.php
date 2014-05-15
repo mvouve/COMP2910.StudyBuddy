@@ -2,6 +2,12 @@
 require( '../../config.php' );
 require( PHP_INC_PATH . 'common.php' );
 
+$user = User::instance();
+if ( !$user->isLoggedIn() )
+{
+	die();
+}
+
 if( isset( $_POST['method'] ) )
 {
     //Add course function
