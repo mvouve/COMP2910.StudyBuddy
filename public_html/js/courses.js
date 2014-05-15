@@ -71,7 +71,7 @@ function getCourseList( ajax_URL )
             }
         }
     });
-    //$( '#all-courses-list' ).listview( 'refresh' );
+    $( '#all-courses-list' ).listview( 'refresh' );
 }
 
 var loading = {};
@@ -83,9 +83,8 @@ function masterCourseListAdd ( ajax_URL, id, title, inCourse )
 {
     loading[id] = false;
     var newLI = document.createElement('li');
-    newLI.innerHTML = '<a href="#" id="all-course-' + id + '" class="ui-btn">' + id + '<br>' + 
+    newLI.innerHTML = '<a href="#" id="all-course-' + id + '" class="ui-btn" style="vertical-align: middle;">' + id + '<br>' + 
                       title + '</a>';
-    
     allCoursesList.appendChild(newLI);
     if( inCourse )
     {
@@ -109,8 +108,14 @@ function masterCourseListAdd ( ajax_URL, id, title, inCourse )
         {
             loading[id] = true;
         }
+        //show loading image
+        e.target.innerHTML = e.target.innerHTML + '<img class="loading" src="css/images/ajax-loader.gif" alt="loading">';
+
         var parentLI = e.target.parentNode;
         var inUserList = parentLI.getAttribute('data-icon') == 'check';
+
+        parentLI.setAttribute('data-icon', 'false')
+        $('#' + e.target.id).removeClass('ui-icon-check ui-btn-icon-right');
 
         $.post(ajax_URL + 'courses/user-courses.php',
         {
@@ -131,8 +136,20 @@ function masterCourseListAdd ( ajax_URL, id, title, inCourse )
                     parentLI.setAttribute('data-icon', 'check')
                     $('#' + e.target.id).addClass('ui-icon-check ui-btn-icon-right');
                 }
-                $('#all-courses-list').listview('refresh');
             }
+            //remove loading image
+            e.target.removeChild(e.target.getElementsByTagName("img")[0]);
+            var refresh = true;
+            for( var key in loading )
+            {
+                if( loading[key] )
+                {
+                    refresh = false;
+                    break;
+                }
+            }
+            if( refresh )
+                $('#all-courses-list').listview('refresh');
             loading[id] = false;
         },
         "json");

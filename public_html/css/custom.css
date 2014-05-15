@@ -24,10 +24,13 @@ a
     box-shadow: 0px -1px 10px #333;
 }
 
-.listview-wrapper {
+.listview-wrapper
+{
     padding-top : 60px;
 }
-.listview-wrapper form {
+
+.listview-wrapper form
+{
     position: fixed;
     top: 40px;
     left: 0px;
@@ -37,4 +40,14 @@ a
     background: #fbf9fb;
     border-bottom: 1px solid #a808e2;
     box-shadow: 0px 1px 10px #333;
+}
+
+li .loading
+{
+    width: 22px;
+    height: 22px;
+    opacity: 0.3;
+    float: right;
+    margin-top: -11px !important;
+    margin-right: -7px !important;
 }

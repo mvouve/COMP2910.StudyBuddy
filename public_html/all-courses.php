@@ -17,7 +17,7 @@
 		            <ul>
 			            <li><a href="#page-my-courses" data-icon="back" data-iconpos="top">My Courses</a></li>
 			            <li><a href="#page-add-course" data-icon="plus" data-iconpos="top">Create Course</a></li>
-			            <li><a href="#" data-icon="minus" data-iconpos="top">Clear All</a></li>
+			            <li><a href="#" id="clear-my-courses" data-icon="minus" data-iconpos="top">Clear All</a></li>
 		            </ul>
 	            </div>
             </div>
@@ -30,6 +30,28 @@
 				$( '#all-courses-list' ).listview();
 				allCoursesList = document.getElementById('all-courses-list');
 				getCourseList(ajaxURL);
+
+                $( '#clear-my-courses' ).on( 'click tap', function(e)
+                {
+                    $.ajax
+                    ({
+                        url: ajaxURL + 'courses/user-courses.php',
+                        data:
+                        {
+                            method: "remove-all-courses"
+                        },
+                        dataType: "json",
+                        success: function (json)
+                        {
+                            if(json.success == true)
+                            {
+                                $( '#all-courses-list>li' ).attr( 'data-icon', 'false' );
+                                $( '#all-courses-list a' ).removeClass('ui-icon-check ui-btn-icon-right');
+                                $('#all-courses-list').listview('refresh');
+                            }
+                        }
+                    });
+                } );
 			}
         </script>
 <!--End of all-courses.php-->
