@@ -6,7 +6,7 @@
             <?php global $user; ?>
             var ajaxURL = "<?php echo AJAX_URL; ?>";
             var uid = <?php 
-							if ( $user )
+							if ( $user != null && $user->isLoggedIn() )
 							{
 								echo $user->getUserID( $_SESSION['email'] ); 
 							}
