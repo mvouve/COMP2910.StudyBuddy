@@ -133,7 +133,12 @@ class CourseManager
         $sql->bindParam( ':uid', $userID );
         $sql->bindParam( ':cid', $courseID );
 		
-		return $sql->execute();
+        if ( !$sql->execute() )
+        {
+            return false;
+        }
+        
+		return $sql->rowCount() >= 1;
 	}
 	
 	/*
