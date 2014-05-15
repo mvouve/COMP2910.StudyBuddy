@@ -71,7 +71,7 @@ function getCourseList( ajax_URL )
             }
         }
     });
-    $( '#all-courses-list' ).listview( 'refresh' );
+    //$( '#all-courses-list' ).listview( 'refresh' );
 }
 
 /* Adds course data to list elements in HTML 
@@ -81,15 +81,21 @@ function getCourseList( ajax_URL )
 function masterCourseListAdd ( ajax_URL, id, title, inCourse )
 {
     var newLI = document.createElement('li');
-    if (inCourse)
-    {
-        alert(id);
-    }
-    newLI.setAttribute( 'data-icon', ( inCourse ? 'check' : 'false' ) );
-    alert( newLI.getAttribute( 'data-icon' ) );
     newLI.innerHTML = '<a href="#" id="all-course-' + id + '" class="ui-btn">' + id + '<br>' + 
                       title + '</a>';
+    
     allCoursesList.appendChild(newLI);
+    if( inCourse )
+    {
+        newLI.setAttribute( 'data-icon', 'check');
+        alert('all-course-' + id);
+        $('#all-course-' + id).addClass('ui-icon-check ui-btn-icon-right');
+    }
+    else
+    {
+        newLI.setAttribute( 'data-icon', 'false');
+        $('#all-course-' + id).removeClass('ui-icon-check ui-btn-icon-right');
+    }
     
     // Add Event Handler to added List Item
     $('#all-course-' + id).on('click tap', function (e)
