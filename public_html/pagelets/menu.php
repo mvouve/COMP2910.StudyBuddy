@@ -10,9 +10,12 @@
                         <li><a href='login.php?logout=true' rel='external'>Logout</a></li>
                         <li>
                             <div data-role="controlgroup" data-type="horizontal" data-mini="true">
-                                <a href="serversideSwitch.html?style=styles1" rel="styles1" class="styleswitch" data-role="button">Purple</a>
-                                <a href="serversideSwitch.html?style=styles2" rel="styles2" class="styleswitch" data-role="button">Green</a>
-                                <a href="serversideSwitch.html?style=styles3" rel="styles3" class="styleswitch" data-role="button">Dark</a>
+                                <a href="serversideSwitch.html?style=styles1" rel="styles1" class="styleswitch" data-role="button" 
+                                   id="purple-button">Purple</a>
+                                <a href="serversideSwitch.html?style=styles2" rel="styles2" class="styleswitch" data-role="button" 
+                                   id="green-button">Green</a>
+                                <a href="serversideSwitch.html?style=styles3" rel="styles3" class="styleswitch" data-role="button" 
+                                   id="dark-button">Dark</a>
                             </div>
                         </li>
                     </ul>
