@@ -52,12 +52,12 @@ function getCourseList( ajax_URL )
 {
     $.ajax
     ({
-        url: ajax_URL + '/courses/courses.php',
+        url: ajax_URL + 'courses/courses.php',
         data:
         {
-            method: get-courses
+            method: "get-courses"
         },
-        dataType: json,
+        dataType: "json",
         success: function (json) {
             var courseArray = json;
             for ( i = 0 ; courseArray.length ; i++ ) {
@@ -171,10 +171,10 @@ function removeUserCourse ( ajax_URL, courseID )
         url: ajax_URL + '/courses/user-courses.php',
         data:
         {
-            method: remove-course,
+            method: "remove-course",
             id: courseID
         },
-        datatype: json,
+        datatype: "json",
         success: function ( json )
         {
             var CourseID = json.id;
@@ -206,10 +206,10 @@ function toggleVisibility ( ajax_URL, courseID )
         url: ajax_URL + '/courses/user-courses.php',
         data:
         {
-            method: toggle-visibility,
+            method: "toggle-visibility",
             id: courseID
         },
-        datatype: json,
+        datatype: "json",
         success: function ( json )
         {
             //PLACEHOLDER, backklog for next sprint
