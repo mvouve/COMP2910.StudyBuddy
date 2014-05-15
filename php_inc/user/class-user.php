@@ -36,7 +36,6 @@ class User
      */
 	private function __construct()
 	{
-		echo "--HERE IS THE THING--";
 		$this->passHasher = new PasswordHash( 8, false );
 		$this->startSession();
 	}
