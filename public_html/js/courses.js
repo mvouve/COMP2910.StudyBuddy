@@ -8,13 +8,13 @@ function getUserCourses( ajax_URL )
         url: ajax_URL + '/courses/user-courses.php',
         data:
         {
-            method: get-courses
+            method: "get-courses"
         },
-        dataType: json,
+        dataType: "json",
         success: function ( json )
         {
             var courseArray = json;
-            for ( i = 0 ; courseArray.length ; i++ )
+            for ( var i = 0 ; i < courseArray.length ; i++ )
             {
                 var courseID = courseArray[i].id;
                 var courseTitle = courseArray[i].title; 
@@ -60,7 +60,7 @@ function getCourseList( ajax_URL )
         dataType: "json",
         success: function (json) {
             var courseArray = json;
-            for ( i = 0 ; courseArray.length ; i++ ) {
+            for ( var i = 0 ; i < courseArray.length ; i++ ) {
                 var courseID = courseArray[i].id;
                 var courseTitle = courseArray[i].title;
                 var userInCourse = courseArray[i].inCourse;
