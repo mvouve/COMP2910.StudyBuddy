@@ -51,7 +51,7 @@
             });
         
 			// Setup Pusher for receiving events.
-			setupPusher();
+			setupPusher( ajaxURL );
 		
             // Various Page "onReady" functions
             accountSettingsOnReady();

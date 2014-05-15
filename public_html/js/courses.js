@@ -46,7 +46,6 @@ function addToUserCourses ( id, title )
     //ASSIGN A id="my-courseID" to each list item made for easier removal with the removal helper function
     listItem.setAttribute('id', 'my-' + id);
 }
-
 /* Fetch master course list from the server
     @param ajax_URL the URI location where the ajax folder is located */
 function getCourseList( ajax_URL )
@@ -67,7 +66,7 @@ function getCourseList( ajax_URL )
                 var userInCourse = courseArray[i].inCourse;
 
                 //calls a separate function to add this data to the HTML
-                masterCourseListAdd( courseID, courseTitle, userInCourse );
+                masterCourseListAdd( ajax_URL, courseID, courseTitle, userInCourse );
             }
         }
     });
@@ -77,18 +76,34 @@ function getCourseList( ajax_URL )
     @param id the 4-letter and 4-number course code
     @param title a brief description / the name of the course
     @param inCourse boolean, true if the user in the course*/
-function masterCourseListAdd ( id, title, inCourse )
+function masterCourseListAdd ( ajax_URL, id, title, inCourse )
 {
-    var list = document.getElementById( 'all-courses-list' );
-    var listItem = document.createElement( 'li' );
-    var inCourseString = ( inCourse ) ? "true" : "false";
+    var newLI = document.createElement('li');
+    newLI.setAttribute( 'data-icon', ( inCourse ? 'check' : 'false' ) );
+    newLI.innerHTML = '<a href="#" id="all-course-' + id + '" class="ui-btn">' + id + '<br>' + 
+                      title + '</a>';
+    allCoursesList.appendChild(newLI);
     
-    listItem.setAttribute( 'data-icon', inCourseString );
-    
-    listItem.innerHTML = '<a href="#" id="all-course-' + id + '" class="ui-btn">' + id +
-                         '<br />' + title + '</a>';
-    
-    list.appendChild( listItem );
+    // Add Event Handler to added List Item
+    $( '#all-course-' + id ).on( 'click tap', function(e)
+    {
+        var parentLI = e.target.parentNode;
+        var inUserList = parentLI.getAttribute('data-icon') == 'check';
+        
+        $.post( ajax_URL + 'courses/user-courses.php',
+        {
+            method: (inUserList ? "remove-course" : "add-course"),
+            id: e.target.id.substring(11)
+        },
+        function (result) {
+            if( result.success )
+            {
+                parentLI.setAttribute('data-icon',(inUserList ? 'false' : 'check'))
+                $('#all-courses-list').listview('refresh');
+            }
+        },
+        "json");
+    } );
 }
 
 /* Add a course to the master course list

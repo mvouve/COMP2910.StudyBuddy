@@ -11,6 +11,6 @@ function setupPusher()
 
 function pusherCourseAdded( data )
 {
-    masterCourseListAdd( data.id, data.title, false );
+    masterCourseListAdd( ajaxURL, data.id, data.title, false );
     $('#all-courses-list').listview('refresh');
 }
