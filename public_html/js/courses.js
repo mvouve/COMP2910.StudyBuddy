@@ -60,16 +60,18 @@ function getCourseList( ajax_URL )
         dataType: "json",
         success: function (json) {
             var courseArray = json;
-            for ( var i = 0 ; i < courseArray.length ; i++ ) {
+            for (var i = 0; i < courseArray.length; i++) {
                 var courseID = courseArray[i].id;
                 var courseTitle = courseArray[i].title;
                 var userInCourse = courseArray[i].inCourse;
+                
 
                 //calls a separate function to add this data to the HTML
-                masterCourseListAdd( ajax_URL, courseID, courseTitle, userInCourse );
+                masterCourseListAdd(ajax_URL, courseID, courseTitle, userInCourse);
             }
         }
     });
+    $( '#all-courses-list' ).listview( 'refresh' );
 }
 
 /* Adds course data to list elements in HTML 
@@ -79,31 +81,46 @@ function getCourseList( ajax_URL )
 function masterCourseListAdd ( ajax_URL, id, title, inCourse )
 {
     var newLI = document.createElement('li');
+    if (inCourse)
+    {
+        alert(id);
+    }
     newLI.setAttribute( 'data-icon', ( inCourse ? 'check' : 'false' ) );
+    alert( newLI.getAttribute( 'data-icon' ) );
     newLI.innerHTML = '<a href="#" id="all-course-' + id + '" class="ui-btn">' + id + '<br>' + 
                       title + '</a>';
     allCoursesList.appendChild(newLI);
     
     // Add Event Handler to added List Item
-    $( '#all-course-' + id ).on( 'click tap', function(e)
+    $('#all-course-' + id).on('click tap', function (e)
     {
         var parentLI = e.target.parentNode;
         var inUserList = parentLI.getAttribute('data-icon') == 'check';
-        
-        $.post( ajax_URL + 'courses/user-courses.php',
+
+        $.post(ajax_URL + 'courses/user-courses.php',
         {
             method: (inUserList ? "remove-course" : "add-course"),
             id: e.target.id.substring(11)
         },
-        function (result) {
-            if( result.success )
+        function (result)
+        {
+            if (result.success)
             {
-                parentLI.setAttribute('data-icon', ( inUserList ? 'false' : 'check' ) )
+                if( inUserList )
+                {
+                    parentLI.setAttribute('data-icon', 'false')
+                    $('#' + e.target.id).removeClass('ui-icon-check ui-btn-icon-right');
+                }
+                else
+                {
+                    parentLI.setAttribute('data-icon', 'check')
+                    $('#' + e.target.id).addClass('ui-icon-check ui-btn-icon-right');
+                }
                 $('#all-courses-list').listview('refresh');
             }
         },
         "json");
-    } );
+    });
 }
 
 /* Add a course to the master course list
