@@ -74,11 +74,26 @@ class Meeting
     {
         global $db;
 		
-        $sql = 'INSERT INTO' . Meeting::USER_MEETING_TABLE . '
-                    VALUES ( :meetingID, :userID );';
-        $sql = $db->prepare( $sql );
-        $sql->bindParam( ':meetingID',  $meetingID );
-        $sql->bindParam( ':userID',     $userID );
+		
+		// get the maximum people allowed in a meeting.
+		$sql = 'SELECT maxBuddies
+					FROM' .  Meeting::MEETING_TABLE . '
+					WHERE meetingID = :meetingID;';
+		$sql = $db->prepare();
+		$sql->bindParam( ':meetingID', $meetingID );
+		$sql->execute();
+		$maxUsers = $sql->fetch( PDO::FETCH_ASSOC );
+		$maxUsers = $maxUsers['$maxBuddies'];
+		
+		//has to be room in an meeting to join.
+		if( $maxUsers > getCurrentUsers( $meetingID ) )
+		{
+			$sql = 'INSERT INTO' . Meeting::USER_MEETING_TABLE . '
+						VALUES ( :meetingID, :userID );';
+			$sql = $db->prepare( $sql );
+			$sql->bindParam( ':meetingID',  $meetingID );
+			$sql->bindParam( ':userID',     $userID );
+		}
         
         return $sql->execute();
     }
@@ -290,6 +305,13 @@ class Meeting
 		$sql-> bindParam( ':meetingID', $meetingID );
 	}
 	
+	/*
+	 * Get the number of users currently in a given meeting.
+	 *
+	 * @param $meetingID The meeting to count users from.
+	 *
+	 * @returns the current number of users in the meeting.
+	 */
 	private function getCurrentUsers( $meetingID )
 	{
 		$sql = 'SELECT COUNT(1) AS TotalUsers
