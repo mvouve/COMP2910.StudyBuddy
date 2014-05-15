@@ -49,12 +49,12 @@
                     allCoursesList.appendChild(newLI);
                     $('#all-course-'+result[i].id).on( 'click tap', function(e)
                     {
-                        var parentLI = e.target.parent();
-                        var inUserList = parentLI.attr('data-icon') == 'check';
+                        var parentLI = e.target.parentNode;
+                        var inUserList = parentLI.getAttribute('data-icon') == 'check';
                         $.post( <?php echo '\'' . AJAX_URL . 'courses/user-courses.php\''; ?>,
 				    	{
                             method: (inUserList ? "remove-course" : "add-course"),
-                            id: courseID
+                            id: e.target.id.substring(11)
                         },
 					    checkSuccess( result ),
 						"json");
