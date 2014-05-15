@@ -74,12 +74,14 @@ function getCourseList( ajax_URL )
     //$( '#all-courses-list' ).listview( 'refresh' );
 }
 
+var loading = {};
 /* Adds course data to list elements in HTML 
     @param id the 4-letter and 4-number course code
     @param title a brief description / the name of the course
     @param inCourse boolean, true if the user in the course*/
 function masterCourseListAdd ( ajax_URL, id, title, inCourse )
 {
+    loading[id] = false;
     var newLI = document.createElement('li');
     newLI.innerHTML = '<a href="#" id="all-course-' + id + '" class="ui-btn">' + id + '<br>' + 
                       title + '</a>';
@@ -99,6 +101,14 @@ function masterCourseListAdd ( ajax_URL, id, title, inCourse )
     // Add Event Handler to added List Item
     $('#all-course-' + id).on('click tap', function (e)
     {
+        if( loading[id] )
+        {
+            return;
+        }
+        else
+        {
+            loading[id] = true;
+        }
         var parentLI = e.target.parentNode;
         var inUserList = parentLI.getAttribute('data-icon') == 'check';
 
@@ -123,6 +133,7 @@ function masterCourseListAdd ( ajax_URL, id, title, inCourse )
                 }
                 $('#all-courses-list').listview('refresh');
             }
+            loading[id] = false;
         },
         "json");
     });
