@@ -5,7 +5,16 @@
         <script>
             <?php global $user; ?>
             var ajaxURL = "<?php echo AJAX_URL; ?>";
-            var uid = <?php echo $user->getUserID( $_SESSION['email'] ); ?>;
+            var uid = <?php 
+							if ( $user )
+							{
+								echo $user->getUserID( $_SESSION['email'] ); 
+							}
+							else
+							{
+								echo '-1';
+							}
+						?>;
         </script>
         <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
         <script src="js/jqm.js"></script>
