@@ -4,7 +4,7 @@
 		    <form id="get-my-courses-form" name="get-my-courses-form" method="POST">
 				<input type="hidden" name="method" value="get-courses" />
 			</form>
-            <div data-role="content">
+            <div data-role="content" class="listview-wrapper">
                 <ul data-role="listview" data-filter="true" id="my-courses-list">
 	                <!--li data-icon="false"><a href="#">BUSA2720<br>Business in a Networked Economy</a></li>
 	                <li data-icon="false"><a href="#">COMP1116<br>Business Communications 1</a></li>
@@ -15,11 +15,11 @@
     	            <li data-icon="false"><a href="#">COMP1536<br>Introduction to Web Development</a></li-->
                 </ul>
             </div>
-            <div data-role="footer" data-position="fixed">
+            <div data-role="footer" data-position="fixed" data-tap-toggle="false">
                 <div data-role="navbar">
 		            <ul>
-			            <li><a href="#page-all-courses" id="add-course-button">Add Courses</a></li>
-			            <li><a href="#" id="remove-course-button">Remove Courses</a></li>
+			            <li><a href="#page-all-courses" id="add-course-button" data-icon="plus" data-iconpos="top">Add Courses</a></li>
+			            <li><a href="#" id="remove-course-button" data-icon="minus" data-iconpos="top">Remove Courses</a></li>
 		            </ul>
 	            </div>
             </div>
