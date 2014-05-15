@@ -57,8 +57,11 @@
             // Various Page "onReady" functions
             accountSettingsOnReady();
             addCourseOnReady();
-            myCourseOnReady();
             allCoursesOnReady();
+            myCourseOnReady();
+
+		    getCourseList(ajaxURL);
+            getUserCourses( ajaxURL );
         });
 	</script>
 	

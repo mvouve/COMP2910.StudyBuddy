@@ -25,22 +25,14 @@
             </div>
         </div>
         <script>
-            var myCoursesList;
-            var removeMode;
-            var myCoursesServerResponse = {};
+            var removeMode = false;
 			var removeClicked = false;
             function myCourseOnReady()
             {
-				removeClicked = false;
                 myCoursesList = document.getElementById('my-courses-list');
+				removeClicked = false;
                 removeMode = false;
 				$('#my-courses-list').listview();
-
-                var getMyCoursesFormData = $("#get-my-courses-form").serializeArray();
-                $.post( <?php echo '\'' . AJAX_URL . 'courses/user-courses.php\''; ?>,
-                            getMyCoursesFormData,
-                            storeResult,
-                            "json");
                             
                 $('#remove-course-button').on( 'click tap', function(e)
                 {
@@ -71,28 +63,6 @@
                     }
                     removeMode = !removeMode;
                 });
-            }
-
-            function storeResult(json)
-            {
-                for( var i = 0; i < json.length; ++i )
-                {
-                    myCoursesServerResponse[json[i].id] = { 'title':json[i].title, 'visible':json[i].visible };
-                }
-                populateMyCourseList();
-            }
-            
-            function populateMyCourseList()
-            {
-                for( var key in myCoursesServerResponse )
-                {
-                    var newLI = document.createElement('li');
-                    newLI.setAttribute( 'data-icon', (myCoursesServerResponse[key].visible?'eye':'false') );
-                    newLI.innerHTML = '<a href="#" id="my-course-'+key+'">' + key + '<br>' + myCoursesServerResponse[key].title + '</a>';
-                    myCoursesList.appendChild(newLI);
-                }
-
-				$('#my-courses-list').listview('refresh');
             }
 
             function updateTrackedCheckMarks()

@@ -1,3 +1,7 @@
+
+
+var myCoursesServerResponse = {};
+var myCoursesList;
 /* Fetch user course list from server
     @param ajax_URL the URI location where the ajax folder is located */
 
@@ -13,15 +17,16 @@ function getUserCourses( ajax_URL )
         dataType: "json",
         success: function ( json )
         {
-            var courseArray = json;
-            for ( var i = 0 ; i < courseArray.length ; i++ )
+            for( var i = 0; i < json.length; ++i )
             {
-                var courseID = courseArray[i].id;
-                var courseTitle = courseArray[i].title; 
+                myCoursesServerResponse[json[i].id] = { 'title':json[i].title, 'visible':json[i].visible };
 
-                //calls a separate function to add this data to the HTML
-                addToUserCourses(courseID, courseTitle);
+                var newLI = document.createElement('li');
+                newLI.setAttribute( 'data-icon', (json[i].visible?'eye':'false') );
+                newLI.innerHTML = '<a href="#" id="my-course-'+json[i].id+'">' + json[i].id + '<br>' + json[i].title + '</a>';
+                myCoursesList.appendChild(newLI);
             }
+            $('#my-courses-list').listview('refresh');
         }
     });
 }
@@ -39,17 +44,18 @@ function getCourseList( ajax_URL )
             method: "get-courses"
         },
         dataType: "json",
-        success: function (json) {
-            for (var i = 0; i < json.length; i++) {
+        success: function (json)
+        {
+            for (var i = 0; i < json.length; i++)
+            {
                 allCoursesServerResponse[json[i].id] = { 'title':json[i].title, 'inCourse':json[i].inCourse };
-
 
                 //calls a separate function to add this data to the HTML
                 masterCourseListAdd(ajax_URL, json[i].id, json[i].title, json[i].inCourse);
             }
+            $( '#all-courses-list' ).listview( 'refresh' );
         }
     });
-    $( '#all-courses-list' ).listview( 'refresh' );
 }
 
 var clearing = false;
@@ -178,11 +184,8 @@ function addUserCourse( ajax_URL, courseID )
         dataType: "json",
         success: function ( json )
         {
-            var courseID = json.id;
-			var description = json.title;
-			
 			/* helper function, adds the course to the HTML */
-			addToUserCourses (courseID, description);
+			addToUserCourses (courseID);
         }
     });
 
@@ -195,21 +198,15 @@ function addToUserCourses ( id, title )
 {
     $('#all-course-' + id).addClass('ui-icon-check ui-btn-icon-right');
     $('#all-course-' + id).parent().attr('data-icon', 'check');
-    /*
-    var list = getElementById( 'my-courses-list' );
-    var listItem = document.createElmeent('li');
+    
+    myCoursesServerResponse[id] = { 'title':allCoursesServerResponse[id].title, 'visible':true };
 
-    //create inner anchor element in list item and set its attribute and data
-    var anchor = document.createElement('a');
-    anchor.setAttribute('href', '#');
-    anchor.innerHTML='' + id + '<br/>' + title;
+    var newLI = document.createElement('li');
+    newLI.setAttribute( 'data-icon', (myCoursesServerResponse[id].visible?'eye':'false') );
+    newLI.innerHTML = '<a href="#" id="my-course-'+id+'">' + id + '<br>' + myCoursesServerResponse[id].title + '</a>';
+    myCoursesList.appendChild(newLI);
 
-    //put the anchor element inside the list item element
-    listItem.innerHTML = anchor;
-
-    //ASSIGN A id="my-courseID" to each list item made for easier removal with the removal helper function
-    listItem.setAttribute('id', 'my-' + id);
-    */
+    $('#my-courses-list').listview('refresh');
 }
 
 /* removes a course from the user list in the database
@@ -245,8 +242,13 @@ function removeFromUserCourses ( id )
 {
     $('#all-course-' + id).removeClass('ui-icon-check ui-btn-icon-right');
     $('#all-course-' + id).parent().attr('data-icon', 'false');
-    var element = getElementById( 'my-course-' + id );
-    element.parentNode.removeChild( element );
+    
+    delete myCoursesServerResponse[id];
+
+    var element = document.getElementById( 'my-course-' + id );
+    element.parentNode.parentNode.removeChild( element.parentNode );
+  
+    $('#my-courses-list').listview('refresh');
 }
 
 /* toggle course watch visibility 
