@@ -104,7 +104,7 @@ class CourseManager
 		$sql = 'INSERT INTO ' . CourseManager::USER_COURSE_TABLE . ' 
 					(userID, courseID, visible)
 				VALUES
-					(:uid, :cID, \'F\')
+					(:uid, :cID, \'T\')
 				;';
 		$sql = $db->prepare( $sql );
 		$sql->bindParam( ':uid', $userID );
