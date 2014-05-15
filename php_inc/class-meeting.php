@@ -179,7 +179,7 @@ class Meeting
 					FROM uc.' . Meeting::USER_COURSE_TABLE . '
 						JOIN m.' . Meeting::MEETING_TABLE . '
 							ON uc.courseID = m.courseID
-					WHERE userID = :userID );';
+					WHERE uc.userID = :userID );';
 					
 		$sql = $db->prepare( $sql );
 		$sql->bindParam( ':userID', $userID );
@@ -196,6 +196,74 @@ class Meeting
 		}
 		
 		return $retval;
+	}
+
+	/*
+	 * Gets all the meetings the user is the meeting master for.
+	 *
+	 * @param $userID the ID of the current user.
+	 *
+	 * @return all meetings as an array.
+	 */	
+	public function getUserMasterMeetings( $userID )
+	{
+		global $db;
+		$retval = array();
+		
+		$sql = 'SELECT ID, courseID, location, startDate
+					FROM ' . Meeting::MEETING_TABLE . '
+					WHERE masterID = :masterID );';
+					
+		$sql = $db->prepare( $sql );
+		$sql->bindParam( ':masterID', $userID );
+		$sql->execute();
+		
+		$result = null;
+		
+		while( ( $result = $sql->fetch( PDO::FETCH_ASSOC ) ) != null )
+		{
+			$retval[] = array( 'meetingId'		=> $result['ID'],
+							   'courseId'		=> $result['courseID'],
+							   'location'		=> $result['location'],
+							   'date'			=> $result['startDate']);
+		}
+		
+		return $retval;	
+	}
+
+	/*
+	 * Gets all the meetings a user has joined.
+	 *
+	 * @param $userID the ID of the current user.
+	 *
+	 * @return all meetings as an array.
+	 */	
+	public function getUserJoinedMeetings( $userID )
+	{
+		global $db;
+		$retval = array();
+		
+		$sql = 'SELECT m.ID, m.courseID, m.location, m.startDate
+					FROM um.' . Meeting::USER_MEETING_TABLE . '
+						JOIN m.' . Meeting::MEETING_TABLE . '
+							ON uc.meetingID = m.ID
+					WHERE um.userID = :userID );';
+					
+		$sql = $db->prepare( $sql );
+		$sql->bindParam( ':userID', $userID );
+		$sql->execute();
+		
+		$result = null;
+		
+		while( ( $result = $sql->fetch( PDO::FETCH_ASSOC ) ) != null )
+		{
+			$retval[] = array( 'meetingId'		=> $result['m.ID'],
+							   'courseId'		=> $result['m.courseID'],
+							   'location'		=> $result['m.location'],
+							   'date'			=> $result['m.startDate']);
+		}
+		
+		return $retval;	
 	}
 	
 	/*
