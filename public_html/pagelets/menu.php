@@ -20,7 +20,7 @@
                             </div>
                         </li>
                         <li><a href="serversideSwitch.html?style=styles4" rel="styles4" class="styleswitch" 
-                               data-role="button" data-mini="true" id="dark-button">ColorBlindOption</a>  </li>
+                               data-role="button" data-mini="true" class="colorblind-button">ColorBlindOption</a>  </li>
                     </ul>
                 </div>
             </div>
