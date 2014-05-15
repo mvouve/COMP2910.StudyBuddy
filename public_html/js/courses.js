@@ -5,7 +5,7 @@ function getUserCourses( ajax_URL )
 {
     $.ajax
     ({
-        url: ajax_URL + '/courses/user-courses.php',
+        url: ajax_URL + 'courses/user-courses.php',
         data:
         {
             method: "get-courses"
@@ -114,7 +114,7 @@ function createCourse( ajax_URL, courseID, description )
 {
     $.ajax
         ({
-            url: ajax_URL + '/courses/courses.php',
+            url: ajax_URL + 'courses/courses.php',
             data:
             {
                 method: "add-course",
@@ -142,7 +142,7 @@ function addUserCourse( ajax_URL, courseID )
 {
     $.ajax
     ({
-        url: ajax_URL + '/courses/user-courses.php',
+        url: ajax_URL + 'courses/user-courses.php',
         data:
         {
             method: "add-course",
@@ -168,7 +168,7 @@ function removeUserCourse ( ajax_URL, courseID )
 {
     $.ajax
     ({
-        url: ajax_URL + '/courses/user-courses.php',
+        url: ajax_URL + 'courses/user-courses.php',
         data:
         {
             method: "remove-course",
@@ -203,7 +203,7 @@ function toggleVisibility ( ajax_URL, courseID )
 {
     $.ajax
     ({
-        url: ajax_URL + '/courses/user-courses.php',
+        url: ajax_URL + 'courses/user-courses.php',
         data:
         {
             method: "toggle-visibility",
