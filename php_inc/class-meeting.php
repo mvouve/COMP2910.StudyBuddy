@@ -3,6 +3,8 @@ class Meeting
 {
     const MEETING_TABLE = 'Meeting';
     const USER_MEETING_TABLE = 'UserMeeting';
+	const USER_COURSE_TABLE = 'UserCourse';
+	const USER_TABLE = 'User';
     
     function __construct()
     {
@@ -132,7 +134,7 @@ class Meeting
             {
                 $sql = 'DELETE FROM' .Meeting::MEETING_TABLE . '
                             WHERE meetingID = :meetingID;';
-                $sql->$db->prepare( $sql );
+                $sql = $db->prepare( $sql );
                 $sql->bindParam( ':meetingID', $meetingID );
                 $sql->execute();
             }
@@ -146,14 +148,54 @@ class Meeting
 	 * attending/the meetings master. ( can be used to see if the user is the master. )
 	 *
 	 * @return all meetings as an array.
-	 *
+	 * UNFINISHED UNTIL THERE'S A POINT TO EVEN HAVING THIS
 	 */
+	 /*
 	public function getAllMeetings()
 	{
 		global $db;
 		$retval = array();
 		
 		$sql = 'SELECT *
-					FROM' . Meetings::MEETINGS_TABLE . '
+					FROM' . Meetings::MEETING_TABLE . '
 					WHERE endDate > ' . date('Y-m-d H:i:s') . ';';
+					
+	*/
+	
+	
+	/*
+	 * Gets all the meetings for a users classes.
+	 *
+	 * @param $userID the ID of the current user.
+	 *
+	 * @return all meetings 
+	 */
+	 public function getUserClassMeetings( $userID )
+	 {
+		global $db;
+		$retval = array();
+		
+		$sql = 'SELECT m.ID, m.courseID, m.location, m.startDate
+					FROM uc.' . Meeting::USER_COURSE_TABLE . '
+						JOIN m.' . Meeting::MEETING_TABLE . '
+							ON uc.courseID = m.courseID
+					WHERE userID = :userID );';
+					
+		$sql = $db->prepare( $sql );
+		$sql->bindParam( ':userID', $userID );
+		$sql->execute();
+		
+		$result = null;
+		
+		while( ( $result = $sql->fetch( PDO::FETCH_ASSOC ) ) != null )
+		{
+			$retval[] = array( 'meetingId'		=> $result['m.ID'],
+							   'courseId'		=> $result['m.courseID'],
+							   'location'		=> $result['m.location'],
+							   'date'			=> $result['m.startDate']);
+		}
+		
+		return $retval;
+	}
+		
 }
