@@ -1,4 +1,5 @@
 <?php
+// todo add properly formatted date checks.
 class Meeting
 {
     const MEETING_TABLE = 'Meeting';
@@ -314,6 +315,8 @@ class Meeting
 	 */
 	private function getCurrentUsers( $meetingID )
 	{
+		global $db;
+		
 		$sql = 'SELECT COUNT(1) AS TotalUsers
 					FROM' . Meeting::USER_MEETING_TABLE . '
 					WHERE meetingID = :meetingID';
@@ -324,5 +327,36 @@ class Meeting
 		$totalUsers = $sql->fetch( PDO::FETCH_ASSOC );
 		
 		return $totalUsers['TotalUsers'];
+	}
+	
+	/*
+	 * Fetch an array of users associated to a meeting.
+	 * 
+	 * @param $meetingID the meeting to fetch users for.
+	 *
+	 * @returns an array of meeting users.
+	 *
+	 */
+	private function getMeetingUserList( $meetingID )
+	{
+		global $db;
+		$retval = array();
+		
+		$sql = 'SELECT u.displayName
+					FROM um.' . Meeting::USER_MEETING_TABLE . '
+						JOIN u.' . Meeting::USER_TABLE . '
+							ON u.ID = um.userID
+						WHERE um.meetingID = :meetingID'
+						
+		$sql = $db->prepare( $sql );
+		$sql->bindParam( ':meetingID', $meetingID );
+		$sql->execute();
+		
+		$user = null;
+		
+		while( ( $user = $sql->fetch( PDO::FETCH_ASSOC ) ) != null )
+		{
+			$retval[] = $result['displayName'];
+		}
 	}
 }
