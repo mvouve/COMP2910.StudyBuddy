@@ -9,9 +9,10 @@
                         <li><a href='#page-account-settings'>Account Settings</a></li>
                         <li><a href='login.php?logout=true' rel='external'>Logout</a></li>
                         <li>
-                            <div data-role="controlgroup" data-type="horizontal">
-                                <a href="serversideSwitch.html?style=styles1" rel="styles1" class="styleswitch" data-role="button">Dark</a>
+                            <div data-role="controlgroup" data-type="horizontal" data-mini="true">
+                                <a href="serversideSwitch.html?style=styles1" rel="styles1" class="styleswitch" data-role="button">Purple</a>
                                 <a href="serversideSwitch.html?style=styles2" rel="styles2" class="styleswitch" data-role="button">Green</a>
+                                <a href="serversideSwitch.html?style=styles2" rel="styles3" class="styleswitch" data-role="button">Dark</a>
                             </div>
                         </li>
                     </ul>
