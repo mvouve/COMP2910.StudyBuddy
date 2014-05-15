@@ -18,7 +18,7 @@
             <input id="max-buddies" name="max-buddies" type="text"><br/>
 
             <label for="meeting-comments">Comments :</label><br/>
-            <textarea id="meeting-comments" name="meeting-comments" type="text"></textarea><br/>
+            <textarea id="meeting-comments" name="meeting-comments"></textarea><br/>
 
         </form>
     </div>
