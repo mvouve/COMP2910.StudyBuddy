@@ -168,7 +168,7 @@ class Meeting
 	 *
 	 * @param $userID the ID of the current user.
 	 *
-	 * @return all meetings 
+	 * @return all meetings as an array.
 	 */
 	 public function getUserClassMeetings( $userID )
 	 {
@@ -197,5 +197,28 @@ class Meeting
 		
 		return $retval;
 	}
+	
+	/*
+	 * Get details of a meeting
+	 *
+	 * @param $meetingID the ID of the meeting you're fetching details for.
+	 *
+	 * @return meeting details as an array.
+	 *
+	 */
+	public function getMeetingDetails( $meetingID )
+	{
+		global $db;
 		
+		$sql = 'SELECT count.
+					FROM m.' . Meeting::MEETING_TABLE . ' .
+						JOIN um.' . Meeting::USER_MEETING_TABLE . ' .
+							ON m.ID = um.meetingID
+						JOIN u.' . Meeting::USER_TABLE . '
+							ON um.userID = u.ID
+					WHERE m.ID = :meetingID
+					GROUP BY m.ID;';
+		$sql = $db->prepare( $sql );
+		$sql-> bindParam( ':meetingID', $meetingID );
+	}
 }
