@@ -38,7 +38,6 @@
 				allCoursesList = document.getElementById('all-courses-list');
 			}
 			
-            var wasSuccessful;
             function populateAllCourseList(result)
             {
                 for( var i = 0; i < result.length; ++i )
@@ -56,29 +55,21 @@
                             method: (inUserList ? "remove-course" : "add-course"),
                             id: e.target.id.substring(11)
                         },
-					    checkSuccess( result ),
+					    function(result){ answer(result, parentLI, inUserList) },
 						"json");
-
-                        if( wasSuccessful )
-                        {
-                            parentLI.attr('data-icon',(inUserList ? 'false' : 'check'))
-				            $('#all-courses-list').listview('refresh');
-                        }
+                        alert('end of function ' + inUserList);
                     } );
                 }
 				
 				$('#all-courses-list').listview('refresh');
             }
 
-            function checkSuccess( result )
+            function answer( result, parentLI, inUserList )
             {
                 if( result.success )
                 {
-                    wasSuccessful = true;
-                }
-                else
-                {
-                    wasSuccessful = false;
+                    parentLI.setAttribute('data-icon',(inUserList ? 'false' : 'check'))
+				    $('#all-courses-list').listview('refresh');
                 }
             }
         </script>
