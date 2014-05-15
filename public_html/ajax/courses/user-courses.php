@@ -75,7 +75,7 @@ function addCourse( $id )
     
     $retval = array( 'success' => false );
     
-    if( $courses->addUserCouse( getUID(), $id ) )
+    if( $courses->addUserCourse( getUID(), $id ) )
     {
         $retval = array( 'success' => true );
     }

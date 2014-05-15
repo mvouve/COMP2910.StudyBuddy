@@ -2,7 +2,7 @@
                 <div class='panel-content'>
                     <h1>Menu</h1><br>
                     <ul data-role='listview'>
-                        <li><a href='main.php' >My Meetings</a></li>
+                        <li><a href='#page-test-main'>My Meetings</a></li>
                         <li><a href='#' >Create Meetings</a></li>
                         <li><br></li>
                         <li><a href='#page-my-courses'>My Courses</a></li>

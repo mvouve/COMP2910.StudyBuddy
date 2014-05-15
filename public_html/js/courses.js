@@ -5,16 +5,16 @@ function getUserCourses( ajax_URL )
 {
     $.ajax
     ({
-        url: ajax_URL + '/courses/user-courses.php',
+        url: ajax_URL + 'courses/user-courses.php',
         data:
         {
-            method: get-courses
+            method: "get-courses"
         },
-        dataType: json,
+        dataType: "json",
         success: function ( json )
         {
             var courseArray = json;
-            for ( i = 0 ; courseArray.length ; i++ )
+            for ( var i = 0 ; i < courseArray.length ; i++ )
             {
                 var courseID = courseArray[i].id;
                 var courseTitle = courseArray[i].title; 
@@ -46,54 +46,86 @@ function addToUserCourses ( id, title )
     //ASSIGN A id="my-courseID" to each list item made for easier removal with the removal helper function
     listItem.setAttribute('id', 'my-' + id);
 }
-
 /* Fetch master course list from the server
     @param ajax_URL the URI location where the ajax folder is located */
 function getCourseList( ajax_URL )
 {
     $.ajax
     ({
-        url: ajax_URL + '/courses/courses.php',
+        url: ajax_URL + 'courses/courses.php',
         data:
         {
-            method: get-courses
+            method: "get-courses"
         },
-        dataType: json,
+        dataType: "json",
         success: function (json) {
             var courseArray = json;
-            for ( i = 0 ; courseArray.length ; i++ ) {
+            for (var i = 0; i < courseArray.length; i++) {
                 var courseID = courseArray[i].id;
                 var courseTitle = courseArray[i].title;
                 var userInCourse = courseArray[i].inCourse;
+                
 
                 //calls a separate function to add this data to the HTML
-                masterCourseListAdd( courseID, courseTitle, userInCourse );
+                masterCourseListAdd(ajax_URL, courseID, courseTitle, userInCourse);
             }
         }
     });
+    //$( '#all-courses-list' ).listview( 'refresh' );
 }
 
 /* Adds course data to list elements in HTML 
     @param id the 4-letter and 4-number course code
     @param title a brief description / the name of the course
     @param inCourse boolean, true if the user in the course*/
-function masterCourseListAdd ( id, title, inCourse )
+function masterCourseListAdd ( ajax_URL, id, title, inCourse )
 {
-    var list = getElementById( 'all-courses-list' );
-    var listItem = document.createElmeent( 'li' );
+    var newLI = document.createElement('li');
+    newLI.innerHTML = '<a href="#" id="all-course-' + id + '" class="ui-btn">' + id + '<br>' + 
+                      title + '</a>';
+    
+    allCoursesList.appendChild(newLI);
+    if( inCourse )
+    {
+        newLI.setAttribute( 'data-icon', 'check');
+        $('#all-course-' + id).addClass('ui-icon-check ui-btn-icon-right');
+    }
+    else
+    {
+        newLI.setAttribute( 'data-icon', 'false');
+        $('#all-course-' + id).removeClass('ui-icon-check ui-btn-icon-right');
+    }
+    
+    // Add Event Handler to added List Item
+    $('#all-course-' + id).on('click tap', function (e)
+    {
+        var parentLI = e.target.parentNode;
+        var inUserList = parentLI.getAttribute('data-icon') == 'check';
 
-    //create inner anchor element in list item and set its attribute and data
-    var anchor = document.createElement( 'a' );
-    anchor.setAttribute( 'href', '#' );
-    anchor.innerHTML='' + id + '<br/>' + title;
-
-    //put the anchor element inside the list item element
-    listItem.innerHTML = anchor;
-
-    //ASSIGN A id="my-courseID" to each list item made for easier removal with the removal helper function
-    listItem.setAttribute('id', 'master-' + id);
-
-    //MUST STILL DEAL WITH IN_COURSE BOOLEAN; BUTTON IS NOT IMPLEMENTED AS OF WRITING
+        $.post(ajax_URL + 'courses/user-courses.php',
+        {
+            method: (inUserList ? "remove-course" : "add-course"),
+            id: e.target.id.substring(11)
+        },
+        function (result)
+        {
+            if (result.success)
+            {
+                if( inUserList )
+                {
+                    parentLI.setAttribute('data-icon', 'false')
+                    $('#' + e.target.id).removeClass('ui-icon-check ui-btn-icon-right');
+                }
+                else
+                {
+                    parentLI.setAttribute('data-icon', 'check')
+                    $('#' + e.target.id).addClass('ui-icon-check ui-btn-icon-right');
+                }
+                $('#all-courses-list').listview('refresh');
+            }
+        },
+        "json");
+    });
 }
 
 /* Add a course to the master course list
@@ -104,7 +136,7 @@ function createCourse( ajax_URL, courseID, description )
 {
     $.ajax
         ({
-            url: ajax_URL + '/courses/courses.php',
+            url: ajax_URL + 'courses/courses.php',
             data:
             {
                 method: "add-course",
@@ -121,9 +153,6 @@ function createCourse( ajax_URL, courseID, description )
                     document.getElementById("user-course-form").reset();
                     $.mobile.changePage("#page-all-courses");
                 }
-
-                //calls a separate function to add this data to the HTML
-                masterCourseListAdd(courseID, description, inCourse);
             }
         });
 }
@@ -135,7 +164,7 @@ function addUserCourse( ajax_URL, courseID )
 {
     $.ajax
     ({
-        url: ajax_URL + '/courses/user-courses.php',
+        url: ajax_URL + 'courses/user-courses.php',
         data:
         {
             method: "add-course",
@@ -161,13 +190,13 @@ function removeUserCourse ( ajax_URL, courseID )
 {
     $.ajax
     ({
-        url: ajax_URL + '/courses/user-courses.php',
+        url: ajax_URL + 'courses/user-courses.php',
         data:
         {
-            method: remove-course,
+            method: "remove-course",
             id: courseID
         },
-        datatype: json,
+        datatype: "json",
         success: function ( json )
         {
             var CourseID = json.id;
@@ -196,13 +225,13 @@ function toggleVisibility ( ajax_URL, courseID )
 {
     $.ajax
     ({
-        url: ajax_URL + '/courses/user-courses.php',
+        url: ajax_URL + 'courses/user-courses.php',
         data:
         {
-            method: toggle-visibility,
+            method: "toggle-visibility",
             id: courseID
         },
-        datatype: json,
+        datatype: "json",
         success: function ( json )
         {
             //PLACEHOLDER, backklog for next sprint

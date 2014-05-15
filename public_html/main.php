@@ -50,6 +50,9 @@
                 $.mobile.activePage.find(".menu-panel" ).panel( "open" );
             });
         
+			// Setup Pusher for receiving events.
+			setupPusher( ajaxURL );
+		
             // Various Page "onReady" functions
             accountSettingsOnReady();
             addCourseOnReady();

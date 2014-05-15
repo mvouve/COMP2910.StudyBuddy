@@ -28,7 +28,7 @@ else if( isset( $_GET['method'] ) )
             break;
             
         case 'get-courses':
-            $retval = getCourse();
+            $retval = getCourses();
             break;
             
         default:
@@ -51,13 +51,22 @@ function addCourse( $id, $title )
 {
     global $courses;
     global $pusher;
+    global $user;
     
     $retval = array( 'success' => false );
     
     if ( $courses->createCourse( $id, $title ) )
     {
+        $uid = $user->getUserID( $_SESSION['email'] );
+        
+        // Try adding the creator immediately.
+        if ( !$courses->addUserCourse( $uid, $id ) )
+        {
+            $uid = -2;
+        }
+        
         $retval['success'] = true;
-        //$courses->pushNewCourseToClients( $pusher, $id, $title );
+        $courses->pushNewCourseToClients( $pusher, $id, $title, $uid );
     }
     
     return $retval;

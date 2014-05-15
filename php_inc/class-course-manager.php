@@ -130,8 +130,15 @@ class CourseManager
 					AND courseID=:cid
 				;';
 		$sql = $db->prepare( $sql );
+        $sql->bindParam( ':uid', $userID );
+        $sql->bindParam( ':cid', $courseID );
 		
-		return $sql->execute();
+        if ( !$sql->execute() )
+        {
+            return false;
+        }
+        
+		return $sql->rowCount() >= 1;
 	}
 	
 	/*
@@ -202,9 +209,9 @@ class CourseManager
     /*
      * Use Pusher to push a newly created Course to connected clients.
      */
-    public function pushNewCourseToClients( $pusher, $courseID, $courseTitle )
+    public function pushNewCourseToClients( $pusher, $courseID, $courseTitle, $creatorID )
     {
-        $data = array( 'id' => $courseID, 'title' => $courseTitle );
+        $data = array( 'id' => $courseID, 'title' => $courseTitle, 'creator' => $creatorID );
         $pusher->trigger( CourseManager::PUSHER_CHANNEL, 'course_added', $data ); 
     }
     
