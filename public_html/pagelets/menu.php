@@ -8,6 +8,12 @@
                         <li><a href='#page-my-courses'>My Courses</a></li>
                         <li><a href='#page-account-settings'>Account Settings</a></li>
                         <li><a href='login.php?logout=true' rel='external'>Logout</a></li>
+                        <li>
+                            <div data-role="controlgroup" data-type="horizontal">
+                                <a href="serversideSwitch.html?style=styles1" rel="styles1" class="styleswitch" data-role="button">Dark</a>
+                                <a href="serversideSwitch.html?style=styles2" rel="styles2" class="styleswitch" data-role="button">Green</a>
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </div>
