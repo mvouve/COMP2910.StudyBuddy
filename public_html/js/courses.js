@@ -177,6 +177,7 @@ function addUserCourse( ajax_URL, courseID, mode )
         dataType: "json",
         success: function ( json )
         {
+            allCoursesServerResponse[courseID].inCourse = true;
 			/* helper function, adds the course to the HTML */
 			addToUserCourses (courseID);
             
@@ -273,6 +274,7 @@ function removeUserCourse ( ajax_URL, courseID, mode )
         datatype: "json",
         success: function ( json )
         {			
+            allCoursesServerResponse[courseID].inCourse = false;
 			/* helper function called to remove HTML elements referencing this course */
 			removeFromUserCourses ( courseID );
             //remove loading image
