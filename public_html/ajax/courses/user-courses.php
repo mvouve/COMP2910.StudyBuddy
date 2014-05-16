@@ -65,6 +65,11 @@ else if( isset( $_GET['method'] ) )
             
             break;
 			
+		case 'toggle-visibility':
+            $retval = toggleVisibility( $_GET['id'] );
+            
+            break;
+			
         default:
             break;
     }

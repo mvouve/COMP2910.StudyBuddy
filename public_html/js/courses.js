@@ -28,14 +28,15 @@ function getUserCourses( ajax_URL )
                 myCoursesList.appendChild(newLI);
                 $('#my-course-'+json[i].id).on( 'click tap', function(e)
                 {
-                    alert('clicked shit');
                     if( removeMode )
                     {
+						/* CLICK TO REMOVE */
                         removeUserCourse( ajaxURL, e.target.id.substring('my-course-'.length), 'my' );
                     }
                     else
                     {
-                        
+                        /* CLICK TO TOGGLE VISIBILITY */
+						toggleVisibility ( ajaxURL, e.target.id.substring('my-course-'.length) );
                     }
                 } );
             }
@@ -298,6 +299,10 @@ function removeFromUserCourses ( id )
     @param courseID the 4-letter and 4-number course code */
 function toggleVisibility ( ajax_URL, courseID )
 {
+	// Hide Icon
+	$( '#my-course-' + courseID ).parent().attr('data-icon', 'false');
+	$( '#my-course-' + courseID ).removeClass('ui-icon-eye ui-btn-icon-right');
+
     $.ajax
     ({
         url: ajax_URL + 'courses/user-courses.php',
@@ -309,7 +314,20 @@ function toggleVisibility ( ajax_URL, courseID )
         datatype: "json",
         success: function ( json )
         {
-            //PLACEHOLDER, backklog for next sprint
+            myCoursesServerResponse[courseID].visible = !myCoursesServerResponse[courseID].visible;
+			
+			// Remove Loading Image
+			$( '#my-course-' + courseID + ' img' ).remove();
+			
+			// If the course is now watched, show the eye icon.
+			if ( myCoursesServerResponse[courseID].visible )
+			{	
+				// Set Icon
+				$( '#my-course-' + courseID ).parent().attr('data-icon', 'eye');
+				$( '#my-course-' + courseID ).addClass('ui-icon-eye ui-btn-icon-right');
+			}
+			
+			$('#my-courses-list').listview('refresh');
         }
     });
 }

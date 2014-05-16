@@ -215,6 +215,7 @@ class CourseManager
             $sql = 'UPDATE ' . CourseManager::USER_COURSE_TABLE .'
                         SET visible= ' . $vis . '
                         WHERE userID = :userID AND courseID = :courseID';
+			$sql = $db->prepare( $sql );
             $sql->bindParam( ':userID', $userID );
             $sql->bindParam( ':courseID', $courseID );
             
