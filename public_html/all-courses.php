@@ -41,6 +41,9 @@
                     {
                         clearing = true;
                     }
+                    $( '#clear-my-courses' ).attr( 'data-icon','false' );
+                    $( '#clear-my-courses' ).removeClass('ui-icon-minus ui-btn-icon-top' );
+                    $( '#clear-my-courses' ).html('<img class="footer-loading" src="css/images/ajax-loader.gif" alt="loading..."><br>Clear All');
                     $.ajax
                     ({
                         url: ajaxURL + 'courses/user-courses.php',
@@ -59,6 +62,10 @@
                                 document.getElementById( 'my-courses-list' ).innerHTML = '';
                                 myCoursesServerResponse = {};
                             }
+                            $( '#clear-my-courses' ).attr( 'data-icon','minus' );
+                            $( '#clear-my-courses' ).addClass('ui-icon-minus ui-btn-icon-top' );
+                            $( '#clear-my-courses img' ).remove();
+                            $( '#clear-my-courses br' ).remove();
                             clearing = false;
                             setTimeout(function(){$('#clear-my-courses').removeClass( 'ui-btn-active' );},200);
                             $('#clear-my-courses').removeClass( 'ui-btn-active' );
