@@ -16,7 +16,7 @@
                 </ul>
             </div>
             <div data-role="footer" data-position="fixed" data-tap-toggle="false">
-                <div data-role="navbar">
+                <div class="sb-navbar" data-role="navbar">
 		            <ul>
 			            <li><a href="#page-all-courses" id="add-course-button" data-icon="plus" data-iconpos="top">Add Courses</a></li>
 			            <li><a href="#" id="remove-course-button" data-icon="minus" data-iconpos="top">Remove Courses</a></li>

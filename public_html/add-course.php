@@ -39,8 +39,6 @@
             var userNewCourseId;
             var userNewCourseTitle;
             
-            
-            
             var courseIdFilled;
             var courseTitleFilled;
 
