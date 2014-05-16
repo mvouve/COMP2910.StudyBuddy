@@ -156,12 +156,10 @@ function createCourse( ajax_URL, courseID, description )
             },
             dataType: "json",
             success: function (json) {
-                var courseID = json.id;
-                var description = json.title;
-                var inCourse = true;
-                
                 if(json.success == true){
                     document.getElementById("user-course-form").reset();
+					allCoursesServerResponse[courseID] = { 'title':description, 'inCourse':true };
+					addToUserCourses( courseID, description );
                     $.mobile.changePage("#page-all-courses");
                 }
             }
