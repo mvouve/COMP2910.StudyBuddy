@@ -17,10 +17,10 @@
 						?>;
         </script>
         <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="js/jqm.js"></script>
 		<!--Source: http://www.kelvinluck.com/assets/jquery/styleswitch/-->
 	    <script type="text/javascript" src="js/styleswitch.js"></script>
         <script src="js/misc.js"></script>
-        <script src="js/jqm.js"></script>
 		<script src="http://js.pusher.com/2.2/pusher.min.js"></script>
         <script src="js/pusher-events.js"></script>
 		<script src="js/courses.js"></script>

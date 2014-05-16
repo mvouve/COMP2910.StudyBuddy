@@ -40,9 +40,9 @@
                 menuPanel.panel( "close" );
             });
             
-            $( '#page-container' ).on( 'pagecontainerbeforehide', function() {
+            $( '#page-container' ).on( 'pagecontainerbeforeshow', function() {
 				$( '#page-container' ).find( '.ui-btn-active' ).removeClass( 'ui-btn-active ui-focus' );
-                $.mobile.activePage.find('.ui-btn-active').each( function() { console.log("ASFA"); } );
+				colorChange();
             });
             
             // Open the Menu Panel when the Menu button is clicked on a specific page.
@@ -53,8 +53,6 @@
 			// Setup Pusher for receiving events.
 			setupPusher( ajaxURL );
 			
-			// Set theme based on cookie and setup theme switching buttons.
-			setTimeout( colorChange, 100 );
 		
             // Various Page "onReady" functions
             accountSettingsOnReady();
