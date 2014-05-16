@@ -220,7 +220,14 @@ function addToUserCourses ( id, title )
     myCoursesList.appendChild(newLI);
 
 	$('#my-course-' + id).on( 'click tap', function(e) {
-		toggleVisibility ( ajaxURL, e.target.id.substring('my-course-'.length) );
+		if ( removeMode )
+		{
+			removeUserCourse( ajaxURL, e.target.id.substring('my-course-'.length), 'my' );
+		}
+		else
+		{
+			toggleVisibility ( ajaxURL, e.target.id.substring('my-course-'.length) );
+		}
 	});
 	
     $('#my-courses-list').listview('refresh');
