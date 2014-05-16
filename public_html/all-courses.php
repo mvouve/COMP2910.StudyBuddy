@@ -17,7 +17,7 @@
 		            <ul>
 			            <li><a href="#page-my-courses" data-icon="back" data-iconpos="top">My Courses</a></li>
 			            <li><a href="#page-add-course" data-icon="plus" data-iconpos="top">Create Course</a></li>
-			            <li><a href="#" id="clear-my-courses" data-icon="minus" data-iconpos="top">Remove All</a></li>
+			            <!--<li><a href="#" id="clear-my-courses" data-icon="minus" data-iconpos="top">Remove All</a></li> TO BE REMOVED-->
 		            </ul>
 	            </div>
             </div>
@@ -30,7 +30,7 @@
                 
 				$( '#all-courses-list' ).listview();
 				allCoursesList = document.getElementById('all-courses-list');
-
+                /* TO BE REMOVED
                 $( '#clear-my-courses' ).on( 'click tap', function(e)
                 {
                     if( clearing )
@@ -70,7 +70,7 @@
                             setTimeout(function(){$('#clear-my-courses').removeClass( 'ui-btn-active' );},200);
                             $('#clear-my-courses').removeClass( 'ui-btn-active' );
                         }
-                    });
+                    }); */
                 } );
 			}
         </script>
