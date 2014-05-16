@@ -9,16 +9,20 @@
                         <li><a href='#page-account-settings'>Account Settings</a></li>
                         <li><a href='login.php?logout=true' rel='external'>Logout</a></li>
                         <li>
-                            <div data-role="controlgroup" data-type="horizontal" data-mini="true">
-                                <a href="serversideSwitch.html?style=styles1" rel="styles1" class="styleswitch purple-button" data-role="button" 
-                                   ><font color="purple">P</font></a>
-                                <a href="serversideSwitch.html?style=styles2" rel="styles2" class="styleswitch green-button" data-role="button" 
-                                   ><font color="green">G</font></a>
-                                <a href="serversideSwitch.html?style=styles3" rel="styles3" class="styleswitch dark-button" data-role="button" 
-								   ><font color="black">B</font></a>                              
-                                <a href="serversideSwitch.html?style=styles4" rel="styles4" class="styleswitch cb-button" data-role="button"
-                                   ><font color="blue">CB</font></a>
+                            <div data-role="collapsible" data-theme="a" data-content-theme="c" data-inset="false">
+                                <h1>Theme</h1>
+                                <ul data-role='listview'>
+                                    <li><a href="serversideSwitch.html?style=styles1" rel="styles1" class="styleswitch purple-button" data-role="button" 
+                                       ><font color="purple">Purple</font></a></li>
+                                    <li><a href="serversideSwitch.html?style=styles2" rel="styles2" class="styleswitch green-button" data-role="button" 
+                                       ><font color="green">Green</font></a></li>
+                                    <li><a href="serversideSwitch.html?style=styles3" rel="styles3" class="styleswitch dark-button" data-role="button" 
+                                       ><font color="black">Dark</font></a></li>                          
+                                    <li><a href="serversideSwitch.html?style=styles4" rel="styles4" class="styleswitch cb-button" data-role="button"
+                                       ><font color="blue">Color Blind</font></a></li>
+                                </ul>
                             </div>
+                        </li>
                     </ul>
                 </div>
             </div>
