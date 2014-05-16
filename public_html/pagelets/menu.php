@@ -19,8 +19,8 @@
 								   >Dark</a>                              
                             </div>
                         </li>
-                        <li><a href="serversideSwitch.html?style=styles4" rel="styles4" class="styleswitch" 
-                               data-role="button" data-mini="true" class="colorblind-button">ColorBlindOption</a>  </li>
+                        <li><a href="serversideSwitch.html?style=styles4" rel="styles4" class="styleswitch colorblind-button" 
+                               data-role="button" data-mini="true">ColorBlindOption</a>  </li>
                     </ul>
                 </div>
             </div>
