@@ -84,6 +84,17 @@ a
     border-bottom: 1px solid #737373;
 }
 
+.cb-ui-navbar
+{
+     border-top: 3px solid #737373;
+}
+
+.cb-listview-wrapper
+{
+    background: #737373;
+    border-bottom: 1px solid #737373;
+}
+
 .img-resize
 {
     width:70%;
