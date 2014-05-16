@@ -13,6 +13,15 @@ function pusherCourseAdded( data )
 {
     var isCreator = ( data.creator == uid );
     
+    $.post( ajaxURL + 'courses/courses.php',
+                        {
+                            method: 'silent-add',
+                            id: data.id,
+                            title: data.title
+                        },
+                        function( data ) {},
+                        "json");
+    
     allCoursesServerResponse[data.id] = { 'title':data.title, 'inCourse':false };
     masterCourseListAdd( ajaxURL, data.id, data.title, isCreator );
     $('#all-courses-list').listview('refresh');
