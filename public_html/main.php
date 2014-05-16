@@ -44,6 +44,8 @@
 				$( '#page-container' ).find( '.ui-btn-active' ).removeClass( 'ui-btn-active ui-focus' );
 				colorChange();
             });
+			
+			setTimeout( function() { colorChange(); }, 250 );
             
             // Open the Menu Panel when the Menu button is clicked on a specific page.
             $( '.menu-toggle' ).on( "click tap", function() {
