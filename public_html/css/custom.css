@@ -51,6 +51,15 @@ a
     margin-right: -7px !important;
 }
 
+.footer-loading
+{
+    width: 22px;
+    height: 22px;
+    opacity: 0.3;
+    margin-top:  -1px !important;
+    margin-bottom: -2px !important;
+}
+
 .purple-ui-navbar
 {
     border-top: 3px solid #9900CC

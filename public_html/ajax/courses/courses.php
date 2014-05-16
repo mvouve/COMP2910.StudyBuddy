@@ -14,11 +14,15 @@ if( isset( $_POST['method'] ) )
     switch( $_POST['method'] )
     {
         case 'add-course':
-            $retval = addCourse( $_POST['id'], $_POST['title'] );
+            $retval = addCourse( $_POST['id'], $_POST['title'], true );
             break;
             
         case 'get-courses':
             $retval = getCourses();
+            break;
+            
+        case 'silent-add':
+            $retval = addCourse( $_POST['id'], $_POST['title'], false );
             break;
             
         default:
@@ -30,7 +34,7 @@ else if( isset( $_GET['method'] ) )
     switch( $_GET['method'] )
     {
         case 'add-course':
-            $retval = addCourse( $_GET['id'], $_GET['title'] );
+            $retval = addCourse( $_GET['id'], $_GET['title'], true );
             break;
             
         case 'get-courses':
@@ -50,10 +54,11 @@ return;
  *
  * @param id the ID of the course
  * @param title 
+ * @param push whether or not to push the creation to clients
  *
  * @return true | false
  */
-function addCourse( $id, $title )
+function addCourse( $id, $title, $push )
 {
     global $courses;
     global $pusher;
@@ -66,13 +71,17 @@ function addCourse( $id, $title )
         $uid = $user->getUserID( $_SESSION['email'] );
         
         // Try adding the creator immediately.
-        if ( !$courses->addUserCourse( $uid, $id ) )
+        if ( !$push || !$courses->addUserCourse( $uid, $id ) )
         {
             $uid = -2;
         }
         
         $retval['success'] = true;
-        $courses->pushNewCourseToClients( $pusher, $id, $title, $uid );
+        
+        if ( $push )
+        {
+            $courses->pushNewCourseToClients( $pusher, $id, $title, $uid );
+        }
     }
     
     return $retval;
