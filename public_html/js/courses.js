@@ -354,3 +354,4 @@ function toggleVisibility ( ajax_URL, courseID )
         }
     });
 }
+//desregard this comment
