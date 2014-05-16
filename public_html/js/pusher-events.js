@@ -13,6 +13,7 @@ function pusherCourseAdded( data )
 {
     var isCreator = ( data.creator == uid );
     
+    allCoursesServerResponse[data.id] = { 'title':data.title, 'inCourse':false };
     masterCourseListAdd( ajaxURL, data.id, data.title, isCreator );
     $('#all-courses-list').listview('refresh');
 }
