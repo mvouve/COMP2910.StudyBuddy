@@ -59,7 +59,12 @@ else if( isset( $_GET['method'] ) )
             $retval = removeAllCourses();
             
             break;
-
+			
+        case 'remove-course':
+            $retval = removeCourse( $_GET['id'] );
+            
+            break;
+			
         default:
             break;
     }
