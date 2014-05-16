@@ -182,6 +182,9 @@ function addUserCourse( ajax_URL, courseID, mode )
             
             //remove loading image
             target.removeChild(target.getElementsByTagName("img")[0]);
+            
+            loading[courseID] = false;
+
             //make sure there are no images in the list so it can be refreshed
             var refresh = true;
             for( var key in loading )
@@ -196,7 +199,6 @@ function addUserCourse( ajax_URL, courseID, mode )
             if( refresh )
                 $('#all-courses-list').listview('refresh');
 
-            loading[courseID] = false;
         }
     });
 
@@ -275,6 +277,8 @@ function removeUserCourse ( ajax_URL, courseID, mode )
 			removeFromUserCourses ( courseID );
             //remove loading image
             target.removeChild(target.getElementsByTagName("img")[0]);
+
+            loading[courseID] = false;
             //make sure there are no images in the list so it can be refreshed
             var refresh = true;
             for( var key in loading )
@@ -289,7 +293,6 @@ function removeUserCourse ( ajax_URL, courseID, mode )
             if( refresh )
                 $('#all-courses-list').listview('refresh');
 
-            loading[courseID] = false;
         }
     });
 }
@@ -349,9 +352,19 @@ function toggleVisibility ( ajax_URL, courseID )
 				$( '#my-course-' + courseID ).parent().attr('data-icon', 'eye');
 				$( '#my-course-' + courseID ).addClass('ui-icon-eye ui-btn-icon-right');
 			}
-			
-			$('#my-courses-list').listview('refresh');
 			beingToggled[ courseID ] = false;
+			var refresh = true;
+            for( var key in beingToggled )
+            {
+                if( beingToggled[key] )
+                {
+                    refresh = false;
+                    break;
+                }
+            }
+            //refresh if safe
+            if( refresh )
+			    $('#my-courses-list').listview('refresh');
         }
     });
 }
