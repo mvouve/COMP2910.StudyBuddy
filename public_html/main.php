@@ -52,7 +52,9 @@
         
 			// Setup Pusher for receiving events.
 			setupPusher( ajaxURL );
-            colorChange();
+			
+			// Set theme based on cookie and setup theme switching buttons.
+			setTimeout( colorChange, 100 );
 		
             // Various Page "onReady" functions
             accountSettingsOnReady();

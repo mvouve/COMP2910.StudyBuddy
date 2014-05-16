@@ -1,20 +1,21 @@
 function colorChange()
 {
     var cookieStuff = readCookie('style');
-    if(cookieStuff != null){
-        if(cookieStuff.match("css/study-buddy-theme-5.min.css"))
+	
+    if( cookieStuff != null ){
+        if(cookieStuff == "styles1" )
         {
             purpleChange();
         }
-        if(cookieStuff.match("css/StudyBuddyV2.css"))
+        if(cookieStuff == "styles2" )
         {
             greenChange();
         }
-        if(cookieStuff.match("css/NightTheme.css"))
+        if(cookieStuff == "styles3" )
         {
             darkChange();
         }
-        if(cookieStuff.match("css/ColorBlindOption.css"))
+        if(cookieStuff == "styles4" )
         {
             cbChange();
         }
