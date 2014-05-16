@@ -1,6 +1,7 @@
 
 
 var myCoursesServerResponse = {};
+var beingToggled = {};
 var myCoursesList;
 var removeMode = false;
 /* Fetch user course list from server
@@ -21,7 +22,8 @@ function getUserCourses( ajax_URL )
             for( var i = 0; i < json.length; ++i )
             {
                 myCoursesServerResponse[json[i].id] = { 'title':json[i].title, 'visible':json[i].visible };
-
+				beingToggled[json[i].id] = false;
+					
                 var newLI = document.createElement('li');
                 newLI.setAttribute( 'data-icon', (json[i].visible?'eye':'false') );
                 newLI.innerHTML = '<a href="#" id="my-course-'+json[i].id+'">' + json[i].id + '<br>' + json[i].title + '</a>';
@@ -208,6 +210,8 @@ function addToUserCourses ( id, title )
     $('#all-course-' + id).addClass('ui-icon-check ui-btn-icon-right');
     $('#all-course-' + id).parent().attr('data-icon', 'check');
     
+	beingToggled[id] = false;
+	
     myCoursesServerResponse[id] = { 'title':allCoursesServerResponse[id].title, 'visible':true };
 
     var newLI = document.createElement('li');
@@ -215,6 +219,10 @@ function addToUserCourses ( id, title )
     newLI.innerHTML = '<a href="#" id="my-course-'+id+'">' + id + '<br>' + myCoursesServerResponse[id].title + '</a>';
     myCoursesList.appendChild(newLI);
 
+	$('#my-course-' + id).on( 'click tap', function(e) {
+		toggleVisibility ( ajaxURL, e.target.id.substring('my-course-'.length) );
+	});
+	
     $('#my-courses-list').listview('refresh');
 }
 
@@ -299,10 +307,17 @@ function removeFromUserCourses ( id )
     @param courseID the 4-letter and 4-number course code */
 function toggleVisibility ( ajax_URL, courseID )
 {
+	if ( beingToggled[ courseID ] )
+	{
+		return;
+	}
+	
+	beingToggled[ courseID ] = true;
+
 	// Hide Icon
 	$( '#my-course-' + courseID ).parent().attr('data-icon', 'false');
 	$( '#my-course-' + courseID ).removeClass('ui-icon-eye ui-btn-icon-right');
-
+	
     $.ajax
     ({
         url: ajax_URL + 'courses/user-courses.php',
@@ -321,13 +336,14 @@ function toggleVisibility ( ajax_URL, courseID )
 			
 			// If the course is now watched, show the eye icon.
 			if ( myCoursesServerResponse[courseID].visible )
-			{	
+			{
 				// Set Icon
 				$( '#my-course-' + courseID ).parent().attr('data-icon', 'eye');
 				$( '#my-course-' + courseID ).addClass('ui-icon-eye ui-btn-icon-right');
 			}
 			
 			$('#my-courses-list').listview('refresh');
+			beingToggled[ courseID ] = false;
         }
     });
 }
