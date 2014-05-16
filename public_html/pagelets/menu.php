@@ -15,12 +15,10 @@
                                 <a href="serversideSwitch.html?style=styles2" rel="styles2" class="styleswitch green-button" data-role="button" 
                                    >Green</a>
                                 <a href="serversideSwitch.html?style=styles3" rel="styles3" class="styleswitch dark-button" data-role="button" 
-                                   
 								   >Dark</a>                              
+                                <a href="serversideSwitch.html?style=styles4" rel="styles4" class="styleswitch colorblind-button" data-role="button"
+                                   >C.Blind</a>
                             </div>
-                        </li>
-                        <li><a href="serversideSwitch.html?style=styles4" rel="styles4" class="styleswitch colorblind-button" 
-                               data-role="button" data-mini="true">ColorBlindOption</a>  </li>
                     </ul>
                 </div>
             </div>

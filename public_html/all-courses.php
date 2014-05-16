@@ -60,6 +60,8 @@
                                 myCoursesServerResponse = {};
                             }
                             clearing = false;
+                            setTimeout(function(){$('#clear-my-courses').removeClass( 'ui-btn-active' );},200);
+                            $('#clear-my-courses').removeClass( 'ui-btn-active' );
                         }
                     });
                 } );

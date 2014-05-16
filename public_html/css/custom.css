@@ -37,7 +37,6 @@ a
     width: 80%;
     padding: 10px 10% 0px;
     z-index: 1;
-    background: #fbf9fb;
     box-shadow: 0px 1px 10px #333;
 }
 
@@ -50,6 +49,17 @@ a
     float: right;
     margin-top: -11px !important;
     margin-right: -7px !important;
+}
+
+.purple-ui-navbar
+{
+    border-top: 3px solid #9900CC
+}
+
+.purple-listview-wrapper
+{
+    background: #fbf9fb;
+    border-bottom: 1px solid #fbf9fb;    
 }
 
 .green-ui-navbar
