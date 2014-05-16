@@ -359,4 +359,32 @@ class Meeting
 			$retval[] = $result['displayName'];
 		}
 	}
+	
+	public function getMeetings()
+	{
+		global $db;
+		$visible = getFilter();
+		$courseEvent = array();
+		
+		if( $visible & 1 )
+		{	
+			$sql = 'SELECT m.ID, m.courseID, m.location, m.startDate
+						FROM m.' . Meeting::MEETING_TABLE . '
+							INNER JOIN uc.' . Meeting::USER_COURSE_TABLE . '
+								ON m.courseID = uc.courseID
+							LEFT JOIN um.' Meeting::USER_MEETING_TABLE . '
+								ON m.ID = um.meetingID
+						FROM um.UserCourse
+						WHERE um.userID IS NULL AND uc.userID = :userID AND m.endDate > current_timestamp
+						ORDER BY m.startDate;';
+			
+			$sql = $db->prepare( $sql );
+			$sql->bindParam( $sql );
+			$sql->execute;
+						
+			$return = null;
+			
+			while( ( $return = sql->fetch( PDO::FETCH_ASSOC ) ) != null )
+			{
+				$courseEvent
 }

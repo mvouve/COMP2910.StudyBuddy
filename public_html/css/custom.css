@@ -20,6 +20,7 @@ a
 
 .ui-navbar
 {
+    border-top: 3px solid #9900CC;
     box-shadow: 0px -1px 10px #000;
 }
 
