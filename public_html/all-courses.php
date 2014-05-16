@@ -43,7 +43,7 @@
                     }
                     $( '#clear-my-courses' ).attr( 'data-icon','false' );
                     $( '#clear-my-courses' ).removeClass('ui-icon-minus ui-btn-icon-top' );
-                    $( '#clear-my-courses' ).html('<img class="footer-loading" src="css/images/ajax-loader.gif" alt="loading..."><br>Clear All');
+                    $( '#clear-my-courses' ).html('<img class="footer-loading" src="css/images/ajax-loader.gif" alt="loading..."><br>Remove All');
                     $.ajax
                     ({
                         url: ajaxURL + 'courses/user-courses.php',
