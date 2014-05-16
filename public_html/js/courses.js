@@ -324,7 +324,8 @@ function toggleVisibility ( ajax_URL, courseID )
 	// Hide Icon
 	$( '#my-course-' + courseID ).parent().attr('data-icon', 'false');
 	$( '#my-course-' + courseID ).removeClass('ui-icon-eye ui-btn-icon-right');
-	
+	$( '#my-course-' + courseID ).html($( '#my-course-' + courseID ).html() + 
+'<img class="course-loading" src="css/images/ajax-loader.gif" alt="loading...">')
     $.ajax
     ({
         url: ajax_URL + 'courses/user-courses.php',

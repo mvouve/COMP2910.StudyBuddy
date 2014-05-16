@@ -64,6 +64,18 @@
                     setTimeout(function(){$('#remove-course-button').removeClass( 'ui-btn-active' );},200);
                     $('#remove-course-button').removeClass( 'ui-btn-active' );
                 });
+
+                $('#add-course-button').on( 'click tap', function(e)
+                {
+                    if(  removeMode  )
+                    {
+                        $('#my-courses-list a').removeClass('ui-btn-icon-right ui-icon-delete');
+                        updateTrackedCheckMarks();
+				        $('#my-courses-list').listview('refresh');
+                        $('#remove-course-button').html('Remove Courses');
+                        removeMode = false;
+                    }
+                });
                 
             }
 
