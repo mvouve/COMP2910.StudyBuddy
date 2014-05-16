@@ -25,7 +25,6 @@
             </div>
         </div>
         <script>
-            var removeMode = false;
 			var removeClicked = false;
             function myCourseOnReady()
             {
