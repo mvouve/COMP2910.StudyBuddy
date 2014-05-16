@@ -11,13 +11,13 @@
                         <li>
                             <div data-role="controlgroup" data-type="horizontal" data-mini="true">
                                 <a href="serversideSwitch.html?style=styles1" rel="styles1" class="styleswitch purple-button" data-role="button" 
-                                   >Purple</a>
+                                   ><font color="purple">P</font></a>
                                 <a href="serversideSwitch.html?style=styles2" rel="styles2" class="styleswitch green-button" data-role="button" 
-                                   >Green</a>
+                                   ><font color="green">G</font></a>
                                 <a href="serversideSwitch.html?style=styles3" rel="styles3" class="styleswitch dark-button" data-role="button" 
-								   >Dark</a>                              
-                                <a href="serversideSwitch.html?style=styles4" rel="styles4" class="styleswitch colorblind-button" data-role="button"
-                                   >C.Blind</a>
+								   ><font color="black">B</font></a>                              
+                                <a href="serversideSwitch.html?style=styles4" rel="styles4" class="styleswitch cb-button" data-role="button"
+                                   ><font color="blue">CB</font></a>
                             </div>
                     </ul>
                 </div>
