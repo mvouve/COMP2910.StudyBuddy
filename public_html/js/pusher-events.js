@@ -22,7 +22,7 @@ function pusherCourseAdded( data )
                         function( data ) {},
                         "json");
     
-    allCoursesServerResponse[data.id] = { 'title':data.title, 'inCourse':false };
+    allCoursesServerResponse[data.id] = { 'title':data.title, 'inCourse':isCreator };
     masterCourseListAdd( ajaxURL, data.id, data.title, isCreator );
     $('#all-courses-list').listview('refresh');
 }

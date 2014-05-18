@@ -71,7 +71,7 @@ function addCourse( $id, $title, $push )
         $uid = $user->getUserID( $_SESSION['email'] );
         
         // Try adding the creator immediately.
-        if ( !$courses->addUserCourse( $uid, $id ) )
+        if ( !$push || !$courses->addUserCourse( $uid, $id ) )
         {
             $uid = -2;
         }
