@@ -8,6 +8,7 @@ function setMeetingFilter ( ajax_URL, created, userAttending, userNotAttending )
     $.ajax
     ({
         url: ajax_URL + 'meetings/settings.php',
+        type: 'POST',
         data:
         {
             method: 'set-meeting-filter',
@@ -30,6 +31,7 @@ function getMeetingFilter ( ajax_URL )
     $.ajax
     ({
         url: ajax_URL + 'meetings/settings.php',
+        type: 'POST',
         data:
         {
             method: 'get-meeting-filter'

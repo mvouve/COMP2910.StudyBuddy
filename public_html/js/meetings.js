@@ -8,6 +8,7 @@ function getMeetings( ajax_URL )
     $.ajax
     ({
         url: ajax_URL + 'meetings/meetings.php',
+        type: 'POST',
         data:
         {
             method: 'get-meetings'
@@ -44,6 +45,7 @@ function createMeeting ( ajax_URL, courseID, courseDescription, meetingLocation,
     $.ajax
     ({
         url: ajax_URL + 'meetings/meetings.php',
+        type: 'POST',
         data:
         {
             method: 'create-meeting',
@@ -77,6 +79,7 @@ function editMeeting ( ajax_URL, meetingID, courseID, courseDescription, meeting
     $.ajax
     ({
         url: ajax_URL + 'meetings/meetings.php',
+        type: 'POST',
         data:
         {
             method: 'edit-meeting',
@@ -105,6 +108,7 @@ function cancelMeeting( ajax_URL, meetingID )
     $.ajax
     ({
         url: ajax_URL + 'meetings/meetings.php',
+        type: 'POST',
         data:
         {
             method: 'cancel-meeting',
@@ -127,6 +131,7 @@ function joinMeeting ( ajax_URL, meetingID )
     $.ajax
     ({
         url: ajax_URL + 'meetings/meetings.php',
+        type: 'POST',
         data:
         {
             method: 'join-meeting',
@@ -150,6 +155,7 @@ function leaveMeeting ( ajax_URL, meetingID )
     $.ajax
     ({
         url: ajax_URL + 'meetings/meetings.php',
+        type: 'POST',
         data:
         {
             method: 'leave-meeting',
