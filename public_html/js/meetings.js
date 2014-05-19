@@ -12,9 +12,17 @@ function getMeetings (ajax_URL)
         success: function (json)
         {
             var meetingID = json.id;
-            var creator =  json.creatorID;
-            var course = json.courseID;
-            var 
+            var meetingCreator =  json.creatorID;
+            var meetingCourse = json.courseID;
+            var meetingDesc = json.description;
+            var meetingLoc = json.location;
+            var meetingStartTime = json.startTime;
+            var meetingEndTime = json.endTime;
+            var meetingMaxBuddies = json.maxBuddies;
+            var meetingBuddies = json.buddies;
+            var meetingAttending = json.attending;
+
+            //Do something with all this data now
         }
     })
    
