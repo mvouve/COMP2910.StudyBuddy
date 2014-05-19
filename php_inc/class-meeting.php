@@ -350,4 +350,27 @@ class Meeting
         return $retval;
     }
     
+    /*
+     * Checks if a user is the current meeting master.
+     *
+     * @param $userID the user ID to check.
+     * @param $meetingID the meeting to check.
+     * @return true is user is the master, false if the user is not the master.
+     */
+    public function isMaster( $userID, $meetingID )
+    {
+        global $db;
+    
+        $sql = 'SELECT masterID
+                    FROM ' . Meeting::MEETING_TABLE . '
+                    WHERE ID = :meetingID;';
+        $sql = $db->prepare( $sql );
+        $sql->bindParam( ':meetingID', $meetingID );
+        $sql->execute();
+        $sql = $sql->fetch( PDO::FETCH_ASSOC );
+        
+        $retval = ( $sql['masterID'] == $userID );
+        // returns if the current user is the master or not.
+        return $retval;
+    }
 }
