@@ -214,16 +214,22 @@ class Meeting
     {
         global $db;
         
-        $sql = 'SELECT count.
+        $sql = 'SELECT comment, courseID, location, startDate, endDate, maxBuddies
                     FROM ' . Meeting::MEETING_TABLE . ' m
-                        JOIN ' . Meeting::USER_MEETING_TABLE . ' um
-                            ON m.ID = um.meetingID
-                        JOIN ' . Meeting::USER_TABLE . ' u
-                            ON um.userID = u.ID
-                    WHERE m.ID = :meetingID
-                    GROUP BY m.ID;';
+                    WHERE m.ID = :meetingID;';
         $sql = $db->prepare( $sql );
         $sql-> bindParam( ':meetingID', $meetingID );
+        $sql->execute();
+        
+        $sql = $sql->fetch( PDO::FETCH_ASSOC );
+        
+        $retval = array( 'discription'  => $sql['comment'],
+                         'courseID'     => $sql['courseID'],
+                         'location'     => $sql['location'],
+                         'startDate'    => $sql['startDate'],
+                         'endDate'      => $sql['endDate']
+                        );
+        return $retval;
     }
     
     /*
