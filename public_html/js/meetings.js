@@ -138,7 +138,7 @@ function joinMeeting ( ajax_URL, userID)
         {
             //to do later
         }
-    })
+    });
 }
 /*
 	method: join-meeting
