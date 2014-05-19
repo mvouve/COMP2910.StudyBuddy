@@ -1,12 +1,6 @@
 <!-- create meetings page-->
-<?php require_once( 'config.php' ); ?>
-<?php require_once( PHP_INC_PATH . 'common.php' ); ?>
-<?php if ( isset( $_GET['logout'] ) ) { User::instance()->logout(); } ?>
-<?php renderPagelet( 'header.php', array( '{{customHeadTags}}' => '' ) ); ?>
-
-<div data-role="page">
-    <div data-role="header">
-    </div>
+<div data-role="page" id="page-create-meeting">
+    <?php renderPagelet( 'banner.php', array( '{{title}}' => 'Create Meeting' ) ); ?>
 
     <div data-role="main" id="create-edit-meeting-div">
         <form id="create-edit-meeting-form" name="create-edit-meeting-form" method="post">

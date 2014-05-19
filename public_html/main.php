@@ -15,6 +15,7 @@
 <?php renderPagelet( 'header.php', $sliderHeader ); ?>
     <body id='page-container'>
         <?php include( 'my-meetings.php' ); ?>
+        <?php include( 'create-meetings.php' ); ?>
 		<?php include( 'account-setting.php' ); ?>
 		<?php include( 'all-courses.php' ); ?>
 		<?php include( 'my-courses.php' ); ?>
