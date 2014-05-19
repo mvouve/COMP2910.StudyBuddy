@@ -56,7 +56,7 @@ function createMeeting (ajax_URL, courseID, courseDescription, meetingLocation, 
         {
             //to do later
         }
-    })
+    });
 }
 
 /*--------------------------------------------------------------------------------------------
