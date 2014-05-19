@@ -23,6 +23,10 @@ if ( isset( $_POST['method'] ) )
             $retval = getMeetings();
             break;
             
+        case 'get-meeting-details':
+            $retval = getMeetingDetails( $_POST['ID'] );
+            break;
+            
         case: 'create-meeting':
             $retval = createMeeting( $_POST['courseID'],
                                      $_POST['description'],
@@ -72,6 +76,16 @@ function getMeetings()
 }
 
 /*
+ * Get the details of a meeting, including current attendees.
+ */
+function getMeetingDetails( $meetingID )
+{
+    $ret = $meetings->getMeetingDetails( $meetingID );
+    $ret['buddies'] = $meetings->getMeetingBuddyList( $meetingID );
+    return ret;
+}
+
+/*
  * Create a new Meeting
  */
 function createMeeting( $courseID, $description, $location, $maxBuddies, $startTime, $endTime )
@@ -101,10 +115,8 @@ function editMeeting( $meetingID, $courseID, $description, $location, $maxBuddie
 {
     $ret = array( 'success' => false );
     
-    /* -- FUNCTIONALITY NOT COMPLETE IN MEETING CLASS --
-    
     // Ensure the editting user is the master of the meeting.
-    if ( !$meeting->isMaster( $uid, $meetingID ) )
+    if ( !$meetings->isMaster( $uid, $meetingID ) )
     {
         return $ret;
     }
@@ -134,9 +146,7 @@ function cancelMeeting( $meetingID )
 {
     $ret = array( 'success' => false );
 
-    /* -- FUNCTIONALITY NOT COMPLETE IN MEETING CLASS --
-    
-    if ( !$meeting->isMaster( $uid, $meetingID ) )
+    if ( !$meetings->isMaster( $uid, $meetingID ) )
     {
         return $ret;
     }
@@ -150,14 +160,20 @@ function cancelMeeting( $meetingID )
     return $ret;
 }
 
+/*
+ * Cause the User to join a meeting
+ */
 function joinMeeting( $meetingID )
 {
-    return array( 'success' => false );
+    return array( 'success' => $meetings->joinMeeting( $meetingID, $uid ) );
 }
 
+/*
+ * Cause the User to leave a meeting
+ */
 function leaveMeeting( $meetingID )
 {
-    return array( 'success' => false );
+    return array( 'success' => $meetings->leaveMeeting( $meetingID, $uid ) );
 }
 
 
