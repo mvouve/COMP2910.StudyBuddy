@@ -80,6 +80,8 @@ function editMeeting (ajax_URL, userID, courseID, courseDescription, meetingLoca
         data:
         {
             method: 'edit-meeting',
+            //woah woah is id the userID (to make sure that the person editing the meeting is in fact its creator)?
+            //or is it the unique id associated with the meeting?
             id: userID,
             course-id: courseID,        //problem: javascript does not like a hyphen in course-id. Change this once Calvin changes the back end name, i guess.
             description: courseDescription,
@@ -108,7 +110,7 @@ function cancelMeeting(ajax_URL, userID)
         data:
         {
             method: 'cancel-meeting',
-            id: userID
+            id: userID                  //******OR is this the meeting ID? did i goof up?
         },
         dataType: "json",
         success: function (json)
@@ -118,11 +120,27 @@ function cancelMeeting(ajax_URL, userID)
     });
 }
 
-/*------------------------------------------------------------------------------------------------------------
-	method: cancel-meeting
-	id: int
-	Returns: success: true | false
-------------------------------------------------------------------------------------------------------------
+/* allows a user to join a meeting that someone else has created
+    @param ajax_URL  the URI location where the ajax folder is located
+    @param userID: the meeting editor/creator's user ID */
+
+function joinMeeting ( ajax_URL, userID)
+{
+    $.ajax
+    ({
+        url: ajax_URL + 'meetings/meetings.php',
+        data:
+        {
+            id: userID                  //******OR is this the meeting ID? did i goof up?
+        },
+        dataType: "json",
+        success: function (json)
+        {
+            //to do later
+        }
+    })
+}
+/*
 	method: join-meeting
 	id: int
 	Returns: success: true | false
