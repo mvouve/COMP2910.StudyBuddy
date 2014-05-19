@@ -500,8 +500,21 @@ class Meeting
         return $retval;
     }
     
-    private function getFilter() { 
-        return 7; 
+    private function getFilter( $userID ) { 
+        global $db;
+        
+        $sql = 'SELECT visible
+                    FROM' . Meeting::USER_TABLE . '
+                        WHERE ID = :userID;';
+        
+        $sql = $db->prepare( $sql );
+        
+        $sql->bindParam( ':userID', $userID );
+        $sql->execute();
+        
+        $visible = $sql->fetch( PDO::FETCH_ASSOC );
+        
+        return $visible['visible'];
     }
     
     
