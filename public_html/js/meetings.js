@@ -57,6 +57,7 @@ function getMeetingDetails ( ajax_URL, meetingID )
             //call a helper function in order to populate the edit meetings page
 
         }
+    });
 }
 		      
    
