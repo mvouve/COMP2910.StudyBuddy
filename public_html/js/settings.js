@@ -13,7 +13,7 @@ function setMeetingFilter ( ajax_URL, created, userAttending, userNotAttending )
         {
             method: 'set-meeting-filter',
             attending: userAttending,
-            not-attending: userNotAttending
+            notAttending: userNotAttending
         },
         dataType: "json",
         success: function ( json )

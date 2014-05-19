@@ -49,12 +49,12 @@ function createMeeting ( ajax_URL, courseID, courseDescription, meetingLocation,
         data:
         {
             method: 'create-meeting',
-            course-id: courseID,        //problem: javascript does not like a hyphen in course-id. Change this once Calvin changes the back end name, i guess.
+            courseId: courseID,
             description: courseDescription,
             location: meetingLocation, 
-            start-time: startTime,      //ditto
-            end-time: endTime,          //ditto
-            max-buddies: maxBuddies    //ditto
+            startTime: startTime,
+            endTime: endTime,
+            maxBuddies: maxBuddies
         },
         dataType: "json",
         success: function ( json )
@@ -84,12 +84,12 @@ function editMeeting ( ajax_URL, meetingID, courseID, courseDescription, meeting
         {
             method: 'edit-meeting',
             id: meetingID,
-            course-id: courseID,        //problem: javascript does not like a hyphen in course-id. Change this once Calvin changes the back end name, i guess.
+            courseId: courseID,
             description: courseDescription,
             location: meetingLocation, 
-            start-time: startTime,      //ditto
-            end-time: endTime,          //ditto
-            max-buddies: maxBuddies    //ditto
+            startTime: startTime,
+            endTime: endTime,
+            maxBuddies: maxBuddies
         },
         dataType: "json",
         success: function ( json )
