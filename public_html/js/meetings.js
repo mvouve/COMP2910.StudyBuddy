@@ -1,18 +1,17 @@
-URL: /ajax/meetings/meetings.php
-------------------------------------------------------------------------------------------------------------
+-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
 /* a method to return all the meetings that you are attending.
-    @param ajax_URL the URI where the ajax folder is located */
+@param ajax_URL the URI where the ajax folder is located */
 
-function getMeetings (ajax_URL)
+function getMeetings(ajax_URL)
+{
     $.ajax
     ({
         url: ajax_URL + 'meetings/meetings.php',
-        method: get-meetings,
-        success: function (json)
-        {
+        method: get - meetings,
+        success: function (json) {
             var meetingID = json.id;
-            var meetingCreator =  json.creatorID;
+            var meetingCreator = json.creatorID;
             var meetingCourse = json.courseID;
             var meetingDesc = json.description;
             var meetingLoc = json.location;
@@ -24,7 +23,8 @@ function getMeetings (ajax_URL)
 
             //Do something with all this data now
         }
-    })
+    });
+}
    
    /* 
 	method: get-meetings
