@@ -16,8 +16,11 @@
             <label for="location-dropdown">Location :</label><br/>
             <select id="location-dropdown" name="location-dropdown"></select><br/>
 
-            <label for="meeting-datetime">Meeting Date :</label><br/>
-            <input id="meeting-datetime" name="meeting-datetime" type="text"><br/>
+            <label for="meeting-start-datetime">Start Time :</label><br/>
+            <input id="meeting-start-datetime" name="meeting-start-datetime" type="text"><br/>
+
+            <label for="meeting-end-datetime">End Time :</label><br/>
+            <input id="meeting-end-datetime" name="meeting-end-datetime" type="text"><br/>
 
             <label for="max-buddies">Maximum Buddies :</label><br/>
             <input id="max-buddies" name="max-buddies" type="text"><br/>

@@ -1,6 +1,6 @@
 /* a method to return all the meetings that you are attending.
     returns a 2D array of meetings, each of which contains individual meeting data.
-    @param ajax_URL the URI location where the ajax folder is located */
+    @param ajax_URL (string): the URI location where the ajax folder is located */
 
 function getAllMeetings( ajax_URL )
 {
@@ -29,6 +29,36 @@ function getAllMeetings( ajax_URL )
         }
     });
 }
+
+/* a method to return the details for one specific meeting
+    returns an array containing a course description string, end date string, max buddies int, and an array of buddies currently signed up to the meeting
+    @param ajax_URL (string): 
+    @param meetingID (INT): a numeric unique ID for a meeting */
+
+function getMeetingDetails ( ajax_URL, meetingID )
+{
+    $.ajax
+    ({
+        url: ajax_URL + 'meetings/meeting-details.php',
+        type: 'POST',
+        data:
+        {
+            method: 'get-meetings',
+            id: meetingID
+        },
+        dataType: "json",
+        success: function ( json )
+        {
+            var meetingDesc = json.description;
+            var meetingEndDate = json.endDate;
+            var meetingMaxBuddies = json.maxBuddies;
+            var meetingBuddies = json.buddies //an array of displayNames
+
+            //call a helper function in order to populate the edit meetings page
+
+        }
+}
+		      
    
 /* creates a new meeting
     @param ajax_URL  the URI location where the ajax folder is located
@@ -172,12 +202,8 @@ function leaveMeeting ( ajax_URL, meetingID )
 /* used to add the details of a particular meeting to a HTML form, for editing meetings
     @param meetingID the unique ID assigned to a meeting */
 
-function populateMeetingDetails ( meetingID )
+function populateMeetingDetails ( description,  )
 {
-    //get json data from the server.
-
-    //assign json data to variables
-
     //select a form element and assign json data to it
     var element = document.getElementById("course-dropdown");
     element.setAttribute("value", /* json data */);
@@ -194,3 +220,10 @@ function populateMeetingDetails ( meetingID )
     var element = document.getElementById("meeting-comments");
     element.setAttribute("value", /* json data */);
 }
+
+/*
+    var meetingDesc = json.description;
+            var meetingEndDate = json.endDate;
+            var meetingMaxBuddies = json.maxBuddies;
+            var meetingBuddies = json.buddies //an array of displayNames
+*/
