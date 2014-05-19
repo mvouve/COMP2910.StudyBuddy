@@ -36,6 +36,12 @@
 </div>
 
 <script>
-    $('#create-meeting-start-datetime').datetimepicker();
-    $('#create-meeting-end-datetime').datetimepicker();
+    $('#create-meeting-start-datetime').datetimepicker({
+                                                        format: 'YYYY-MM-DD HH:MM:ss',
+                                                        inline: true
+                                                        });
+    $('#create-meeting-end-datetime').datetimepicker({
+                                                      format: 'YYYY-MM-DD HH:MM:ss',
+                                                      inline: true
+                                                      });
 </script>
