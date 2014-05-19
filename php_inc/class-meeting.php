@@ -62,6 +62,47 @@ class Meeting
         
         return $db->commit();
     }
+
+    /*
+     * Add a meeting to the database.
+     *
+     * @param $courseID     the course the meeting will be studdying.
+     * @param $meetingID    the ID of the meeting to be edited.
+     * @param $comment      the comment associated with the meeting.
+     * @param $location     where the meeting will be.
+     * @param $maxBuddies   the maximum number of people for the meeting.
+     * @param $startTime    The time the meeting starts.
+     * @param $endTime      The time the meeting ends.
+     *
+     * @returns true on success, false on failure.
+     */
+     // TODO: VALIDATE DATE & TIMES
+    public function editMeeting( $courseID,
+                                 $meetingID,
+                                 $comment,
+                                 $location,
+                                 $maxBuddies,
+                                 $startTime,
+                                 $endTime )
+    {
+        global $db;
+        
+        // Update event
+        $sql = ' UPDATE ' . Meeting::MEETING_TABLE . '
+                    SET courseID = :courseID, comment = :comment, 
+                        location = :location, maxBuddies = :maxBuddies,
+                        startTime = :startTime, endTime = :endTime
+                    WHERE ID = :meetingID';
+        $sql = $db->prepare( $sql );
+        $sql->bindParam( ':courseID',   $courseID );
+        $sql->bindParam( ':meetingID',  $meetingID );
+        $sql->bindParam( ':comment',    $comment );
+        $sql->bindParam( ':location',   $location );
+        $sql->bindParam( ':maxBuddies', $maxBuddies );
+        $sql->bindParam( ':startTime',  $startTime );
+        $sql->bindParam( ':endTime',    $endTime );
+        $sql->execute();
+    }
     
     /*
      * Join an existing meeting.
@@ -251,102 +292,62 @@ class Meeting
      */
     public function getMeetingList( $userID )
     {
-       
         global $db;
-        $courseMeeting  = array();
-        $joinedMeeting  = array();
-        $meetingMaster  = array();
-        $signedUp       = array();
-        $retval         = array();
+        $retval = array();
+        $row = null;
         
-        // if the user is in the course, but not signed up for the meeting.
-        $sql = 'SELECT m.ID, m.courseID, m.location, m.startDate
-                    FROM ' . Meeting::MEETING_TABLE . ' m
-                        INNER JOIN ' . Meeting::USER_COURSE_TABLE . ' uc
-                            ON m.courseID = uc.courseID
-                        LEFT JOIN ' . Meeting::USER_MEETING_TABLE . ' um
-                            ON m.ID = um.meetingID
-                    WHERE um.userID IS NULL 
-                        AND uc.userID = :userID 
-                        AND m.endDate > current_timestamp
-                        AND uc.visible = \'T\'
-                    ORDER BY m.startDate;';
+        // Build SQL statement
+        $sql = 'SELECT m.ID, m.masterID, m.courseID, m.location, m.startDate, um.userID as m_user
+                FROM ' . Meeting::MEETING_TABLE . ' m
+                    JOIN ' . Meeting::USER_COURSE_TABLE . ' uc
+                        ON m.courseID = uc.courseID
+                    LEFT JOIN ' . Meeting::USER_MEETING_TABLE . ' um
+                        ON m.ID = um.meetingID AND uc.userID = um.userID
+                WHERE uc.userID = :uid
+                    AND uc.visible = \'T\'
+                    AND m.endDate > NOW()
+                ORDER BY m.startDate
+                ;';
         
+        // Execute the SQL
         $sql = $db->prepare( $sql );
-        $sql->bindParam( ':userID', $userID );
-        $sql->execute();
-                    
-        $return = null;
+        $sql->bindParam( ':uid', $userID );
         
-        while( ( $return = $sql->fetch( PDO::FETCH_ASSOC ) ) != null )
+        if ( !$sql->execute() )
         {
+            return $retval;
+        }
+        
+        // Loop through the results and organize the output
+        while ( ( $row = $sql->fetch( PDO::FETCH_ASSOC ) ) != null )
+        {
+            $output = array(
+                            'ID' => $row['ID'],
+                            'courseID' => $row['courseID'],
+                            'location' => $row['location'],
+                            'startDate' => $row['startDate']
+                            );
+                            
+            // User is not signed-up for the meeting
+            if ( is_null( $row['m_user'] ) )
+            {
+                $output['filter'] = 0;
+            }
+            // User created the meeting.
+            else if ( $row['masterID'] == $userID )
+            {
+                $output['filter'] = 2;
+            }
+            // User is attending but did not create the meeting.
+            else
+            {
+                $output['filter'] = 1;
+            }
             
-            $courseMeeting[] = array( 'ID'              => $return['ID'],
-                                      'courseID'        => $return['courseID'],
-                                      'location'        => $return['location'],
-                                      'startDate'       => $return['startDate'],
-                                      'filter'          => 0
-                                    );
+            $retval[] = $output;
         }
         
-        // if the user is signed up for the meeting
-        $sql = 'SELECT m.ID, m.courseID, m.location, m.startDate
-                    FROM ' . Meeting::MEETING_TABLE . ' m
-                        INNER JOIN ' . Meeting::USER_COURSE_TABLE . ' uc
-                            ON m.courseID = uc.courseID
-                        LEFT JOIN ' . Meeting::USER_MEETING_TABLE . ' um
-                            ON m.ID = um.meetingID
-                    WHERE um.userID = :userID 
-                        AND u.masterID != :userID 
-                        AND m.endDate > current_timestamp
-                        AND uc.visible = \'T\'
-                    ORDER BY m.startDate;';
-                    
-        $sql = $db->prepare( $sql );
-        $sql->bindParam( ':userID', $userID );
-        $sql->execute();
-
-        $return = null;
-        
-        while( ( $return = $sql->fetch( PDO::FETCH_ASSOC ) ) != null )
-        {
-            $courseEvent[] = array( 'ID'                => $return['ID'],
-                                    'courseID'          => $return['courseID'],
-                                    'location'          => $return['location'],
-                                    'startDate'         => $return['startDate'],
-                                    'filter'            => 1
-                                   );
-        }
-        
-        // if the user is the meetings current master.
-        $sql = 'SELECT m.ID, m.courseID, m.location, m.startDate
-                    FROM ' . Meeting::MEETING_TABLE . ' m
-                        INNER JOIN ' . Meeting::USER_COURSE_TABLE . ' uc
-                            ON m.courseID = uc.courseID
-                        LEFT JOIN ' . Meeting::USER_MEETING_TABLE . ' um
-                            ON m.ID = um.meetingID
-                    WHERE m.masterID = :userID 
-                        AND m.endDate > current_timestamp
-                        AND uc.visible = \'T\'
-                    ORDER BY m.startDate;';
-                    
-        $sql = $db->prepare( $sql );
-        $sql->bindParam( ':userID', $userID );
-        $sql->execute();
-
-        $return = null;
-        
-        while( ( $return = $sql->fetch( PDO::FETCH_ASSOC ) ) != null )
-        {
-            $meetingMaster[] = array( 'ID'          => $return['ID'],
-                                      'courseID'    => $return['courseID'],
-                                      'location'    => $return['location'],
-                                      'startDate'   => $return['startDate'],
-                                      'filter'      => 2
-                                    );
-        }
-        
-        return $meetingMaster + $joinedMeeting + $courseMeeting;
+        return $retval;
     }
     
 }
