@@ -11,10 +11,10 @@
             <select id="location-dropdown" name="location-dropdown"></select><br/>
 
             <label for="meeting-start-datetime">Start Time :</label><br/>
-            <input id="meeting-start-datetime" name="meeting-start-datetime" type="text"><br/>
+            <input id="create-meeting-start-datetime" name="meeting-start-datetime" type="text"><br/>
 
             <label for="meeting-end-datetime">End Time :</label><br/>
-            <input id="meeting-end-datetime" name="meeting-end-datetime" type="text"><br/>
+            <input id="create-meeting-end-datetime" name="meeting-end-datetime" type="text"><br/>
 
             <label for="max-buddies">Maximum Buddies :</label><br/>
             <input id="max-buddies" name="max-buddies" type="text"><br/>
@@ -35,10 +35,7 @@
             </div>
 </div>
 
-<!-- added to include the datetime picker plugin, info at: http://www.jqueryrain.com/?lnsG0UbP -->
-<link rel="stylesheet" type="text/css" href="/jquery.datetimepicker.css"/>
-<script src="/jquery.js"></script>
-<script src="/jquery.datetimepicker.js"></script>
 <script>
-    jQuery('#datetimepicker').datetimepicker();
+    $('#create-meeting-start-datetime').datetimepicker();
+    $('#create-meeting-end-datetime').datetimepicker();
 </script>

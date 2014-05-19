@@ -24,6 +24,9 @@
 		<script src="http://js.pusher.com/2.2/pusher.min.js"></script>
         <script src="js/pusher-events.js"></script>
 		<script src="js/courses.js"></script>
+        <!-- Source: http://www.jqueryrain.com/?lnsG0UbP -->
+        <link rel="stylesheet" type="text/css" href="js/datetimepicker/jquery.datetimepicker.css"/>
+        <script src="js/datetimepicker/jquery.datetimepicker.js"></script>
 	 
         <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile.structure-1.4.2.min.css" />
         <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css">
