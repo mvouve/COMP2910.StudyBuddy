@@ -45,12 +45,13 @@ function createMeeting (ajax_URL, courseID, courseDescription, meetingLocation, 
         url: ajax_URL + 'meetings/meetings.php',
         data:
         {
+            method: 'create-meeting',
             course-id: courseID,        //problem: javascript does not like a hyphen in course-id. Change this once Calvin changes the back end name, i guess.
             description: courseDescription,
             location: meetingLocation, 
-            start-time: startTime,
-            end-time: endTime,
-            max-buddies: maxBuddies
+            start-time: startTime,      //ditto
+            end-time: endTime,          //ditto
+            max-buddies: maxBuddies    //ditto
         },
         success: function (json)
         {
@@ -59,15 +60,38 @@ function createMeeting (ajax_URL, courseID, courseDescription, meetingLocation, 
     });
 }
 
-/*--------------------------------------------------------------------------------------------
-	method: create-meeting
-	course-id: string (eg. COMP1510)
-	description: string
-	location: string
-	start-time: string (YYYY-MM-DD HH:MM:SS)
-	end-time: string
-	max-buddies: int
-	Returns: success: true | false
+
+/* called when the creator of a meeting needs to change something about the meeting
+    @param ajax_URL  the URI location where the ajax folder is located
+    @param userID: the meeting editor/creator's user ID
+    @param courseID the course being studied at the meeting
+    @param CourseDescription a description of the course
+    @param meetingLocation the place where the meeting will be held
+    @param startTime a datetime string informing when the meeting begins (YYYY-MM-DD HH:MM:SS)
+    @param endTime a datetime string informing when the meeting ends (YYYY-MM-DD HH:MM:SS)
+    @param maxBuddies the maximum number of people that a location can accomidate */
+function editMeeting (ajax_URL, userID, courseID, courseDescription, meetingLocation, startTime, endTime, maxBuddies)
+{
+    $.ajax
+    ({
+        url: ajax_URL + 'meetings/meetings.php',
+        data:
+        {
+            method: 'edit-meeting',
+            id: userID,
+            course-id: courseID,        //problem: javascript does not like a hyphen in course-id. Change this once Calvin changes the back end name, i guess.
+            description: courseDescription,
+            location: meetingLocation, 
+            start-time: startTime,      //ditto
+            end-time: endTime,          //ditto
+            max-buddies: maxBuddies    //ditto
+        },
+        success: function (json)
+        {
+            //to do later
+        }
+    })
+}
 /*------------------------------------------------------------------------------------------------------------
 	method: edit-meeting
 	id: int
