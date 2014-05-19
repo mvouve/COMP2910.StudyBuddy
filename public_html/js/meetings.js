@@ -12,6 +12,7 @@ function getMeetings(ajax_URL)
         {
             method: 'get-meetings'
         },
+        dataType: "json",
         success: function (json) {
             var meetingID = json.id;
             var meetingCreator = json.creatorID;
@@ -53,6 +54,7 @@ function createMeeting (ajax_URL, courseID, courseDescription, meetingLocation, 
             end-time: endTime,          //ditto
             max-buddies: maxBuddies    //ditto
         },
+        dataType: "json",
         success: function (json)
         {
             //to do later
@@ -86,22 +88,36 @@ function editMeeting (ajax_URL, userID, courseID, courseDescription, meetingLoca
             end-time: endTime,          //ditto
             max-buddies: maxBuddies    //ditto
         },
+        dataType: "json",
         success: function (json)
         {
             //to do later
         }
     })
 }
-/*------------------------------------------------------------------------------------------------------------
-	method: edit-meeting
-	id: int
-	course-id: string
-	description: string
-	location: string
-	start-time: string
-	end-time: string
-	max-buddies: int
-	Returns: success: true | false
+
+/* allows a user to cancel a meeting that they have created
+    @param ajax_URL  the URI location where the ajax folder is located
+    @param userID: the meeting editor/creator's user ID */
+
+function cancelMeeting(ajax_URL, userID)
+{
+    $.ajax
+    ({
+        url: ajax_URL + 'meetings/meetings.php',
+        data:
+        {
+            method: 'cancel-meeting',
+            id: userID
+        },
+        dataType: "json",
+        success: function (json)
+        {
+            //to do later
+        }
+    })
+}
+
 /*------------------------------------------------------------------------------------------------------------
 	method: cancel-meeting
 	id: int
