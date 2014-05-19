@@ -40,6 +40,11 @@ a
     box-shadow: 0px 1px 10px #333;
 }
 
+.ui-header
+{
+    z-index: 99999999;
+}
+
 
 .course-loading
 {
