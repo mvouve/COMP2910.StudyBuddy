@@ -93,7 +93,7 @@ function editMeeting (ajax_URL, userID, courseID, courseDescription, meetingLoca
         {
             //to do later
         }
-    })
+    });
 }
 
 /* allows a user to cancel a meeting that they have created
@@ -115,7 +115,7 @@ function cancelMeeting(ajax_URL, userID)
         {
             //to do later
         }
-    })
+    });
 }
 
 /*------------------------------------------------------------------------------------------------------------
