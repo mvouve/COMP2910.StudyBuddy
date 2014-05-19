@@ -27,52 +27,8 @@
 		
 			function allCoursesOnReady()
 			{
-                
 				$( '#all-courses-list' ).listview();
 				allCoursesList = document.getElementById('all-courses-list');
-                /* TO BE REMOVED
-                $( '#clear-my-courses' ).on( 'click tap', function(e)
-                {
-                    if( clearing )
-                    {
-                        return;
-                    }
-                    else
-                    {
-                        clearing = true;
-                    }
-                    $( '#clear-my-courses' ).attr( 'data-icon','false' );
-                    $( '#clear-my-courses' ).removeClass('ui-icon-minus ui-btn-icon-top' );
-                    $( '#clear-my-courses' ).html('<img class="footer-loading" src="css/images/ajax-loader.gif" alt="loading..."><br>Remove All');
-                    $.ajax
-                    ({
-                        url: ajaxURL + 'courses/user-courses.php',
-                        data:
-                        {
-                            method: "remove-all-courses"
-                        },
-                        dataType: "json",
-                        success: function (json)
-                        {
-                            if(json.success == true)
-                            {
-                                $( '#all-courses-list>li' ).attr( 'data-icon', 'false' );
-                                $( '#all-courses-list a' ).removeClass('ui-icon-check ui-btn-icon-right');
-                                $( '#all-courses-list' ).listview('refresh');
-                                document.getElementById( 'my-courses-list' ).innerHTML = '';
-                                myCoursesServerResponse = {};
-                            }
-                            $( '#clear-my-courses' ).attr( 'data-icon','minus' );
-                            $( '#clear-my-courses' ).addClass('ui-icon-minus ui-btn-icon-top' );
-                            $( '#clear-my-courses img' ).remove();
-                            $( '#clear-my-courses br' ).remove();
-                            clearing = false;
-                            setTimeout(function(){$('#clear-my-courses').removeClass( 'ui-btn-active' );},200);
-                            $('#clear-my-courses').removeClass( 'ui-btn-active' );
-                        }
-                    });
-                } );
-                */
 			}
         </script>
 <!--End of all-courses.php-->

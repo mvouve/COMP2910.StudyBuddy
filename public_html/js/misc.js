@@ -20,6 +20,10 @@ function colorChange()
             cbChange();
         }
     }
+    else
+    {
+        purpleChange();
+    }
     
     $( '.green-button' ).on( 'click tap',greenChange);
     $( '.dark-button' ).on( 'click tap',darkChange);
