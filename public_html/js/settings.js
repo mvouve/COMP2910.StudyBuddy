@@ -10,11 +10,11 @@ function setMeetingFilter ( ajax_URL, created, userAttending, userNotAttending )
         url: ajax_URL + 'meetings/settings.php',
         data:
         {
-            method: 'set-meeting-filter'
+            method: 'set-meeting-filter',
             attending: userAttending,
             not-attending: userNotAttending
         },
-        dataType: "json"
+        dataType: "json",
         success: function ( json )
         {
             //put code here
