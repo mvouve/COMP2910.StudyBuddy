@@ -65,7 +65,7 @@ function createMeeting ( ajax_URL, courseID, courseDescription, meetingLocation,
 
 /* called when the creator of a meeting needs to change something about the meeting
     @param ajax_URL  the URI location where the ajax folder is located
-    @param userID: the meeting editor/creator's user ID
+    @param meetingID: the meeting ID, determiend which meeting is to be altered
     @param courseID the course being studied at the meeting
     @param CourseDescription a description of the course
     @param meetingLocation the place where the meeting will be held
@@ -98,7 +98,7 @@ function editMeeting ( ajax_URL, meetingID, courseID, courseDescription, meeting
 
 /* allows a user to cancel a meeting that they have created
     @param ajax_URL  the URI location where the ajax folder is located
-    @param userID: the meeting editor/creator's user ID */
+    @param meetingID: the meeting ID, determiend which meeting is to be altered */
 
 function cancelMeeting( ajax_URL, meetingID )
 {
@@ -120,7 +120,7 @@ function cancelMeeting( ajax_URL, meetingID )
 
 /* allows a user to join a meeting that someone else has created
     @param ajax_URL  the URI location where the ajax folder is located
-    @param userID: the meeting editor/creator's user ID */
+    @param meetingID: the meeting ID, determiend which meeting is to be altered */
 
 function joinMeeting ( ajax_URL, meetingID )
 {
@@ -143,7 +143,7 @@ function joinMeeting ( ajax_URL, meetingID )
 /* allows a user to remove their userID from being associated with a meeting and reduces the number
     of buddies attending a meeting by 1.
     @param ajax_URL  the URI location where the ajax folder is located
-    @param userID: the meeting editor/creator's user ID */
+    @param meetingID: the meeting ID, determiend which meeting is to be altered */
 
 function leaveMeeting ( ajax_URL, meetingID )
 {
