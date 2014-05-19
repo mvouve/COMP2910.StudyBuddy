@@ -24,7 +24,7 @@ class Meeting
      *
      * @returns true on success, false on failure.
      */
-     // TRANSACTIONS UNTESTED.
+     // TESTED READY TO GO.
      // TODO: VALIDATE DATE & TIMES
     public function createMeeting( $courseID,
                                    $masterID,
@@ -75,28 +75,30 @@ class Meeting
     {
         global $db;
         
-        
+        $db->beginTransaction();
         // get the maximum people allowed in a meeting.
         $sql = 'SELECT maxBuddies
-                    FROM' .  Meeting::MEETING_TABLE . '
-                    WHERE meetingID = :meetingID;';
-        $sql = $db->prepare();
-        $sql->bindParam( ':meetingID', $meetingID );
+                    FROM ' .  Meeting::MEETING_TABLE . '
+                    WHERE ID = :ID;';
+        $sql = $db->prepare( $sql );
+        $sql->bindParam( ':ID', $meetingID );
         $sql->execute();
         $maxUsers = $sql->fetch( PDO::FETCH_ASSOC );
-        $maxUsers = $maxUsers['$maxBuddies'];
+        print_r( $maxUsers );
+        $maxUsers = $maxUsers['maxBuddies'];
         
         //has to be room in an meeting to join.
-        if( $maxUsers > getCurrentUsers( $meetingID ) )
+        if( $maxUsers > $this->getCurrentUsers( $meetingID ) )
         {
-            $sql = 'INSERT INTO' . Meeting::USER_MEETING_TABLE . '
-                        VALUES ( :meetingID, :userID );';
+            $sql = 'INSERT INTO ' . Meeting::USER_MEETING_TABLE . '
+                        VALUES( :meetingID, :userID );';
             $sql = $db->prepare( $sql );
             $sql->bindParam( ':meetingID',  $meetingID );
             $sql->bindParam( ':userID',     $userID );
+            $sql->execute();
         }
         
-        return $sql->execute();
+        return $db->commit();
     }
     
     /*
