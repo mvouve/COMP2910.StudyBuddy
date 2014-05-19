@@ -276,14 +276,16 @@ class Meeting
         
         while( ( $user = $sql->fetch( PDO::FETCH_ASSOC ) ) != null )
         {
-            $retval[] = $result['displayName'];
+            $retval[] = $user['displayName'];
         }
+        
+        return $retval;
     }
     
     
     
     
-    /* THIS WILL TOTS WORK NO NEED TO TEST NP NP
+    /*
      * A function to fetch meetings from the database.
      *
      * @param $userID
