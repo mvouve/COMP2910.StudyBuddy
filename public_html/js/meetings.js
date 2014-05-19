@@ -1,5 +1,3 @@
--- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-
 /* a method to return all the meetings that you are attending.
 @param ajax_URL the URI location where the ajax folder is located */
 
