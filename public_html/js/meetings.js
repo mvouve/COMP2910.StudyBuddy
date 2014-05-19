@@ -3,7 +3,7 @@
 /* a method to return all the meetings that you are attending.
 @param ajax_URL the URI location where the ajax folder is located */
 
-function getMeetings(ajax_URL)
+function getMeetings( ajax_URL )
 {
     $.ajax
     ({
@@ -13,7 +13,7 @@ function getMeetings(ajax_URL)
             method: 'get-meetings'
         },
         dataType: "json",
-        success: function (json) {
+        success: function ( json ) {
             var meetingID = json.id;
             var meetingCreator = json.creatorID;
             var meetingCourse = json.courseID;
@@ -39,7 +39,7 @@ function getMeetings(ajax_URL)
     @param endTime a datetime string informing when the meeting ends (YYYY-MM-DD HH:MM:SS)
     @param maxBuddies the maximum number of people that a location can accomidate */
 
-function createMeeting (ajax_URL, courseID, courseDescription, meetingLocation, startTime, endTime, maxBuddies)
+function createMeeting ( ajax_URL, courseID, courseDescription, meetingLocation, startTime, endTime, maxBuddies )
 {
     $.ajax
     ({
@@ -55,7 +55,7 @@ function createMeeting (ajax_URL, courseID, courseDescription, meetingLocation, 
             max-buddies: maxBuddies    //ditto
         },
         dataType: "json",
-        success: function (json)
+        success: function ( json )
         {
             //to do later
         }
@@ -72,7 +72,7 @@ function createMeeting (ajax_URL, courseID, courseDescription, meetingLocation, 
     @param startTime a datetime string informing when the meeting begins (YYYY-MM-DD HH:MM:SS)
     @param endTime a datetime string informing when the meeting ends (YYYY-MM-DD HH:MM:SS)
     @param maxBuddies the maximum number of people that a location can accomidate */
-function editMeeting (ajax_URL, userID, courseID, courseDescription, meetingLocation, startTime, endTime, maxBuddies)
+function editMeeting ( ajax_URL, meetingID, courseID, courseDescription, meetingLocation, startTime, endTime, maxBuddies )
 {
     $.ajax
     ({
@@ -80,9 +80,7 @@ function editMeeting (ajax_URL, userID, courseID, courseDescription, meetingLoca
         data:
         {
             method: 'edit-meeting',
-            //woah woah is id the userID (to make sure that the person editing the meeting is in fact its creator)?
-            //or is it the unique id associated with the meeting?
-            id: userID,
+            id: meetingID,
             course-id: courseID,        //problem: javascript does not like a hyphen in course-id. Change this once Calvin changes the back end name, i guess.
             description: courseDescription,
             location: meetingLocation, 
@@ -91,7 +89,7 @@ function editMeeting (ajax_URL, userID, courseID, courseDescription, meetingLoca
             max-buddies: maxBuddies    //ditto
         },
         dataType: "json",
-        success: function (json)
+        success: function ( json )
         {
             //to do later
         }
@@ -102,7 +100,7 @@ function editMeeting (ajax_URL, userID, courseID, courseDescription, meetingLoca
     @param ajax_URL  the URI location where the ajax folder is located
     @param userID: the meeting editor/creator's user ID */
 
-function cancelMeeting(ajax_URL, userID)
+function cancelMeeting( ajax_URL, meetingID )
 {
     $.ajax
     ({
@@ -110,10 +108,10 @@ function cancelMeeting(ajax_URL, userID)
         data:
         {
             method: 'cancel-meeting',
-            id: userID                  //******OR is this the meeting ID? did i goof up?
+            id: userID
         },
         dataType: "json",
-        success: function (json)
+        success: function ( json )
         {
             //to do later
         }
@@ -124,28 +122,47 @@ function cancelMeeting(ajax_URL, userID)
     @param ajax_URL  the URI location where the ajax folder is located
     @param userID: the meeting editor/creator's user ID */
 
-function joinMeeting ( ajax_URL, userID)
+function joinMeeting ( ajax_URL, meetingID )
 {
     $.ajax
     ({
         url: ajax_URL + 'meetings/meetings.php',
         data:
         {
-            id: userID                  //******OR is this the meeting ID? did i goof up?
+            method: 'join-meeting',
+            id: meetingID
         },
         dataType: "json",
-        success: function (json)
+        success: function ( json )
         {
             //to do later
         }
     });
 }
-/*
-	method: join-meeting
-	id: int
-	Returns: success: true | false
-------------------------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------------------------
+
+/* allows a user to remove their userID from being associated with a meeting and reduces the number
+    of buddies attending a meeting by 1.
+    @param ajax_URL  the URI location where the ajax folder is located
+    @param userID: the meeting editor/creator's user ID */
+
+function leaveMeeting ( ajax_URL, meetingID )
+{
+    $.ajax
+    ({
+        url: ajax_URL + 'meetings/meetings.php',
+        data:
+        {
+            method: 'leave-meeting',
+            id: meetingID
+        },
+        dataType: "json",
+        success: function ( json )
+        {
+            //to do later
+        }
+    });
+}
+/*------------------------------------------------------------------------------------------------------------
 	method: leave-meeting
 	id: int
 	Returns: success: true | false
