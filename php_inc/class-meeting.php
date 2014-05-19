@@ -251,8 +251,65 @@ class Meeting
      */
     public function getMeetingList( $userID )
     {
-       
         global $db;
+        $retval = array();
+        $row = null;
+        
+        // Build SQL statement
+        $sql = 'SELECT m.ID, m.masterID, m.courseID, m.location, m.startDate, um.userID as m_user
+                FROM ' . Meeting::MEETING_TABLE . ' m
+                    JOIN ' . Meeting::USER_COURSE_TABLE . ' uc
+                        ON m.courseID = uc.courseID
+                    LEFT JOIN ' . Meeting::USER_MEETING_TABLE . ' um
+                        ON m.ID = um.meetingID AND uc.userID = um.userID
+                WHERE uc.userID = :uid
+                    AND uc.visible = \'T\'
+                    AND m.endDate > NOW()
+                ORDER BY m.startDate
+                ;';
+        
+        // Execute the SQL
+        $sql = $db->prepare( $sql );
+        $sql->bindParam( ':uid', $userID );
+        
+        if ( !$sql->execute() )
+        {
+            return $retval;
+        }
+        
+        // Loop through the results and organize the output
+        while ( ( $row = $sql->fetch( PDO::FETCH_ASSOC ) ) != null )
+        {
+            $output = array(
+                            'ID' => $row['ID'],
+                            'courseID' => $row['courseID'],
+                            'location' => $row['location'],
+                            'startDate' => $row['startDate']
+                            );
+                            
+            // User is not signed-up for the meeting
+            if ( is_null( $row['m_user'] ) )
+            {
+                $output['filter'] = 0;
+            }
+            // User created the meeting.
+            else if ( $row['masterID'] == $userID )
+            {
+                $output['filter'] = 2;
+            }
+            // User is attending but did not create the meeting.
+            else
+            {
+                $output['filter'] = 1;
+            }
+            
+            $retval[] = $output;
+        }
+        
+        return $retval;
+        
+        /* Marc's Code:
+        
         $courseMeeting  = array();
         $joinedMeeting  = array();
         $meetingMaster  = array();
@@ -347,6 +404,7 @@ class Meeting
         }
         
         return $meetingMaster + $joinedMeeting + $courseMeeting;
+        */
     }
     
 }
