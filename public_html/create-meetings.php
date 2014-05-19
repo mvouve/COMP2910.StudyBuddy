@@ -17,7 +17,7 @@
             <input id="create-meeting-end-datetime" name="meeting-end-datetime" type="text"><br/>
 
             <label for="max-buddies">Maximum Buddies :</label><br/>
-            <input id="max-buddies" name="max-buddies" type="text"><br/>
+            <input id="max-buddies" name="max-buddies" type="number" min="1" max="99"><br/>
 
             <label for="meeting-comments">Comments :</label><br/>
             <textarea id="meeting-comments" name="meeting-comments"></textarea><br/>
