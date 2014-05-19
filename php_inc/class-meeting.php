@@ -7,7 +7,7 @@ class Meeting
     const USER_COURSE_TABLE = 'UserCourse';
     const USER_TABLE = 'User';
     
-    function __construct()
+    public function __construct()
     {
     }
     
@@ -49,13 +49,13 @@ class Meeting
         $sql->bindParam( ':comment',    $comment );
         $sql->bindParam( ':location',   $location );
         $sql->bindParam( ':maxBuddies', $maxBuddies );
-        $sql->bindParam( ':startDate',  $startDate );
-        $sql->bindParam( ':endDate',    $endDate );
+        $sql->bindParam( ':startTime',  $startTime );
+        $sql->bindParam( ':endTime',    $endTime );
         $sql->execute();
         
         // add user to the event they just created.
         $sql = 'INSERT INTO  ' . Meeting::USER_MEETING_TABLE . '
-                    VALUES ( ' . $db->lastInsertId . ', :userID );';
+                    VALUES ( LAST_INSERT_ID(), :userID );';
         $sql = $db->prepare( $sql );
         $sql->bindParam( ':userID', $masterID );
         $sql->execute();
@@ -139,7 +139,7 @@ class Meeting
             {
                 $sql = 'UPDATE' . Meeting::USER_MEETING_TABLE . '
                             SET masterID = :newMasterID
-                            WHERE meetingID = :meetingID'
+                            WHERE meetingID = :meetingID;';
                 $sql = $db->prepare( $sql );
                 $sql->bindParam( ':newMasterID', $newMasterID );
                 $sql->bindParam( ':meetingID', $meetingID );
@@ -148,7 +148,7 @@ class Meeting
             // if there's no one else in the meeting delete the meeting.
             else
             {
-                $sql = 'DELETE FROM' .Meeting::MEETING_TABLE . '
+                $sql = 'DELETE FROM' . Meeting::MEETING_TABLE . '
                             WHERE meetingID = :meetingID;';
                 $sql = $db->prepare( $sql );
                 $sql->bindParam( ':meetingID', $meetingID );
@@ -158,25 +158,6 @@ class Meeting
         
         return $db->commit();
     }
-    
-    /*
-     * Gets a list of all the meetings in the future from the server, and if the user is
-     * attending/the meetings master. ( can be used to see if the user is the master. )
-     *
-     * @return all meetings as an array.
-     * UNFINISHED UNTIL THERE'S A POINT TO EVEN HAVING THIS
-     */
-     /*
-    public function getAllMeetings()
-    {
-        global $db;
-        $retval = array();
-        
-        $sql = 'SELECT *
-                    FROM' . Meetings::MEETING_TABLE . '
-                    WHERE endDate > ' . date('Y-m-d H:i:s') . ';';
-                    
-    */
     
     
     /*
@@ -337,7 +318,7 @@ class Meeting
      * @returns an array of meeting users.
      *
      */
-    private function getMeetingUserList( $meetingID )
+    public function getMeetingUserList( $meetingID )
     {
         global $db;
         $retval = array();
@@ -346,7 +327,7 @@ class Meeting
                     FROM um.' . Meeting::USER_MEETING_TABLE . '
                         JOIN u.' . Meeting::USER_TABLE . '
                             ON u.ID = um.userID
-                        WHERE um.meetingID = :meetingID'
+                        WHERE um.meetingID = :meetingID;';
                         
         $sql = $db->prepare( $sql );
         $sql->bindParam( ':meetingID', $meetingID );
@@ -360,6 +341,9 @@ class Meeting
         }
     }
     
+    
+    
+    
     /* THIS WILL TOTS WORK NO NEED TO TEST NP NP
      * A function to fetch meetings from the database.
      *
@@ -367,10 +351,11 @@ class Meeting
      *
      * @returns an array of filtered meetings.
      */
-    public function getMeetings( $userID )
+    public function getMeetingList( $userID )
     {
+       
         global $db;
-        $visible        = getFilter();
+        $visible        = $this->getFilter();
         $courseMeeting  = array();
         $joinedMeeting  = array();
         $meetingMaster  = array();
@@ -384,7 +369,7 @@ class Meeting
                         FROM m.' . Meeting::MEETING_TABLE . '
                             INNER JOIN uc.' . Meeting::USER_COURSE_TABLE . '
                                 ON m.courseID = uc.courseID
-                            LEFT JOIN um.' Meeting::USER_MEETING_TABLE . '
+                            LEFT JOIN um.' . Meeting::USER_MEETING_TABLE . '
                                 ON m.ID = um.meetingID
                         WHERE um.userID IS NULL 
                             AND uc.userID = :userID 
@@ -393,13 +378,14 @@ class Meeting
                         ORDER BY m.startDate;';
             
             $sql = $db->prepare( $sql );
-            $sql->bindParam( $sql );
-            $sql->execute;
+            $sql->bindParam( ':userID', $userID );
+            $sql->execute();
                         
             $return = null;
             
-            while( ( $return = sql->fetch( PDO::FETCH_ASSOC ) ) != null )
+            while( ( $return = $sql->fetch( PDO::FETCH_ASSOC ) ) != null )
             {
+                
                 $courseMeeting[] = array( 'ID'              => $return['m.ID'],
                                           'courseID'        => $return['m.courseID'],
                                           'location'        => $return['m.location'],
@@ -411,13 +397,13 @@ class Meeting
         }
         
         // if the user is signed up for the meeting
-        if( $visable & 2 )
+        if( $visible & 2 )
         {
             $sql = 'SELECT m.ID, m.courseID, m.location, m.startDate
                         FROM m.' . Meeting::MEETING_TABLE . '
                             INNER JOIN uc.' . Meeting::USER_COURSE_TABLE . '
                                 ON m.courseID = uc.courseID
-                            LEFT JOIN um.' Meeting::USER_MEETING_TABLE . '
+                            LEFT JOIN um.' . Meeting::USER_MEETING_TABLE . '
                                 ON m.ID = um.meetingID
                         WHERE um.userID = :userID 
                             AND um.masterID != :userID 
@@ -427,11 +413,11 @@ class Meeting
                         
             $sql = $db->prepare( $sql );
             $sql->bindParam( ':userID', $userID );
-            $sql->execute;
+            $sql->execute();
 
             $return = null;
             
-            while( ( $return = sql->fetch( PDO::FETCH_ASSOC ) ) != null )
+            while( ( $return = $sql->fetch( PDO::FETCH_ASSOC ) ) != null )
             {
                 $courseEvent[] = array( 'ID'                => $return['m.ID'],
                                         'courseID'          => $return['m.courseID'],
@@ -443,13 +429,13 @@ class Meeting
         }
         
         // if the user is the meetings current master.
-        if( $visable & 4 )
+        if( $visible & 4 )
         {
             $sql = 'SELECT m.ID, m.courseID, m.location, m.startDate
                         FROM m.' . Meeting::MEETING_TABLE . '
                             INNER JOIN uc.' . Meeting::USER_COURSE_TABLE . '
                                 ON m.courseID = uc.courseID
-                            LEFT JOIN um.' Meeting::USER_MEETING_TABLE . '
+                            LEFT JOIN um.' . Meeting::USER_MEETING_TABLE . '
                                 ON m.ID = um.meetingID
                         WHERE m.masterID = :userID 
                             AND m.endDate > current_timestamp
@@ -458,12 +444,13 @@ class Meeting
                         
             $sql = $db->prepare( $sql );
             $sql->bindParam( ':userID', $userID );
-            $sql->execute;
+            $sql->execute();
 
             $return = null;
             
-            while( ( $return = sql->fetch( PDO::FETCH_ASSOC ) ) != null )
+            while( ( $return = $sql->fetch( PDO::FETCH_ASSOC ) ) != null )
             {
+                echo( 'meeting list called' );
                 $meetingMaster[] = array( 'ID'          => $return['m.ID'],
                                           'courseID'    => $return['m.courseID'],
                                           'location'    => $return['m.location'],
@@ -474,12 +461,12 @@ class Meeting
         }
         
         // array indexes.
-        $i = 0;
-        $foo = 0;
-        $bar = 0;
+        $i      = 0;
+        $foo    = 0;
+        $bar    = 0;
         
         // Merge $joineMeetings and $meetingMaster in order by date.
-        while( $i < $joinedMeeting.length + $meetingMaster.length )
+        while( $i < count( $joinedMeeting ) + count( $meetingMaster ) )
         {
             // If $couseMeeting is earlier then meetingMaster.
             if( $joinedMeeting[$foo]['startDate'] < $meetingMaster[$bar]['startDate'] )
@@ -492,9 +479,9 @@ class Meeting
             }
         }
         
-        $i = 0;
-        $foo = 0;
-        $bar = 0;
+        $i      = 0;
+        $foo    = 0;
+        $bar    = 0;
         
         // Merge $signedUp and $courseMeeting by date.
         while( $i < count( $signedUp ) + count( $courseMeeting ) )
@@ -512,4 +499,10 @@ class Meeting
         
         return $retval;
     }
+    
+    private function getFilter() { 
+        return 7; 
+    }
+    
+    
 }
