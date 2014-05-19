@@ -1,5 +1,6 @@
 /* a method to return all the meetings that you are attending.
-@param ajax_URL the URI location where the ajax folder is located */
+    returns a 2D array of meetings, each of which contains individual meeting data.
+    @param ajax_URL the URI location where the ajax folder is located */
 
 function getMeetings( ajax_URL )
 {
@@ -165,4 +166,13 @@ function leaveMeeting ( ajax_URL, meetingID )
             //to do later
         }
     });
+}
+
+
+/* used to get the details of a particular meeting 
+    @param meetingID the unique ID assigned to a meeting */
+
+function getMeetingDetails ( meetingID )
+{
+    
 }
