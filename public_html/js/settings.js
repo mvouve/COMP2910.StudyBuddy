@@ -25,7 +25,7 @@ function setMeetingFilter ( ajax_URL, created, userAttending, userNotAttending )
 /* im not exactly sure what this function is supposed to do either
     @param ajax_URL the URI location where the ajax folder is located 
 */
-function getMeetingFilter ( ajax_URL, created, userAttending, userNotAttending )
+function getMeetingFilter ( ajax_URL )
 {
     $.ajax
     ({
