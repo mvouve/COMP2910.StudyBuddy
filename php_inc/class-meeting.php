@@ -297,7 +297,7 @@ class Meeting
                         LEFT JOIN ' . Meeting::USER_MEETING_TABLE . ' um
                             ON m.ID = um.meetingID
                     WHERE um.userID = :userID 
-                        AND um.masterID != :userID 
+                        AND u.masterID != :userID 
                         AND m.endDate > current_timestamp
                         AND uc.visible = \'T\'
                     ORDER BY m.startDate;';
@@ -347,45 +347,6 @@ class Meeting
         }
         
         return $meetingMaster + $joinedMeeting + $courseMeeting;
-        /*
-        // array indexes.
-        $i      = 0;
-        $foo    = 0;
-        $bar    = 0;
-        
-        // Merge $joineMeetings and $meetingMaster in order by date.
-        while( $i < count( $joinedMeeting ) + count( $meetingMaster ) )
-        {
-            // If $couseMeeting is earlier then meetingMaster.
-            if( $joinedMeeting[$foo]['startDate'] < $meetingMaster[$bar]['startDate'] )
-            {
-                $signedUp[$i++] = $joinedMeeting[$foo++];
-            }
-            else
-            {
-                $signedUp[$i++] = $meetingMaster[$bar++];
-            }
-        }
-        
-        $i      = 0;
-        $foo    = 0;
-        $bar    = 0;
-        
-        // Merge $signedUp and $courseMeeting by date.
-        while( $i < count( $signedUp ) + count( $courseMeeting ) )
-        {
-            // If $signedUp is earlier then meeting master. ( this could very well be 0.
-            if( $signedUp[$foo]['startDate'] < $signedUp[$bar]['startDate'] )
-            {
-                $retval[$i++] = $courseMeeting[$foo++];
-            }
-            else
-            {
-                $retval[$i++] = $SignedUp[$bar++];
-            }
-        }
-        
-        return $retval; */
     }
     
 }
