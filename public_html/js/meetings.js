@@ -1,7 +1,8 @@
 /* a method to return all the meetings that you are attending.
-@param ajax_URL the URI location where the ajax folder is located */
+    returns a 2D array of meetings, each of which contains individual meeting data.
+    @param ajax_URL the URI location where the ajax folder is located */
 
-function getMeetings( ajax_URL )
+function getAllMeetings( ajax_URL )
 {
     $.ajax
     ({
@@ -165,4 +166,31 @@ function leaveMeeting ( ajax_URL, meetingID )
             //to do later
         }
     });
+}
+
+
+/* used to add the details of a particular meeting to a HTML form, for editing meetings
+    @param meetingID the unique ID assigned to a meeting */
+
+function populateMeetingDetails ( meetingID )
+{
+    //get json data from the server.
+
+    //assign json data to variables
+
+    //select a form element and assign json data to it
+    var element = document.getElementById("course-dropdown");
+    element.setAttribute("value", /* json data */);
+
+    var element = document.getElementById("location-dropdown");
+    element.setAttribute("value", /* json data */);
+
+    var element = document.getElementById("meeting-datetime");
+    element.setAttribute("value", /* json data */);
+
+    var element = document.getElementById("max-buddies");           //note: must not allow user to change this to a value lower than the current # of buddies.
+    element.setAttribute("value", /* json data */);
+
+    var element = document.getElementById("meeting-comments");
+    element.setAttribute("value", /* json data */);
 }
