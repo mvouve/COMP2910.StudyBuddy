@@ -313,7 +313,7 @@
                     }
                     $( '#clear-my-courses' ).attr( 'data-icon','false' );
                     $( '#clear-my-courses' ).removeClass('ui-icon-minus ui-btn-icon-left' );
-                    $( '#clear-my-courses' ).html('<img class="footer-loading" src="css/images/ajax-loader.gif" alt="loading..."><br>Remove All');
+                    $( '#clear-my-courses' ).html('<img class="footer-loading" src="css/images/ajax-loader.gif" alt="loading..."><span style="margin-right: -8px !important;">Remove All</span>');
                     $.ajax
                     ({
                         url: ajaxURL + 'courses/user-courses.php',
@@ -334,7 +334,7 @@
                             }
                             $( '#clear-my-courses' ).attr( 'data-icon','minus' );
                             $( '#clear-my-courses' ).addClass('ui-icon-minus ui-btn-icon-left' );
-                            $( '#clear-my-courses img' ).remove();
+                            $( '#clear-my-courses' ).html( 'Remove All' );
                             $( '#clear-my-courses br' ).remove();
                             clearing = false;
                             setTimeout(function(){$('#clear-my-courses').removeClass( 'ui-btn-active' );},200);
