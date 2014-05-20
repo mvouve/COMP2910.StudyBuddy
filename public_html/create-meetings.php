@@ -2,7 +2,7 @@
 <div data-role="page" id="page-create-meeting">
     <?php renderPagelet( 'banner.php', array( '{{title}}' => 'Create Meeting' ) ); ?>
 
-    <div data-role="main" id="create-meeting-div">
+    <div data-role="content" data-theme="a">
         <form id="create-meeting-form" name="create-meeting-form" method="post">
             <div id="course-dropdown-wrapper">
                 <label for="course-dropdown">Course :</label>
@@ -14,10 +14,10 @@
                 <select id="location-dropdown" name="location-dropdown"></select><br/>
             </div>
 
-            <div id="meeting-start-datetime-wrapper">
+            
                 <label for="create-meeting-start-datetime">Start Time :</label>
                 <input id="create-meeting-start-datetime" name="create-meeting-start-datetime" type="text"><br/>
-            </div>
+            
 
 
                 <label for="create-meeting-end-datetime">End Time :</label>
