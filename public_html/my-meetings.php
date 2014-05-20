@@ -11,9 +11,9 @@
         <div data-role="footer" data-position="fixed" data-tap-toggle="false">
             <div data-role="navbar">
                 <ul>
-                    <li><a href="#" data-icon="plus" data-iconpos="top" id="i-created">I created</a></li>
-                    <li><a href="#" data-icon="plus" data-iconpos="top" id="all-meeting">All meetings</a></li>
-                    <li><a href="#" data-icon="plus" data-iconpos="top" id="i-attending">Meetings I'm Attending</a></li>
+                    <li><a href="#" data-icon="star" data-iconpos="top" id="i-created">My Creations</a></li>
+                    <li><a href="#" data-icon="grid" data-iconpos="top" id="all-meeting">All meetings</a></li>
+                    <li><a href="#" data-icon="check" data-iconpos="top" id="i-attending">I'm Attending</a></li>
 
                 </ul>
             </div>
