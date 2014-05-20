@@ -23,8 +23,6 @@
             </div>
         </div>
         <script>
-			var allCoursesList;
-		
 			function allCoursesOnReady()
 			{
 				$( '#all-courses-list' ).listview();
