@@ -332,6 +332,8 @@
                                 $( '#all-courses-list' ).listview('refresh');
                                 document.getElementById( 'my-courses-list' ).innerHTML = '';
                                 myCoursesServerResponse = {};
+								
+								unbindFromAllCourses();
                             }
                             $( '#clear-my-courses' ).attr( 'data-icon','minus' );
                             $( '#clear-my-courses' ).addClass('ui-icon-minus ui-btn-icon-left' );

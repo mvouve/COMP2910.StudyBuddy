@@ -7,9 +7,6 @@ function setupPusher()
 	channels['study_buddy'] = pusher.subscribe( 'study_buddy' );
 	
 	channels['study_buddy'].bind( 'course_added', pusherCourseAdded );
-	
-	// Test private channel
-	bindToCourse( 'COMP1510' );
 }
 
 // Bind pusher to a course-specific private channel
@@ -28,6 +25,18 @@ function unbindFromCourse( course )
 	channels.splice( course, 1 );
 }
 
+function unbindFromAllCourses()
+{
+	for ( var id in channels )
+	{
+		if ( id != 'study_buddy' )
+		{
+			unbindFromCourse( id );
+		}
+	}
+}
+
+// Pusher Callback on Course Creation
 function pusherCourseAdded( data )
 {
     var isCreator = ( data.creator == uid );
@@ -46,14 +55,26 @@ function pusherCourseAdded( data )
     $('#all-courses-list').listview('refresh');
 }
 
+/*
+ * Pusher Callback on meeting creation
+ */
 function pusherMeetingAdded( data )
 {
+	
 }
 
+/*
+ * Pusher Callback on a Meeting being Cancelled.
+ */
 function pusherMeetingCancelled( data )
 {
+	
 }
 
+/*
+ * Pusher Callback on Meeting editted.
+ */
 function pusherMeetingChanged( data )
 {
+	
 }
