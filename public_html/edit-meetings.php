@@ -8,7 +8,7 @@
     <div data-role="header">
     </div>
 
-    <div data-role="main" id="create-edit-meeting-div">
+    <div data-role="main" id="edit-meeting-div">
         <form id="create-edit-meeting-form" name="create-edit-meeting-form" method="post">
             <label for="course-dropdown">Course :</label><br/>
             <select id="course-dropdown" name="course-dropdown"></select><br/>
