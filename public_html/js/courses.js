@@ -116,22 +116,21 @@ function masterCourseListAdd ( ajax_URL, id, title, inCourse )
     //create an entry in loading list
     loading[id] = false;
     
-    //create the list item and add it to allCoursesList manually
+    //create the list item and add it to allCoursesList
     var newLI = document.createElement('li');
-    newLI.innerHTML = '<a href="#" id="all-course-' + id +
-        '" class="ui-btn" style="vertical-align: middle;">' + id + '<br>' + title + '</a>';
+    newLI.setAttribute( 'class', 'ui-li-has-alt' );
+    newLI.innerHTML = '<a href="#"><h3>' + id + '</h3><p>' + title + '</p></a>'
+                      + '<a href="#" id="all-course-'+id+'" class="ui-btn"></a>';
     allCoursesList.appendChild(newLI);
-    
     //add the check mark if user is in the course
     if( inCourse )
     {
-        newLI.setAttribute( 'data-icon', 'check');
-        $('#all-course-' + id).addClass('ui-icon-check ui-btn-icon-right');
+        $('#all-course-' + id).removeClass('ui-icon-plus');
+        $('#all-course-' + id).addClass('ui-icon-check');
     }
     else
     {
-        newLI.setAttribute( 'data-icon', 'false');
-        $('#all-course-' + id).removeClass('ui-icon-check ui-btn-icon-right');//doesn't hurt to remove a non-existant class
+        $('#all-course-' + id).removeClass('ui-icon-check');
     }
     
     // Add Event Handler to added List Item
@@ -198,7 +197,7 @@ function addUserCourse( ajax_URL, courseID, mode )
 
     //hide check
     target.parentNode.setAttribute('data-icon', 'false');
-    $('#' + target.id).removeClass('ui-icon-check ui-icon-eye ui-icon-delete ui-btn-icon-right');
+    $('#' + target.id).removeClass('ui-icon-check ui-icon-plus ui-icon-eye ui-icon-delete ui-btn-icon-right');
 
     //show loading image
     target.innerHTML = target.innerHTML +
@@ -248,8 +247,7 @@ function addUserCourse( ajax_URL, courseID, mode )
 function addToUserCourses ( id, title )
 {
     //show check mark
-    $('#all-course-' + id).parent().attr('data-icon', 'check');
-    $('#all-course-' + id).addClass('ui-icon-check ui-btn-icon-right');
+    $('#all-course-' + id).addClass('ui-icon-check');
     
     //add to temporary user course list
     myCoursesServerResponse[id] = { 'title':allCoursesServerResponse[id].title,
