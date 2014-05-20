@@ -114,7 +114,7 @@ class Meeting
      */
     public function cancelMeeting( $meetingID )
     {
-        global $db
+        global $db;
         
         $sql = 'UPDATE ' . Meeting::MEETING_TABLE . '
                     SET canceled = \'T\'
@@ -187,7 +187,7 @@ class Meeting
         $sql->execute();
         
         // If the user leaving the meeting is the current master, change the master.
-        if( $this->isMaster( $userID, $meetingID )
+        if( $this->isMaster( $userID, $meetingID ) )
         {
             //SQL statment for getting userIDs for other users attending this meeting.
             $sql = 'SELECT userID
