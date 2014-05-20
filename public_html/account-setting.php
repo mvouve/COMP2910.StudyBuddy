@@ -317,6 +317,7 @@
                     $.ajax
                     ({
                         url: ajaxURL + 'courses/user-courses.php',
+                        type: "POST",
                         data:
                         {
                             method: "remove-all-courses"

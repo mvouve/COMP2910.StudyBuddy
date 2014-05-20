@@ -150,8 +150,10 @@ function masterCourseListAdd ( ajax_URL, id, title, inCourse )
     @param description a brief description / the name of the course */
 function createCourse( ajax_URL, courseID, description )
 {
-    $.ajax({
+    $.ajax
+    ({
         url: ajax_URL + 'courses/courses.php',
+        type: "POST",
         data:
         {
             method: "add-course",
