@@ -11,15 +11,12 @@
         <div data-role="footer" data-position="fixed" data-tap-toggle="false">
             <div data-role="navbar">
                 <ul>
-                    <li><a href="#" id="create-meeting-button" data-icon="plus" data-iconpos="top">Create Meeting</a></li>
-                    <li><a href="#" id="cancel-meeting-button" data-icon="plus" data-iconpos="top">Cancel my meeting</a></li>
-                    <li><a href="#" id="all-meetings-button" data-icon="plus" data-iconpos="top">All meetings</a></li>
-                    <li><a href="#" id="attending-meetings-button" data-icon="plus" data-iconpos="top">Meetings I'm Attending</a></li>
+                    <li><a href="#" data-icon="star" data-iconpos="top" id="i-created">My Creations</a></li>
+                    <li><a href="#" data-icon="grid" data-iconpos="top" id="all-meeting">All meetings</a></li>
+                    <li><a href="#" data-icon="check" data-iconpos="top" id="i-attending">I'm Attending</a></li>
+
                 </ul>
             </div>
         </div>
     </div>
-    <script>
-        //
-    </script>
 <!--End of my-meetings.php-->

@@ -2,7 +2,7 @@
         <div data-role="page" data-theme="a" id='page-all-courses'>
             <?php renderPagelet( 'banner.php', array( '{{title}}' => 'All courses' ) ); ?>
             <div data-role="content" class="listview-wrapper">
-                <ul data-role="listview" data-filter="true" id="all-courses-list">
+                <ul data-role="listview" data-filter="true" id="all-courses-list" data-split-icon="false">
 	                <!--li data-icon="false"><a href="#">BUSA2720<br>Business in a Networked Economy</a></li>
 	                <li data-icon="false"><a href="#">COMP1116<br>Business Communications 1</a></li>
 	                <li data-icon="false"><a href="#">COMP1100<br>CST Program Fundamentals</a></li>
@@ -12,7 +12,7 @@
     	            <li data-icon="false"><a href="#">COMP1536<br>Introduction to Web Development</a></li-->
                 </ul>
             </div>
-            <div data-role="footer" data-position="fixed" data-tap-toggle="false">
+            <div data-role="footer" data-position="fixed" data-tap-toggle="false" data-split-theme="a">
                 <div data-role="navbar">
 		            <ul>
 			            <li><a href="#page-my-courses" data-icon="back" data-iconpos="top">My Courses</a></li>
