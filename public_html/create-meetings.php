@@ -19,15 +19,17 @@
                 <input id="create-meeting-start-datetime" name="create-meeting-start-datetime" type="text"><br/>
             </div>
 
-            <div id="meeting-end-datetime-wrapper">
+
                 <label for="create-meeting-end-datetime">End Time :</label>
                 <input id="create-meeting-end-datetime" name="create-meeting-end-datetime" type="text"><br/>
-            </div>
+
 
             <div id="max-buddies-wrapper">
                 <label for="max-buddies">Maximum Buddies :</label>
                 <input id="max-buddies" name="max-buddies" type="text"><br/>
             </div>
+
+            <div id="css-center-test"><p>what up!</p></div>
 
             <div id="meeting-comments-wrapper">
                 <label for="meeting-comments">Comments :</label>
