@@ -18,18 +18,14 @@ function getAllMeetings( ajax_URL )
             for( var i = 0; i < json.length; ++i )
             {
                 var meetingID = json.id;
-                var meetingCreator = json.creatorID;
                 var meetingCourse = json.courseID;
-                var meetingDesc = json.description;
                 var meetingLoc = json.location;
-                var meetingStartTime = json.startTime;
-                var meetingEndTime = json.endTime;
-                var meetingMaxBuddies = json.maxBuddies;
-                var meetingBuddies = json.buddies;
-                var meetingAttending = json.attending;
+                var meetingStartTime = json.startDate;
+                var meetingCancelled = json.cancelled;
+                var meetingFilter = json.filter;            // filter will determine which mode people will be able to use for a meeting and how it displays in lists
 
                 //populate the list of all meetings with a helper function
-                addMeetingToList ( meetingID, meetingCreator, meetingCourse, meetingDesc, meetingLoc, meetingStartTime, meetingEndTime, meetingMaxBuddies, meetingBuddies, meetingAttending );
+                addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTime, meetingCancelled, meetingFilter );
             }
         }
     });
@@ -84,7 +80,7 @@ function createMeeting ( ajax_URL, courseID, courseDescription, meetingLocation,
         data:
         {
             method: 'create-meeting',
-            courseId: courseID,
+            courseID: courseID,
             description: courseDescription,
             location: meetingLocation, 
             startTime: startTime,
@@ -137,6 +133,7 @@ function editMeeting ( ajax_URL, meetingID, courseID, courseDescription, meeting
             {
                 document.getElementById( 'create-meeting-form' ).reset();
                 $.mobile.changePage( '#page-my-meetings' )
+            }
         }
     });
 }
@@ -211,7 +208,7 @@ function leaveMeeting ( ajax_URL, meetingID )
     });
 }
 
-
+/*---------------------------------- HELPER FUNCTIONS BELOW ---------------------------------------*/
 /* used to add the details of a particular meeting to a HTML form, for editing meetings
     @param meetingID the unique ID assigned to a meeting */
 
@@ -236,19 +233,130 @@ function populateMeetingDetails ( description, meetingEndDate, meetingMaxBuddies
 
 /* used to add a meeting to a list of meetings
     @param meetingID: a numeric meeting ID, unique to each meeting
-    @param meetingCreator: the user who created the meeting
     @param meetingCourse: the course being studied at the meeting
-    @param meetingDesc: a description of the meeting
     @param meetingLoc: the location where the meeting will be held
     @param meetingStartTime: the starting date time of the meeting
-    @param meetingEndTime: the ending date time for the meeting
-    @param meetingMaxBuddies: the maximum number of people that the location can accomodate
-    @param meetingBuddies: an array of user names, a list of people attending the meeting
-    @param meetingAttending: an indication of whether the user is attending this meeting or not */
+    @param meetingCancelled: a boolean value
+                true: indicates a meeting is cancelled
+                false: indicates     the meeting is available
+    @param meetingFilter: a numeric value ( 0, 1, or 2 ) which detemines a user's relationship to any given meeting
+                0: not attending
+                1: attending
+                2: meeting creator */
 
-function addMeetingToList ( meetingID, meetingCreator, meetingCourse, meetingDesc, meetingLoc, meetingStartTime, meetingEndTime, meetingMaxBuddies, meetingBuddies, meetingAttending )
+function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTime, meetingCancelled, meetingFilter )
 {
+    //make sure my-meetings-list is in a container with  data-role="collapsible" so that we get the nice drop down effect for meeting info.
     //get the element to get meetings added to it
     var meetingList = document.getElementById('my-meetings-list');
     $('#my-meetings-list').listview();
+
+
+    //call an ajax function for add additional information from the server (if needed) and assign it to variables
+
+    
+    //use createElement() to make a <li> and populate it with all the data
+
+    //add <li> to the meetingList varable as a child node (i guess)
 }
+    
+/*   --- CALVIN'S DEMO STUFF
+$( '#i-created' ).on( 'click tap', function(e)
+{
+    iCreated = !iCreated;
+
+    regenerateList();
+});
+
+function regenerateList()
+{
+    for( i = 0; i < courses.length; i += 1 )
+    {
+        if ( iCreated && courses[i].creator === me )
+        {
+            addMeetingToList(();
+        }
+        ...
+    }
+}
+*/
+
+/*
+$( '#i-created' ).on( 'click tap', function(e)
+    {
+
+
+        var templist;
+        for(blabla)
+        {
+            if(beepboop.filter == '2')
+            {
+                //add to list
+            }
+        }
+        //remove current list
+        //append new list
+        //refresh
+    });
+$( '#all-meeting' ).on( 'click tap', function(e)
+    {
+        //remove current list
+        //append original list from request
+        //refresh
+    });
+$( '#i-attending' ).on( 'click tap', function(e)
+    {
+        var templist;
+        for(blabla)
+        {
+            if(beepboop.filter == '1')
+            {
+                //add to list
+            }
+        }
+        //remove current list
+        //append new list
+        //refresh
+    });
+
+function regenerateList(iCreated,allMeeting,iAttending)
+{    
+    var templist;
+    for(blablabla)
+    {
+        if(iCreated)
+        {
+            if(bla.filter == '2')
+            {
+                addMeetingToList(bla);
+            }
+        }
+        if(allMeeting)
+        {
+            while(templist.length != 0)
+            {
+                removeMeetingfromList(templist[i]);
+            }
+            while(list.length != templist.length)
+            {
+                addMeetingToList(list[i]);
+            }
+        }
+        if(iAttending)
+        {
+
+        }
+    }
+}
+
+function addMeetingToList()
+{
+
+}
+
+function removeMeetingFromList()
+{
+
+}
+*/
+
