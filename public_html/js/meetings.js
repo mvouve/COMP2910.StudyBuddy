@@ -100,15 +100,19 @@ function createMeeting ( ajax_URL, courseID, courseDescription, meetingLocation,
 }
 
 
-/* called when the creator of a meeting needs to change something about the meeting
-    @param ajax_URL  the URI location where the ajax folder is located
-    @param meetingID: the meeting ID, determiend which meeting is to be altered
-    @param courseID the course being studied at the meeting
-    @param CourseDescription a description of the course
-    @param meetingLocation the place where the meeting will be held
-    @param startTime a datetime string informing when the meeting begins (YYYY-MM-DD HH:MM:SS)
-    @param endTime a datetime string informing when the meeting ends (YYYY-MM-DD HH:MM:SS)
-    @param maxBuddies the maximum number of people that a location can accomidate */
+    /* 
+     * called when the creator of a meeting needs to change something about the meeting
+     *
+     *
+     * @param ajax_URL  the URI location where the ajax folder is located
+     * @param meetingID: the meeting ID, determiend which meeting is to be altered
+     * @param courseID the course being studied at the meeting
+     * @param CourseDescription a description of the course
+     * @param meetingLocation the place where the meeting will be held
+     * @param startTime a datetime string informing when the meeting begins (YYYY-MM-DD HH:MM:SS)
+     * @param endTime a datetime string informing when the meeting ends (YYYY-MM-DD HH:MM:SS)
+     * @param maxBuddies the maximum number of people that a location can accomidate 
+     */
 function editMeeting ( ajax_URL, meetingID, courseID, courseDescription, meetingLocation, startTime, endTime, maxBuddies )
 {
     $.ajax
@@ -129,7 +133,10 @@ function editMeeting ( ajax_URL, meetingID, courseID, courseDescription, meeting
         dataType: "json",
         success: function ( json )
         {
-            //to do later
+            if( json.success == true )
+            {
+                document.getElementById( 'create-meeting-form' ).reset();
+                $.mobile.changePage( '#page-my-meetings' )
         }
     });
 }
@@ -245,3 +252,103 @@ function addMeetingToList ( meetingID, meetingCreator, meetingCourse, meetingDes
     var meetingList = document.getElementById('my-meetings-list');
     $('#my-meetings-list').listview();
 }
+    
+/*   --- CALVIN'S DEMO STUFF
+$( '#i-created' ).on( 'click tap', function(e)
+{
+    iCreated = !iCreated;
+
+    regenerateList();
+});
+
+function regenerateList()
+{
+    for( i = 0; i < courses.length; i += 1 )
+    {
+        if ( iCreated && courses[i].creator === me )
+        {
+            addMeetingToList(();
+        }
+        ...
+    }
+}
+*/
+
+/*
+$( '#i-created' ).on( 'click tap', function(e)
+    {
+
+
+        var templist;
+        for(blabla)
+        {
+            if(beepboop.filter == '2')
+            {
+                //add to list
+            }
+        }
+        //remove current list
+        //append new list
+        //refresh
+    });
+$( '#all-meeting' ).on( 'click tap', function(e)
+    {
+        //remove current list
+        //append original list from request
+        //refresh
+    });
+$( '#i-attending' ).on( 'click tap', function(e)
+    {
+        var templist;
+        for(blabla)
+        {
+            if(beepboop.filter == '1')
+            {
+                //add to list
+            }
+        }
+        //remove current list
+        //append new list
+        //refresh
+    });
+
+function regenerateList(iCreated,allMeeting,iAttending)
+{    
+    var templist;
+    for(blablabla)
+    {
+        if(iCreated)
+        {
+            if(bla.filter == '2')
+            {
+                addMeetingToList(bla);
+            }
+        }
+        if(allMeeting)
+        {
+            while(templist.length != 0)
+            {
+                removeMeetingfromList(templist[i]);
+            }
+            while(list.length != templist.length)
+            {
+                addMeetingToList(list[i]);
+            }
+        }
+        if(iAttending)
+        {
+
+        }
+    }
+}
+
+function addMeetingToList()
+{
+
+}
+
+function removeMeetingFromList()
+{
+
+}
+*/

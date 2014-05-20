@@ -116,3 +116,33 @@ a
     width:70%;
     height:auto;
 }
+
+/* what up! css for create-meetings.php is below*/
+
+#create-meeting-start-datetime-wrapper
+{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#create-meeting-end-datetime-wrapper
+{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#css-center-test
+{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#xdsoft_datetimepicker xdsoft_noselect  xdsoft_inline
+{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

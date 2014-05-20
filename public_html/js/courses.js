@@ -38,6 +38,12 @@ function getUserCourses( ajax_URL )
                 newLI.innerHTML = '<a href="#" id="my-course-'+json[i].id+'">' + json[i].id +
                     '<br>' + json[i].title + '</a>';
                 myCoursesList.appendChild(newLI);
+				
+				// If visible, bind to channel
+				if ( json[i].visible )
+				{
+					bindToCourse( json[i].id );
+				}
 
                 /* When an item is clicked, either
                     -remove course from user course list, if in remove mode OR
@@ -250,6 +256,11 @@ function addToUserCourses ( id, title )
     //create an entry in the beingToggled list
 	beingToggled[id] = false;
 	
+	// If visible, bind to course channel
+	if ( myCoursesServerResponse[id].visible )
+	{
+		bindToCourse( id );
+	}
     
     //create the list item and add it to myCoursesList
     var newLI = document.createElement('li');
@@ -262,7 +273,7 @@ function addToUserCourses ( id, title )
         -remove course from user course list, if in remove mode OR
         -toggle course's visability otherwise
     */
-    $('#my-course-' + id).on( 'click tap', function(e)
+    $('#my-course-'+id).on( 'click tap', function(e)
     {
         if( removeMode )
         {
@@ -350,13 +361,19 @@ function removeFromUserCourses ( id )
     //remove check
     $('#all-course-' + id).parent().attr('data-icon', 'false');
     $('#all-course-' + id).removeClass('ui-icon-check ui-btn-icon-right');
-    
-    //delete entry from temporary all courses list
-    delete myCoursesServerResponse[id];
 
     //remove the list item of the course from the unordered list
     var element = document.getElementById( 'my-course-' + id );
     element.parentNode.parentNode.removeChild( element.parentNode );
+	
+	// Remove course channel binding if it's set
+	if ( myCoursesServerResponse[id].visible )
+	{
+		unbindFromCourse( id );
+	}
+	
+    //delete entry from temporary all courses list
+    delete myCoursesServerResponse[id];
   
     $('#my-courses-list').listview('refresh');
 }
@@ -402,9 +419,17 @@ function toggleVisibility ( ajax_URL, courseID )
 			// If the course is now watched, show the eye icon.
 			if ( myCoursesServerResponse[courseID].visible )
 			{
+				// Remove course channel binding if it's set
+				bindToCourse( courseID );
+					
 				// Set Icon
 				$( '#my-course-' + courseID ).parent().attr('data-icon', 'eye');
 				$( '#my-course-' + courseID ).addClass('ui-icon-eye ui-btn-icon-right');
+			}
+			else
+			{
+				// Remove course channel binding if it's set
+				unbindFromCourse( courseID );
 			}
             
 			beingToggled[ courseID ] = false;

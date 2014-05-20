@@ -3,25 +3,38 @@
     <?php renderPagelet( 'banner.php', array( '{{title}}' => 'Create Meeting' ) ); ?>
 
     <div data-role="main" id="create-meeting-div">
-        <form id="create-edit-meeting-form" name="create-edit-meeting-form" method="post">
-            <label for="course-dropdown">Course :</label>
-            <select id="course-dropdown" name="course-dropdown"></select><br/>
+        <form id="create-meeting-form" name="create-meeting-form" method="post">
+            <div id="course-dropdown-wrapper">
+                <label for="course-dropdown">Course :</label>
+                <select id="course-dropdown" name="course-dropdown"></select><br/>
+            </div>
 
-            <label for="location-dropdown">Location :</label>
-            <select id="location-dropdown" name="location-dropdown"></select><br/>
+            <div id="location-dropdown-wrapper">
+                <label for="location-dropdown">Location :</label>
+                <select id="location-dropdown" name="location-dropdown"></select><br/>
+            </div>
 
-            <label for="meeting-start-datetime">Start Time :</label>
-            <input id="create-meeting-start-datetime" name="meeting-start-datetime" type="text"><br/>
+            <div id="meeting-start-datetime-wrapper">
+                <label for="create-meeting-start-datetime">Start Time :</label>
+                <input id="create-meeting-start-datetime" name="create-meeting-start-datetime" type="text"><br/>
+            </div>
 
-            <label for="meeting-end-datetime">End Time :</label>
-            <input id="create-meeting-end-datetime" name="meeting-end-datetime" type="text"><br/>
 
-            <label for="max-buddies">Maximum Buddies :</label>
-            <input id="max-buddies" name="max-buddies" type="number" min="1" max="99"><br/>
+                <label for="create-meeting-end-datetime">End Time :</label>
+                <input id="create-meeting-end-datetime" name="create-meeting-end-datetime" type="text"><br/>
 
-            <label for="meeting-comments">Comments :</label>
-            <textarea id="meeting-comments" name="meeting-comments"></textarea><br/>
 
+            <div id="max-buddies-wrapper">
+                <label for="max-buddies">Maximum Buddies :</label>
+                <input id="max-buddies" name="max-buddies" type="text"><br/>
+            </div>
+
+            <div id="css-center-test"><p>what up!</p></div>
+
+            <div id="meeting-comments-wrapper">
+                <label for="meeting-comments">Comments :</label>
+                <textarea id="meeting-comments" name="meeting-comments"></textarea><br/>
+            </div>
         </form>
     </div>
             <!-- save meeting and cancel buttons go here?-->
