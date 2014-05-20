@@ -14,7 +14,7 @@
                 <select id="location-dropdown" name="location-dropdown"></select><br/>
             </div>
 
-            <div>
+            <div id="meeting-start-datetime-wrapper">
                 <label for="meeting-start-datetime">Start Time :</label>
                 <input id="meeting-start-datetime" name="meeting-start-datetime" type="text"><br/>
             </div>
