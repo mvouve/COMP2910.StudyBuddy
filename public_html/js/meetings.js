@@ -252,3 +252,103 @@ function addMeetingToList ( meetingID, meetingCreator, meetingCourse, meetingDes
     var meetingList = document.getElementById('my-meetings-list');
     $('#my-meetings-list').listview();
 }
+    
+/*   --- CALVIN'S DEMO STUFF
+$( '#i-created' ).on( 'click tap', function(e)
+{
+    iCreated = !iCreated;
+
+    regenerateList();
+});
+
+function regenerateList()
+{
+    for( i = 0; i < courses.length; i += 1 )
+    {
+        if ( iCreated && courses[i].creator === me )
+        {
+            addMeetingToList(();
+        }
+        ...
+    }
+}
+*/
+
+/*
+$( '#i-created' ).on( 'click tap', function(e)
+    {
+
+
+        var templist;
+        for(blabla)
+        {
+            if(beepboop.filter == '2')
+            {
+                //add to list
+            }
+        }
+        //remove current list
+        //append new list
+        //refresh
+    });
+$( '#all-meeting' ).on( 'click tap', function(e)
+    {
+        //remove current list
+        //append original list from request
+        //refresh
+    });
+$( '#i-attending' ).on( 'click tap', function(e)
+    {
+        var templist;
+        for(blabla)
+        {
+            if(beepboop.filter == '1')
+            {
+                //add to list
+            }
+        }
+        //remove current list
+        //append new list
+        //refresh
+    });
+
+function regenerateList(iCreated,allMeeting,iAttending)
+{    
+    var templist;
+    for(blablabla)
+    {
+        if(iCreated)
+        {
+            if(bla.filter == '2')
+            {
+                addMeetingToList(bla);
+            }
+        }
+        if(allMeeting)
+        {
+            while(templist.length != 0)
+            {
+                removeMeetingfromList(templist[i]);
+            }
+            while(list.length != templist.length)
+            {
+                addMeetingToList(list[i]);
+            }
+        }
+        if(iAttending)
+        {
+
+        }
+    }
+}
+
+function addMeetingToList()
+{
+
+}
+
+function removeMeetingFromList()
+{
+
+}
+*/
