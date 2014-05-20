@@ -15,13 +15,13 @@
             </div>
 
             <div id="meeting-start-datetime-wrapper">
-                <label for="meeting-start-datetime">Start Time :</label>
-                <input id="meeting-start-datetime" name="meeting-start-datetime" type="text"><br/>
+                <label for="create-meeting-start-datetime">Start Time :</label>
+                <input id="create-meeting-start-datetime" name="create-meeting-start-datetime" type="text"><br/>
             </div>
 
             <div id="meeting-end-datetime-wrapper">
-                <label for="meeting-end-datetime">End Time :</label>
-                <input id="meeting-end-datetime" name="meeting-end-datetime" type="text"><br/>
+                <label for="create-meeting-end-datetime">End Time :</label>
+                <input id="create-meeting-end-datetime" name="create-meeting-end-datetime" type="text"><br/>
             </div>
 
             <div id="max-buddies-wrapper">
