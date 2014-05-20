@@ -101,7 +101,28 @@ class Meeting
         $sql->bindParam( ':maxBuddies', $maxBuddies );
         $sql->bindParam( ':startTime',  $startTime );
         $sql->bindParam( ':endTime',    $endTime );
-        $sql->execute();
+        
+        return $sql->execute();
+    }
+    
+    /*
+     * Cancel a meeting
+     *
+     * @param @meetingID
+     *
+     * @returns true on success, false on failure
+     */
+    public function cancelMeeting( $meetingID )
+    {
+        global $db
+        
+        $sql = 'UPDATE ' . Meeting::MEETING_TABLE . '
+                    SET canceled = \'T\'
+                    WHERE ID = :meetingID;';
+        $sql = $db->prepare( $sql );
+        $sql->bindParam( ':meetingID' );
+        
+        return $sql->execute();
     }
     
     /*
@@ -151,7 +172,7 @@ class Meeting
      *
      * @returns true on success, false on failure.
      */
-    public function leaveMeeting( $userID, $meetingID, $masterID )
+    public function leaveMeeting( $userID, $meetingID )
     {
         global $db;
         
@@ -166,18 +187,21 @@ class Meeting
         $sql->execute();
         
         // If the user leaving the meeting is the current master, change the master.
-        if( $masterID == $userID )
+        if( $this->isMaster( $userID, $meetingID )
         {
+            //SQL statment for getting userIDs for other users attending this meeting.
             $sql = 'SELECT userID
                         FROM' . Meeting::USER_MEETING_TABLE . '
-                        WHERE meetingID = :meetingID;';
+                        WHERE meetingID = :meetingID;';            
             $sql = $db->prepare( $sql );
             $sql->bindParam( ':meetingID', $meetingID );
             $sql->execute();
+            
+            //fetch the first row from the sql statment ( i.e. the next user )
             $newMasterID = $sql->fetch( PDO::FETCH_ASSOC );
             $newMasterID = $newMasterID['userID'];
             
-            // automaticly make someone in the meeting the new master.
+            // If that row exists, make that person the new master.
             if( $newMasterID )
             {
                 $sql = 'UPDATE' . Meeting::USER_MEETING_TABLE . '
@@ -188,6 +212,7 @@ class Meeting
                 $sql->bindParam( ':meetingID', $meetingID );
                 $sql->execute();
             }
+            
             // if there's no one else in the meeting delete the meeting.
             else
             {
