@@ -6,7 +6,10 @@ function setupPusher()
 	pusher = new Pusher( '7abde25051bc963f5a03', { authEndpoint: ajaxURL + 'pusher_auth.php' });
 	channels['study_buddy'] = pusher.subscribe( 'study_buddy' );
 	
-	channels['studdy_buddy'].bind( 'course_added', pusherCourseAdded );
+	channels['study_buddy'].bind( 'course_added', pusherCourseAdded );
+	
+	// Test private channel
+	bindToCourse( 'COMP1510' );
 }
 
 // Bind pusher to a course-specific private channel

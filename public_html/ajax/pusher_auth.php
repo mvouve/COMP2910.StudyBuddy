@@ -1,5 +1,5 @@
 <?php
-require( '../../config.php' );
+require( '../config.php' );
 require( PHP_INC_PATH . 'common.php' );
 
 $user = User::instance();
