@@ -13,19 +13,24 @@ function getAllMeetings( ajax_URL )
             method: 'get-meetings'
         },
         dataType: "json",
-        success: function ( json ) {
-            var meetingID = json.id;
-            var meetingCreator = json.creatorID;
-            var meetingCourse = json.courseID;
-            var meetingDesc = json.description;
-            var meetingLoc = json.location;
-            var meetingStartTime = json.startTime;
-            var meetingEndTime = json.endTime;
-            var meetingMaxBuddies = json.maxBuddies;
-            var meetingBuddies = json.buddies;
-            var meetingAttending = json.attending;
+        success: function ( json )
+        {
+            for( var i = 0; i < json.length; ++i )
+            {
+                var meetingID = json.id;
+                var meetingCreator = json.creatorID;
+                var meetingCourse = json.courseID;
+                var meetingDesc = json.description;
+                var meetingLoc = json.location;
+                var meetingStartTime = json.startTime;
+                var meetingEndTime = json.endTime;
+                var meetingMaxBuddies = json.maxBuddies;
+                var meetingBuddies = json.buddies;
+                var meetingAttending = json.attending;
 
-            //Do something with all this data now
+                //populate the list of all meetings with a helper function
+                addMeetingToList ( meetingID, meetingCreator, meetingCourse, meetingDesc, meetingLoc, meetingStartTime, meetingEndTime, meetingMaxBuddies, meetingBuddies, meetingAttending );
+            }
         }
     });
 }
@@ -203,7 +208,7 @@ function leaveMeeting ( ajax_URL, meetingID )
 /* used to add the details of a particular meeting to a HTML form, for editing meetings
     @param meetingID the unique ID assigned to a meeting */
 
-function populateMeetingDetails ( description,  )
+function populateMeetingDetails ( description, meetingEndDate, meetingMaxBuddies, meetingBuddies )
 {
     //select a form element and assign json data to it
     var element = document.getElementById("course-dropdown");
@@ -222,9 +227,21 @@ function populateMeetingDetails ( description,  )
     element.setAttribute("value", /* json data */);
 }
 
-/*
-    var meetingDesc = json.description;
-            var meetingEndDate = json.endDate;
-            var meetingMaxBuddies = json.maxBuddies;
-            var meetingBuddies = json.buddies //an array of displayNames
-*/
+/* used to add a meeting to a list of meetings
+    @param meetingID: a numeric meeting ID, unique to each meeting
+    @param meetingCreator: the user who created the meeting
+    @param meetingCourse: the course being studied at the meeting
+    @param meetingDesc: a description of the meeting
+    @param meetingLoc: the location where the meeting will be held
+    @param meetingStartTime: the starting date time of the meeting
+    @param meetingEndTime: the ending date time for the meeting
+    @param meetingMaxBuddies: the maximum number of people that the location can accomodate
+    @param meetingBuddies: an array of user names, a list of people attending the meeting
+    @param meetingAttending: an indication of whether the user is attending this meeting or not */
+
+function addMeetingToList ( meetingID, meetingCreator, meetingCourse, meetingDesc, meetingLoc, meetingStartTime, meetingEndTime, meetingMaxBuddies, meetingBuddies, meetingAttending )
+{
+    //get the element to get meetings added to it
+    var meetingList = document.getElementById('my-meetings-list');
+    $('#my-meetings-list').listview();
+}
