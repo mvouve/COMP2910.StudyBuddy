@@ -12,6 +12,7 @@ function getUserCourses( ajax_URL )
     $.ajax
     ({
         url: ajax_URL + 'courses/user-courses.php',
+        type: 'POST',
         data:
         {
             method: "get-courses"
@@ -58,6 +59,7 @@ function getCourseList( ajax_URL )
     $.ajax
     ({
         url: ajax_URL + 'courses/courses.php',
+        type: 'POST',
         data:
         {
             method: "get-courses"
@@ -174,6 +176,7 @@ function addUserCourse( ajax_URL, courseID, mode )
     $.ajax
     ({
         url: ajax_URL + 'courses/user-courses.php',
+        type: 'POST',
         data:
         {
             method: "add-course",
@@ -271,6 +274,7 @@ function removeUserCourse ( ajax_URL, courseID, mode )
     $.ajax
     ({
         url: ajax_URL + 'courses/user-courses.php',
+        type: 'POST',
         data:
         {
             method: "remove-course",
@@ -341,6 +345,7 @@ function toggleVisibility ( ajax_URL, courseID )
     $.ajax
     ({
         url: ajax_URL + 'courses/user-courses.php',
+        type: 'POST',
         data:
         {
             method: "toggle-visibility",

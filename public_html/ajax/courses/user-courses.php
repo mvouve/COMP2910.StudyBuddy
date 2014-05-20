@@ -96,7 +96,7 @@ function getCourses()
 }
 
 /*
- * Adds a course a user in the DB
+ * Adds a course to a user in the DB
  * 
  * @param $id the courseID to be added
  * @return true | false 
