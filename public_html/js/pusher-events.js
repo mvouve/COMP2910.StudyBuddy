@@ -7,6 +7,9 @@ function setupPusher()
 	channels['study_buddy'] = pusher.subscribe( 'study_buddy' );
 	
 	channels['study_buddy'].bind( 'course_added', pusherCourseAdded );
+	
+	// Test private channel
+	bindToCourse( 'COMP1510' );
 }
 
 // Bind pusher to a course-specific private channel
