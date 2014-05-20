@@ -1,5 +1,5 @@
 <!--Beginning of my-meetings.php-->
-    <div data-role="page" data-theme="a" id='page-my-meetings'>
+    <div data-role="page" data-theme="a" id="page-my-meetings">
         <?php renderPagelet( 'banner.php', array( '{{title}}' => 'My Meetings') ); ?>
         <form id="get-my-meetings-form" name="get-my-meetings-form" method="POST">
             <input type="hidden" name="method" value="get-meetings" />
@@ -23,5 +23,3 @@
         //
     </script>
 <!--End of my-meetings.php-->
-                        
-            
