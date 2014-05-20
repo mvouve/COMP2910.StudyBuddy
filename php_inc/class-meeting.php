@@ -101,7 +101,28 @@ class Meeting
         $sql->bindParam( ':maxBuddies', $maxBuddies );
         $sql->bindParam( ':startTime',  $startTime );
         $sql->bindParam( ':endTime',    $endTime );
-        $sql->execute();
+        
+        return $sql->execute();
+    }
+    
+    /*
+     * Cancel a meeting
+     *
+     * @param @meetingID
+     *
+     * @returns true on success, false on failure
+     */
+    public function cancelMeeting( $meetingID )
+    {
+        global $db
+        
+        $sql = 'UPDATE ' . Meeting::MEETING_TABLE . '
+                    SET canceled = \'T\'
+                    WHERE ID = :meetingID;';
+        $sql = $db->prepare( $sql );
+        $sql->bindParam( ':meetingID' );
+        
+        return $sql->execute();
     }
     
     /*
@@ -151,7 +172,7 @@ class Meeting
      *
      * @returns true on success, false on failure.
      */
-    public function leaveMeeting( $userID, $meetingID, $masterID )
+    public function leaveMeeting( $userID, $meetingID )
     {
         global $db;
         
@@ -166,18 +187,21 @@ class Meeting
         $sql->execute();
         
         // If the user leaving the meeting is the current master, change the master.
-        if( $masterID == $userID )
+        if( $this->isMaster( $userID, $meetingID )
         {
+            //SQL statment for getting userIDs for other users attending this meeting.
             $sql = 'SELECT userID
                         FROM' . Meeting::USER_MEETING_TABLE . '
-                        WHERE meetingID = :meetingID;';
+                        WHERE meetingID = :meetingID;';            
             $sql = $db->prepare( $sql );
             $sql->bindParam( ':meetingID', $meetingID );
             $sql->execute();
+            
+            //fetch the first row from the sql statment ( i.e. the next user )
             $newMasterID = $sql->fetch( PDO::FETCH_ASSOC );
             $newMasterID = $newMasterID['userID'];
             
-            // automaticly make someone in the meeting the new master.
+            // If that row exists, make that person the new master.
             if( $newMasterID )
             {
                 $sql = 'UPDATE' . Meeting::USER_MEETING_TABLE . '
@@ -188,6 +212,7 @@ class Meeting
                 $sql->bindParam( ':meetingID', $meetingID );
                 $sql->execute();
             }
+            
             // if there's no one else in the meeting delete the meeting.
             else
             {
@@ -214,16 +239,22 @@ class Meeting
     {
         global $db;
         
-        $sql = 'SELECT count.
+        $sql = 'SELECT comment, courseID, location, startDate, endDate, maxBuddies
                     FROM ' . Meeting::MEETING_TABLE . ' m
-                        JOIN ' . Meeting::USER_MEETING_TABLE . ' um
-                            ON m.ID = um.meetingID
-                        JOIN ' . Meeting::USER_TABLE . ' u
-                            ON um.userID = u.ID
-                    WHERE m.ID = :meetingID
-                    GROUP BY m.ID;';
+                    WHERE m.ID = :meetingID;';
         $sql = $db->prepare( $sql );
         $sql-> bindParam( ':meetingID', $meetingID );
+        $sql->execute();
+        
+        $sql = $sql->fetch( PDO::FETCH_ASSOC );
+        
+        $retval = array( 'discription'  => $sql['comment'],
+                         'courseID'     => $sql['courseID'],
+                         'location'     => $sql['location'],
+                         'startDate'    => $sql['startDate'],
+                         'endDate'      => $sql['endDate']
+                        );
+        return $retval;
     }
     
     /*
@@ -299,7 +330,7 @@ class Meeting
         $row = null;
         
         // Build SQL statement
-        $sql = 'SELECT m.ID, m.masterID, m.courseID, m.location, m.startDate, um.userID as m_user
+        $sql = 'SELECT m.ID, m.masterID, m.courseID, m.location, m.startDate, um.userID as m_user, m.canceled
                 FROM ' . Meeting::MEETING_TABLE . ' m
                     JOIN ' . Meeting::USER_COURSE_TABLE . ' uc
                         ON m.courseID = uc.courseID
@@ -333,12 +364,26 @@ class Meeting
             // User is not signed-up for the meeting
             if ( is_null( $row['m_user'] ) )
             {
-                $output['filter'] = 0;
+                if ( $row['canceled'] = 'T' )
+                {
+                    $output['filter'] = 3;
+                }
+                else
+                {
+                    $output['filter'] = 0;
+                }
             }
             // User created the meeting.
             else if ( $row['masterID'] == $userID )
             {
+                if ( $row['canceled'] = 'T' )
+                {
+                    $output['filter'] = 3;
+                }
+                else
+                {
                 $output['filter'] = 2;
+                }
             }
             // User is attending but did not create the meeting.
             else
