@@ -2,8 +2,8 @@
                 <div class='panel-content'>
                     <h1>Menu</h1><br>
                     <ul data-role='listview'>
-                        <li><a href='#page-test-main'>My Meetings</a></li>
-                        <li><a href='#' >Create Meetings</a></li>
+                        <li><a href='#page-my-meetings'>My Meetings</a></li>
+                        <li><a href='#page-create-meeting' >Create Meeting</a></li>
                         <li><br></li>
                         <li><a href='#page-my-courses'>My Courses</a></li>
                         <li><a href='#page-account-settings'>Account Settings</a></li>

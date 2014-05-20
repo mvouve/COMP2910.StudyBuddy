@@ -21,19 +21,22 @@ function getUserCourses( ajax_URL )
         {
             for( var i = 0; i < json.length; ++i )
             {
-                myCoursesServerResponse[json[i].id] = { 'title':json[i].title, 'visible':json[i].visible };
+                myCoursesServerResponse[json[i].id] = { 'title':json[i].title,
+                                                        'visible':json[i].visible };
 				beingToggled[json[i].id] = false;
 					
                 var newLI = document.createElement('li');
                 newLI.setAttribute( 'data-icon', (json[i].visible?'eye':'false') );
-                newLI.innerHTML = '<a href="#" id="my-course-'+json[i].id+'">' + json[i].id + '<br>' + json[i].title + '</a>';
+                newLI.innerHTML = '<a href="#" id="my-course-'+json[i].id+'">' + json[i].id +
+                    '<br>' + json[i].title + '</a>';
                 myCoursesList.appendChild(newLI);
                 $('#my-course-'+json[i].id).on( 'click tap', function(e)
                 {
                     if( removeMode )
                     {
 						/* CLICK TO REMOVE */
-                        removeUserCourse( ajaxURL, e.target.id.substring('my-course-'.length), 'my' );
+                        removeUserCourse( ajaxURL, e.target.id.substring('my-course-'.length),
+                            'my' );
                     }
                     else
                     {
@@ -64,7 +67,8 @@ function getCourseList( ajax_URL )
         {
             for (var i = 0; i < json.length; i++)
             {
-                allCoursesServerResponse[json[i].id] = { 'title':json[i].title, 'inCourse':json[i].inCourse };
+                allCoursesServerResponse[json[i].id] = { 'title':json[i].title,
+                                                         'inCourse':json[i].inCourse };
 
                 //calls a separate function to add this data to the HTML
                 masterCourseListAdd(ajax_URL, json[i].id, json[i].title, json[i].inCourse);
@@ -84,9 +88,10 @@ function masterCourseListAdd ( ajax_URL, id, title, inCourse )
 {
     loading[id] = false;
     var newLI = document.createElement('li');
-    newLI.innerHTML = '<a href="#" id="all-course-' + id + '" class="ui-btn" style="vertical-align: middle;">' + id + '<br>' + 
-                      title + '</a>';
+    newLI.innerHTML = '<a href="#" id="all-course-' + id +
+        '" class="ui-btn" style="vertical-align: middle;">' + id + '<br>' + title + '</a>';
     allCoursesList.appendChild(newLI);
+    
     if( inCourse )
     {
         newLI.setAttribute( 'data-icon', 'check');
@@ -118,25 +123,24 @@ function masterCourseListAdd ( ajax_URL, id, title, inCourse )
     @param description a brief description / the name of the course */
 function createCourse( ajax_URL, courseID, description )
 {
-    $.ajax
-        ({
-            url: ajax_URL + 'courses/courses.php',
-            data:
-            {
-                method: "add-course",
-                id: courseID,
-                title: description
-            },
-            dataType: "json",
-            success: function (json) {
-                if(json.success == true){
-                    document.getElementById("user-course-form").reset();
-					allCoursesServerResponse[courseID] = { 'title':description, 'inCourse':true };
-					addToUserCourses( courseID, description );
-                    $.mobile.changePage("#page-all-courses");
-                }
+    $.ajax({
+        url: ajax_URL + 'courses/courses.php',
+        data:
+        {
+            method: "add-course",
+            id: courseID,
+            title: description
+        },
+        dataType: "json",
+        success: function (json) {
+            if(json.success == true){
+                document.getElementById("user-course-form").reset();
+                allCoursesServerResponse[courseID] = { 'title':description, 'inCourse':true };
+                addToUserCourses( courseID, description );
+                $.mobile.changePage("#page-all-courses");
             }
-        });
+        }
+    });
 }
 
 /* adds a course to the user list in the database
@@ -160,11 +164,12 @@ function addUserCourse( ajax_URL, courseID, mode )
     var parentLI = target.parentNode;
 
     //hide check
-    parentLI.setAttribute('data-icon', 'false')
+    parentLI.setAttribute('data-icon', 'false');
     $('#' + target.id).removeClass('ui-icon-check ui-icon-eye ui-icon-delete ui-btn-icon-right');
 
     //show loading image
-    target.innerHTML = target.innerHTML + '<img class="course-loading" src="css/images/ajax-loader.gif" alt="loading...">';
+    target.innerHTML = target.innerHTML +
+        '<img class="course-loading" src="css/images/ajax-loader.gif" alt="loading...">';
 
     $.ajax
     ({
@@ -199,10 +204,8 @@ function addUserCourse( ajax_URL, courseID, mode )
             //refresh if safe
             if( refresh )
                 $('#all-courses-list').listview('refresh');
-
         }
     });
-
 }
 
 /* Adds course data to list elements in HTML 
@@ -219,7 +222,8 @@ function addToUserCourses ( id, title )
 
     var newLI = document.createElement('li');
     newLI.setAttribute( 'data-icon', (myCoursesServerResponse[id].visible?'eye':'false') );
-    newLI.innerHTML = '<a href="#" id="my-course-'+id+'">' + id + '<br>' + myCoursesServerResponse[id].title + '</a>';
+    newLI.innerHTML = '<a href="#" id="my-course-'+id+'">' + id + '<br>'
+        + myCoursesServerResponse[id].title + '</a>';
     myCoursesList.appendChild(newLI);
 
 	$('#my-course-' + id).on( 'click tap', function(e) {
@@ -258,10 +262,11 @@ function removeUserCourse ( ajax_URL, courseID, mode )
     var parentLI = target.parentNode;
 
     //hide check
-    parentLI.setAttribute('data-icon', 'false')
+    parentLI.setAttribute('data-icon', 'false');
     $('#' + target.id).removeClass('ui-icon-check ui-icon-eye ui-icon-delete ui-btn-icon-right');
     //show loading image
-    target.innerHTML = target.innerHTML + '<img class="course-loading" src="css/images/ajax-loader.gif" alt="loading...">';
+    target.innerHTML = target.innerHTML +
+        '<img class="course-loading" src="css/images/ajax-loader.gif" alt="loading...">';
 
     $.ajax
     ({
@@ -330,7 +335,9 @@ function toggleVisibility ( ajax_URL, courseID )
 	$( '#my-course-' + courseID ).parent().attr('data-icon', 'false');
 	$( '#my-course-' + courseID ).removeClass('ui-icon-eye ui-btn-icon-right');
 	$( '#my-course-' + courseID ).html($( '#my-course-' + courseID ).html() + 
-'<img class="course-loading" src="css/images/ajax-loader.gif" alt="loading...">')
+        '<img class="course-loading" src="css/images/ajax-loader.gif" alt="loading...">');
+    
+    // Toggle visibility on server
     $.ajax
     ({
         url: ajax_URL + 'courses/user-courses.php',
@@ -354,6 +361,7 @@ function toggleVisibility ( ajax_URL, courseID )
 				$( '#my-course-' + courseID ).parent().attr('data-icon', 'eye');
 				$( '#my-course-' + courseID ).addClass('ui-icon-eye ui-btn-icon-right');
 			}
+            
 			beingToggled[ courseID ] = false;
 			var refresh = true;
             for( var key in beingToggled )
