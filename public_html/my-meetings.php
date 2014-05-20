@@ -19,7 +19,6 @@
             </div>
         </div>
     </div>
-<<<<<<< HEAD
 <script>
 	/*   --- CALVIN'S DEMO STUFF
 	$( '#i-created' ).on( 'click tap', function(e)
@@ -124,9 +123,3 @@
     
 </script>
 <!--End of my-meetings.php-->
-=======
-    <script>
-        //
-    </script>
-<!--End of my-meetings.php-->
->>>>>>> FETCH_HEAD
