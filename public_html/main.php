@@ -52,6 +52,7 @@
 			
 		
             // Various Page "onReady" functions
+            createMeetingOnReady();
             accountSettingsOnReady();
             addCourseOnReady();
             allCoursesOnReady();

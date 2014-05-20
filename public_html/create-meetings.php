@@ -29,8 +29,6 @@
                 <input id="max-buddies" name="max-buddies" type="text"><br/>
             </div>
 
-            <div id="css-center-test"><p>what up!</p></div>
-
             <div id="meeting-comments-wrapper">
                 <label for="meeting-comments">Comments :</label>
                 <textarea id="meeting-comments" name="meeting-comments"></textarea><br/>
@@ -57,4 +55,15 @@
                                                       format: 'YYYY-MM-DD HH:MM:ss',
                                                       inline: true
                                                       });
+    /*
+     * Populate courses. 
+     */
+    function createMeetingOnReady()
+    {
+        for( var key in myCoursesServerResponse )
+        {
+            var opt = '<option value="' + key + '">' + key + '</option>';
+            $('#course-dropdown').append( opt );
+        }
+    }
 </script>
