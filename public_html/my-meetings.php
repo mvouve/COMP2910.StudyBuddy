@@ -12,9 +12,8 @@
             <div data-role="navbar">
                 <ul>
                     <li><a href="#" data-icon="star" data-iconpos="top" id="i-created">My Creations</a></li>
-                    <li><a href="#" data-icon="grid" data-iconpos="top" id="all-meeting">All meetings</a></li>
-                    <li><a href="#" data-icon="check" data-iconpos="top" id="i-attending">I'm Attending</a></li>
-
+                    <li><a href="#" data-icon="check" data-iconpos="top" id="i-attending">I'm In!</a></li>
+                    <li><a href="#" data-icon="grid" data-iconpos="top" id="not-attending">Not Attending</a></li>
                 </ul>
             </div>
         </div>
