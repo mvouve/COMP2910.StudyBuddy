@@ -355,35 +355,28 @@ class Meeting
         while ( ( $row = $sql->fetch( PDO::FETCH_ASSOC ) ) != null )
         {
             $output = array(
-                            'ID' => $row['ID'],
-                            'courseID' => $row['courseID'],
-                            'location' => $row['location'],
+                            'ID'        => $row['ID'],
+                            'courseID'  => $row['courseID'],
+                            'location'  => $row['location'],
                             'startDate' => $row['startDate']
                             );
-                            
+            if ( $row['canceled'] == 'T' )
+            {
+                $output['canceled'] = true;
+            }
+            else
+            {
+                $output['canceled'] = false; 
+            }
             // User is not signed-up for the meeting
             if ( is_null( $row['m_user'] ) )
             {
-                if ( $row['canceled'] = 'T' )
-                {
-                    $output['filter'] = 3;
-                }
-                else
-                {
-                    $output['filter'] = 0;
-                }
+                $output['filter'] = 0;
             }
             // User created the meeting.
             else if ( $row['masterID'] == $userID )
             {
-                if ( $row['canceled'] = 'T' )
-                {
-                    $output['filter'] = 3;
-                }
-                else
-                {
                 $output['filter'] = 2;
-                }
             }
             // User is attending but did not create the meeting.
             else
