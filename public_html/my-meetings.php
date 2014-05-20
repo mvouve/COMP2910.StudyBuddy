@@ -1,5 +1,5 @@
 <!--Beginning of my-meetings.php-->
-    <div data-role="page" data-theme="a" id='page-my-meetings'>
+    <div data-role="page" data-theme="a" id="page-my-meetings">
         <?php renderPagelet( 'banner.php', array( '{{title}}' => 'My Meetings') ); ?>
         <form id="get-my-meetings-form" name="get-my-meetings-form" method="POST">
             <input type="hidden" name="method" value="get-meetings" />
@@ -11,13 +11,21 @@
         <div data-role="footer" data-position="fixed" data-tap-toggle="false">
             <div data-role="navbar">
                 <ul>
+<<<<<<< HEAD
                     <li><a href="#" data-icon="plus" data-iconpos="top" id="i-created">I created</a></li>
                     <li><a href="#" data-icon="plus" data-iconpos="top" id="all-meeting">All meetings</a></li>
                     <li><a href="#" data-icon="plus" data-iconpos="top" id="i-attending">Meetings I'm Attending</a></li>
+=======
+                    <li><a href="#" id="create-meeting-button" data-icon="plus" data-iconpos="top">Create Meeting</a></li>
+                    <li><a href="#" id="cancel-meeting-button" data-icon="plus" data-iconpos="top">Cancel my meeting</a></li>
+                    <li><a href="#" id="all-meetings-button" data-icon="plus" data-iconpos="top">All meetings</a></li>
+                    <li><a href="#" id="attending-meetings-button" data-icon="plus" data-iconpos="top">Meetings I'm Attending</a></li>
+>>>>>>> FETCH_HEAD
                 </ul>
             </div>
         </div>
     </div>
+<<<<<<< HEAD
 <script>
     /*
     $( '#i-created' ).on( 'click tap', function(e)
@@ -101,3 +109,9 @@
     
 </script>
 <!--End of my-meetings.php-->
+=======
+    <script>
+        //
+    </script>
+<!--End of my-meetings.php-->
+>>>>>>> FETCH_HEAD

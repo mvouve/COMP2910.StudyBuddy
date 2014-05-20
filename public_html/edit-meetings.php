@@ -8,26 +8,37 @@
     <div data-role="header">
     </div>
 
-    <div data-role="main" id="create-edit-meeting-div">
-        <form id="create-edit-meeting-form" name="create-edit-meeting-form" method="post">
-            <label for="course-dropdown">Course :</label><br/>
-            <select id="course-dropdown" name="course-dropdown"></select><br/>
+    <div data-role="main" id="edit-meeting-div">
+        <form id="edit-meeting-form" name="edit-meeting-form" method="post">
+            <div id="course-dropdown-wrapper">
+                <label for="course-dropdown">Course :</label>
+                <select id="course-dropdown" name="course-dropdown"></select><br/>
+            </div>
 
-            <label for="location-dropdown">Location :</label><br/>
-            <select id="location-dropdown" name="location-dropdown"></select><br/>
+            <div id="location-dropdown-wrapper">
+                <label for="location-dropdown">Location :</label>
+                <select id="location-dropdown" name="location-dropdown"></select><br/>
+            </div>
 
-            <label for="meeting-start-datetime">Start Time :</label><br/>
-            <input id="meeting-start-datetime" name="meeting-start-datetime" type="text"><br/>
+            <div>
+                <label for="meeting-start-datetime">Start Time :</label>
+                <input id="meeting-start-datetime" name="meeting-start-datetime" type="text"><br/>
+            </div>
 
-            <label for="meeting-end-datetime">End Time :</label><br/>
-            <input id="meeting-end-datetime" name="meeting-end-datetime" type="text"><br/>
+            <div id="meeting-end-datetime-wrapper">
+                <label for="meeting-end-datetime">End Time :</label>
+                <input id="meeting-end-datetime" name="meeting-end-datetime" type="text"><br/>
+            </div>
 
-            <label for="max-buddies">Maximum Buddies :</label><br/>
-            <input id="max-buddies" name="max-buddies" type="text"><br/>
+            <div id="max-buddies-wrapper">
+                <label for="max-buddies">Maximum Buddies :</label>
+                <input id="max-buddies" name="max-buddies" type="text"><br/>
+            </div>
 
-            <label for="meeting-comments">Comments :</label><br/>
-            <textarea id="meeting-comments" name="meeting-comments"></textarea><br/>
-
+            <div id="meeting-comments-wrapper">
+                <label for="meeting-comments">Comments :</label>
+                <textarea id="meeting-comments" name="meeting-comments"></textarea><br/>
+            </div>
         </form>
     </div>
             <!-- save meeting and cancel buttons go here?-->
