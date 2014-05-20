@@ -261,7 +261,7 @@ function addToUserCourses ( id, title )
 	// If visible, bind to course channel
 	if ( myCoursesServerResponse[id].visible )
 	{
-		bindToCourse( myCoursesServerResponse[id] );
+		bindToCourse( id );
 	}
     
     //create the list item and add it to myCoursesList

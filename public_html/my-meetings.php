@@ -27,6 +27,27 @@
     </div>
 <<<<<<< HEAD
 <script>
+	/*   --- CALVIN'S DEMO STUFF
+	$( '#i-created' ).on( 'click tap', function(e)
+	{
+		iCreated = !iCreated;
+		
+		regenerateList();
+	});
+	
+	function regenerateList()
+	{
+		for( i = 0; i < courses.length; i += 1 )
+		{
+			if ( iCreated && courses[i].creator === me )
+			{
+				addMeetingToList(();
+			}
+			...
+		}
+	}
+	*/
+
     /*
     $( '#i-created' ).on( 'click tap', function(e)
         {
