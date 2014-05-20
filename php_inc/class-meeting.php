@@ -330,7 +330,7 @@ class Meeting
         $row = null;
         
         // Build SQL statement
-        $sql = 'SELECT m.ID, m.masterID, m.courseID, m.location, m.startDate, um.userID as m_user
+        $sql = 'SELECT m.ID, m.masterID, m.courseID, m.location, m.startDate, um.userID as m_user, m.canceled
                 FROM ' . Meeting::MEETING_TABLE . ' m
                     JOIN ' . Meeting::USER_COURSE_TABLE . ' uc
                         ON m.courseID = uc.courseID
@@ -364,12 +364,26 @@ class Meeting
             // User is not signed-up for the meeting
             if ( is_null( $row['m_user'] ) )
             {
-                $output['filter'] = 0;
+                if ( $row['canceled'] = 'T' )
+                {
+                    $output['filter'] = 3;
+                }
+                else
+                {
+                    $output['filter'] = 0;
+                }
             }
             // User created the meeting.
             else if ( $row['masterID'] == $userID )
             {
+                if ( $row['canceled'] = 'T' )
+                {
+                    $output['filter'] = 3;
+                }
+                else
+                {
                 $output['filter'] = 2;
+                }
             }
             // User is attending but did not create the meeting.
             else
