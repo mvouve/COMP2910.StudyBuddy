@@ -322,82 +322,44 @@ function regenerateList()
 }
 */
 
-/*
-$( '#i-created' ).on( 'click tap', function(e)
-    {
+function myMeetingOnReady(){
+    var iCreated = false;
+    var allMeeting = false;
+    var iAttending = false;
 
+    $( '#i-created' ).on( 'click tap', function(e)
+        {
+            iCreated = !iCreated;
+            regenerateList();
+        });
+    $( '#all-meeting' ).on( 'click tap', function(e)
+        {
+            allMeeting = !allMeeting;
+            regenerateList();
+        });
+    $( '#i-attending' ).on( 'click tap', function(e)
+        {
+            iAttending = !iAttending;
+            regenerateList();
+        });
 
-        var templist;
-        for(blabla)
+    function regenerateList(iCreated,allMeeting,iAttending)
+    {    
+        for( i = 0; i < courses.length; i += 1 )
         {
-            if(beepboop.filter == '2')
+            if(allMeeting)
             {
-                //add to list
+                addMeetingToList();
             }
-        }
-        //remove current list
-        //append new list
-        //refresh
-    });
-$( '#all-meeting' ).on( 'click tap', function(e)
-    {
-        //remove current list
-        //append original list from request
-        //refresh
-    });
-$( '#i-attending' ).on( 'click tap', function(e)
-    {
-        var templist;
-        for(blabla)
-        {
-            if(beepboop.filter == '1')
+            else if( iCreated && filter == 2)
             {
-                //add to list
+                addMeetingToList();
             }
-        }
-        //remove current list
-        //append new list
-        //refresh
-    });
-
-function regenerateList(iCreated,allMeeting,iAttending)
-{    
-    var templist;
-    for(blablabla)
-    {
-        if(iCreated)
-        {
-            if(bla.filter == '2')
+            else if( iAttending && filter == 1)
             {
-                addMeetingToList(bla);
+                AddMeetingToList();
             }
-        }
-        if(allMeeting)
-        {
-            while(templist.length != 0)
-            {
-                removeMeetingfromList(templist[i]);
-            }
-            while(list.length != templist.length)
-            {
-                addMeetingToList(list[i]);
-            }
-        }
-        if(iAttending)
-        {
-
         }
     }
 }
-
-function addMeetingToList()
-{
-
-}
-
-function removeMeetingFromList()
-{
-
-}
-*/
 
