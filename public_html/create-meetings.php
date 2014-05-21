@@ -53,11 +53,9 @@
 
 <script>
     $('#create-meeting-start-datetime').datetimepicker({
-                                                        format: 'YYYY-MM-DD HH:MM:ss',
                                                         inline: true
                                                         });
     $('#create-meeting-end-datetime').datetimepicker({
-                                                      format: 'YYYY-MM-DD HH:MM:ss',
                                                       inline: true
                                                       });
                                                       
@@ -170,8 +168,9 @@
             var courseID              = document.getElementById( 'course-dropdown' ).value;
             var maxBuddies          = document.getElementById( 'max-buddies' ).value;
             var courseDescription   = document.getElementById( 'meeting-comments' ).value;
-            var startTime           = document.getElementById( 'create-meeting-start-datetime' ).value;
-            var endTime             = document.getElementById( 'create-meeting-end-datetime' ).value;
+            console.log( document.getElementById( 'create-meeting-start-datetime' ).value );
+            var startTime           = new Date( document.getElementById( 'create-meeting-start-datetime' ).value ).getTime();
+            var endTime             = new Date( document.getElementById( 'create-meeting-end-datetime' ).value ).getTime();
             var meetingLocation     = document.getElementById( 'location-dropdown' ).value;
             
             createMeeting ( ajaxURL, 
