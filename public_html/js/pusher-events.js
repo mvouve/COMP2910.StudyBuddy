@@ -69,7 +69,7 @@ function pusherCourseAdded( data )
  */
 function pusherMeetingAdded( data )
 {
-	// add this meeting data to the meetingList array
+	// add this meeting data to the meetingList array in meetings.js ((var meetingList = {};))
     // regenerate the list by the regenerate function
 }
 
