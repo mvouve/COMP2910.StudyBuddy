@@ -99,13 +99,13 @@ function createMeeting( $courseID, $description, $location, $maxBuddies, $startT
                                          $startTime,
                                          $endTime );
     
-    if ( $created )
+    if ( $created != -1 )
     {
         $ret['success'] = true;
         
         // Push the Meeting through Pusher
         global $pusher;
-        $data = array( 'ID' => -1, 'courseID' => $courseID, 'creator' => $uid,
+        $data = array( 'ID' => $created, 'courseID' => $courseID, 'creator' => $uid,
             'location' => $location, 'startTime' => $startTime );
         $pusher->trigger( 'private-' . $courseID, 'meeting_added', $data ); 
     }
