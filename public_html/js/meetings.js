@@ -367,7 +367,7 @@ function myMeetingOnReady(){
         }
         for( i = 0; i < meetingList.length; i += 1 )
         {
-            if(allMeeting)
+            if(allMeeting && meetingList.filter == 0)
             {
                 addMeetingToList(meetingList[i].meetingID,
                                  meetingList[i].meetingCourse,
