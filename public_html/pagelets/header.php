@@ -3,6 +3,8 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script>
+			var eventHandlerType = 'click tap';
+		
             <?php global $user; ?>
             var ajaxURL = "<?php echo AJAX_URL; ?>";
             var uid = <?php 
@@ -22,9 +24,9 @@
 	    <script type="text/javascript" src="js/styleswitch.js"></script>
         <script src="js/misc.js"></script>
 		<script src="http://js.pusher.com/2.2/pusher.min.js"></script>
-        <script src="js/pusher-events.js"></script>
 		<script src="js/courses.js"></script>
 		<script src="js/meetings.js"></script>
+        <script src="js/pusher-events.js"></script>
         <!-- Source: http://www.jqueryrain.com/?lnsG0UbP -->
         <link rel="stylesheet" type="text/css" href="js/datetimepicker/jquery.datetimepicker.css"/>
         <script src="js/datetimepicker/jquery.datetimepicker.js"></script>

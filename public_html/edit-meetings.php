@@ -45,10 +45,6 @@
             </div>
 </div>
 
-<!-- added to include the datetime picker plugin, info at: http://www.jqueryrain.com/?lnsG0UbP -->
-<link rel="stylesheet" type="text/css" href="/jquery.datetimepicker.css"/>
-<script src="/jquery.js"></script>
-<script src="/jquery.datetimepicker.js"></script>
 <script>
     jQuery('#datetimepicker').datetimepicker();
 </script>
