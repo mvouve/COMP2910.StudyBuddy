@@ -96,11 +96,14 @@ function createMeeting( $courseID, $description, $location, $maxBuddies, $startT
 {
 	global $meetings, $uid;
 
-	$sTime = date( 'U', $startTime );
-	$sTime = date( 'Y-m-d H:i:s', $sTime );
+	$sDate=date_create();
+	date_timestamp_set($sDate,$startTime);
+	$sTime = date_format($sDate,"Y-m-d H:i:s");
 	
-	$eTime = date( 'U', $endTime );
-	$eTime = date( 'Y-m-d H:i:s', $eTime );
+	
+	$eDate=date_create();
+	date_timestamp_set($eDate,$endTime);
+	$eTime = date_format($eDate,"Y-m-d H:i:s");
 	
     $ret = array( 'success' => false );
     $created = $meetings->createMeeting( $courseID,
