@@ -444,6 +444,7 @@ function myMeetingOnReady(){
 			
 			$('#i-created').toggleClass("toggled");
             regenerateList();
+            return false;
         });
     $( '#not-attending' ).on( 'touchend', function(e)
         {
@@ -451,6 +452,7 @@ function myMeetingOnReady(){
 			
 			$('#not-attending').toggleClass("toggled");
             regenerateList();
+            return false;
         });
     $( '#i-attending' ).on( 'touchend', function(e)
         {
@@ -458,7 +460,6 @@ function myMeetingOnReady(){
 			
 			$('#i-attending').toggleClass("toggled");
             regenerateList();
-			
-			e.stopImmediatePropagation();
+			return false;
         });
 }
