@@ -255,6 +255,8 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
     //          p: meeting detail #2
     //                  ...
     //          p: meeting detail #n
+    //          EDIT MEETING BUTTON
+    //          CANCEL MEETING BUTTON
     //    DIV: ListElement #2 data-role="collapsible"
     //       h1: ListHeader
     //       div: listBody
@@ -262,6 +264,8 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
     //          p: meeting detail #2
     //                  ...
     //          p: meeting detail #n
+    //          EDIT MEETING BUTTON
+    //          CANCEL MEETING BUTTON
     //     ...
     //    DIV: ListElement #n data-role="collapsible"
     //       h1: ListHeader
@@ -270,6 +274,8 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
     //          p: meeting detail #2
     //                  ...
     //          p: meeting detail #n
+    //          EDIT MEETING BUTTON
+    //          CANCEL MEETING BUTTON
 
     //make sure my-meetings-list is in a container with  data-role="collapsible" so that we get the nice drop down effect for meeting info.
     //get the element to get meetings added to it
