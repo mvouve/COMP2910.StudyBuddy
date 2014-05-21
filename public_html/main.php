@@ -57,6 +57,7 @@
             addCourseOnReady();
             allCoursesOnReady();
             myCourseOnReady();
+			myMeetingOnReady();
 
 		    getCourseList(ajaxURL);
             getUserCourses( ajaxURL );
