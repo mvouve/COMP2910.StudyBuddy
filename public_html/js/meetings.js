@@ -255,8 +255,10 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
     //          p: meeting detail #2
     //                  ...
     //          p: meeting detail #n
-    //          EDIT MEETING BUTTON
-    //          CANCEL MEETING BUTTON
+    //          div: buttonBar
+    //              if (meetingFilter == 2) {button: edit meeting, button: cancel meeting}
+    //              if (meetingFilter != 2 && <not attending> && <meeting not cancelled>) {button: join meeting}
+    //              if (meetingFilter != 2 && <attending>) {button: leave meeting}
     //    DIV: ListElement #2 data-role="collapsible"
     //       h1: ListHeader
     //       div: listBody
@@ -264,8 +266,10 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
     //          p: meeting detail #2
     //                  ...
     //          p: meeting detail #n
-    //          EDIT MEETING BUTTON
-    //          CANCEL MEETING BUTTON
+    //          div: buttonBar
+    //              if (meetingFilter == 2) {button: edit meeting, button: cancel meeting}
+    //              if (meetingFilter != 2 && <not attending> && <meeting not cancelled>) {button: join meeting}
+    //              if (meetingFilter != 2 && <attending>) {button: leave meeting}
     //     ...
     //    DIV: ListElement #n data-role="collapsible"
     //       h1: ListHeader
@@ -274,8 +278,10 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
     //          p: meeting detail #2
     //                  ...
     //          p: meeting detail #n
-    //          EDIT MEETING BUTTON
-    //          CANCEL MEETING BUTTON
+    //          div: buttonBar
+    //              if (meetingFilter == 2) {button: edit meeting, button: cancel meeting}
+    //              if (meetingFilter != 2 && <not attending> && <meeting not cancelled>) {button: join meeting}
+    //              if (meetingFilter != 2 && <attending>) {button: leave meeting}
 
     //make sure my-meetings-list is in a container with  data-role="collapsible" so that we get the nice drop down effect for meeting info.
     //get the element to get meetings added to it
