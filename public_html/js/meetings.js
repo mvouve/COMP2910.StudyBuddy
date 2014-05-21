@@ -287,10 +287,6 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
 
     //get the element to get meetings added to it
     var meetingList = document.getElementById( 'my-meetings-list' );
-
-    //call an ajax function for add additional information from the server (if needed) and assign it to variables. TRIGGERS WHEN A PERSON CLICKS ON A LIST ELEMENT TO EXPAND IT
-    //maybe manage this by giving the div an id of the meetingID
-    
     
     //use createElement() to make a div with data-role="collapsible" to store the course information
     var listElement = document.createElement( "div" );
@@ -305,8 +301,6 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
     //create a div element to store detailed/supplementary information on a meeting
     var listBody = document.createElement("div");
     
-
-
     //add information to the meetingList varable as a child node (i guess)
     listElement.appendChild(listHeader);
     listElement.appendChild(listBody);
@@ -315,9 +309,9 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
     $('.list-element').bind('expand', function () 
     {
         // need some code here to remove any existing children from the parent list element that may exist from previous expands
-        // use .empty() on the element being expanded?
+        this.empty();
 
-
+        //ajax call to retrueve information from the server and call a function to create meeting details
         $.ajax
         ({
             url: ajax_URL + 'meetings/meetings.php',
@@ -335,12 +329,17 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
                 var meetingMaxBuddies = json.maxBuddies;
                 var meetingBuddies = json.buddies //an array of displayNames
 
+
+                for ( var i = 0 ; i<json.buddies.length ; i++ )
+                {
+                    meetingBuddies = "" + meetingBuddies + json.buddies[i] + "<br/>";
+                }
+
                 /*call a function to create meeting details and append them to a parent element
-                    @param parentID the parent element ID
                     @param meetingDesc the meeting description
                     @param maxbuddies: the max Number of buddies
                     @param meetingbuddies: an Array of users attending this meeting */
-                createMeetingDetails( parentID, meetingDesc, meetingEndDate, meetingMaxBuddies, meetingBuddies)
+                createMeetingDetails( meetingDesc, meetingEndDate, meetingMaxBuddies, meetingBuddies)
             }
         });
     });
@@ -351,6 +350,20 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
     @param meetingDesc the meeting description
     @param maxbuddies: the max Number of buddies
     @param meetingbuddies: an Array of users attending this meeting */
+function createMeetingDetails( meetingDesc, meetingEndDate, meetingMaxBuddies, meetingBuddies)
+{
+    var descElement = document.createElement("p");
+    descElement.innerHTML("Description: " + meetingDesc);
+
+    var endElement = document.createElement("p");
+    endElement.innerHTML("End Date: " + meetingEndDate);
+
+    var maxBuddiesElement = document.createElement("p");
+    maxBuddiesElement.innerHTML("Max Buddies: " + meetingMaxBuddies);
+
+    var buddiesElement = document.createElement("p");
+    buddiesElement.innerHTML("Buddies: " + "<br/>" + meetingBuddies);
+}
 
     
 /*   --- CALVIN'S DEMO STUFF
