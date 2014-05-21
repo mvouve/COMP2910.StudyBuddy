@@ -45,7 +45,7 @@
                 <div data-role="navbar">
 		            <ul>
 			            <li><a href="#page-my-meetings" data-icon="back" data-iconpos="top">Cancel</a></li>
-			            <li><a href="#page-create-meetings" data-icon="plus" data-iconpos="top" onClick="submitCreateMeeting()">Create Meeting</a></li>
+			            <li><a href="#" id="create-meeting-submit" data-icon="plus" data-iconpos="top" >Create Meeting</a></li>
 		            </ul>
 	            </div>
             </div>
@@ -83,7 +83,7 @@
     //$('#meeting-comments').keyup( function() { validateCreateMeeting() } );
     //$('#max-buddies').keyup( function() { validateCreateMeeting() } );
     //$('#course-dropdown').change( function() { validateCreateMeeting() } );
-    $( '#create-meeting-submit' ).on( 'click tap', function(){ submitCreateMeeting() } );
+    $( '#create-meeting-submit' ).on( 'click tap', submitCreateMeeting );
     
     /*
      * Validates form input.
@@ -167,7 +167,7 @@
     {
         if( validateCreateMeeting() )
         {
-            var course              = document.getElementById( 'course-dropdown' ).value;
+            var courseID              = document.getElementById( 'course-dropdown' ).value;
             var maxBuddies          = document.getElementById( 'max-buddies' ).value;
             var courseDescription   = document.getElementById( 'meeting-comments' ).value;
             var startTime           = document.getElementById( 'create-meeting-start-datetime' ).value;

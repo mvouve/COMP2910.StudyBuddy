@@ -56,7 +56,7 @@ function createMeeting ( ajax_URL, courseID, courseDescription, meetingLocation,
         success: function (json) {
             if (json.success == true) {
                 //redirect user to myMeetings
-                window.location.assign("my-meetings.php");
+                $.mobile.changePage("#page-my-meetings");
             }
             else {
                 //alert: meeting was not created successfully.

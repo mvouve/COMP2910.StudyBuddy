@@ -27,7 +27,7 @@ if ( isset( $_POST['method'] ) )
             $retval = getMeetingDetails( $_POST['ID'] );
             break;
             
-        case: 'create-meeting':
+        case 'create-meeting':
             $retval = createMeeting( $_POST['courseID'],
                                      $_POST['description'],
                                      $_POST['location'],
@@ -72,6 +72,8 @@ if ( isset( $_POST['method'] ) )
  */
 function getMeetings()
 {
+	global $meetings, $uid;
+	
     return $meetings->getMeetingList( $uid );
 }
 
@@ -80,6 +82,8 @@ function getMeetings()
  */
 function getMeetingDetails( $meetingID )
 {
+	global $meetings;
+
     $ret = $meetings->getMeetingDetails( $meetingID );
     $ret['buddies'] = $meetings->getMeetingBuddyList( $meetingID );
     return ret;
@@ -90,6 +94,8 @@ function getMeetingDetails( $meetingID )
  */
 function createMeeting( $courseID, $description, $location, $maxBuddies, $startTime, $endTime )
 {
+	global $meetings, $uid;
+
     $ret = array( 'success' => false );
     $created = $meetings->createMeeting( $courseID,
                                          $uid,
@@ -119,6 +125,8 @@ function createMeeting( $courseID, $description, $location, $maxBuddies, $startT
 function editMeeting( $meetingID, $courseID, $description, $location, $maxBuddies, $startTime,
                       $endTime )
 {
+	global $meetings, $uid;
+	
     $ret = array( 'success' => false );
     
     // Ensure the editting user is the master of the meeting.
@@ -155,6 +163,8 @@ function editMeeting( $meetingID, $courseID, $description, $location, $maxBuddie
  */
 function cancelMeeting( $meetingID )
 {
+	global $meetings, $uid;
+
     $ret = array( 'success' => false );
 
     if ( !$meetings->isMaster( $uid, $meetingID ) )
@@ -180,6 +190,8 @@ function cancelMeeting( $meetingID )
  */
 function joinMeeting( $meetingID )
 {
+	global $meetings, $uid;
+
     return array( 'success' => $meetings->joinMeeting( $meetingID, $uid ) );
 }
 
@@ -188,6 +200,8 @@ function joinMeeting( $meetingID )
  */
 function leaveMeeting( $meetingID )
 {
+	global $meetings, $uid;
+
     return array( 'success' => $meetings->leaveMeeting( $meetingID, $uid ) );
 }
 
