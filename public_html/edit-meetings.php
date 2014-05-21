@@ -2,9 +2,9 @@
 <?php require_once( 'config.php' ); ?>
 <?php require_once( PHP_INC_PATH . 'common.php' ); ?>
 <?php if ( isset( $_GET['logout'] ) ) { User::instance()->logout(); } ?>
-<?php renderPagelet( 'header.php', array( '{{customHeadTags}}' => '' ) ); ?>
+<?php renderPagelet( 'header.php', array( '{{customHeadTags}}' => 'Edit Meeting' ) ); ?>
 
-<div data-role="page">
+<div data-role="page" id="page-edit-meeting">
     <div data-role="header">
     </div>
 

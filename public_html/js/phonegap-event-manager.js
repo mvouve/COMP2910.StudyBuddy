@@ -1,4 +1,4 @@
-var eventQueue = {};
+var eventQueue = [];
 
 function getEvents()
 {
@@ -8,6 +8,15 @@ function getEvents()
 	return tempArray;
 }
 
-function addNotification( title, description )
+function addMeetingNotification( meetingID, courseID, location, meetingStartTime)
 {
+	var event = {
+					method: 'add-notification',
+					id:      meetingID,
+					title:   'StudyBuddy Reminder: ' + courseID,
+					message: 'Your study meeting for courseID starts in 30 minutes in the ' + location + "!",
+					date:    new Date( meetingStartTime.getTime() - 60 * 1000 * 30 )
+				};
+				
+	eventQueue[ eventQueue.length ] = event;
 }
