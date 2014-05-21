@@ -355,46 +355,23 @@ function myMeetingOnReady(){
             regenerateList();
         });
 
-    function regenerateList()
+    function regenerateList(iCreated,allMeeting,iAttending)
     {    
-        for( j = 0; j < meetingList.length; i+=1)
+        for( i = 0; i < courses.length; i += 1 )
         {
-               removeMeeting(course[i]);
-        }
-        for( i = 0; i < meetingList.length; i += 1 )
-        {
-            if(allMeeting)
+            if(allMeeting && filter == 0)
             {
-                addMeetingToList(meetingList[i].meetingID,
-                                 meetingList[i].meetingCourse,
-                                 meetingList[i].meetingLoc,
-                                 meetingList[i].meetingStartTime,
-                                 meetingList[i].meetingCancelled,
-                                 meetingList[i].meetingFilter);
+                addMeetingToList();
             }
-            else if( iCreated && meetingList.filter == 2)
+            else if( iCreated && filter == 2)
             {
-                addMeetingToList(meetingList[i].meetingID,
-                                 meetingList[i].meetingCourse,
-                                 meetingList[i].meetingLoc,
-                                 meetingList[i].meetingStartTime,
-                                 meetingList[i].meetingCancelled,
-                                 meetingList[i].meetingFilter);
+                addMeetingToList();
             }
-            else if( iAttending && meetingList.filter == 1)
+            else if( iAttending && filter == 1)
             {
-                addMeetingToList(meetingList[i].meetingID,
-                                 meetingList[i].meetingCourse,
-                                 meetingList[i].meetingLoc,
-                                 meetingList[i].meetingStartTime,
-                                 meetingList[i].meetingCancelled,
-                                 meetingList[i].meetingFilter);
+                AddMeetingToList();
             }
         }
     }
 }
 
-fucntion removeMeeting()
-{
-    //TO BE FILLED
-}
