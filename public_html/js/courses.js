@@ -34,11 +34,13 @@ function getUserCourses( ajax_URL )
 				
                 //create the list item and add it to myCoursesList manually
                 var newLI = document.createElement('li');
-                newLI.setAttribute( 'data-icon', (json[i].visible?'eye':'false') );
-                newLI.innerHTML = '<a href="#" id="my-course-'+json[i].id+'">' + json[i].id +
-                    '<br>' + json[i].title + '</a>';
+                newLI.setAttribute( 'class', 'ui-li-has-alt' );
+                newLI.innerHTML = '<a href="#"><h3>' + json[i].id + '</h3><p>' + json[i].title + '</p></a>'
+                                + '<a href="#" id="my-course-'+json[i].id+'" class="the-button ui-btn"></a>';
                 myCoursesList.appendChild(newLI);
 				
+                $( '#my-course-'+json[i].id ).addClass( json[i].visible?'ui-icon-eye':'ui-icon-no-eye' );
+
 				// If visible, bind to channel
 				if ( json[i].visible )
 				{
@@ -246,7 +248,7 @@ function addUserCourse( ajax_URL, courseID, mode )
     @param title a brief description / the name of the course*/
 function addToUserCourses ( id, title )
 {
-    //show check mark
+    //show check mark in all courses list
     $('#all-course-' + id).addClass('ui-icon-check');
     
     //add to temporary user course list
@@ -262,12 +264,14 @@ function addToUserCourses ( id, title )
 		bindToCourse( id );
 	}
     
-    //create the list item and add it to myCoursesList
+    //create the list item and add it to myCoursesList manually
     var newLI = document.createElement('li');
-    newLI.setAttribute( 'data-icon', (myCoursesServerResponse[id].visible?'eye':'false') );
-    newLI.innerHTML = '<a href="#" id="my-course-'+id+'">' + id + '<br>'
-        + myCoursesServerResponse[id].title + '</a>';
+    newLI.setAttribute( 'class', 'ui-li-has-alt' );
+    newLI.innerHTML = '<a href="#"><h3>' + id + '</h3><p>' + title + '</p></a>'
+                    + '<a href="#" id="my-course-'+id+'" class="the-button ui-btn"></a>';
     myCoursesList.appendChild(newLI);
+				
+    $( '#my-course-'+id ).addClass( myCoursesServerResponse[id].visible?'ui-icon-eye':'ui-icon-no-eye' );
 
     /* When an item is clicked, either
         -remove course from user course list, if in remove mode OR
@@ -392,8 +396,7 @@ function toggleVisibility ( ajax_URL, courseID )
 	beingToggled[ courseID ] = true;
 
 	// Hide Icon
-	$( '#my-course-' + courseID ).parent().attr('data-icon', 'false');
-	$( '#my-course-' + courseID ).removeClass('ui-icon-eye ui-btn-icon-right');
+	$( '#my-course-' + courseID ).removeClass('ui-icon-eye ui-icon-no-eye');
 	$( '#my-course-' + courseID ).html($( '#my-course-' + courseID ).html() + 
         '<img class="course-loading" src="css/images/ajax-loader.gif" alt="loading...">');
     
@@ -422,14 +425,18 @@ function toggleVisibility ( ajax_URL, courseID )
 				// Remove course channel binding if it's set
 				bindToCourse( courseID );
 					
-				// Set Icon
-				$( '#my-course-' + courseID ).parent().attr('data-icon', 'eye');
-				$( '#my-course-' + courseID ).addClass('ui-icon-eye ui-btn-icon-right');
+				// Set Icon to eye
+				$( '#my-course-' + courseID ).removeClass('ui-icon-no-eye');
+				$( '#my-course-' + courseID ).addClass('ui-icon-eye');
 			}
 			else
 			{
 				// Remove course channel binding if it's set
 				unbindFromCourse( courseID );
+
+                // Set Icon to no-eye
+				$( '#my-course-' + courseID ).removeClass('ui-icon-eye');
+				$( '#my-course-' + courseID ).addClass('ui-icon-no-eye');
 			}
             
 			beingToggled[ courseID ] = false;
