@@ -355,23 +355,46 @@ function myMeetingOnReady(){
             regenerateList();
         });
 
-    function regenerateList(iCreated,allMeeting,iAttending)
+    function regenerateList()
     {    
-        for( i = 0; i < courses.length; i += 1 )
+        for( j = 0; j < meetingList.length; i+=1)
+        {
+               removeMeeting(course[i]);
+        }
+        for( i = 0; i < meetingList.length; i += 1 )
         {
             if(allMeeting)
             {
-                addMeetingToList();
+                addMeetingToList(meetingList[i].meetingID,
+                                 meetingList[i].meetingCourse,
+                                 meetingList[i].meetingLoc,
+                                 meetingList[i].meetingStartTime,
+                                 meetingList[i].meetingCancelled,
+                                 meetingList[i].meetingFilter);
             }
-            else if( iCreated && filter == 2)
+            else if( iCreated && meetingList.filter == 2)
             {
-                addMeetingToList();
+                addMeetingToList(meetingList[i].meetingID,
+                                 meetingList[i].meetingCourse,
+                                 meetingList[i].meetingLoc,
+                                 meetingList[i].meetingStartTime,
+                                 meetingList[i].meetingCancelled,
+                                 meetingList[i].meetingFilter);
             }
-            else if( iAttending && filter == 1)
+            else if( iAttending && meetingList.filter == 1)
             {
-                AddMeetingToList();
+                addMeetingToList(meetingList[i].meetingID,
+                                 meetingList[i].meetingCourse,
+                                 meetingList[i].meetingLoc,
+                                 meetingList[i].meetingStartTime,
+                                 meetingList[i].meetingCancelled,
+                                 meetingList[i].meetingFilter);
             }
         }
     }
 }
 
+fucntion removeMeeting()
+{
+    //TO BE FILLED
+}
