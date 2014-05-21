@@ -295,6 +295,7 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
     //use createElement() to make a div with data-role="collapsible" to store the course information
     var listElement = document.createElement( "div" );
     listElement.setAttribute( "data-role", "collapsible" );
+    listElement.setAttribute( "class", "list-element" );
 
 
     //create a header to store main information on a meeting
@@ -311,9 +312,32 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
     listElement.appendChild(listBody);
     meetingList.appendChild(listElement);
 
-    $('#meeting-1').bind('expand', function () 
+    $('.list-element').bind('expand', function () 
     {
-        // ajax call
+        $.ajax
+        ({
+            url: ajax_URL + 'meetings/meetings.php',
+            type: 'POST',
+            data:
+            {
+                method: 'get-meeting-details',
+                id: meetingID
+            },
+            dataType: "json",
+            success: function ( json )
+            {
+                var meetingDesc = json.description;
+                var meetingEndDate = json.endDate;
+                var meetingMaxBuddies = json.maxBuddies;
+                var meetingBuddies = json.buddies //an array of displayNames
+
+                /*call a function to create meeting details and append them to a parent element
+                    @param parentID the parent element ID
+                    @param meetingDesc the meeting description
+                    @param maxbuddies: the max Number of buddies
+                    @param meetingbuddies: an Array of users attending this meeting */
+            }
+        });
     });
 }
     
