@@ -1,3 +1,4 @@
+var meetingList = {};
 /* a method to return all the meetings that you are attending, and adds them to your my meetings list via a helper function.
     returns a 2D array of meetings, each of which contains individual meeting data.
     @param ajax_URL (string): the URI location where the ajax folder is located */
@@ -15,18 +16,8 @@ function getAllMyMeetings( ajax_URL )
         dataType: "json",
         success: function ( json )
         {
-            for( var i = 0; i < json.length; ++i )
-            {
-                var meetingID = json.id;
-                var meetingCourse = json.courseID;
-                var meetingLoc = json.location;
-                var meetingStartTime = json.startDate;
-                var meetingCancelled = json.cancelled;
-                var meetingFilter = json.filter;            // filter will determine which mode people will be able to use for a meeting and how it displays in lists
-
-                //populate the list of all meetings with a helper function
-                addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTime, meetingCancelled, meetingFilter );
-            }
+            meetingList = json;
+            regenerateList();
         }
     });
 }
@@ -427,59 +418,75 @@ function myMeetingOnReady(){
     $( '#i-created' ).on( 'click tap', function(e)
         {
             iCreated = !iCreated;
+            if(iCreated)
+            {
+                $('#i-created').addClass("ui-btn-active");
+            }
+            else
+            {
+                $('#i-created').removeClass("ui-btn-active");   
+            }
             regenerateList();
         });
     $( '#all-meeting' ).on( 'click tap', function(e)
         {
             allMeeting = !allMeeting;
+            if(allMeeting)
+            {
+                $('#all-meeting').addClass("ui-btn-active");
+            }
+            else
+            {
+                $('#all-meeting').removeClass("ui-btn-active");   
+            }       
             regenerateList();
         });
     $( '#i-attending' ).on( 'click tap', function(e)
         {
             iAttending = !iAttending;
+            if(iAttending)
+            {
+                $('#i-attending').addClass("ui-btn-active");
+            }
+            else
+            {
+                $('#i-attending').removeClass("ui-btn-active");   
+            }       
             regenerateList();
         });
 
     function regenerateList()
     {    
-        for( j = 0; j < meetingList.length; i+=1)
-        {
-               removeMeeting(course[i]);
-        }
+        $("#my-meeting-list").html("");
         for( i = 0; i < meetingList.length; i += 1 )
         {
             if(allMeeting && meetingList.filter == 0)
             {
-                addMeetingToList(meetingList[i].meetingID,
-                                 meetingList[i].meetingCourse,
-                                 meetingList[i].meetingLoc,
-                                 meetingList[i].meetingStartTime,
-                                 meetingList[i].meetingCancelled,
-                                 meetingList[i].meetingFilter);
+                addMeetingToList(meetingList[i].ID,
+                                 meetingList[i].courseID,
+                                 meetingList[i].location,
+                                 meetingList[i].startDate,
+                                 meetingList[i].cancelled,
+                                 meetingList[i].filter);
             }
             else if( iCreated && meetingList.filter == 2)
             {
-                addMeetingToList(meetingList[i].meetingID,
-                                 meetingList[i].meetingCourse,
-                                 meetingList[i].meetingLoc,
-                                 meetingList[i].meetingStartTime,
-                                 meetingList[i].meetingCancelled,
-                                 meetingList[i].meetingFilter);
+                addMeetingToList(meetingList[i].ID,
+                                 meetingList[i].courseID,
+                                 meetingList[i].location,
+                                 meetingList[i].startDate,
+                                 meetingList[i].cancelled,
+                                 meetingList[i].filter);
             }
             else if( iAttending && meetingList.filter == 1)
             {
-                addMeetingToList(meetingList[i].meetingID,
-                                 meetingList[i].meetingCourse,
-                                 meetingList[i].meetingLoc,
-                                 meetingList[i].meetingStartTime,
-                                 meetingList[i].meetingCancelled,
-                                 meetingList[i].meetingFilter);
+                addMeetingToList(meetingList[i].ID,
+                                 meetingList[i].courseID,
+                                 meetingList[i].location,
+                                 meetingList[i].startDate,
+                                 meetingList[i].cancelled,
+                                 meetingList[i].filter));
             }
         }
     }
-}
-
-fucntion removeMeeting()
-{
-    //TO BE FILLED
 }
