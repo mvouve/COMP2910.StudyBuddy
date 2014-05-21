@@ -77,7 +77,9 @@
     } );
     /*
      * When user types in the comment section validate the comment.
+     * Needs to be completed when 
      */
-    $('#meeting-comments').keyup( function() { validateInputs() } );
-    $('#max-buddies').keyup( function() { validateInputs() } );
+    $('#meeting-comments').keyup( function() { validateCreateMeeting() } );
+    $('#max-buddies').keyup( function() { validateCreateMeeting() } );
+    $('#course-dropdown').change( function() { validateCreateMeeting() } );
 </script>
