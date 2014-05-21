@@ -63,6 +63,7 @@
                                                       format: 'YYYY-MM-DD HH:MM:ss',
                                                       inline: true
                                                       });
+                                                      
     /*
      * Populate courses when the user clicks courses.
      */
@@ -79,7 +80,37 @@
      * When user types in the comment section validate the comment.
      * Needs to be completed when 
      */
-    $('#meeting-comments').keyup( function() { validateCreateMeeting() } );
-    $('#max-buddies').keyup( function() { validateCreateMeeting() } );
-    $('#course-dropdown').change( function() { validateCreateMeeting() } );
+    //$('#meeting-comments').keyup( function() { validateCreateMeeting() } );
+    //$('#max-buddies').keyup( function() { validateCreateMeeting() } );
+    //$('#course-dropdown').change( function() { validateCreateMeeting() } );
+    $('#create-meeting-submit').on( 'click tap', function(){ submitCreateMeeting() );
+    
+    
+    function validateCreateMeeting()
+    {
+        if( !document.getElementById('course-dropdown').value.match(/^([A-Z]{4}[0-9]{4})$/gi )
+        {
+            return false;
+        }
+        if( !document.getElementByI('max-buddies').value.match(/^[0-9]$/) )
+        {
+            return false;
+        }
+        if( document.getElementById('meeting-comments').value.length < 1 )
+        {
+            return false;
+        }
+        return true;
+    
+    }    
+    
+        function submitCreateMeeting()
+        {
+            if( validateCreateMeeting() )
+            {
+                //how is babby formed
+            }
+            return;
+        }
+        
 </script>
