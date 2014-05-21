@@ -11,7 +11,11 @@
 
             <div id="location-dropdown-wrapper">
                 <label for="location-dropdown">Location :</label>
-                <select id="location-dropdown" name="location-dropdown"></select><br/>
+                <input type="text" id="location-dropdown" name="location-dropdown" list="locations">
+                <datalist id="locations">
+                    <option>EhPod</option>
+                </datalist>
+                <br/>
             </div>
 
             
@@ -32,6 +36,10 @@
             <div id="meeting-comments-wrapper">
                 <label for="meeting-comments">Comments :</label>
                 <textarea id="meeting-comments" name="meeting-comments"></textarea><br/>
+            </div>
+            
+            <div id="create-meeting-submit-wrapper">
+                <a href="#" data-role="button" id="create-meeting-submit">Create Meeting</a>
             </div>
         </form>
     </div>
@@ -56,14 +64,20 @@
                                                       inline: true
                                                       });
     /*
-     * Populate courses. 
+     * Populate courses when the user clicks courses.
      */
-    function createMeetingOnReady()
+    $('#course-dropdown').focus( function()
     {
+        document.getElementById('course-dropdown').innerHTML = '';
         for( var key in myCoursesServerResponse )
         {
             var opt = '<option value="' + key + '">' + key + '</option>';
             $('#course-dropdown').append( opt );
         }
-    }
+    } );
+    /*
+     * When user types in the comment section validate the comment.
+     */
+    $('#meeting-comments').keyup( function() { validateInputs() } );
+    $('#max-buddies').keyup( function() { validateInputs() } );
 </script>
