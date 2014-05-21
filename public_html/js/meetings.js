@@ -190,25 +190,28 @@ function leaveMeeting ( ajax_URL, meetingID )
 /* used to add the details of a particular meeting to a HTML form, for editing meetings
     @param meetingID the unique ID assigned to a meeting */
 
-function populateEditMeetingFields ( description, meetingEndDate, meetingMaxBuddies, meetingBuddies )
+function populateEditMeetingFields ( courseID, meetingLoc, description, meetingStartDate, meetingEndDate, meetingMaxBuddies )
 {
     //select a form element and assign json data to it
-	/*
-    var element = document.getElementById("course-dropdown");
-    element.setAttribute("value", );
+	
+    var element = document.getElementById("courseID");
+    element.setAttribute("value", courseID);
 
-    var element = document.getElementById("location-dropdown");
-    element.setAttribute("value",);
+    var element = document.getElementById("edit-location");
+    element.setAttribute("value", meetingLoc);
 
-    var element = document.getElementById("meeting-datetime");
-    element.setAttribute("value", );
+    var element = document.getElementById("meeting-start-datetime");
+    element.setAttribute("value", meetingStartDate);
 
-    var element = document.getElementById("max-buddies");           //note: must not allow user to change this to a value lower than the current # of buddies.
-    element.setAttribute("value", );
+    var element = document.getElementById("meeting-end-datetime");
+    element.setAttribute("value", meetingEndDate);
+
+    var element = document.getElementById("max-buddies");
+    element.setAttribute("value", meetingMaxBuddies);
 
     var element = document.getElementById("meeting-comments");
-    element.setAttribute("value", );
-	*/
+    element.setAttribute("value", description);
+	
 }
 
 /* used to add a meeting to a list of meetings
@@ -311,7 +314,7 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
             success: function ( json )
             {
                 var meetingDesc = json.description;
-                var meetingEndDate = json.endDate;
+                var meetingEndTime = json.endDate;
                 var meetingMaxBuddies = json.maxBuddies;
                 var meetingBuddies = "";
                 
@@ -321,54 +324,56 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
                 }
 
                 /* call a function to create meeting details and append them to a parent element */
-                createMeetingDetails( '#meeting-' + meetingID, meetingDesc, meetingEndDate, meetingMaxBuddies, meetingBuddies)
+                createMeetingDetails( '#meeting-' + meetingID, meetingDesc, meetingEndTime, meetingMaxBuddies, meetingBuddies)
+
+                //create buttons based on the user's relationship to this meeting
+                if ( meetingFilter == 2 )
+                {
+                    //button: edit meeting, button: cancel meeting
+                    var editButton = document.createElement( "button" );
+                    editButton.innerHTML( "Edit Meeting" );
+                    editButton.on( 'click tap', function()
+                    {
+                        //call populate fields method for editing
+                        /* populateEditMeetingFields ( courseID, meetingLoc, description, meetingStartDate, meetingEndDate, meetingMaxBuddies, meetingComments ) */
+                        populateEditMeetingFields ( meetingCourse, meetingLoc, meetingDesc, meetingStartTime, meetingEndTime, meetingMaxBuddies )
+                        //move the user to the edit meetings page.
+                    });
+
+                    var cancelButton = document.createElement( "button" );
+                    cancelButton.innerHTML( "Edit Meeting" );
+                    cancelButton.on( 'click tap', function()
+                    {
+                        //call the cancel meetings function.
+                    });
+
+                    buttonBar.appendChild(editButton);
+                    buttonBar.appendChild(cancelButton);
+                }
+                else if ( ( meetingFilter == 0 ) && ( meetingCancelled == false ) )
+                {
+                    //button: join meeting
+                    var joinButton = document.createElement( "button" );
+                    joinButton.innerHTML( "Edit Meeting" );
+                    joinButton.on( 'click tap', function()
+                    {
+                        //call the join meeting function.
+                    });
+                    buttonBar.appendChild(joinButton);
+                }
+                else if ( ( meetingFilter == 1 ) && ( meetingCancelled == false ) )
+                {
+                    //button: leave meeting
+                    var leaveButton = document.createElement( "button" );
+                    leaveButton.innerHTML( "Edit Meeting" );
+                    leaveButton.on( 'click tap', function()
+                    {
+                        //call the leave meeting function.
+                    });
+                    buttonBar.appendChild(leaveButton);
+                }
             }
         });
-        //create buttons based on the user's relationship to this meeting
-        if ( meetingFilter == 2 )
-        {
-            //button: edit meeting, button: cancel meeting
-            var editButton = document.createElement( "button" );
-            editButton.innerHTML( "Edit Meeting" );
-            editButton.on( 'click tap', function()
-            {
-                //call populate fields method for editing
-                //move the user to the edit meetings page.
-            });
-
-            var cancelButton = document.createElement( "button" );
-            cancelButton.innerHTML( "Edit Meeting" );
-            cancelButton.on( 'click tap', function()
-            {
-                //call the cancel meetings function.
-            });
-
-            buttonBar.appendChild(editButton);
-            buttonBar.appendChild(cancelButton);
-        }
-        else if ( ( meetingFilter == 0 ) && ( meetingCancelled == false ) )
-        {
-            //button: join meeting
-            var joinButton = document.createElement( "button" );
-            joinButton.innerHTML( "Edit Meeting" );
-            joinButton.on( 'click tap', function()
-            {
-                //call the join meeting function.
-            });
-            buttonBar.appendChild(joinButton);
-        }
-        else if ( ( meetingFilter == 1 ) && ( meetingCancelled == false ) )
-        {
-            //button: leave meeting
-            var leaveButton = document.createElement( "button" );
-            leaveButton.innerHTML( "Edit Meeting" );
-            leaveButton.on( 'click tap', function()
-            {
-                //call the leave meeting function.
-            });
-            buttonBar.appendChild(leaveButton);
-        }
-
     });
 }
 
