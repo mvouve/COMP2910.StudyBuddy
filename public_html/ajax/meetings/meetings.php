@@ -95,25 +95,9 @@ function getMeetingDetails( $meetingID )
 function createMeeting( $courseID, $description, $location, $maxBuddies, $startTime, $endTime )
 {
 	global $meetings, $uid;
-
-	/*
-	$sDate = strtotime( $startTime );
-	$sTime = date( 'Y-m-d H:i:s', $sDate );
-	*/
-	/*
-	$sDate=date_create();
-	date_timestamp_set($sDate,$startTime);
-	$sTime = date_format($sDate,"Y-m-d H:i:s");
-	*/
 	
 	$sTime = DateTime::createFromFormat('Y/m/d H:i', $startTime)->format('Y-m-d H:i:s');
 	$eTime = DateTime::createFromFormat('Y/m/d H:i', $endTime)->format('Y-m-d H:i:s');
-	
-	/*
-	$eDate=date_create();
-	date_timestamp_set($eDate,$endTime);
-	$eTime = date_format($eDate,"Y-m-d H:i:s");
-	*/
 	
     $ret = array( 'success' => false );
     $created = $meetings->createMeeting( $courseID,
@@ -147,6 +131,9 @@ function editMeeting( $meetingID, $courseID, $description, $location, $maxBuddie
 	global $meetings, $uid;
 	
     $ret = array( 'success' => false );
+	
+	$sTime = DateTime::createFromFormat('Y/m/d H:i', $startTime)->format('Y-m-d H:i:s');
+	$eTime = DateTime::createFromFormat('Y/m/d H:i', $endTime)->format('Y-m-d H:i:s');
     
     // Ensure the editting user is the master of the meeting.
     if ( !$meetings->isMaster( $uid, $meetingID ) )
