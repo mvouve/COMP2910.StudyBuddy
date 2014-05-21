@@ -93,6 +93,7 @@ class Meeting
                         location = :location, maxBuddies = :maxBuddies,
                         startTime = :startTime, endTime = :endTime
                     WHERE ID = :meetingID';
+                    
         $sql = $db->prepare( $sql );
         $sql->bindParam( ':courseID',   $courseID );
         $sql->bindParam( ':meetingID',  $meetingID );
@@ -120,7 +121,7 @@ class Meeting
                     SET canceled = \'T\'
                     WHERE ID = :meetingID;';
         $sql = $db->prepare( $sql );
-        $sql->bindParam( ':meetingID' );
+        $sql->bindParam( ':meetingID', $meetingID );
         
         return $sql->execute();
     }
@@ -406,7 +407,11 @@ class Meeting
                     WHERE ID = :meetingID;';
         $sql = $db->prepare( $sql );
         $sql->bindParam( ':meetingID', $meetingID );
-        $sql->execute();
+        
+        if ( !$sql->execute() )
+        {
+            return false;
+        }
         $sql = $sql->fetch( PDO::FETCH_ASSOC );
         
         $retval = ( $sql['masterID'] == $userID );
