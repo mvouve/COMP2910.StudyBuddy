@@ -38,18 +38,14 @@
                 <label for="meeting-comments">Comments :</label>
                 <textarea id="meeting-comments" name="meeting-comments"></textarea><br/>
             </div>
-            
-            <div id="create-meeting-submit-wrapper">
-                <a href="#" data-role="button" id="create-meeting-submit">Create Meeting</a>
-            </div>
         </form>
     </div>
             <!-- save meeting and cancel buttons go here?-->
     <div data-role="footer" data-position="fixed" data-tap-toggle="false">
                 <div data-role="navbar">
 		            <ul>
-			            <li><a href="#page-my-courses" data-icon="back" data-iconpos="top">Cancel</a></li>
-			            <li><a href="#page-add-course" data-icon="plus" data-iconpos="top">Create Meeting</a></li>
+			            <li><a href="#page-my-meetings" data-icon="back" data-iconpos="top">Cancel</a></li>
+			            <li><a href="#page-create-meetings" data-icon="plus" data-iconpos="top" onClick="submitCreateMeeting()">Create Meeting</a></li>
 		            </ul>
 	            </div>
             </div>
@@ -108,7 +104,7 @@
             
             retval = false;
         }
-        if( !document.getElementById('max-buddies').value.match( /^[0-9]$/) )
+        if( !document.getElementById('max-buddies').value.match( /^[0-9]+$/) )
         {
             errorDiv.innerHTML += formatError( 'You must specify maximum number of buddies' );
             
@@ -178,7 +174,7 @@
             var endTime             = document.getElementById( 'create-meeting-end-datetime' ).value;
             var meetingLocation     = document.getElementById( 'location-dropdown' ).value;
             
-            createMeeting ( '<?php echo( AJAX_URL ) ?>', 
+            createMeeting ( ajaxURL, 
                             courseID, courseDescription, 
                             meetingLocation, startTime, 
                             endTime, maxBuddies 
