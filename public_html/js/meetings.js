@@ -365,28 +365,8 @@ function createMeetingDetails( meetingDesc, meetingEndDate, meetingMaxBuddies, m
     buddiesElement.innerHTML("Buddies: " + "<br/>" + meetingBuddies);
 }
 
-    
-/*   --- CALVIN'S DEMO STUFF
-$( '#i-created' ).on( 'click tap', function(e)
-{
-    iCreated = !iCreated;
-
-    regenerateList();
-});
-
-function regenerateList()
-{
-    for( i = 0; i < courses.length; i += 1 )
-    {
-        if ( iCreated && courses[i].creator === me )
-        {
-            addMeetingToList(();
-        }
-        ...
-    }
-}
-*/
-
+/*This function will check the toggles and add the meetings that match the criteria to the list.
+*/    
 function myMeetingOnReady(){
     var iCreated = false;
     var allMeeting = false;
