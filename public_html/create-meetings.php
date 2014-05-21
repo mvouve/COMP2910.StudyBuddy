@@ -63,6 +63,7 @@
                                                       format: 'YYYY-MM-DD HH:MM:ss',
                                                       inline: true
                                                       });
+                                                      
     /*
      * Populate courses when the user clicks courses.
      */
@@ -71,15 +72,70 @@
         document.getElementById('course-dropdown').innerHTML = '';
         for( var key in myCoursesServerResponse )
         {
-            var opt = '<option value="' + key + '">' + key + '</option>';
-            $('#course-dropdown').append( opt );
+            if( myCoursesServerResponse[key].visible )
+            {
+                var opt = '<option value="' + key + '">' + key + '</option>';
+                $('#course-dropdown').append( opt );
+            }
         }
     } );
     /*
      * When user types in the comment section validate the comment.
      * Needs to be completed when 
      */
-    $('#meeting-comments').keyup( function() { validateCreateMeeting() } );
-    $('#max-buddies').keyup( function() { validateCreateMeeting() } );
-    $('#course-dropdown').change( function() { validateCreateMeeting() } );
+    //$('#meeting-comments').keyup( function() { validateCreateMeeting() } );
+    //$('#max-buddies').keyup( function() { validateCreateMeeting() } );
+    //$('#course-dropdown').change( function() { validateCreateMeeting() } );
+    $( '#create-meeting-submit' ).on( 'click tap', function(){ submitCreateMeeting() } );
+    
+    
+    function validateCreateMeeting()
+    {
+        if( !document.getElementById('course-dropdown').value.match( /^([A-Z]{4}[0-9]{4})$/gi ) )
+        {
+            return false;
+        }
+        if( !document.getElementByI('max-buddies').value.match( /^[0-9]$/) )
+        {
+            return false;
+        }
+        if( document.getElementById('meeting-comments').value.length < 1 )
+        {
+            return false;
+        }
+        
+        var startDate = document.getElementById( 'create-meeting-start-datetime' );
+        var endDate   = document.getElementById( 'create-meeting-end-datetime' );
+        if( !validateDates( startDate, endDate ) )
+        {
+            return false;
+        }
+    }
+    
+    function validateDates( startDate, endDate )
+    {
+        return;
+    }
+    
+    
+    function submitCreateMeeting()
+    {
+        if( validateCreateMeeting() )
+        {
+            var course              = document.getElementById( 'course-dropdown' ).value;
+            var maxBuddies          = document.getElementById( 'max-buddies' ).value;
+            var courseDescription   = document.getElementById( 'meeting-comments' ).value;
+            var startTime           = document.getElementById( 'create-meeting-start-datetime' ).value;
+            var endTime             = document.getElementById( 'create-meeting-end-datetime' ).value;
+            var meetingLocation     = document.getElementById( 'location-dropdown' ).value;
+            
+            createMeeting ( '<?php echo( AJAX_URL ) ?>', 
+                            courseID, courseDescription, 
+                            meetingLocation, startTime, 
+                            endTime, maxBuddies 
+                           );
+        }
+        return;
+    }
+        
 </script>

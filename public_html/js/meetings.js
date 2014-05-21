@@ -1,4 +1,9 @@
+/* GLOBAL VARIABLES */
 var meetingList = {};
+var iCreated = false;
+var allMeeting = false;
+var iAttending = false;
+
 /* a method to return all the meetings that you are attending, and adds them to your my meetings list via a helper function.
     returns a 2D array of meetings, each of which contains individual meeting data.
     @param ajax_URL (string): the URI location where the ajax folder is located */
@@ -21,37 +26,6 @@ function getAllMyMeetings( ajax_URL )
         }
     });
 }
-
-/* a method to return the details for one specific meeting
-    returns an array containing a course description string, end date string, max buddies int, and an array of buddies currently signed up to the meeting
-    @param ajax_URL (string): 
-    @param meetingID (INT): a numeric unique ID for a meeting */
-
-function getMeetingDetails ( ajax_URL, meetingID )
-{
-    $.ajax
-    ({
-        url: ajax_URL + 'meetings/meetings.php',
-        type: 'POST',
-        data:
-        {
-            method: 'get-meeting-details',
-            id: meetingID
-        },
-        dataType: "json",
-        success: function ( json )
-        {
-            var meetingDesc = json.description;
-            var meetingEndDate = json.endDate;
-            var meetingMaxBuddies = json.maxBuddies;
-            var meetingBuddies = json.buddies //an array of displayNames
-
-            //call a helper function in order to populate the edit meetings page
-
-        }
-    });
-}
-		      
    
 /* creates a new meeting
     @param ajax_URL  the URI location where the ajax folder is located
@@ -81,11 +55,14 @@ function createMeeting ( ajax_URL, courseID, courseDescription, meetingLocation,
         dataType: "json",
         success: function ( json )
         {
-            //should redirect the user to the myMeetings page
-        },
-        failure: function ( json )
-        {
-            //show an alert that the me
+            if (json.success == true)
+            {
+                //redirect user to myMeetings
+            }
+            else
+            {
+                //alert: meeting was not created successfully.
+            }
         }
     });
 }
@@ -128,6 +105,10 @@ function editMeeting ( ajax_URL, meetingID, courseID, courseDescription, meeting
             {
                 document.getElementById( 'create-meeting-form' ).reset();
                 $.mobile.changePage( '#page-my-meetings' )
+            }
+            else
+            {
+                //show an alert that the meeting was not successfully edited.
             }
         }
     });
@@ -174,7 +155,8 @@ function joinMeeting ( ajax_URL, meetingID )
         dataType: "json",
         success: function ( json )
         {
-            //call getMeetingDetails to refresh the meeting screen
+            //collapse the div
+            //re-expand the div to programatically refresh the div
         }
     });
 }
@@ -198,7 +180,8 @@ function leaveMeeting ( ajax_URL, meetingID )
         dataType: "json",
         success: function ( json )
         {
-            //call getMeetingDetails to refresh the meeting screen
+            //collapse the div
+            //re-expand the div to programatically refresh the div
         }
     });
 }
@@ -349,14 +332,15 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
             editButton.innerHTML( "Edit Meeting" );
             editButton.on( 'click tap', function()
             {
-                
+                //call populate fields method for editing
+                //move the user to the edit meetings page.
             });
 
             var cancelButton = document.createElement( "button" );
             cancelButton.innerHTML( "Edit Meeting" );
             cancelButton.on( 'click tap', function()
             {
-                
+                //call the cancel meetings function.
             });
 
             buttonBar.appendChild(editButton);
@@ -369,7 +353,7 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
             joinButton.innerHTML( "Edit Meeting" );
             joinButton.on( 'click tap', function()
             {
-                
+                //call the join meeting function.
             });
             buttonBar.appendChild(joinButton);
         }
@@ -380,7 +364,7 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
             leaveButton.innerHTML( "Edit Meeting" );
             leaveButton.on( 'click tap', function()
             {
-                
+                //call the leave meeting function.
             });
             buttonBar.appendChild(leaveButton);
         }
@@ -414,7 +398,7 @@ function createMeetingDetails( meetingIDContainer, meetingDesc, meetingEndDate, 
     containerDiv.appendChild( buddiesElement );
 }
 
-
+/* goes through the meetingList array and adds it to the HTML list if called*/
 function regenerateList()
 {    
 	$("#my-meeting-list").html("");
@@ -453,9 +437,6 @@ function regenerateList()
 /*This function will check the toggles and add the meetings that match the criteria to the list.
 */    
 function myMeetingOnReady(){
-    var iCreated = false;
-    var allMeeting = false;
-    var iAttending = false;
 
     $( '#i-created' ).on( 'touchend', function(e)
         {
