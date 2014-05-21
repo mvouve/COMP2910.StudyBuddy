@@ -314,6 +314,10 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
 
     $('.list-element').bind('expand', function () 
     {
+        // need some code here to remove any existing children from the parent list element that may exist from previous expands
+        // use .empty() on the element being expanded?
+
+
         $.ajax
         ({
             url: ajax_URL + 'meetings/meetings.php',
@@ -336,10 +340,18 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
                     @param meetingDesc the meeting description
                     @param maxbuddies: the max Number of buddies
                     @param meetingbuddies: an Array of users attending this meeting */
+                createMeetingDetails( parentID, meetingDesc, meetingEndDate, meetingMaxBuddies, meetingBuddies)
             }
         });
     });
 }
+
+/*call a function to create meeting details and append them to a parent element
+    @param parentID the parent element ID
+    @param meetingDesc the meeting description
+    @param maxbuddies: the max Number of buddies
+    @param meetingbuddies: an Array of users attending this meeting */
+
     
 /*   --- CALVIN'S DEMO STUFF
 $( '#i-created' ).on( 'click tap', function(e)
