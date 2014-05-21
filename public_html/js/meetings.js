@@ -1,4 +1,4 @@
-/* a method to return all the meetings that you are attending.
+/* a method to return all the meetings that you are attending, and adds them to your my meetings list via a helper function.
     returns a 2D array of meetings, each of which contains individual meeting data.
     @param ajax_URL (string): the URI location where the ajax folder is located */
 
@@ -246,13 +246,38 @@ function populateMeetingDetails ( description, meetingEndDate, meetingMaxBuddies
 
 function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTime, meetingCancelled, meetingFilter )
 {
+    //to clarify things for myself i will draw a crude sketch of the heirarchy here since there are going to be a LOT OF ELEMENTS
+    //DIV: meetingList
+    //    DIV: ListElement #1 data-role="collapsible"
+    //       h1: ListHeader
+    //       div: listBody
+    //          p: meeting detail #1
+    //          p: meeting detail #2
+    //                  ...
+    //          p: meeting detail #n
+    //    DIV: ListElement #2 data-role="collapsible"
+    //       h1: ListHeader
+    //       div: listBody
+    //          p: meeting detail #1
+    //          p: meeting detail #2
+    //                  ...
+    //          p: meeting detail #n
+    //     ...
+    //    DIV: ListElement #n data-role="collapsible"
+    //       h1: ListHeader
+    //       div: listBody
+    //          p: meeting detail #1
+    //          p: meeting detail #2
+    //                  ...
+    //          p: meeting detail #n
+
     //make sure my-meetings-list is in a container with  data-role="collapsible" so that we get the nice drop down effect for meeting info.
     //get the element to get meetings added to it
     var meetingList = document.getElementById( 'my-meetings-list' );
-    $( '#my-meetings-list' ).listview();
 
 
-    //call an ajax function for add additional information from the server (if needed) and assign it to variables
+    //call an ajax function for add additional information from the server (if needed) and assign it to variables. TRIGGERS WHEN A PERSON CLICKS ON A LIST ELEMENT TO EXPAND IT
+    //maybe manage this by giving the div an id of the meetingID
     
     
     //use createElement() to make a div with data-role="collapsible" to store the course information
@@ -268,9 +293,12 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
     var listBody = document.createElement("p");
     listBody.innerHTML("???");                                                   //additional info called by ajax goes here
 
+    //create two buttons
+
     //add information to the meetingList varable as a child node (i guess)
+    listElement.appendChild(listHeader);
+    listElement.appendChild(listBody);
     meetingList.appendChild(listElement);
-    meetingList.appendChild(listBody);
 }
     
 /*   --- CALVIN'S DEMO STUFF
