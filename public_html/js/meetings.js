@@ -40,7 +40,7 @@ function getMeetingDetails ( ajax_URL, meetingID )
 {
     $.ajax
     ({
-        url: ajax_URL + 'meetings/meeting-details.php',
+        url: ajax_URL + 'meetings/meetings.php',
         type: 'POST',
         data:
         {
