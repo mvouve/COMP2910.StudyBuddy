@@ -7,3 +7,7 @@ function getEvents()
 	
 	return tempArray;
 }
+
+function addNotification( title, description )
+{
+}

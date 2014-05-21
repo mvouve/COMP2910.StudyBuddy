@@ -28,7 +28,7 @@
                         Not Attending</a></li>
                 </ul>
             </div>
-                <<div class="ui-grid-b">
+                <!--div class="ui-grid-b">
                     <div class="ui-block-a">
                         <label><input type="checkbox"
                                       name="i-created" 
@@ -50,7 +50,7 @@
                                       class="ui-block-c custom-checkbox"/>
                             I am Not Attending</label>
                     </div>
-                </div>
+                </div-->
         </div>
     </div>
 <!--End of my-meetings.php-->

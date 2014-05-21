@@ -151,3 +151,8 @@ a
     width: 90%;
 	margin: 0 5%;
 }
+
+.toggled
+{
+	box-shadow: inset 0px 0px 10px #000;
+}
