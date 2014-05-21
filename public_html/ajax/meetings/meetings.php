@@ -107,10 +107,13 @@ function createMeeting( $courseID, $description, $location, $maxBuddies, $startT
 	*/
 	
 	$sTime = DateTime::createFromFormat('Y/m/d H:i', $startTime)->format('Y-m-d H:i:s');
+	$eTime = DateTime::createFromFormat('Y/m/d H:i', $endTime)->format('Y-m-d H:i:s');
 	
+	/*
 	$eDate=date_create();
 	date_timestamp_set($eDate,$endTime);
 	$eTime = date_format($eDate,"Y-m-d H:i:s");
+	*/
 	
     $ret = array( 'success' => false );
     $created = $meetings->createMeeting( $courseID,
