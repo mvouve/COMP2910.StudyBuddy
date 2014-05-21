@@ -248,21 +248,29 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
 {
     //make sure my-meetings-list is in a container with  data-role="collapsible" so that we get the nice drop down effect for meeting info.
     //get the element to get meetings added to it
-    var meetingList = document.getElementById('my-meetings-list');
-    $('#my-meetings-list').listview();
+    var meetingList = document.getElementById( 'my-meetings-list' );
+    $( '#my-meetings-list' ).listview();
 
 
     //call an ajax function for add additional information from the server (if needed) and assign it to variables
     
     
     //use createElement() to make a div with data-role="collapsible" to store the course information
-    var listElement = document.createElement("div");
-    listElement.setAttribute("data-role", "collapsible")
+    var listElement = document.createElement( "div" );
+    listElement.setAttribute( "data-role", "collapsible" );
 
-    //add information into this new collapsible div
-    listElement.innerHTML=
+
+    //create a header to store main information on a meeting
+    var listHeader = document.createElement("h1");
+    listHeader.innerHTML( "Course: " + meetingCourse + "<br/>" + "Location: " + meetingLoc + "<br/>" + "Date: " + meetingStartTime );
+
+    //create a paragraph element to store detailed/supplementary information on a meeting
+    var listBody = document.createElement("p");
+    listBody.innerHTML("???");                                                   //additional info called by ajax goes here
 
     //add information to the meetingList varable as a child node (i guess)
+    meetingList.appendChild(listElement);
+    meetingList.appendChild(listBody);
 }
     
 /*   --- CALVIN'S DEMO STUFF
