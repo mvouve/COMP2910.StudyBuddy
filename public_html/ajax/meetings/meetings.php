@@ -102,6 +102,12 @@ function createMeeting( $courseID, $description, $location, $maxBuddies, $startT
     if ( $created )
     {
         $ret['success'] = true;
+        
+        // Push the Meeting through Pusher
+        global $pusher;
+        $data = array( 'ID' => -1, 'courseID' => $courseID, 'creator' => $uid,
+            'location' => $location, 'startTime' => $startTime );
+        $pusher->trigger( 'private-' . $courseID, 'meeting_added', $data ); 
     }
     
     return $ret;
@@ -133,8 +139,13 @@ function editMeeting( $meetingID, $courseID, $description, $location, $maxBuddie
     if ( $editted )
     {
         $ret['success'] = true;
+        
+        // Push the Edits through Pusher
+        global $pusher;
+        $data = array( 'ID' => $meetingID, 'courseID' => $courseID, 'creator' => $uid,
+            'location' => $location, 'startTime' => $startTime );
+        $pusher->trigger( 'private-' . $courseID, 'meeting_editted', $data ); 
     }
-    */
     
     return $ret;
 }
@@ -154,8 +165,12 @@ function cancelMeeting( $meetingID )
     if ( $meetings->cancelMeeting( $meetingID ) )
     {
         $ret['success'] = true;
+        
+        // Push the cancellation through Pusher
+        global $pusher;
+        $data = array( 'ID' => $meetingID );
+        $pusher->trigger( 'private-' . $courseID, 'meeting_cancelled', $data ); 
     }
-    */
     
     return $ret;
 }
