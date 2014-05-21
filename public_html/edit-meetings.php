@@ -2,22 +2,19 @@
 <?php require_once( 'config.php' ); ?>
 <?php require_once( PHP_INC_PATH . 'common.php' ); ?>
 <?php if ( isset( $_GET['logout'] ) ) { User::instance()->logout(); } ?>
-<?php renderPagelet( 'header.php', array( '{{customHeadTags}}' => '' ) ); ?>
+<?php renderPagelet( 'header.php', array( '{{customHeadTags}}' => 'Edit Meeting' ) ); ?>
 
-<div data-role="page">
+<div data-role="page" id="page-edit-meeting">
     <div data-role="header">
     </div>
 
     <div data-role="main" id="edit-meeting-div">
         <form id="edit-meeting-form" name="edit-meeting-form" method="post">
-            <div id="course-dropdown-wrapper">
-                <label for="course-dropdown">Course :</label>
-                <select id="course-dropdown" name="course-dropdown"></select><br/>
-            </div>
+            <h3 id="courseID"></h3>
 
-            <div id="location-dropdown-wrapper">
-                <label for="location-dropdown">Location :</label>
-                <select id="location-dropdown" name="location-dropdown"></select><br/>
+            <div id="edit-location-wrapper">
+                <label for="edit-location">Location :</label>
+                <input id="edit-location" name="edit-location" type="text"><br/>
             </div>
 
             <div>

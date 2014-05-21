@@ -5,7 +5,7 @@
 				<input type="hidden" name="method" value="get-courses" />
 			</form>
             <div data-role="content" class="listview-wrapper">
-                <ul data-role="listview" data-filter="true" id="my-courses-list">
+                <ul data-role="listview" data-filter="true" id="my-courses-list" data-split-icon="false">
 	                <!--li data-icon="false"><a href="#">BUSA2720<br>Business in a Networked Economy</a></li>
 	                <li data-icon="false"><a href="#">COMP1116<br>Business Communications 1</a></li>
 	                <li data-icon="false"><a href="#">COMP1100<br>CST Program Fundamentals</a></li>
@@ -47,16 +47,15 @@
 				
                     if( removeMode )
                     {
-                        $('#my-courses-list a').removeClass('ui-btn-icon-right ui-icon-delete');
+                        $('#my-courses-list .the-button').removeClass('ui-btn-icon-right ui-icon-delete');
                         updateTrackedCheckMarks();
 				        $('#my-courses-list').listview('refresh');
                         $('#remove-course-button').html('Remove Courses');                    
                     }
                     else
                     {
-                        $('#my-courses-list>li').attr('data-icon', 'delete');
-                        $('#my-courses-list a').removeClass('ui-icon-eye');
-                        $('#my-courses-list a').addClass('ui-btn-icon-right ui-icon-delete');
+                        $('#my-courses-list .the-button').removeClass('ui-icon-eye ui-icon-no-eye');
+                        $('#my-courses-list .the-button').addClass('ui-icon-delete');
 				        $('#my-courses-list').listview('refresh');
                         $('#remove-course-button').html('Finish');
                     }

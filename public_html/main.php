@@ -20,6 +20,7 @@
 		<?php include( 'all-courses.php' ); ?>
 		<?php include( 'my-courses.php' ); ?>
 		<?php include( 'add-course.php' ); ?>
+        <?php include( 'edit-meetings.php' ); ?>
     </body>
 	
 	<script>
