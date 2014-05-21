@@ -44,7 +44,7 @@ function getMeetingDetails ( ajax_URL, meetingID )
         type: 'POST',
         data:
         {
-            method: 'get-meetings',
+            method: 'get-meeting-details',
             id: meetingID
         },
         dataType: "json",
@@ -283,10 +283,10 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
     //              if (meetingFilter != 2 && <not attending> && <meeting not cancelled>) {button: join meeting}
     //              if (meetingFilter != 2 && <attending>) {button: leave meeting}
 
-    //make sure my-meetings-list is in a container with  data-role="collapsible" so that we get the nice drop down effect for meeting info.
+
+
     //get the element to get meetings added to it
     var meetingList = document.getElementById( 'my-meetings-list' );
-
 
     //call an ajax function for add additional information from the server (if needed) and assign it to variables. TRIGGERS WHEN A PERSON CLICKS ON A LIST ELEMENT TO EXPAND IT
     //maybe manage this by giving the div an id of the meetingID
@@ -301,16 +301,20 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
     var listHeader = document.createElement("h1");
     listHeader.innerHTML( "Course: " + meetingCourse + "<br/>" + "Location: " + meetingLoc + "<br/>" + "Date: " + meetingStartTime );
 
-    //create a paragraph element to store detailed/supplementary information on a meeting
-    var listBody = document.createElement("p");
-    listBody.innerHTML("???");                                                   //additional info called by ajax goes here
+    //create a div element to store detailed/supplementary information on a meeting
+    var listBody = document.createElement("div");
+    
 
-    //create two buttons
 
     //add information to the meetingList varable as a child node (i guess)
     listElement.appendChild(listHeader);
     listElement.appendChild(listBody);
     meetingList.appendChild(listElement);
+
+    $('#meeting-1').bind('expand', function () 
+    {
+        // ajax call
+    });
 }
     
 /*   --- CALVIN'S DEMO STUFF
