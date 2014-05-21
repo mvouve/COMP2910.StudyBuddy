@@ -2,7 +2,7 @@
     returns a 2D array of meetings, each of which contains individual meeting data.
     @param ajax_URL (string): the URI location where the ajax folder is located */
 
-function getAllMeetings( ajax_URL )
+function getAllMyMeetings( ajax_URL )
 {
     $.ajax
     ({
@@ -253,11 +253,16 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
 
 
     //call an ajax function for add additional information from the server (if needed) and assign it to variables
-
     
-    //use createElement() to make a <li> and populate it with all the data
+    
+    //use createElement() to make a div with data-role="collapsible" to store the course information
+    var listElement = document.createElement("div");
+    listElement.setAttribute("data-role", "collapsible")
 
-    //add <li> to the meetingList varable as a child node (i guess)
+    //add information into this new collapsible div
+    listElement.innerHTML=
+
+    //add information to the meetingList varable as a child node (i guess)
 }
     
 /*   --- CALVIN'S DEMO STUFF
