@@ -96,19 +96,19 @@ function createMeeting ( ajax_URL, courseID, courseDescription, meetingLocation,
 }
 
 
-    /* 
-     * called when the creator of a meeting needs to change something about the meeting
-     *
-     *
-     * @param ajax_URL  the URI location where the ajax folder is located
-     * @param meetingID: the meeting ID, determiend which meeting is to be altered
-     * @param courseID the course being studied at the meeting
-     * @param CourseDescription a description of the course
-     * @param meetingLocation the place where the meeting will be held
-     * @param startTime a datetime string informing when the meeting begins (YYYY-MM-DD HH:MM:SS)
-     * @param endTime a datetime string informing when the meeting ends (YYYY-MM-DD HH:MM:SS)
-     * @param maxBuddies the maximum number of people that a location can accomidate 
-     */
+/* 
+ * called when the creator of a meeting needs to change something about the meeting
+ *
+ *
+ * @param ajax_URL  the URI location where the ajax folder is located
+ * @param meetingID: the meeting ID, determiend which meeting is to be altered
+ * @param courseID the course being studied at the meeting
+ * @param CourseDescription a description of the course
+ * @param meetingLocation the place where the meeting will be held
+ * @param startTime a datetime string informing when the meeting begins (YYYY-MM-DD HH:MM:SS)
+ * @param endTime a datetime string informing when the meeting ends (YYYY-MM-DD HH:MM:SS)
+ * @param maxBuddies the maximum number of people that a location can accomidate 
+ */
 function editMeeting ( ajax_URL, meetingID, courseID, courseDescription, meetingLocation, startTime, endTime, maxBuddies )
 {
     $.ajax

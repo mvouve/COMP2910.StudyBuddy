@@ -15,20 +15,23 @@ function bindToCourse( course )
 	channels[course] = pusher.subscribe( 'private-' + course );
 	channels[course].bind( 'meeting_added', pusherMeetingAdded );
 	channels[course].bind( 'meeting_cancelled', pusherMeetingCancelled );
-	channels[course].bind( 'meeting_changed', pusherMeetingChanged );
+	channels[course].bind( 'meeting_editted', pusherMeetingChanged );
 }
 
 // Unbind pusher from a course-specific private channel
 function unbindFromCourse( course )
 {
 	pusher.unsubscribe( 'private-' + course );
-	channels.splice( course, 1 );
+    delete channels[ course ];
 }
 
 function unbindFromAllCourses()
 {
+    console.log( JSON.stringify( channels ) );
+
 	for ( var id in channels )
 	{
+        console.log( id );
 		if ( id != 'study_buddy' )
 		{
 			unbindFromCourse( id );
