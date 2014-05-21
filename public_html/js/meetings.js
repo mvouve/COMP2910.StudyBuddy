@@ -1,3 +1,9 @@
+/* GLOBAL VARIABLES */
+var meetingList = {};
+var iCreated = false;
+var allMeeting = false;
+var iAttending = false;
+
 /* a method to return all the meetings that you are attending, and adds them to your my meetings list via a helper function.
     returns a 2D array of meetings, each of which contains individual meeting data.
     @param ajax_URL (string): the URI location where the ajax folder is located */
@@ -15,52 +21,11 @@ function getAllMyMeetings( ajax_URL )
         dataType: "json",
         success: function ( json )
         {
-            for( var i = 0; i < json.length; ++i )
-            {
-                var meetingID = json.id;
-                var meetingCourse = json.courseID;
-                var meetingLoc = json.location;
-                var meetingStartTime = json.startDate;
-                var meetingCancelled = json.cancelled;
-                var meetingFilter = json.filter;            // filter will determine which mode people will be able to use for a meeting and how it displays in lists
-
-                //populate the list of all meetings with a helper function
-                addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTime, meetingCancelled, meetingFilter );
-            }
+            meetingList = json;
+            regenerateList();
         }
     });
 }
-
-/* a method to return the details for one specific meeting
-    returns an array containing a course description string, end date string, max buddies int, and an array of buddies currently signed up to the meeting
-    @param ajax_URL (string): 
-    @param meetingID (INT): a numeric unique ID for a meeting */
-
-function getMeetingDetails ( ajax_URL, meetingID )
-{
-    $.ajax
-    ({
-        url: ajax_URL + 'meetings/meetings.php',
-        type: 'POST',
-        data:
-        {
-            method: 'get-meeting-details',
-            id: meetingID
-        },
-        dataType: "json",
-        success: function ( json )
-        {
-            var meetingDesc = json.description;
-            var meetingEndDate = json.endDate;
-            var meetingMaxBuddies = json.maxBuddies;
-            var meetingBuddies = json.buddies //an array of displayNames
-
-            //call a helper function in order to populate the edit meetings page
-
-        }
-    });
-}
-		      
    
 /* creates a new meeting
     @param ajax_URL  the URI location where the ajax folder is located
@@ -82,15 +47,21 @@ function createMeeting ( ajax_URL, courseID, courseDescription, meetingLocation,
             method: 'create-meeting',
             courseID: courseID,
             description: courseDescription,
-            location: meetingLocation, 
+            location: meetingLocation,
             startTime: startTime,
             endTime: endTime,
             maxBuddies: maxBuddies
         },
         dataType: "json",
-        success: function ( json )
-        {
-            //to do later
+        success: function (json) {
+            if (json.success == true) {
+                //redirect user to myMeetings
+                window.location.assign("my-meetings.php");
+            }
+            else {
+                //alert: meeting was not created successfully.
+                alert("Meeting not created successfully.");
+            }
         }
     });
 }
@@ -121,18 +92,20 @@ function editMeeting ( ajax_URL, meetingID, courseID, courseDescription, meeting
             id: meetingID,
             courseId: courseID,
             description: courseDescription,
-            location: meetingLocation, 
+            location: meetingLocation,
             startTime: startTime,
             endTime: endTime,
             maxBuddies: maxBuddies
         },
         dataType: "json",
-        success: function ( json )
-        {
-            if( json.success == true )
-            {
-                document.getElementById( 'create-meeting-form' ).reset();
-                $.mobile.changePage( '#page-my-meetings' )
+        success: function (json) {
+            if (json.success == true) {
+                document.getElementById('create-meeting-form').reset();
+                $.mobile.changePage('#page-my-meetings')
+            }
+            else {
+                //show an alert that the meeting was not successfully edited.
+                alert("meeting was not succesfully edited.");
             }
         }
     });
@@ -156,7 +129,7 @@ function cancelMeeting( ajax_URL, meetingID )
         dataType: "json",
         success: function ( json )
         {
-            //to do later
+            //doesnt need anything to do here.
         }
     });
 }
@@ -177,9 +150,11 @@ function joinMeeting ( ajax_URL, meetingID )
             id: meetingID
         },
         dataType: "json",
-        success: function ( json )
-        {
-            //to do later
+        success: function (json) {
+            //collapse the div
+            $("#meeting-" + meetingID).trigger("collapse");
+            //re-expand the div to programatically refresh the div
+            $("#meeting-" + meetingID).trigger("expand");
         }
     });
 }
@@ -203,7 +178,10 @@ function leaveMeeting ( ajax_URL, meetingID )
         dataType: "json",
         success: function ( json )
         {
-            //to do later
+            //collapse the div
+            $("#meeting-" + meetingID).trigger("collapse");
+            //re-expand the div to programatically refresh the div
+            $("#meeting-" + meetingID).trigger("expand");
         }
     });
 }
@@ -212,23 +190,25 @@ function leaveMeeting ( ajax_URL, meetingID )
 /* used to add the details of a particular meeting to a HTML form, for editing meetings
     @param meetingID the unique ID assigned to a meeting */
 
-function populateMeetingDetails ( description, meetingEndDate, meetingMaxBuddies, meetingBuddies )
+function populateEditMeetingFields ( description, meetingEndDate, meetingMaxBuddies, meetingBuddies )
 {
     //select a form element and assign json data to it
+	/*
     var element = document.getElementById("course-dropdown");
-    element.setAttribute("value", /* json data */);
+    element.setAttribute("value", );
 
     var element = document.getElementById("location-dropdown");
-    element.setAttribute("value", /* json data */);
+    element.setAttribute("value",);
 
     var element = document.getElementById("meeting-datetime");
-    element.setAttribute("value", /* json data */);
+    element.setAttribute("value", );
 
     var element = document.getElementById("max-buddies");           //note: must not allow user to change this to a value lower than the current # of buddies.
-    element.setAttribute("value", /* json data */);
+    element.setAttribute("value", );
 
     var element = document.getElementById("meeting-comments");
-    element.setAttribute("value", /* json data */);
+    element.setAttribute("value", );
+	*/
 }
 
 /* used to add a meeting to a list of meetings
@@ -285,39 +265,39 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
 
 
 
-    //get the element to get meetings added to it
+    //assign the meetings list element to a variable
     var meetingList = document.getElementById( 'my-meetings-list' );
-
-    //call an ajax function for add additional information from the server (if needed) and assign it to variables. TRIGGERS WHEN A PERSON CLICKS ON A LIST ELEMENT TO EXPAND IT
-    //maybe manage this by giving the div an id of the meetingID
-    
     
     //use createElement() to make a div with data-role="collapsible" to store the course information
     var listElement = document.createElement( "div" );
     listElement.setAttribute( "data-role", "collapsible" );
-    listElement.setAttribute( "class", "list-element" );
+    
+    //set the div id for the list element which will contain all the data for a meeting
+    listElement.setAttribute( "id", "meeting-" + meetingID );
 
 
     //create a header to store main information on a meeting
-    var listHeader = document.createElement("h1");
+    var listHeader = document.createElement( "h1" );
     listHeader.innerHTML( "Course: " + meetingCourse + "<br/>" + "Location: " + meetingLoc + "<br/>" + "Date: " + meetingStartTime );
 
     //create a div element to store detailed/supplementary information on a meeting
-    var listBody = document.createElement("div");
+    var listBody = document.createElement( "div" );
+
+    //create a div container for buttons which will appear at the bottom of the expanded accordion
+    var buttonBar = document.createElement( "div" );
     
-
-
     //add information to the meetingList varable as a child node (i guess)
     listElement.appendChild(listHeader);
     listElement.appendChild(listBody);
+    listElement.appendChild(buttonBar);
     meetingList.appendChild(listElement);
 
-    $('.list-element').bind('expand', function () 
+    $('#meeting-' + meetingID).bind( 'expand', function () 
     {
         // need some code here to remove any existing children from the parent list element that may exist from previous expands
-        // use .empty() on the element being expanded?
+        this.empty();
 
-
+        //ajax call to retrueve information from the server and call a function to create meeting details
         $.ajax
         ({
             url: ajax_URL + 'meetings/meetings.php',
@@ -333,108 +313,153 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
                 var meetingDesc = json.description;
                 var meetingEndDate = json.endDate;
                 var meetingMaxBuddies = json.maxBuddies;
-                var meetingBuddies = json.buddies //an array of displayNames
+                var meetingBuddies = "";
+                
+                for ( var i = 0 ; i<json.buddies.length ; i++ )
+                {
+                    meetingBuddies = "" + json.buddies[i] + "<br/>";
+                }
 
-                /*call a function to create meeting details and append them to a parent element
-                    @param parentID the parent element ID
-                    @param meetingDesc the meeting description
-                    @param maxbuddies: the max Number of buddies
-                    @param meetingbuddies: an Array of users attending this meeting */
-                createMeetingDetails( parentID, meetingDesc, meetingEndDate, meetingMaxBuddies, meetingBuddies)
+                /* call a function to create meeting details and append them to a parent element */
+                createMeetingDetails( '#meeting-' + meetingID, meetingDesc, meetingEndDate, meetingMaxBuddies, meetingBuddies)
             }
         });
+        //create buttons based on the user's relationship to this meeting
+        if ( meetingFilter == 2 )
+        {
+            //button: edit meeting, button: cancel meeting
+            var editButton = document.createElement( "button" );
+            editButton.innerHTML( "Edit Meeting" );
+            editButton.on( 'click tap', function()
+            {
+                //call populate fields method for editing
+                //move the user to the edit meetings page.
+            });
+
+            var cancelButton = document.createElement( "button" );
+            cancelButton.innerHTML( "Edit Meeting" );
+            cancelButton.on( 'click tap', function()
+            {
+                //call the cancel meetings function.
+            });
+
+            buttonBar.appendChild(editButton);
+            buttonBar.appendChild(cancelButton);
+        }
+        else if ( ( meetingFilter == 0 ) && ( meetingCancelled == false ) )
+        {
+            //button: join meeting
+            var joinButton = document.createElement( "button" );
+            joinButton.innerHTML( "Edit Meeting" );
+            joinButton.on( 'click tap', function()
+            {
+                //call the join meeting function.
+            });
+            buttonBar.appendChild(joinButton);
+        }
+        else if ( ( meetingFilter == 1 ) && ( meetingCancelled == false ) )
+        {
+            //button: leave meeting
+            var leaveButton = document.createElement( "button" );
+            leaveButton.innerHTML( "Edit Meeting" );
+            leaveButton.on( 'click tap', function()
+            {
+                //call the leave meeting function.
+            });
+            buttonBar.appendChild(leaveButton);
+        }
+
     });
 }
 
 /*call a function to create meeting details and append them to a parent element
-    @param parentID the parent element ID
+    @param meetingIDContainer the parent element ID to which elements created here will be appended
     @param meetingDesc the meeting description
     @param maxbuddies: the max Number of buddies
     @param meetingbuddies: an Array of users attending this meeting */
-
-    
-/*   --- CALVIN'S DEMO STUFF
-$( '#i-created' ).on( 'click tap', function(e)
+function createMeetingDetails( meetingIDContainer, meetingDesc, meetingEndDate, meetingMaxBuddies, meetingBuddies)
 {
-    iCreated = !iCreated;
+    var containerDiv = document.getElementById( meetingIDContainer );
 
-    regenerateList();
-});
+    var descElement = document.createElement( "p" );
+    descElement.innerHTML( "Description: " + meetingDesc );
+    containerDiv.appendChild( descElement );
 
-function regenerateList()
-{
-    for( i = 0; i < courses.length; i += 1 )
-    {
-        if ( iCreated && courses[i].creator === me )
-        {
-            addMeetingToList(();
-        }
-        ...
-    }
+    var endElement = document.createElement( "p" );
+    endElement.innerHTML( "End Date: " + meetingEndDate );
+    containerDiv.appendChild( endElement );
+
+    var maxBuddiesElement = document.createElement( "p" );
+    maxBuddiesElement.innerHTML( "Max Buddies: " + meetingMaxBuddies );
+    containerDiv.appendChild( maxBuddiesElement );
+
+    var buddiesElement = document.createElement( "p" );
+    buddiesElement.innerHTML( "Buddies: " + "<br/>" + meetingBuddies );
+    containerDiv.appendChild( buddiesElement );
 }
-*/
 
+/* goes through the meetingList array and adds it to the HTML list if called*/
+function regenerateList()
+{    
+	$("#my-meeting-list").html("");
+	for( i = 0; i < meetingList.length; i += 1 )
+	{
+		if(allMeeting && meetingList.filter == 0)
+		{
+			addMeetingToList(meetingList[i].ID,
+							 meetingList[i].courseID,
+							 meetingList[i].location,
+							 meetingList[i].startDate,
+							 meetingList[i].cancelled,
+							 meetingList[i].filter);
+		}
+		else if( iCreated && meetingList.filter == 2)
+		{
+			addMeetingToList(meetingList[i].ID,
+							 meetingList[i].courseID,
+							 meetingList[i].location,
+							 meetingList[i].startDate,
+							 meetingList[i].cancelled,
+							 meetingList[i].filter);
+		}
+		else if( iAttending && meetingList.filter == 1)
+		{
+			addMeetingToList(meetingList[i].ID,
+							 meetingList[i].courseID,
+							 meetingList[i].location,
+							 meetingList[i].startDate,
+							 meetingList[i].cancelled,
+							 meetingList[i].filter);
+		}
+	}
+}
+
+/*This function will check the toggles and add the meetings that match the criteria to the list.
+*/    
 function myMeetingOnReady(){
-    var iCreated = false;
-    var allMeeting = false;
-    var iAttending = false;
 
-    $( '#i-created' ).on( 'click tap', function(e)
+    $( '#i-created' ).on( 'touchend', function(e)
         {
             iCreated = !iCreated;
+			
+			$('#i-created').toggleClass("toggled");
             regenerateList();
+            return false;
         });
-    $( '#all-meeting' ).on( 'click tap', function(e)
+    $( '#not-attending' ).on( 'touchend', function(e)
         {
             allMeeting = !allMeeting;
+			
+			$('#not-attending').toggleClass("toggled");
             regenerateList();
+            return false;
         });
-    $( '#i-attending' ).on( 'click tap', function(e)
+    $( '#i-attending' ).on( 'touchend', function(e)
         {
             iAttending = !iAttending;
+			
+			$('#i-attending').toggleClass("toggled");
             regenerateList();
+			return false;
         });
-
-    function regenerateList()
-    {    
-        for( j = 0; j < meetingList.length; i+=1)
-        {
-               removeMeeting(course[i]);
-        }
-        for( i = 0; i < meetingList.length; i += 1 )
-        {
-            if(allMeeting && meetingList.filter == 0)
-            {
-                addMeetingToList(meetingList[i].meetingID,
-                                 meetingList[i].meetingCourse,
-                                 meetingList[i].meetingLoc,
-                                 meetingList[i].meetingStartTime,
-                                 meetingList[i].meetingCancelled,
-                                 meetingList[i].meetingFilter);
-            }
-            else if( iCreated && meetingList.filter == 2)
-            {
-                addMeetingToList(meetingList[i].meetingID,
-                                 meetingList[i].meetingCourse,
-                                 meetingList[i].meetingLoc,
-                                 meetingList[i].meetingStartTime,
-                                 meetingList[i].meetingCancelled,
-                                 meetingList[i].meetingFilter);
-            }
-            else if( iAttending && meetingList.filter == 1)
-            {
-                addMeetingToList(meetingList[i].meetingID,
-                                 meetingList[i].meetingCourse,
-                                 meetingList[i].meetingLoc,
-                                 meetingList[i].meetingStartTime,
-                                 meetingList[i].meetingCancelled,
-                                 meetingList[i].meetingFilter);
-            }
-        }
-    }
-}
-
-fucntion removeMeeting()
-{
-    //TO BE FILLED
 }

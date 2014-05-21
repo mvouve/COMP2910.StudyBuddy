@@ -9,13 +9,9 @@
                 <select id="course-dropdown" name="course-dropdown"></select><br/>
             </div>
 
-            <div id="location-dropdown-wrapper">
-                <label for="location-dropdown">Location :</label>
-                <input type="text" id="location-dropdown" name="location-dropdown" list="locations">
-                <datalist id="locations">
-                    <option>EhPod</option>
-                </datalist>
-                <br/>
+            <div id="create-location-wrapper">
+                <label for="create-location">Location :</label>
+                <input type="text" id="create-location" name="create-location"><br/>
             </div>
 
             

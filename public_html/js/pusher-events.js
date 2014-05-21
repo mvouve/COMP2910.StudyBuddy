@@ -60,24 +60,42 @@ function pusherCourseAdded( data )
 
 /*
  * Pusher Callback on meeting creation
+    @param data  this is an array containing:
+        ID: the ID of the meeting
+        courseID: the ID of course
+        creatorID: unique user ID fo the meeting creator
+        location: the meeting location
+        startTime: meeting start time
  */
 function pusherMeetingAdded( data )
 {
-	
+	// add this meeting data to the meetingList array
+    // regenerate the list by the regenerate function
 }
 
 /*
  * Pusher Callback on a Meeting being Cancelled.
+     @param data  this is an array containing:
+        ID: the ID of the meeting
  */
 function pusherMeetingCancelled( data )
 {
-	
+	//go into meeting list and look for meeting with this ID and set its cancelled property/flag to true
+    // regenerate the list
 }
 
 /*
  * Pusher Callback on Meeting editted.
+     @param data  this is an array containing:
+        ID: the ID of the meeting
+        courseID: the ID of course
+        creatorID: unique user ID fo the meeting creator
+        location: the meeting location
+        startTime: meeting start time
  */
 function pusherMeetingChanged( data )
 {
-	
+	//look through meeting list array, find the meeting with this ID
+    //change its values to the new ones
+    //regenerate the list.
 }

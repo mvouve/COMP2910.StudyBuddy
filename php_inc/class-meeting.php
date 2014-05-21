@@ -53,6 +53,8 @@ class Meeting
         $sql->bindParam( ':endTime',    $endTime );
         $sql->execute();
         
+		$meetingID = $db->lastInsertId();
+		
         // add user to the event they just created.
         $sql = 'INSERT INTO  ' . Meeting::USER_MEETING_TABLE . '
                     VALUES ( LAST_INSERT_ID(), :userID );';
@@ -60,7 +62,12 @@ class Meeting
         $sql->bindParam( ':userID', $masterID );
         $sql->execute();
         
-        return $db->commit();
+        if ( !$db->commit() )
+		{
+			return -1;
+		}
+		
+		return $meetingID;
     }
 
     /*
