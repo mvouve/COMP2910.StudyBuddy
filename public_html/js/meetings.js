@@ -81,7 +81,11 @@ function createMeeting ( ajax_URL, courseID, courseDescription, meetingLocation,
         dataType: "json",
         success: function ( json )
         {
-            //to do later
+            //should redirect the user to the myMeetings page
+        },
+        failure: function ( json )
+        {
+            //show an alert that the me
         }
     });
 }
