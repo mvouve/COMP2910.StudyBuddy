@@ -96,14 +96,17 @@ function createMeeting( $courseID, $description, $location, $maxBuddies, $startT
 {
 	global $meetings, $uid;
 
+	/*
 	$sDate = strtotime( $startTime );
 	$sTime = date( 'Y-m-d H:i:s', $sDate );
-	
+	*/
 	/*
 	$sDate=date_create();
 	date_timestamp_set($sDate,$startTime);
 	$sTime = date_format($sDate,"Y-m-d H:i:s");
 	*/
+	
+	$sTime = DateTime::createFromFormat('Y/m/d H:i', $startTime)->format('Y-m-d H:i:s');
 	
 	$eDate=date_create();
 	date_timestamp_set($eDate,$endTime);
