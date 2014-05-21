@@ -47,21 +47,20 @@ function createMeeting ( ajax_URL, courseID, courseDescription, meetingLocation,
             method: 'create-meeting',
             courseID: courseID,
             description: courseDescription,
-            location: meetingLocation, 
+            location: meetingLocation,
             startTime: startTime,
             endTime: endTime,
             maxBuddies: maxBuddies
         },
         dataType: "json",
-        success: function ( json )
-        {
-            if (json.success == true)
-            {
+        success: function (json) {
+            if (json.success == true) {
                 //redirect user to myMeetings
+                window.location.assign("my-meetings.php");
             }
-            else
-            {
+            else {
                 //alert: meeting was not created successfully.
+                alert("Meeting not created successfully.");
             }
         }
     });
@@ -93,22 +92,20 @@ function editMeeting ( ajax_URL, meetingID, courseID, courseDescription, meeting
             id: meetingID,
             courseId: courseID,
             description: courseDescription,
-            location: meetingLocation, 
+            location: meetingLocation,
             startTime: startTime,
             endTime: endTime,
             maxBuddies: maxBuddies
         },
         dataType: "json",
-        success: function ( json )
-        {
-            if( json.success == true )
-            {
-                document.getElementById( 'create-meeting-form' ).reset();
-                $.mobile.changePage( '#page-my-meetings' )
+        success: function (json) {
+            if (json.success == true) {
+                document.getElementById('create-meeting-form').reset();
+                $.mobile.changePage('#page-my-meetings')
             }
-            else
-            {
+            else {
                 //show an alert that the meeting was not successfully edited.
+                alert("meeting was not succesfully edited.");
             }
         }
     });
@@ -132,7 +129,7 @@ function cancelMeeting( ajax_URL, meetingID )
         dataType: "json",
         success: function ( json )
         {
-            //maybe doesnt need anything to do here.
+            //doesnt need anything to do here.
         }
     });
 }
@@ -153,10 +150,11 @@ function joinMeeting ( ajax_URL, meetingID )
             id: meetingID
         },
         dataType: "json",
-        success: function ( json )
-        {
+        success: function (json) {
             //collapse the div
+            $("#meeting-" + meetingID).trigger("collapse");
             //re-expand the div to programatically refresh the div
+            $("#meeting-" + meetingID).trigger("expand");
         }
     });
 }
@@ -181,7 +179,9 @@ function leaveMeeting ( ajax_URL, meetingID )
         success: function ( json )
         {
             //collapse the div
+            $("#meeting-" + meetingID).trigger("collapse");
             //re-expand the div to programatically refresh the div
+            $("#meeting-" + meetingID).trigger("expand");
         }
     });
 }
