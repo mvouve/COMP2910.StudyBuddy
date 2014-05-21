@@ -327,11 +327,15 @@
                         {
                             if(json.success == true)
                             {
-                                $( '#all-courses-list>li' ).attr( 'data-icon', 'false' );
                                 $( '#all-courses-list a' ).removeClass('ui-icon-check ui-btn-icon-right');
+                                $( '#all-courses-list a' ).addClass('ui-icon-plus');
                                 $( '#all-courses-list' ).listview('refresh');
                                 document.getElementById( 'my-courses-list' ).innerHTML = '';
                                 myCoursesServerResponse = {};
+                                for( var key in allCoursesServerResponse )
+                                {
+                                    allCoursesServerResponse[key].inCourse = false;
+                                }
 								
 								unbindFromAllCourses();
                             }

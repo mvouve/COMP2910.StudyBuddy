@@ -131,6 +131,7 @@ function masterCourseListAdd ( ajax_URL, id, title, inCourse )
     else
     {
         $('#all-course-' + id).removeClass('ui-icon-check');
+        $('#all-course-' + id).addClass('ui-icon-plus');
     }
     
     // Add Event Handler to added List Item
@@ -196,7 +197,6 @@ function addUserCourse( ajax_URL, courseID, mode )
     loading[courseID] = true;
 
     //hide check
-    target.parentNode.setAttribute('data-icon', 'false');
     $('#' + target.id).removeClass('ui-icon-check ui-icon-plus ui-icon-eye ui-icon-delete ui-btn-icon-right');
 
     //show loading image
@@ -359,8 +359,8 @@ function removeUserCourse ( ajax_URL, courseID, mode )
 function removeFromUserCourses ( id )
 {
     //remove check
-    $('#all-course-' + id).parent().attr('data-icon', 'false');
-    $('#all-course-' + id).removeClass('ui-icon-check ui-btn-icon-right');
+    $('#all-course-' + id).removeClass('ui-icon-check');
+    $('#all-course-' + id).addClass('ui-icon-plus');
 
     //remove the list item of the course from the unordered list
     var element = document.getElementById( 'my-course-' + id );

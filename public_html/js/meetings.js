@@ -1,8 +1,9 @@
-/* a method to return all the meetings that you are attending.
+var meetingList = {};
+/* a method to return all the meetings that you are attending, and adds them to your my meetings list via a helper function.
     returns a 2D array of meetings, each of which contains individual meeting data.
     @param ajax_URL (string): the URI location where the ajax folder is located */
 
-function getAllMeetings( ajax_URL )
+function getAllMyMeetings( ajax_URL )
 {
     $.ajax
     ({
@@ -15,18 +16,8 @@ function getAllMeetings( ajax_URL )
         dataType: "json",
         success: function ( json )
         {
-            for( var i = 0; i < json.length; ++i )
-            {
-                var meetingID = json.id;
-                var meetingCourse = json.courseID;
-                var meetingLoc = json.location;
-                var meetingStartTime = json.startDate;
-                var meetingCancelled = json.cancelled;
-                var meetingFilter = json.filter;            // filter will determine which mode people will be able to use for a meeting and how it displays in lists
-
-                //populate the list of all meetings with a helper function
-                addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTime, meetingCancelled, meetingFilter );
-            }
+            meetingList = json;
+            regenerateList();
         }
     });
 }
@@ -40,11 +31,11 @@ function getMeetingDetails ( ajax_URL, meetingID )
 {
     $.ajax
     ({
-        url: ajax_URL + 'meetings/meeting-details.php',
+        url: ajax_URL + 'meetings/meetings.php',
         type: 'POST',
         data:
         {
-            method: 'get-meetings',
+            method: 'get-meeting-details',
             id: meetingID
         },
         dataType: "json",
@@ -246,117 +237,204 @@ function populateMeetingDetails ( description, meetingEndDate, meetingMaxBuddies
 
 function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTime, meetingCancelled, meetingFilter )
 {
-    //make sure my-meetings-list is in a container with  data-role="collapsible" so that we get the nice drop down effect for meeting info.
+    //to clarify things for myself i will draw a crude sketch of the heirarchy here since there are going to be a LOT OF ELEMENTS
+    //DIV: meetingList
+    //    DIV: ListElement #1 data-role="collapsible"
+    //       h1: ListHeader
+    //       div: listBody
+    //          p: meeting detail #1
+    //          p: meeting detail #2
+    //                  ...
+    //          p: meeting detail #n
+    //          div: buttonBar
+    //              if (meetingFilter == 2) {button: edit meeting, button: cancel meeting}
+    //              if (meetingFilter != 2 && <not attending> && <meeting not cancelled>) {button: join meeting}
+    //              if (meetingFilter != 2 && <attending>) {button: leave meeting}
+    //    DIV: ListElement #2 data-role="collapsible"
+    //       h1: ListHeader
+    //       div: listBody
+    //          p: meeting detail #1
+    //          p: meeting detail #2
+    //                  ...
+    //          p: meeting detail #n
+    //          div: buttonBar
+    //              if (meetingFilter == 2) {button: edit meeting, button: cancel meeting}
+    //              if (meetingFilter != 2 && <not attending> && <meeting not cancelled>) {button: join meeting}
+    //              if (meetingFilter != 2 && <attending>) {button: leave meeting}
+    //     ...
+    //    DIV: ListElement #n data-role="collapsible"
+    //       h1: ListHeader
+    //       div: listBody
+    //          p: meeting detail #1
+    //          p: meeting detail #2
+    //                  ...
+    //          p: meeting detail #n
+    //          div: buttonBar
+    //              if (meetingFilter == 2) {button: edit meeting, button: cancel meeting}
+    //              if (meetingFilter != 2 && <not attending> && <meeting not cancelled>) {button: join meeting}
+    //              if (meetingFilter != 2 && <attending>) {button: leave meeting}
+
+
+
     //get the element to get meetings added to it
-    var meetingList = document.getElementById('my-meetings-list');
-    $('#my-meetings-list').listview();
-
-
-    //call an ajax function for add additional information from the server (if needed) and assign it to variables
-
+    var meetingList = document.getElementById( 'my-meetings-list' );
     
-    //use createElement() to make a <li> and populate it with all the data
+    //use createElement() to make a div with data-role="collapsible" to store the course information
+    var listElement = document.createElement( "div" );
+    listElement.setAttribute( "data-role", "collapsible" );
+    listElement.setAttribute( "class", "list-element" );
 
-    //add <li> to the meetingList varable as a child node (i guess)
-}
+
+    //create a header to store main information on a meeting
+    var listHeader = document.createElement("h1");
+    listHeader.innerHTML( "Course: " + meetingCourse + "<br/>" + "Location: " + meetingLoc + "<br/>" + "Date: " + meetingStartTime );
+
+    //create a div element to store detailed/supplementary information on a meeting
+    var listBody = document.createElement("div");
     
-/*   --- CALVIN'S DEMO STUFF
-$( '#i-created' ).on( 'click tap', function(e)
-{
-    iCreated = !iCreated;
+    //add information to the meetingList varable as a child node (i guess)
+    listElement.appendChild(listHeader);
+    listElement.appendChild(listBody);
+    meetingList.appendChild(listElement);
 
-    regenerateList();
-});
-
-function regenerateList()
-{
-    for( i = 0; i < courses.length; i += 1 )
+    $('.list-element').bind('expand', function () 
     {
-        if ( iCreated && courses[i].creator === me )
+        // need some code here to remove any existing children from the parent list element that may exist from previous expands
+        this.empty();
+
+        //ajax call to retrueve information from the server and call a function to create meeting details
+        $.ajax
+        ({
+            url: ajax_URL + 'meetings/meetings.php',
+            type: 'POST',
+            data:
+            {
+                method: 'get-meeting-details',
+                id: meetingID
+            },
+            dataType: "json",
+            success: function ( json )
+            {
+                var meetingDesc = json.description;
+                var meetingEndDate = json.endDate;
+                var meetingMaxBuddies = json.maxBuddies;
+                var meetingBuddies = json.buddies //an array of displayNames
+
+
+                for ( var i = 0 ; i<json.buddies.length ; i++ )
+                {
+                    meetingBuddies = "" + meetingBuddies + json.buddies[i] + "<br/>";
+                }
+
+                /*call a function to create meeting details and append them to a parent element
+                    @param meetingDesc the meeting description
+                    @param maxbuddies: the max Number of buddies
+                    @param meetingbuddies: an Array of users attending this meeting */
+                createMeetingDetails( meetingDesc, meetingEndDate, meetingMaxBuddies, meetingBuddies)
+            }
+        });
+    });
+}
+
+/*call a function to create meeting details and append them to a parent element
+    @param parentID the parent element ID
+    @param meetingDesc the meeting description
+    @param maxbuddies: the max Number of buddies
+    @param meetingbuddies: an Array of users attending this meeting */
+function createMeetingDetails( meetingDesc, meetingEndDate, meetingMaxBuddies, meetingBuddies)
+{
+    var descElement = document.createElement("p");
+    descElement.innerHTML("Description: " + meetingDesc);
+
+    var endElement = document.createElement("p");
+    endElement.innerHTML("End Date: " + meetingEndDate);
+
+    var maxBuddiesElement = document.createElement("p");
+    maxBuddiesElement.innerHTML("Max Buddies: " + meetingMaxBuddies);
+
+    var buddiesElement = document.createElement("p");
+    buddiesElement.innerHTML("Buddies: " + "<br/>" + meetingBuddies);
+}
+
+/*This function will check the toggles and add the meetings that match the criteria to the list.
+*/    
+function myMeetingOnReady(){
+    var iCreated = false;
+    var allMeeting = false;
+    var iAttending = false;
+
+    $( '#i-created' ).on( 'click tap', function(e)
         {
-            addMeetingToList(();
+            iCreated = !iCreated;
+            if(iCreated)
+            {
+                $('#i-created').addClass("ui-btn-active");
+            }
+            else
+            {
+                $('#i-created').removeClass("ui-btn-active");   
+            }
+            regenerateList();
+        });
+    $( '#all-meeting' ).on( 'click tap', function(e)
+        {
+            allMeeting = !allMeeting;
+            if(allMeeting)
+            {
+                $('#all-meeting').addClass("ui-btn-active");
+            }
+            else
+            {
+                $('#all-meeting').removeClass("ui-btn-active");   
+            }       
+            regenerateList();
+        });
+    $( '#i-attending' ).on( 'click tap', function(e)
+        {
+            iAttending = !iAttending;
+            if(iAttending)
+            {
+                $('#i-attending').addClass("ui-btn-active");
+            }
+            else
+            {
+                $('#i-attending').removeClass("ui-btn-active");   
+            }       
+            regenerateList();
+        });
+
+    function regenerateList()
+    {    
+        $("#my-meeting-list").html("");
+        for( i = 0; i < meetingList.length; i += 1 )
+        {
+            if(allMeeting && meetingList.filter == 0)
+            {
+                addMeetingToList(meetingList[i].ID,
+                                 meetingList[i].courseID,
+                                 meetingList[i].location,
+                                 meetingList[i].startDate,
+                                 meetingList[i].cancelled,
+                                 meetingList[i].filter);
+            }
+            else if( iCreated && meetingList.filter == 2)
+            {
+                addMeetingToList(meetingList[i].ID,
+                                 meetingList[i].courseID,
+                                 meetingList[i].location,
+                                 meetingList[i].startDate,
+                                 meetingList[i].cancelled,
+                                 meetingList[i].filter);
+            }
+            else if( iAttending && meetingList.filter == 1)
+            {
+                addMeetingToList(meetingList[i].ID,
+                                 meetingList[i].courseID,
+                                 meetingList[i].location,
+                                 meetingList[i].startDate,
+                                 meetingList[i].cancelled,
+                                 meetingList[i].filter));
+            }
         }
-        ...
     }
 }
-*/
-
-/*
-$( '#i-created' ).on( 'click tap', function(e)
-    {
-
-
-        var templist;
-        for(blabla)
-        {
-            if(beepboop.filter == '2')
-            {
-                //add to list
-            }
-        }
-        //remove current list
-        //append new list
-        //refresh
-    });
-$( '#all-meeting' ).on( 'click tap', function(e)
-    {
-        //remove current list
-        //append original list from request
-        //refresh
-    });
-$( '#i-attending' ).on( 'click tap', function(e)
-    {
-        var templist;
-        for(blabla)
-        {
-            if(beepboop.filter == '1')
-            {
-                //add to list
-            }
-        }
-        //remove current list
-        //append new list
-        //refresh
-    });
-
-function regenerateList(iCreated,allMeeting,iAttending)
-{    
-    var templist;
-    for(blablabla)
-    {
-        if(iCreated)
-        {
-            if(bla.filter == '2')
-            {
-                addMeetingToList(bla);
-            }
-        }
-        if(allMeeting)
-        {
-            while(templist.length != 0)
-            {
-                removeMeetingfromList(templist[i]);
-            }
-            while(list.length != templist.length)
-            {
-                addMeetingToList(list[i]);
-            }
-        }
-        if(iAttending)
-        {
-
-        }
-    }
-}
-
-function addMeetingToList()
-{
-
-}
-
-function removeMeetingFromList()
-{
-
-}
-*/
-
