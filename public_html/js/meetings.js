@@ -151,7 +151,7 @@ function cancelMeeting( ajax_URL, meetingID )
         dataType: "json",
         success: function ( json )
         {
-            //to do later
+            //maybe doesnt need anything to do here.
         }
     });
 }
@@ -174,7 +174,7 @@ function joinMeeting ( ajax_URL, meetingID )
         dataType: "json",
         success: function ( json )
         {
-            //to do later
+            //call getMeetingDetails to refresh the meeting screen
         }
     });
 }
@@ -198,7 +198,7 @@ function leaveMeeting ( ajax_URL, meetingID )
         dataType: "json",
         success: function ( json )
         {
-            //to do later
+            //call getMeetingDetails to refresh the meeting screen
         }
     });
 }
