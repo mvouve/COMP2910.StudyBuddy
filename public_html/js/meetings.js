@@ -375,16 +375,40 @@ function myMeetingOnReady(){
     $( '#i-created' ).on( 'click tap', function(e)
         {
             iCreated = !iCreated;
+            if(iCreated)
+            {
+                $('#i-created').addClass("ui-btn-active");
+            }
+            else
+            {
+                $('#i-created').removeClass("ui-btn-active");   
+            }
             regenerateList();
         });
     $( '#all-meeting' ).on( 'click tap', function(e)
         {
             allMeeting = !allMeeting;
+            if(allMeeting)
+            {
+                $('#all-meeting').addClass("ui-btn-active");
+            }
+            else
+            {
+                $('#all-meeting').removeClass("ui-btn-active");   
+            }       
             regenerateList();
         });
     $( '#i-attending' ).on( 'click tap', function(e)
         {
             iAttending = !iAttending;
+            if(iAttending)
+            {
+                $('#i-attending').addClass("ui-btn-active");
+            }
+            else
+            {
+                $('#i-attending').removeClass("ui-btn-active");   
+            }       
             regenerateList();
         });
 
