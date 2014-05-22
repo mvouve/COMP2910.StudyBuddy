@@ -1,8 +1,8 @@
 /* GLOBAL VARIABLES */
 var meetingList = {};
-var iCreated = false;
-var allMeeting = false;
-var iAttending = false;
+var iCreated = true;
+var allMeeting = true;
+var iAttending = true;
 
 /* a method to return all the meetings that you are attending, and adds them to your my meetings list via a helper function.
     returns a 2D array of meetings, each of which contains individual meeting data.
@@ -286,7 +286,7 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
 
     //create a header to store main information on a meeting
     var listHeader = document.createElement( "h1" );
-    listHeader.innerHTML( "Course: " + meetingCourse + "<br/>" + "Location: " + meetingLoc + "<br/>" + "Date: " + meetingStartTime );
+    listHeader.innerHTML = "Course: " + meetingCourse + "<br/>" + "Location: " + meetingLoc + "<br/>" + "Date: " + meetingStartTime;
 
     //create a div element to store detailed/supplementary information on a meeting
     var listBody = document.createElement( "div" );
@@ -412,9 +412,9 @@ function createMeetingDetails( meetingIDContainer, meetingDesc, meetingEndDate, 
 function regenerateList()
 {    
 	$("#my-meeting-list").html("");
-	for( i = 0; i < meetingList.length; i += 1 )
+	for( i = 0; i < meetingList.length; i++ )
 	{
-		if(allMeeting && meetingList.filter == 0)
+		if(allMeeting && meetingList[i].filter == 0)
 		{
 			addMeetingToList(meetingList[i].ID,
 							 meetingList[i].courseID,
@@ -423,7 +423,7 @@ function regenerateList()
 							 meetingList[i].cancelled,
 							 meetingList[i].filter);
 		}
-		else if( iCreated && meetingList.filter == 2)
+		else if( iCreated && meetingList[i].filter == 2)
 		{
 			addMeetingToList(meetingList[i].ID,
 							 meetingList[i].courseID,
@@ -432,7 +432,7 @@ function regenerateList()
 							 meetingList[i].cancelled,
 							 meetingList[i].filter);
 		}
-		else if( iAttending && meetingList.filter == 1)
+		else if( iAttending && meetingList[i].filter == 1)
 		{
 			addMeetingToList(meetingList[i].ID,
 							 meetingList[i].courseID,
@@ -447,14 +447,25 @@ function regenerateList()
 /*This function will check the toggles and add the meetings that match the criteria to the list.
 */    
 function myMeetingOnReady(){
-
+    
+    if( iCreated )
+        console.log('iCreated');
+    if( iAttending )
+        console.log('iAttending');
+    if( allMeeting )
+        console.log('allMeeting');
+        
+    getAllMyMeetings( ajaxURL );
+    
     $( '#i-created' ).on( 'touchend', function(e)
         {
             iCreated = !iCreated;
 			
 			$('#i-created').toggleClass("toggled");
             regenerateList();
+            
             return false;
+            
         });
     $( '#not-attending' ).on( 'touchend', function(e)
         {
@@ -462,6 +473,7 @@ function myMeetingOnReady(){
 			
 			$('#not-attending').toggleClass("toggled");
             regenerateList();
+            
             return false;
         });
     $( '#i-attending' ).on( 'touchend', function(e)
@@ -470,6 +482,7 @@ function myMeetingOnReady(){
 			
 			$('#i-attending').toggleClass("toggled");
             regenerateList();
+            
 			return false;
         });
 }
