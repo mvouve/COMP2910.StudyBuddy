@@ -44,7 +44,7 @@
 			setTimeout( function() { colorChange(); }, 250 );
             
             // Open the Menu Panel when the Menu button is clicked on a specific page.
-            $( '.menu-toggle' ).on( "click tap", function() {
+            $( '.menu-toggle' ).on( "click touchend", function() {
                 $.mobile.activePage.find(".menu-panel" ).panel( "open" );
             });
         

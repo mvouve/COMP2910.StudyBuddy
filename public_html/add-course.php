@@ -55,7 +55,7 @@
                     validateTitle();
                 });
                //form submit function
-                $("#add-course-submit").on( 'click tap', function (e) {
+                $("#add-course-submit").on( 'click touchend', function (e) {
                     userNewCourseID = $("#user-course-id").val();
                     userNewCourseTitle = $("#user-course-title").val();
 					$('#add-course-submit').addClass('ui-disabled');
@@ -63,7 +63,7 @@
                     e.stopImmediatePropagation();
                     e.preventDefault();
                 }); 
-                $("#cancel-add-course").on( 'click tap', function (e) {
+                $("#cancel-add-course").on( 'click touchend', function (e) {
                     document.getElementById("user-course-form").reset();
 					$('#add-course-submit').addClass('ui-disabled');
                     $.mobile.changePage("#page-all-courses");
