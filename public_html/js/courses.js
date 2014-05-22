@@ -240,6 +240,9 @@ function addUserCourse( ajax_URL, courseID, mode )
             //refresh if safe
             if( refresh )
                 $('#all-courses-list').listview('refresh');
+				
+			// Refresh My Meetings
+			getAllMyMeetings( ajax_URL );
         }
     });
 }
@@ -355,6 +358,8 @@ function removeUserCourse ( ajax_URL, courseID, mode )
             if( refresh )
                 $('#all-courses-list').listview('refresh');
 
+			// Refresh My Meetings
+			getAllMyMeetings( ajax_URL );
         }
     });
 }
