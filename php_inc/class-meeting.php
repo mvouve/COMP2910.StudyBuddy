@@ -98,7 +98,7 @@ class Meeting
         $sql = ' UPDATE ' . Meeting::MEETING_TABLE . '
                     SET courseID = :courseID, comment = :comment, 
                         location = :location, maxBuddies = :maxBuddies,
-                        startTime = :startTime, endTime = :endTime
+                        startTime = :startDate, endDate = :endTime
                     WHERE ID = :meetingID';
                     
         $sql = $db->prepare( $sql );
