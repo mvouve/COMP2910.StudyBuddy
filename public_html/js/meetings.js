@@ -265,7 +265,7 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
                 dataType: "json",
                 success: function ( json )
                 {
-                    var meetingDesc = json.description;
+                    var meetingDesc = json.discription;
                     var meetingEndTime = json.endDate;
                     var meetingMaxBuddies = json.maxBuddies;
                     var currentBuddies = json.buddies.length
@@ -278,8 +278,11 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
                     }
                     
                     console.log( meetingEndTime );
-                    var meetingDetailsStr = '<p>End Date: ' + getHumanDate( meetingEndTime ) + '</p>'
-                                          + '<p>Buddies:' + currentBuddies + '/' + meetingMaxBuddies +'</p>';
+                    var meetingDetailsStr = '<p class="my-meeting-end-date">End Date: ' + getHumanDate( meetingEndTime ) + '</p>'
+                                          + '<p class="my-meeting-desc">Comments: ' + meetingDesc + '</p>'
+                                          + '<p class="my-meeting-buddies-count">Buddies: '
+                                                + currentBuddies + '/' + meetingMaxBuddies + '</p>'
+                                          + '<div class="my-meeting-buddies"><p>' + meetingBuddies + '</p></div>';
                     document.getElementById( 'meeting-details-' + meetingID ).
                                                     innerHTML = meetingDetailsStr;
                 }
