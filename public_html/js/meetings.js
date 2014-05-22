@@ -190,12 +190,12 @@ function leaveMeeting ( ajax_URL, meetingID )
 /* used to add the details of a particular meeting to a HTML form, for editing meetings
     @param meetingID the unique ID assigned to a meeting */
 
-function populateEditMeetingFields ( courseID, meetingLoc, description, meetingStartDate, meetingEndDate, meetingMaxBuddies )
+function populateEditMeetingFields ( courseID, meetingLoc, description, meetingStartDate, meetingEndDate, meetingMaxBuddies, meetingID )
 {
     //select a form element and assign json data to it
 	
-    var element = document.getElementById("courseID");
-    element.innerHTML(courseID);
+    var element = document.getElementById("course-edit-dropdown");
+    element.setAttribute("value", courseID );
 
     var element = document.getElementById("edit-location");
     element.setAttribute("value", meetingLoc);
@@ -206,11 +206,14 @@ function populateEditMeetingFields ( courseID, meetingLoc, description, meetingS
     var element = document.getElementById("meeting-end-datetime");
     element.setAttribute("value", meetingEndDate);
 
-    var element = document.getElementById("max-buddies");
+    var element = document.getElementById("edit-max-buddies");
     element.setAttribute("value", meetingMaxBuddies);
 
-    var element = document.getElementById("meeting-comments");
+    var element = document.getElementById("edit-meeting-comments");
     element.setAttribute("value", description);
+    
+    var element = document.getElementById("meeting-id");
+    element.setAttribute("value", meetingID );
 	
 }
 
@@ -338,7 +341,7 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
                     {
                         //call populate fields method for editing
                         /* populateEditMeetingFields ( courseID, meetingLoc, description, meetingStartDate, meetingEndDate, meetingMaxBuddies, meetingComments ) */
-                        populateEditMeetingFields ( meetingCourse, meetingLoc, meetingDesc, meetingStartTime, meetingEndTime, meetingMaxBuddies )
+                        populateEditMeetingFields ( meetingCourse, meetingLoc, meetingDesc, meetingStartTime, meetingEndTime, meetingMaxBuddies, meetingID )
                         //move the user to the edit meetings page.
                     });
 
