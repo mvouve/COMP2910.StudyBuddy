@@ -89,8 +89,8 @@ function editMeeting ( ajax_URL, meetingID, courseID, courseDescription, meeting
         data:
         {
             method: 'edit-meeting',
-            id: meetingID,
-            courseId: courseID,
+            ID: meetingID,
+            courseID: courseID,
             description: courseDescription,
             location: meetingLocation,
             startTime: startTime,
