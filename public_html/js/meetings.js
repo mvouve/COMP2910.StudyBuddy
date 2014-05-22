@@ -230,7 +230,7 @@ function populateEditMeetingFields ( courseID, meetingLoc, description, meetingS
                 1: attending
                 2: meeting creator */
 
-function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTime, meetingCancelled, meetingFilter )
+function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTime, meetingCancelled, meetingFilter, icon )
 {
     //to clarify things for myself i will draw a crude sketch of the heirarchy here since there are going to be a LOT OF ELEMENTS
     //DIV: meetingList
@@ -273,33 +273,18 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
 
 
 
-    //assign the meetings list element to a variable
-    var meetingList = document.getElementById( 'my-meetings-list' );
-    
-    //use createElement() to make a div with data-role="collapsible" to store the course information
-    var listElement = document.createElement( "li" );
-    listElement.setAttribute( "data-role", "collapsible" );
-    
-    //set the div id for the list element which will contain all the data for a meeting
-    listElement.setAttribute( "id", "meeting-" + meetingID );
-
-
-    //create a header to store main information on a meeting
-    var listHeader = document.createElement( "h1" );
-    listHeader.innerHTML = "Course: " + meetingCourse + "<br/>" + "Location: " + meetingLoc + "<br/>" + "Date: " + getHumanDate( meetingStartTime );
-
-    //create a div element to store detailed/supplementary information on a meeting
-    var listBody = document.createElement( "div" );
-
-    //create a div container for buttons which will appear at the bottom of the expanded accordion
-    var buttonBar = document.createElement( "div" );
-    
-    //add information to the meetingList varable as a child node (i guess)
-    listElement.appendChild(listHeader);
-    listElement.appendChild(listBody);
-    listElement.appendChild(buttonBar);
-    meetingList.appendChild(listElement);
-
+    var listItem = '<li data-role="collapsible" id = "meeting-' + meetingID + '"><a href="#"  class="the-button ui-btn"' + '<h1>Course:' + meetingCourse 
+                            + '<br>Location: ' + meetingLoc 
+                            + '<br>Date: ' + getHumanDate( meetingStartTime ) + '</h1>'
+                            + '<p id="meeting-details-' + meetingID + '">hi</p></a></li>';
+    $( '#my-meetings-list' ).append(listItem);
+    $( '#meeting-' + meetingID ).addClass('ui-icon-' + icon + ' ui-btn-icon-right');
+    $( '#meeting-' + meetingID ).on( 'click touchend', function ()
+    {
+        $('#meeting-details-' + meetingID ).slideToggle();
+    });
+    $('#meeting-details-' + meetingID ).hide();
+    /*
     $('#meeting-' + meetingID).bind( 'expand', function () 
     {
         // need some code here to remove any existing children from the parent list element that may exist from previous expands
@@ -328,7 +313,7 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
                     meetingBuddies = "" + json.buddies[i] + "<br/>";
                 }
 
-                /* call a function to create meeting details and append them to a parent element */
+                // call a function to create meeting details and append them to a parent element
                 createMeetingDetails( '#meeting-' + meetingID, meetingDesc, meetingEndTime, meetingMaxBuddies, meetingBuddies)
 
                 //create buttons based on the user's relationship to this meeting
@@ -340,7 +325,7 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
                     editButton.on( 'click touchend', function()
                     {
                         //call populate fields method for editing
-                        /* populateEditMeetingFields ( courseID, meetingLoc, description, meetingStartDate, meetingEndDate, meetingMaxBuddies, meetingComments ) */
+                        // populateEditMeetingFields ( courseID, meetingLoc, description, meetingStartDate, meetingEndDate, meetingMaxBuddies, meetingComments )
                         populateEditMeetingFields ( meetingCourse, meetingLoc, meetingDesc, meetingStartTime, meetingEndTime, meetingMaxBuddies, meetingID )
                         //move the user to the edit meetings page.
                     });
@@ -380,6 +365,7 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
             }
         });
     });
+    */
 }
 
 /*call a function to create meeting details and append them to a parent element
@@ -422,7 +408,8 @@ function regenerateList()
 							 meetingList[i].location,
 							 meetingList[i].startDate,
 							 meetingList[i].cancelled,
-							 meetingList[i].filter);
+							 meetingList[i].filter,
+                             'bars' );
 		}
 		else if( iCreated && meetingList[i].filter == 2)
 		{
@@ -431,7 +418,8 @@ function regenerateList()
 							 meetingList[i].location,
 							 meetingList[i].startDate,
 							 meetingList[i].cancelled,
-							 meetingList[i].filter);
+							 meetingList[i].filter,
+                             'star' );
 		}
 		else if( iAttending && meetingList[i].filter == 1)
 		{
@@ -440,7 +428,8 @@ function regenerateList()
 							 meetingList[i].location,
 							 meetingList[i].startDate,
 							 meetingList[i].cancelled,
-							 meetingList[i].filter);
+							 meetingList[i].filter,
+                             'check' );
 		}
 	}
     $('#my-meetings-list').listview('refresh');
