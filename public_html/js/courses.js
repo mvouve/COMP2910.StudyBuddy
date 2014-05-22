@@ -220,7 +220,7 @@ function addUserCourse( ajax_URL, courseID, mode )
         {
             allCoursesServerResponse[courseID].inCourse = true;
 			/* helper function, adds the course to the HTML */
-			addToUserCourses (courseID);
+			addToUserCourses (courseID, allCoursesServerResponse[courseID].title);
             
             //remove loading image
             target.removeChild(target.getElementsByTagName("img")[0]);
