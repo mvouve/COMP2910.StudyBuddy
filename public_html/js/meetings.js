@@ -625,11 +625,11 @@ function submitEditMeeting()
 {
     // Ready parameters.
     var courseID          = document.getElementById( 'course-edit-dropdown' ).value;
-    var maxBuddies        = document.getElementById( 'max-buddies' ).value;
-    var courseDescription = document.getElementById( 'meeting-comments' ).value;
+    var maxBuddies        = document.getElementById( 'edit-max-buddies' ).value;
+    var courseDescription = document.getElementById( 'edit-meeting-comments' ).value;
     var startTime         = document.getElementById( 'meeting-start-datetime' ).value;
     var endTime           = document.getElementById( 'meeting-end-datetime' ).value;
-    var meetingLocation   = document.getElementById( 'edit-location-dropdown' ).value;
+    var meetingLocation   = document.getElementById( 'edit-location' ).value;
     var errorDiv          = document.getElementById( 'edit-meeting-error' );
     var meetingID         = document.getElementById( 'meeting-id' ).value;
     

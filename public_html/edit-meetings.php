@@ -30,13 +30,13 @@
             </div>
 
             <div id="max-buddies-wrapper">
-                <label for="max-buddies">Maximum Buddies :</label>
-                <input id="max-buddies" name="max-buddies" type="text"><br/>
+                <label for="edit-max-buddies">Maximum Buddies :</label>
+                <input id="edit-max-buddies" name="edit-max-buddies" type="text"><br/>
             </div>
 
             <div id="meeting-comments-wrapper">
-                <label for="meeting-comments">Comments :</label>
-                <textarea id="meeting-comments" name="meeting-comments"></textarea><br/>
+                <label for="edit-meeting-comments">Comments :</label>
+                <textarea id="edit-meeting-comments" name="meeting-comments"></textarea><br/>
             </div>
             <!-- REMOVE THIS LATER FOR TESTING ONLY! -->
             <label for="meeting-id" style="color:red">Meeting ID !!!TO BE REMOVED: FOR TESTING ONLY!!!</label>
