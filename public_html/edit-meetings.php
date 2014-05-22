@@ -5,6 +5,8 @@
     </div>
 
     <div data-role="main" id="edit-meeting-div">
+        <!--div where errors appear on invalid input-->
+        <div id = "edit-meeting-error"></div>
         <form id="edit-meeting-form" name="edit-meeting-form" method="post">
             <h3 id="courseID"></h3>
 
