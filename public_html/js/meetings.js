@@ -3,6 +3,7 @@ var meetingList = [];
 var iCreated = true;
 var allMeeting = true;
 var iAttending = true;
+var meetingListClickLock = false;
 
 /* a method to return all the meetings that you are attending, and adds them to your my meetings list via a helper function.
     returns a 2D array of meetings, each of which contains individual meeting data.
@@ -232,56 +233,30 @@ function populateEditMeetingFields ( courseID, meetingLoc, description, meetingS
 
 function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTime, meetingCancelled, meetingFilter, icon )
 {
-    //to clarify things for myself i will draw a crude sketch of the heirarchy here since there are going to be a LOT OF ELEMENTS
-    //DIV: meetingList
-    //    DIV: ListElement #1 data-role="collapsible"
-    //       h1: ListHeader
-    //       div: listBody
-    //          p: meeting detail #1
-    //          p: meeting detail #2
-    //                  ...
-    //          p: meeting detail #n
-    //          div: buttonBar
-    //              if (meetingFilter == 2) {button: edit meeting, button: cancel meeting}
-    //                          Marc says "The edit button needs to send an id to the edit meeting page.
-    //                                     This might need to be done with a session variable."
-    //              if (meetingFilter != 2 && <not attending> && <meeting not cancelled>) {button: join meeting}
-    //              if (meetingFilter != 2 && <attending>) {button: leave meeting}
-    //    DIV: ListElement #2 data-role="collapsible"
-    //       h1: ListHeader
-    //       div: listBody
-    //          p: meeting detail #1
-    //          p: meeting detail #2
-    //                  ...
-    //          p: meeting detail #n
-    //          div: buttonBar
-    //              if (meetingFilter == 2) {button: edit meeting, button: cancel meeting}
-    //              if (meetingFilter != 2 && <not attending> && <meeting not cancelled>) {button: join meeting}
-    //              if (meetingFilter != 2 && <attending>) {button: leave meeting}
-    //     ...
-    //    DIV: ListElement #n data-role="collapsible"
-    //       h1: ListHeader
-    //       div: listBody
-    //          p: meeting detail #1
-    //          p: meeting detail #2
-    //                  ...
-    //          p: meeting detail #n
-    //          div: buttonBar
-    //              if (meetingFilter == 2) {button: edit meeting, button: cancel meeting}
-    //              if (meetingFilter != 2 && <not attending> && <meeting not cancelled>) {button: join meeting}
-    //              if (meetingFilter != 2 && <attending>) {button: leave meeting}
-
-
-
-    var listItem = '<li data-role="collapsible" id = "meeting-' + meetingID + '"><a href="#"  class="the-button ui-btn"' + '<h1>Course:' + meetingCourse 
-                            + '<br>Location: ' + meetingLoc 
-                            + '<br>Date: ' + getHumanDate( meetingStartTime ) + '</h1>'
-                            + '<p id="meeting-details-' + meetingID + '">hi</p></a></li>';
+    var listItem = '<li data-role="collapsible" id = "meeting-' + meetingID + '"><a href="#"  class="the-button ui-btn"' + '<h1>Course: ' + meetingCourse 
+                            + '<br>Location: ' + meetingLoc + '</h1>'
+                            + '<p>start date: '  + getHumanDate( meetingStartTime ) 
+                            + '</p><div id="meeting-details-' + meetingID + '"><p>test</p></div></a></li>';
     $( '#my-meetings-list' ).append(listItem);
     $( '#meeting-' + meetingID ).addClass('ui-icon-' + icon + ' ui-btn-icon-right');
-    $( '#meeting-' + meetingID ).on( 'click touchend', function ()
+    
+    
+    $( '#meeting-' + meetingID ).on( 'click tap', function ()
     {
+        if( meetingListClickLock )
+        {
+            console.log('BYE');
+            return;
+        }
+        console.log('HI');
+        meetingListClickLock = true;
+        setTimeout( function() { meetingListClickLock = false; }, 600 );
         $('#meeting-details-' + meetingID ).slideToggle();
+    
+        if( $( 'meeting-details-' + meetingID ).css( 'display' ) == 'none' )
+        {
+            
+        }
     });
     $('#meeting-details-' + meetingID ).hide();
     /*
