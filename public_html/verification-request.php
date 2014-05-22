@@ -36,7 +36,7 @@
             var sendingEmail = false;
             var verifying = false;
             
-            $('#verification-submit').click(function () {
+            $('#verification-submit').on( 'click touchend', function () {
                 if ( verifying == false )
                 {
                     verifying = true;

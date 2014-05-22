@@ -33,7 +33,7 @@
                 removeMode = false;
 				$('#my-courses-list').listview();
                             
-                $('#remove-course-button').on( 'click tap', function(e)
+                $('#remove-course-button').on( 'click touchend', function(e)
                 {
 					if ( removeClicked === true )
 					{
@@ -64,7 +64,7 @@
                     $('#remove-course-button').removeClass( 'ui-btn-active' );
                 });
 
-                $('#add-course-button').on( 'click tap', function(e)
+                $('#add-course-button').on( 'click touchend', function(e)
                 {
                     if(  removeMode  )
                     {

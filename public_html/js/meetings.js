@@ -286,7 +286,7 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
 
     //create a header to store main information on a meeting
     var listHeader = document.createElement( "h1" );
-    listHeader.innerHTML = "Course: " + meetingCourse + "<br/>" + "Location: " + meetingLoc + "<br/>" + "Date: " + meetingStartTime;
+    listHeader.innerHTML = "Course: " + meetingCourse + "<br/>" + "Location: " + meetingLoc + "<br/>" + "Date: " + getHumanDate( meetingStartTime );
 
     //create a div element to store detailed/supplementary information on a meeting
     var listBody = document.createElement( "div" );
@@ -337,7 +337,7 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
                     //button: edit meeting, button: cancel meeting
                     var editButton = document.createElement( "button" );
                     editButton.innerHTML( "Edit Meeting" );
-                    editButton.on( 'click tap', function()
+                    editButton.on( 'click touchend', function()
                     {
                         //call populate fields method for editing
                         /* populateEditMeetingFields ( courseID, meetingLoc, description, meetingStartDate, meetingEndDate, meetingMaxBuddies, meetingComments ) */
@@ -347,7 +347,7 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
 
                     var cancelButton = document.createElement( "button" );
                     cancelButton.innerHTML( "Edit Meeting" );
-                    cancelButton.on( 'click tap', function()
+                    cancelButton.on( 'click touchend', function()
                     {
                         //call the cancel meetings function.
                     });
@@ -360,7 +360,7 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
                     //button: join meeting
                     var joinButton = document.createElement( "button" );
                     joinButton.innerHTML( "Edit Meeting" );
-                    joinButton.on( 'click tap', function()
+                    joinButton.on( 'click touchend', function()
                     {
                         //call the join meeting function.
                     });
@@ -371,7 +371,7 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
                     //button: leave meeting
                     var leaveButton = document.createElement( "button" );
                     leaveButton.innerHTML( "Edit Meeting" );
-                    leaveButton.on( 'click tap', function()
+                    leaveButton.on( 'click touchend', function()
                     {
                         //call the leave meeting function.
                     });
@@ -462,7 +462,7 @@ function myMeetingOnReady(){
     
     
     
-    $( '#i-created' ).on( 'touchend', function(e)
+    $( '#i-created' ).on( 'click touchend', function(e)
         {
             iCreated = !iCreated;
 			
@@ -484,7 +484,7 @@ function myMeetingOnReady(){
             return false;
             
         });
-    $( '#not-attending' ).on( 'touchend', function(e)
+    $( '#not-attending' ).on( 'click touchend', function(e)
         {
             allMeeting = !allMeeting;
 			
@@ -505,7 +505,7 @@ function myMeetingOnReady(){
             
             return false;
         });
-    $( '#i-attending' ).on( 'touchend', function(e)
+    $( '#i-attending' ).on( 'click touchend', function(e)
         {
             iAttending = !iAttending;
             
@@ -713,4 +713,11 @@ function submitEditMeeting()
                       maxBuddies )
     }
     return;
+}
+
+function getHumanDate( d )
+{
+    date = new Date( d );
+    
+    return date.toDateString();
 }

@@ -16,17 +16,20 @@
                     <li><a href="#" 
                            data-icon="star" 
                            data-iconpos="top" 
-                           id="i-created">
+                           id="i-created"
+                           class="toggled">
                         My Creations</a></li>
                     <li><a href="#"
                            data-icon="check"
                            data-iconpos="top"
-                           id="i-attending">
+                           id="i-attending"
+                           class="toggled">
                         I'm In!</a></li>
                     <li><a href="#" 
                            data-icon="bars" 
                            data-iconpos="top" 
-                           id="not-attending">
+                           id="not-attending"
+                           class="toggled">
                         Not Attending</a></li>
                 </ul>
             </div>

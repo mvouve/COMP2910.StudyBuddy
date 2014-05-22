@@ -51,7 +51,7 @@ function getUserCourses( ajax_URL )
                     -remove course from user course list, if in remove mode OR
                     -toggle course's visability otherwise
                 */
-                $('#my-course-'+json[i].id).on( 'click tap', function(e)
+                $('#my-course-'+json[i].id).on( 'click touchend', function(e)
                 {
                     if( removeMode )
                     {
@@ -138,7 +138,7 @@ function masterCourseListAdd ( ajax_URL, id, title, inCourse )
     }
     
     // Add Event Handler to added List Item
-    $('#all-course-' + id).on('click tap', function (e)
+    $('#all-course-' + id).on('click touchend', function (e)
     {
         if( allCoursesServerResponse[id].inCourse )
         {
@@ -220,7 +220,7 @@ function addUserCourse( ajax_URL, courseID, mode )
         {
             allCoursesServerResponse[courseID].inCourse = true;
 			/* helper function, adds the course to the HTML */
-			addToUserCourses (courseID);
+			addToUserCourses (courseID, allCoursesServerResponse[courseID].title);
             
             //remove loading image
             target.removeChild(target.getElementsByTagName("img")[0]);
@@ -278,7 +278,7 @@ function addToUserCourses ( id, title )
         -remove course from user course list, if in remove mode OR
         -toggle course's visability otherwise
     */
-    $('#my-course-'+id).on( 'click tap', function(e)
+    $('#my-course-'+id).on( 'click touchend', function(e)
     {
         if( removeMode )
         {

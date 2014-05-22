@@ -79,7 +79,7 @@
     /*
      * Event handler for the button to create a meeting.
      */
-    $( '#create-meeting-submit' ).on( 'click tap', submitCreateMeeting );
+    $( '#create-meeting-submit' ).on( 'click touchend', submitCreateMeeting );
     
 
 </script>

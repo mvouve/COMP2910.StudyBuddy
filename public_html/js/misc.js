@@ -25,10 +25,10 @@ function colorChange()
         purpleChange();
     }
     
-    $( '.green-button' ).on( 'click tap',greenChange);
-    $( '.dark-button' ).on( 'click tap',darkChange);
-    $( '.purple-button' ).on( 'click tap',purpleChange);
-    $( '.cb-button' ).on( 'click tap', cbChange);
+    $( '.green-button' ).on( 'click touchend',greenChange);
+    $( '.dark-button' ).on( 'click touchend',darkChange);
+    $( '.purple-button' ).on( 'click touchend',purpleChange);
+    $( '.cb-button' ).on( 'click touchend', cbChange);
     
     function greenChange(){
         $( '.ui-navbar' ).removeClass( 'black-ui-navbar' ).removeClass('purple-ui-navbar').removeClass('cb-ui-navbar').addClass( 'green-ui-navbar' );

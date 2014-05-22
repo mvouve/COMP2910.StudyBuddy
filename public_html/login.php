@@ -59,7 +59,7 @@
         document.getElementById( 'error' ).style.display = 'block';
     }
 	
-	$("#login-submit").on( 'click tap', function (e) 
+	$("#login-submit").on( 'click touchend', function (e) 
 	{
         e.preventDefault();
         if ( doingAjax == false )
