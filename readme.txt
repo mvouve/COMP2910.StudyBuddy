@@ -13,7 +13,7 @@ Marc Vouve
 Prupose:
 --------
 Study Buddy was created between April 22, 2014 and May 23rd, 2014 as a student web app design project
-for BCIt (British Columbia Institute of Technology) for the COMP 2910 project management course.
+for BCIT (British Columbia Institute of Technology) for the COMP 2910 project management course.
 
  
 Credits:
