@@ -728,3 +728,36 @@ function getHumanDate( d )
     
     return date.toDateString();
 }
+
+/* allow 15 minute increments in the date time piker */
+
+function generateTimes ()
+{
+    var times = [];
+    var i = 0;
+
+    for ( h = 0 ; h < 24 ; h++ )
+    {
+        for ( m = 0 ; m < 60 ; m += 15 )
+        {
+            if ( m == 0 )
+            {
+                // displays 0 as 00 minutes
+                var formatMinute = "0" + m;
+            }
+            var timeString = "" + h + ":" + formatMinute;
+            times[i] = timeString;
+            i++;
+        }
+    }
+    return times;
+}
+
+function alterPickerTimes ( dateTimePickerID )
+{
+    jQuery( '#' + dateTimePickerID ).datetimepicker
+    ({
+        datepicker:false,
+        allowTimes:generateTimes ()
+    });
+}
