@@ -552,7 +552,7 @@ function validateDates( startDate, endDate, errorDiv )
     // Verifies that something has been entered in the date box.
     if( startDate.length < 1 || endDate.length < 1 )
     {
-        errorDiv.innerHTML += formatError( 'Please enter start and end'
+        errorDiv.innerHTML += formatError( 'Please enter start and end '
              + 'dates for your meeting!' );
     }         
     
@@ -579,4 +579,41 @@ function validateDates( startDate, endDate, errorDiv )
     
     return true;
 }
-
+    /*
+     * Creates a meeting.
+     */
+    function submitCreateMeeting()
+    {
+        // Ready parameters.
+        var courseID          = document.getElementById( 'course-dropdown' ).value;
+        var maxBuddies        = document.getElementById( 'max-buddies' ).value;
+        var courseDescription = document.getElementById( 'meeting-comments' ).value;
+        var startTime         = document.getElementById( 'create-meeting-start-datetime' ).value;
+        var endTime           = document.getElementById( 'create-meeting-end-datetime' ).value;
+        var meetingLocation   = document.getElementById( 'location-dropdown' ).value;
+        var errorDiv          = document.getElementById( 'create-meeting-error' );
+        
+        // Check for valid fields.
+        if( validateMeetingParams( courseID, 
+                                maxBuddies, 
+                                courseDescription, 
+                                startTime,
+                                endTime,
+                                meetingLocation,
+                                errorDiv
+                                ))
+        {
+            
+            
+            // Call ajax function to create meeting.
+            createMeeting ( ajaxURL, 
+                            courseID, 
+                            courseDescription, 
+                            meetingLocation, 
+                            startTime, 
+                            endTime, 
+                            maxBuddies 
+                        );
+        }
+        return;
+    }

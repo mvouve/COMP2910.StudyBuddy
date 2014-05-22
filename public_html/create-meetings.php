@@ -78,42 +78,5 @@
      */
     $( '#create-meeting-submit' ).on( 'click tap', submitCreateMeeting );
     
-    /*
-     * Creates a meeting.
-     */
-    function submitCreateMeeting()
-    {
-        // Ready parameters.
-        var courseID          = document.getElementById( 'course-dropdown' ).value;
-        var maxBuddies        = document.getElementById( 'max-buddies' ).value;
-        var courseDescription = document.getElementById( 'meeting-comments' ).value;
-        var startTime         = document.getElementById( 'create-meeting-start-datetime' ).value;
-        var endTime           = document.getElementById( 'create-meeting-end-datetime' ).value;
-        var meetingLocation   = document.getElementById( 'location-dropdown' ).value;
-        var errorDiv          = document.getElementById( 'create-meeting-error' );
-        
-        // Check for valid fields.
-        if( validateMeetingParams( courseID, 
-                                maxBuddies, 
-                                courseDescription, 
-                                startTime,
-                                endTime,
-                                meetingLocation,
-                                errorDiv
-                                ))
-        {
-            
-            
-            // Call ajax function to create meeting.
-            createMeeting ( ajaxURL, 
-                            courseID, 
-                            courseDescription, 
-                            meetingLocation, 
-                            startTime, 
-                            endTime, 
-                            maxBuddies 
-                        );
-        }
-        return;
-    }
+
 </script>
