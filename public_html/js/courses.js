@@ -51,7 +51,7 @@ function getUserCourses( ajax_URL )
                     -remove course from user course list, if in remove mode OR
                     -toggle course's visability otherwise
                 */
-                $('#my-course-'+json[i].id).on( 'click tap', function(e)
+                $('#my-course-'+json[i].id).on( 'click touchend', function(e)
                 {
                     if( removeMode )
                     {
@@ -138,7 +138,7 @@ function masterCourseListAdd ( ajax_URL, id, title, inCourse )
     }
     
     // Add Event Handler to added List Item
-    $('#all-course-' + id).on('click tap', function (e)
+    $('#all-course-' + id).on('click touchend', function (e)
     {
         if( allCoursesServerResponse[id].inCourse )
         {
@@ -278,7 +278,7 @@ function addToUserCourses ( id, title )
         -remove course from user course list, if in remove mode OR
         -toggle course's visability otherwise
     */
-    $('#my-course-'+id).on( 'click tap', function(e)
+    $('#my-course-'+id).on( 'click touchend', function(e)
     {
         if( removeMode )
         {
