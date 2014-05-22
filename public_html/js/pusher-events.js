@@ -69,8 +69,26 @@ function pusherCourseAdded( data )
  */
 function pusherMeetingAdded( data )
 {
+	console.log( JSON.stringify( data ) );
+
 	// add this meeting data to the meetingList array in meetings.js ((var meetingList = {};))
-    channels.push( data );
+    channels[ channels.length ] = {};
+	channels[ channels.length ].ID = data.ID;
+	channels[ channels.length ].location = data.location;
+	channels[ channels.length ].startDate = data.startTime;
+	channels[ channels.length ].cancelled = false;
+	channels[ channels.length ].courseID = data.courseID;
+	
+	// Filter: 0 not attending, 1 attending, 2 created
+	if ( data.creator == uid )
+	{
+		channels[ channels.length ].filter = 2;
+	}
+	else
+	{
+		channels[ channels.length ].filter = 0;
+	}
+	
     // regenerate the list by the regenerate function
     regenerateList();
 }
