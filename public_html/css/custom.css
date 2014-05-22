@@ -3,6 +3,17 @@
     text-align: center;
 }
 
+.custom-checkbox
+{
+     text-align: left;
+     width: 60%;   
+}
+
+.checkbox-threeway
+{
+    width: 33%;
+}
+
 #logo-btn
 {
 	padding: 5px 10px 0px;

@@ -3,15 +3,20 @@
     <?php renderPagelet( 'banner.php', array( '{{title}}' => 'Create Meeting' ) ); ?>
 
     <div data-role="content" data-theme="a">
+        <div id="create-meeting-error"></div>
         <form id="create-meeting-form" name="create-meeting-form" method="post">
             <div id="course-dropdown-wrapper">
                 <label for="course-dropdown">Course :</label>
                 <select id="course-dropdown" name="course-dropdown"></select><br/>
             </div>
 
-            <div id="create-location-wrapper">
-                <label for="create-location">Location :</label>
-                <input type="text" id="create-location" name="create-location"><br/>
+            <div id="location-dropdown-wrapper">
+                <label for="location-dropdown">Location :</label>
+                <input type="text" id="location-dropdown" name="location-dropdown" list="locations">
+                <datalist id="locations">
+                    <option>EhPod</option>
+                </datalist>
+                <br/>
             </div>
 
             
@@ -33,18 +38,14 @@
                 <label for="meeting-comments">Comments :</label>
                 <textarea id="meeting-comments" name="meeting-comments"></textarea><br/>
             </div>
-            
-            <div id="create-meeting-submit-wrapper">
-                <a href="#" data-role="button" id="create-meeting-submit">Create Meeting</a>
-            </div>
         </form>
     </div>
             <!-- save meeting and cancel buttons go here?-->
     <div data-role="footer" data-position="fixed" data-tap-toggle="false">
                 <div data-role="navbar">
 		            <ul>
-			            <li><a href="#page-my-courses" data-icon="back" data-iconpos="top">Cancel</a></li>
-			            <li><a href="#page-add-course" data-icon="plus" data-iconpos="top">Create Meeting</a></li>
+			            <li><a href="#page-my-meetings" data-icon="back" data-iconpos="top">Cancel</a></li>
+			            <li><a href="#page-create-meeting" id="create-meeting-submit" data-icon="plus" data-iconpos="top" >Create Meeting</a></li>
 		            </ul>
 	            </div>
             </div>
@@ -52,13 +53,13 @@
 
 <script>
     $('#create-meeting-start-datetime').datetimepicker({
-                                                        format: 'YYYY-MM-DD HH:MM:ss',
                                                         inline: true
                                                         });
+                                                        
     $('#create-meeting-end-datetime').datetimepicker({
-                                                      format: 'YYYY-MM-DD HH:MM:ss',
                                                       inline: true
                                                       });
+
     /*
      * Populate courses when the user clicks courses.
      */
@@ -67,13 +68,18 @@
         document.getElementById('course-dropdown').innerHTML = '';
         for( var key in myCoursesServerResponse )
         {
-            var opt = '<option value="' + key + '">' + key + '</option>';
-            $('#course-dropdown').append( opt );
+            if( myCoursesServerResponse[key].visible )
+            {
+                var opt = '<option value="' + key + '">' + key + '</option>';
+                $('#course-dropdown').append( opt );
+            }
         }
     } );
+    
     /*
-     * When user types in the comment section validate the comment.
+     * Event handler for the button to create a meeting.
      */
-    $('#meeting-comments').keyup( function() { validateInputs() } );
-    $('#max-buddies').keyup( function() { validateInputs() } );
+    $( '#create-meeting-submit' ).on( 'click tap', submitCreateMeeting );
+    
+
 </script>

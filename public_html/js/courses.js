@@ -74,6 +74,7 @@ function getUserCourses( ajax_URL )
 
 //temporary all courses list
 var allCoursesServerResponse = {};
+
 /* Fetch master course list from the server
     @param ajax_URL the URI location where the ajax folder is located */
 function getCourseList( ajax_URL )

@@ -1,17 +1,19 @@
 <!-- edit meetings page-->
-<?php require_once( 'config.php' ); ?>
-<?php require_once( PHP_INC_PATH . 'common.php' ); ?>
-<?php if ( isset( $_GET['logout'] ) ) { User::instance()->logout(); } ?>
-<?php renderPagelet( 'header.php', array( '{{customHeadTags}}' => '' ) ); ?>
-
-<div data-role="page">
+<div data-role="page" id="page-edit-meeting">
+    <?php renderPagelet( 'banner.php', array( '{{title}}' => 'Edit Meeting' ) ); ?>
     <div data-role="header">
     </div>
 
     <div data-role="main" id="edit-meeting-div">
+        <!--div where errors appear on invalid input-->
+        <div id = "edit-meeting-error"></div>
         <form id="edit-meeting-form" name="edit-meeting-form" method="post">
-            <h3 id="courseID"></h3>
-
+            
+            <div id="course-edit-dropdown-wrapper">
+                <label for="course-edit-dropdown">Course :</label>
+                <select id="course-edit-dropdown" name="course-edit-dropdown"></select><br/>
+            </div>
+            
             <div id="edit-location-wrapper">
                 <label for="edit-location">Location :</label>
                 <input id="edit-location" name="edit-location" type="text"><br/>
@@ -28,31 +30,52 @@
             </div>
 
             <div id="max-buddies-wrapper">
-                <label for="max-buddies">Maximum Buddies :</label>
-                <input id="max-buddies" name="max-buddies" type="text"><br/>
+                <label for="edit-max-buddies">Maximum Buddies :</label>
+                <input id="edit-max-buddies" name="edit-max-buddies" type="text"><br/>
             </div>
 
             <div id="meeting-comments-wrapper">
-                <label for="meeting-comments">Comments :</label>
-                <textarea id="meeting-comments" name="meeting-comments"></textarea><br/>
+                <label for="edit-meeting-comments">Comments :</label>
+                <textarea id="edit-meeting-comments" name="meeting-comments"></textarea><br/>
             </div>
+            <input id="meeting-id" name="meeting-id" type="hidden">
         </form>
     </div>
             <!-- save meeting and cancel buttons go here?-->
     <div data-role="footer" data-position="fixed" data-tap-toggle="false">
                 <div data-role="navbar">
 		            <ul>
-			            <li><a href="#page-my-courses" data-icon="back" data-iconpos="top">Cancel</a></li>
-			            <li><a href="#page-add-course" data-icon="plus" data-iconpos="top">Create Meeting</a></li>
+			            <li><a href="#page-my-meetings" data-icon="back" data-iconpos="top">Cancel</a></li>
+			            <li><a href="#page-edit-meeting" data-icon="plus" data-iconpos="top" id="edit-meeting-submit">Edit Meeting</a></li>
 		            </ul>
 	            </div>
             </div>
 </div>
 
-<!-- added to include the datetime picker plugin, info at: http://www.jqueryrain.com/?lnsG0UbP -->
-<link rel="stylesheet" type="text/css" href="/jquery.datetimepicker.css"/>
-<script src="/jquery.js"></script>
-<script src="/jquery.datetimepicker.js"></script>
 <script>
-    jQuery('#datetimepicker').datetimepicker();
+    
+    $('#meeting-end-datetime').datetimepicker({
+                                               inline: true
+                                               });
+                                                        
+    $('#meeting-start-datetime').datetimepicker({
+                                                 inline: true
+                                                 });
+    $('#edit-meeting-submit').on( 'click tap', submitEditMeeting );
+    
+        /*
+     * Populate courses when the user clicks courses.
+     */
+    $('#course-edit-dropdown').focus( function()
+    {
+        document.getElementById('course-edit-dropdown').innerHTML = '';
+        for( var key in myCoursesServerResponse )
+        {
+            if( myCoursesServerResponse[key].visible )
+            {
+                var opt = '<option value="' + key + '">' + key + '</option>';
+                $('#course-edit-dropdown').append( opt );
+            }
+        }
+    } );
 </script>
