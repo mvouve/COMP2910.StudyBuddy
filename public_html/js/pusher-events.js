@@ -70,7 +70,9 @@ function pusherCourseAdded( data )
 function pusherMeetingAdded( data )
 {
 	// add this meeting data to the meetingList array in meetings.js ((var meetingList = {};))
+    channels.push( data );
     // regenerate the list by the regenerate function
+    regenerateList();
 }
 
 /*
@@ -81,7 +83,15 @@ function pusherMeetingAdded( data )
 function pusherMeetingCancelled( data )
 {
 	//go into meeting list and look for meeting with this ID and set its cancelled property/flag to true
+    for ( var i = 0 ; i < channels.length ; i++ )
+    {
+        if ( channels[i].ID == data.ID)
+        {
+            channels[i].cancelled = true;
+        }
+    }
     // regenerate the list
+    regenerateList();
 }
 
 /*
