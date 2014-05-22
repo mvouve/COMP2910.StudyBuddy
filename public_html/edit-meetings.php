@@ -11,7 +11,7 @@
             
             <div id="course-edit-dropdown-wrapper">
                 <label for="course-edit-dropdown">Course :</label>
-                <select id="course-edit-dropdown" name="course-edit-dropdown"></select><br/>
+                <h3 id="course-edit-dropdown" name="course-edit-dropdown"></h3><br/>
             </div>
             
             <div id="edit-location-wrapper">
@@ -36,7 +36,7 @@
 
             <div id="meeting-comments-wrapper">
                 <label for="edit-meeting-comments">Comments :</label>
-                <textarea id="edit-meeting-comments" name="meeting-comments"></textarea><br/>
+                <textarea id="edit-meeting-comments" name="edit-meeting-comments"></textarea><br/>
             </div>
             <input id="meeting-id" name="meeting-id" type="hidden">
         </form>
