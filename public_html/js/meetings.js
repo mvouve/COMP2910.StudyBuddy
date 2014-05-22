@@ -624,13 +624,14 @@ function submitCreateMeeting()
 function submitEditMeeting()
 {
     // Ready parameters.
-    var courseID          = document.getElementById( 'course-dropdown' ).value;
+    var courseID          = document.getElementById( 'course-edit-dropdown' ).value;
     var maxBuddies        = document.getElementById( 'max-buddies' ).value;
     var courseDescription = document.getElementById( 'meeting-comments' ).value;
-    var startTime         = document.getElementById( 'create-meeting-start-datetime' ).value;
-    var endTime           = document.getElementById( 'create-meeting-end-datetime' ).value;
-    var meetingLocation   = document.getElementById( 'location-dropdown' ).value;
-    var errorDiv          = document.getElementById( 'create-meeting-error' );
+    var startTime         = document.getElementById( 'meeting-start-datetime' ).value;
+    var endTime           = document.getElementById( 'meeting-end-datetime' ).value;
+    var meetingLocation   = document.getElementById( 'edit-location-dropdown' ).value;
+    var errorDiv          = document.getElementById( 'edit-meeting-error' );
+    var meetingID         = document.getElementById( 'meeting-id' ).value;
     
     // Check for valid fields.
     if( validateMeetingParams( courseID, 
@@ -644,15 +645,15 @@ function submitEditMeeting()
     {
         
         
-        // Call ajax function to create meeting.
-        createMeeting ( ajaxURL, 
-                        courseID, 
-                        courseDescription, 
-                        meetingLocation, 
-                        startTime, 
-                        endTime, 
-                        maxBuddies 
-                    );
+        // Call ajax function to edit meeting.
+        editMeeting ( ajaxURL, 
+                      meetingID,
+                      courseID,
+                      courseDescription,
+                      meetingLocation,
+                      startTime,
+                      endTime,
+                      maxBuddies )
     }
     return;
 }

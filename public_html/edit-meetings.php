@@ -9,7 +9,7 @@
         <div id = "edit-meeting-error"></div>
         <form id="edit-meeting-form" name="edit-meeting-form" method="post">
             
-            <div id="course-dropdown-wrapper">
+            <div id="course-edit-dropdown-wrapper">
                 <label for="course-edit-dropdown">Course :</label>
                 <select id="course-edit-dropdown" name="course-edit-dropdown"></select><br/>
             </div>
@@ -48,7 +48,7 @@
                 <div data-role="navbar">
 		            <ul>
 			            <li><a href="#page-my-meetings" data-icon="back" data-iconpos="top">Cancel</a></li>
-			            <li><a href="#page-edit-meeting" data-icon="plus" data-iconpos="top" id="create-meeting-submit">Create Meeting</a></li>
+			            <li><a href="#page-edit-meeting" data-icon="plus" data-iconpos="top" id="edit-meeting-submit">Create Meeting</a></li>
 		            </ul>
 	            </div>
             </div>
@@ -57,13 +57,13 @@
 <script>
     
     $('#meeting-end-datetime').datetimepicker({
-                                                        inline: true
-                                                        });
+                                               inline: true
+                                               });
                                                         
     $('#meeting-start-datetime').datetimepicker({
-                                                      inline: true
-                                                      });
-    $('#create-meeting-submit').on( 'click tap', submitEditMeeting );
+                                                 inline: true
+                                                 });
+    $('#edit-meeting-submit').on( 'click tap', submitEditMeeting );
     
         /*
      * Populate courses when the user clicks courses.
