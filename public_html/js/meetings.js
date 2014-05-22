@@ -472,27 +472,8 @@ function myMeetingOnReady(){
 }
 
 
-/*
- * Populate courses when the user clicks courses.
- */
-$('#course-dropdown').focus( function()
-{
-    document.getElementById('course-dropdown').innerHTML = '';
-    for( var key in myCoursesServerResponse )
-    {
-        if( myCoursesServerResponse[key].visible )
-        {
-            var opt = '<option value="' + key + '">' + key + '</option>';
-            $('#course-dropdown').append( opt );
-        }
-    }
-} );
-    
-    
-/*
- * Event handler for the button to create a meeting.
- */
-$( '#create-meeting-submit' ).on( 'click tap', submitCreateMeeting );
+   
+
     
     
 /*
@@ -500,16 +481,21 @@ $( '#create-meeting-submit' ).on( 'click tap', submitCreateMeeting );
  * 
  * @returns true on valid false on invalid.
  */
-function validateCreateMeeting()
+function validateMeetingParams( courseID, 
+                               maxBuddies, 
+                               courseDescription, 
+                               startTime,
+                               endTime,
+                               meetingLocation,
+                               errorDiv )
 {
-    var errorDiv = document.getElementById('create-meeting-error');
     var retval = true;
     
     // Reset error div.
     errorDiv.innerHTML = '';
     
     // Checks that there is a course.
-    if( !document.getElementById('course-dropdown').value.match( /^([A-Z]{4}[0-9]{4})$/gi ) )
+    if( !courseID.match( /^([A-Z]{4}[0-9]{4})$/gi ) )
     {
         errorDiv.innerHTML += formatError( 'invalid course!' );
         
@@ -517,7 +503,7 @@ function validateCreateMeeting()
     }
     
     // Checks that the number of buddies entered is an int.
-    if( !document.getElementById('max-buddies').value.match( /^[0-9]+$/) )
+    if( !maxBuddies.match( /^[0-9]+$/) )
     {
         errorDiv.innerHTML += formatError( 'You must specify maximum number of buddies' );
         
@@ -525,7 +511,7 @@ function validateCreateMeeting()
     }
     
     // Check that there is a meeting comment set.
-    if( document.getElementById('meeting-comments').value.length < 1 )
+    if( courseDescription.length < 1 )
     {
         errorDiv.innerHTML += formatError( 'You must enter a comment' );
         
@@ -533,9 +519,7 @@ function validateCreateMeeting()
     }
     
     //Check that the dates are valid.
-    var startDate = document.getElementById( 'create-meeting-start-datetime' );
-    var endDate   = document.getElementById( 'create-meeting-end-datetime' );
-    if( !validateDates( startDate, endDate, errorDiv ) )
+    if( !validateDates( startTime, endTime, errorDiv ) )
     {
         retval = false;
     }
@@ -566,7 +550,7 @@ function formatError( str )
 function validateDates( startDate, endDate, errorDiv )
 {
     // Verifies that something has been entered in the date box.
-    if( startDate.length > 1 || endDate.length > 1 )
+    if( startDate.length < 1 || endDate.length < 1 )
     {
         errorDiv.innerHTML += formatError( 'Please enter start and end'
              + 'dates for your meeting!' );
@@ -596,81 +580,3 @@ function validateDates( startDate, endDate, errorDiv )
     return true;
 }
 
-/*
- * Creates a meeting.
- */
-function submitCreateMeeting()
-{
-    // Check for valid fields.
-    if( validateCreateMeeting() )
-    {
-        // Ready parameters.
-        var courseID          = document.getElementById( 'course-dropdown' ).value;
-        var maxBuddies        = document.getElementById( 'max-buddies' ).value;
-        var courseDescription = document.getElementById( 'meeting-comments' ).value;
-        var startTime         = document.getElementById( 'create-meeting-start-datetime' ).value;
-        var endTime           = document.getElementById( 'create-meeting-end-datetime' ).value;
-        var meetingLocation   = document.getElementById( 'location-dropdown' ).value;
-        
-        // Call ajax function to create meeting.
-        createMeeting ( ajaxURL, 
-                        courseID, 
-                        courseDescription, 
-                        meetingLocation, 
-                        startTime, 
-                        endTime, 
-                        maxBuddies 
-                       );
-    }
-    return;
-}
-
-
-/*
- * Validates form input.
- * TODO: Make this function more generalised so it can be merged.
- * 
- * @returns true on valid false on invalid.
- */
-function validateEditMeeting()
-{
-    var errorDiv = document.getElementById('edit-meeting-error');
-    var retval = true;
-    
-    // reset the error div.
-    errorDiv.innerHTML = '';
-    
-    // Checks that there is a course.
-    if( !document.getElementById('course-dropdown').value.match( /^([A-Z]{4}[0-9]{4})$/gi ) )
-    {
-        errorDiv.innerHTML += formatError( 'invalid course!' );
-        
-        retval = false;
-    }
-    
-    // Checks that the number of buddies entered is an int.
-    if( !document.getElementById('max-buddies').value.match( /^[0-9]+$/) )
-    {
-        errorDiv.innerHTML += formatError( 'You must specify maximum number of buddies' );
-        
-        retval = false;
-    }
-    
-    // Check that there is a meeting comment set.
-    if( document.getElementById('meeting-comments').value.length < 1 )
-    {
-        errorDiv.innerHTML += formatError( 'You must enter a comment' );
-        
-        retval = false;
-    }
-    
-    //Check that the dates are valid.
-    var startDate = document.getElementById( 'create-meeting-start-datetime' );
-    var endDate   = document.getElementById( 'create-meeting-end-datetime' );
-    if( !validateDates( startDate, endDate, errorDiv ) )
-    {
-        retval = false;
-    }
-    
-    return retval;
-}
