@@ -91,6 +91,13 @@ function pusherMeetingAdded( data )
 		filter: filterSetting
 	};
 	
+	// Set Local Notification
+	if ( data.creator == uid )
+	{
+		var date = new Date( data.startTime );
+		addMeetingNotification( data.ID, data.courseID, data.location, date );
+	}
+	
     // regenerate the list by the regenerate function
     regenerateList();
 }
@@ -108,6 +115,7 @@ function pusherMeetingCancelled( data )
         if ( meetingList[i].ID == data.ID)
         {
             meetingList[i].cancelled = true;
+			cancelMeetingNotification( data.ID );
 			break;
         }
     }
@@ -135,6 +143,10 @@ function pusherMeetingChanged( data )
         if ( meetingList[i].ID == data.ID)
         {
             meetingList[i] = data;
+			var date = new Date( data.startTime );
+			
+			editMeetingNotification( data.ID, data.courseID, data.location, date );
+			
 			break;
         }
     }
