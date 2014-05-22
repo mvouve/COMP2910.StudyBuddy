@@ -55,9 +55,11 @@
     $('#create-meeting-start-datetime').datetimepicker({
                                                         inline: true
                                                         });
+                                                        
     $('#create-meeting-end-datetime').datetimepicker({
                                                       inline: true
                                                       });
+
     /*
      * Populate courses when the user clicks courses.
      */
@@ -73,6 +75,7 @@
             }
         }
     } );
+    
     /*
      * Event handler for the button to create a meeting.
      */

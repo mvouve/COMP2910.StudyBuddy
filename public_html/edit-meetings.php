@@ -34,6 +34,9 @@
                 <label for="meeting-comments">Comments :</label>
                 <textarea id="meeting-comments" name="meeting-comments"></textarea><br/>
             </div>
+            <!-- REMOVE THIS LATER FOR TESTING ONLY! -->
+            <label for="meeting-id" style="color:red">Meeting ID !!!TO BE REMOVED: FOR TESTING ONLY!!!</label>
+            <input id="meeting-id" name="meeting-id">
         </form>
     </div>
             <!-- save meeting and cancel buttons go here?-->
