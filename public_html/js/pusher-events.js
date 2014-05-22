@@ -88,6 +88,7 @@ function pusherMeetingCancelled( data )
         if ( channels[i].ID == data.ID)
         {
             channels[i].cancelled = true;
+			break;
         }
     }
     // regenerate the list
@@ -108,4 +109,15 @@ function pusherMeetingChanged( data )
 	//look through meeting list array, find the meeting with this ID
     //change its values to the new ones
     //regenerate the list.
+	//go into meeting list and look for meeting with this ID and set its cancelled property/flag to true
+    for ( var i = 0 ; i < channels.length ; i++ )
+    {
+        if ( channels[i].ID == data.ID)
+        {
+            channels[i] = data;
+			break;
+        }
+    }
+    // regenerate the list
+    regenerateList();
 }
