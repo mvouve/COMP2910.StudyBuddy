@@ -66,6 +66,7 @@
     $('#course-dropdown').focus( function()
     {
         document.getElementById('course-dropdown').innerHTML = '';
+        $('#course-dropdown').append('<option value="empty"></option>'); 
         for( var key in myCoursesServerResponse )
         {
             if( myCoursesServerResponse[key].visible )
