@@ -51,5 +51,11 @@
 </div>
 
 <script>
-    jQuery('#datetimepicker').datetimepicker();
+    $('#meeting-end-datetime').datetimepicker({
+                                                        inline: true
+                                                        });
+                                                        
+    $('#meeting-start-datetime').datetimepicker({
+                                                      inline: true
+                                                      });
 </script>
