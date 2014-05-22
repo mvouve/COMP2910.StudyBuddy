@@ -286,7 +286,7 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
 
     //create a header to store main information on a meeting
     var listHeader = document.createElement( "h1" );
-    listHeader.innerHTML = "Course: " + meetingCourse + "<br/>" + "Location: " + meetingLoc + "<br/>" + "Date: " + meetingStartTime;
+    listHeader.innerHTML = "Course: " + meetingCourse + "<br/>" + "Location: " + meetingLoc + "<br/>" + "Date: " + getHumanDate( meetingStartTime );
 
     //create a div element to store detailed/supplementary information on a meeting
     var listBody = document.createElement( "div" );
@@ -677,4 +677,11 @@ function submitEditMeeting()
                       maxBuddies )
     }
     return;
+}
+
+function getHumanDate( d )
+{
+    date = new Date( d );
+    
+    return date.toDateString();
 }
