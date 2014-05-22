@@ -98,17 +98,17 @@ class Meeting
         $sql = ' UPDATE ' . Meeting::MEETING_TABLE . '
                     SET courseID = :courseID, comment = :comment, 
                         location = :location, maxBuddies = :maxBuddies,
-                        startTime = :startDate, endDate = :endTime
+                        startDate = :startTime, endDate = :endTime
                     WHERE ID = :meetingID';
                     
         $sql = $db->prepare( $sql );
         $sql->bindParam( ':courseID',   $courseID );
-        $sql->bindParam( ':meetingID',  $meetingID );
         $sql->bindParam( ':comment',    $comment );
         $sql->bindParam( ':location',   $location );
         $sql->bindParam( ':maxBuddies', $maxBuddies );
         $sql->bindParam( ':startTime',  $startTime );
         $sql->bindParam( ':endTime',    $endTime );
+        $sql->bindParam( ':meetingID',  $meetingID );
         
         return $sql->execute();
     }
