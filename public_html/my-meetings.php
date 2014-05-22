@@ -8,7 +8,9 @@
             <ul data-role="listview" data-filter="true" id="my-meetings-list">
             </ul>
         </div>
+        
         <div data-role="footer" data-position="fixed" data-tap-toggle="false">
+            <!--CALVINS BEAUTIFUL CREATION-->
             <div data-role="navbar">
                 <ul>
                     <li><a href="#" 
@@ -28,26 +30,51 @@
                         Not Attending</a></li>
                 </ul>
             </div>
-                    <!--<div class="ui-grid-b custom-checkbox">
-                        <div class=" ui-block-a" >
-                            <label><input type="checkbox"
-                                          name="i-created"
-                                          id="i-created"/>
-                                I have Created     </label>
-                        </div>
-                        <div class="ui-block-b">
-                            <label><input type="checkbox"
-                                          name="i-attending"
-                                          id="i-attending"/>
-                                I am Attending     </label>
-                        </div>
-                    <div class="ui-block-c">
-                        <label><input type="checkbox"
-                                      name="not-attending" 
-                                      id="not-attending"/>
-                            I am Not Attending</label>
-                    </div>
-                </div>-->
+            <!-- CHECKBOX ATTEMPT ONE -->
+            <div class="ui-grid-b" class="center">
+                <div class=" ui-block-a custom-checkbox" >
+                    <label class="custom-checkbox">
+                        <input type="checkbox"
+                               name="i-created"
+                               id="i-created"/>
+                        I have Created     </label>
+                </div>
+                <div class="ui-block-b" class="center">
+                    <label class="custom-checkbox">
+                        <input type="checkbox"
+                               name="i-attending"
+                               id="i-attending"/>
+                        I am Attending     </label>
+                </div>
+                <div class="ui-block-c" class="center">
+                    <label class="custom-checkbox">
+                        <input type="checkbox"
+                               name="not-attending"
+                               id="not-attending"/>
+                        I am Not Attending</label>
+                </div>
+            </div>
+            <!-- CHECKBOX ATTEMPT 2-->
+            <div class="ui-field-contain" class="center" class="custom-checkbox">
+                <fieldset data-role="controlgroup" data-type="horizontal" >
+                    <label class="custom-checkbox checkbox-threeway">
+                        <input type="checkbox"
+                               name="i-created"
+                               id="i-created"/>
+                        I have Created     </label>
+                    <label class="custom-checkbox checkbox-threeway">
+                        <input type="checkbox"
+                               name="i-attending"
+                               id="i-attending"/>
+                        I am Attending     </label>
+                    <label class="custom-checkbox checkbox-threeway">
+                        <input type="checkbox"
+                               name="not-attending"
+                               id="not-attending"/>
+                        I am Not Attending</label>
+                </fieldset>
+            </div>
+            <!-- END -->
         </div>
     </div>
 <!--End of my-meetings.php-->
