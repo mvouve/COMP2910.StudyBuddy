@@ -3,7 +3,7 @@ var eventQueue = [];
 function getEvents()
 {
 	var tempArray = eventQueue.slice();
-	eventQueue = {};
+	eventQueue = [];
 	
 	return tempArray;
 }
@@ -19,4 +19,20 @@ function addMeetingNotification( meetingID, courseID, location, meetingStartTime
 				};
 				
 	eventQueue[ eventQueue.length ] = event;
+}
+
+function cancelMeetingNotification( meetingID )
+{
+    var event = {
+                    method: 'cancel-notification',
+                    id: meetingID
+                };
+                
+    eventQueue[ eventQueue.length ] = event;
+}
+
+function editMeetingNotification( meetingID, courseID, location, meetingStartTime )
+{
+    cancelMeetingNotification( meetingID );
+    addMeetingNotification( meetingID, courseID, location, meetingStartTime)
 }

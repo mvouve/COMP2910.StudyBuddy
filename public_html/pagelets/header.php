@@ -24,6 +24,7 @@
 	    <script type="text/javascript" src="js/styleswitch.js"></script>
         <script src="js/misc.js"></script>
 		<script src="http://js.pusher.com/2.2/pusher.min.js"></script>
+        <script src="js/phonegap-event-manager.js"></script>
 		<script src="js/courses.js"></script>
 		<script src="js/meetings.js"></script>
         <script src="js/pusher-events.js"></script>
