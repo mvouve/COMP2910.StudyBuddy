@@ -12,10 +12,10 @@
 
             <div id="location-dropdown-wrapper">
                 <label for="location-dropdown">Location :</label>
-                <input type="text" id="location-dropdown" name="location-dropdown" list="locations">
-                <datalist id="locations">
+                <input type="text" id="location-dropdown" name="location-dropdown">
+                <!--<datalist id="locations">
                     <option>EhPod</option>
-                </datalist>
+                </datalist>-->
                 <br/>
             </div>
 
