@@ -496,7 +496,7 @@ function myMeetingOnReady(){
 			    $('#not-attending').attr( 'data-icon', 'bars' );
                 $('#not-attending').removeClass( 'ui-icon-no-bars' );
                 $('#not-attending').addClass( 'ui-icon-bars' );
-                $('#not-attending').removeClass('toggled');
+                $('#not-attending').addClass('toggled');
             }
             else
             {
@@ -519,7 +519,7 @@ function myMeetingOnReady(){
 			    $('#i-attending').attr( 'data-icon', 'check' );
                 $('#i-attending').removeClass( 'ui-icon-no-check' );
                 $('#i-attending').addClass( 'ui-icon-check' );
-                $('#i-attending').removeClass('toggled');
+                $('#i-attending').addClass('toggled');
             }
             else
             {
