@@ -69,25 +69,27 @@ function pusherCourseAdded( data )
  */
 function pusherMeetingAdded( data )
 {
-	console.log( JSON.stringify( data ) );
+	var filterSetting;
 
-	// add this meeting data to the meetingList array in meetings.js ((var meetingList = {};))
-    channels[ channels.length ] = {};
-	channels[ channels.length ].ID = data.ID;
-	channels[ channels.length ].location = data.location;
-	channels[ channels.length ].startDate = data.startTime;
-	channels[ channels.length ].cancelled = false;
-	channels[ channels.length ].courseID = data.courseID;
-	
 	// Filter: 0 not attending, 1 attending, 2 created
 	if ( data.creator == uid )
 	{
-		channels[ channels.length ].filter = 2;
+		filterSetting = 2;
 	}
 	else
 	{
-		channels[ channels.length ].filter = 0;
+		filterSetting = 0;
 	}
+	
+	// add this meeting data to the meetingList array
+    meetingList[ meetingList.length ] = {
+		ID: data.ID,
+		location: data.location,
+		startDate: data.startTime,
+		cancelled: false,
+		courseID: data.courseID,
+		filter: filterSetting
+	};
 	
     // regenerate the list by the regenerate function
     regenerateList();
@@ -101,11 +103,11 @@ function pusherMeetingAdded( data )
 function pusherMeetingCancelled( data )
 {
 	//go into meeting list and look for meeting with this ID and set its cancelled property/flag to true
-    for ( var i = 0 ; i < channels.length ; i++ )
+    for ( var i = 0 ; i < meetingList.length ; i++ )
     {
-        if ( channels[i].ID == data.ID)
+        if ( meetingList[i].ID == data.ID)
         {
-            channels[i].cancelled = true;
+            meetingList[i].cancelled = true;
 			break;
         }
     }
@@ -128,11 +130,11 @@ function pusherMeetingChanged( data )
     //change its values to the new ones
     //regenerate the list.
 	//go into meeting list and look for meeting with this ID and set its cancelled property/flag to true
-    for ( var i = 0 ; i < channels.length ; i++ )
+    for ( var i = 0 ; i < meetingList.length ; i++ )
     {
-        if ( channels[i].ID == data.ID)
+        if ( meetingList[i].ID == data.ID)
         {
-            channels[i] = data;
+            meetingList[i] = data;
 			break;
         }
     }

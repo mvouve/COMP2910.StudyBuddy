@@ -1,5 +1,5 @@
 /* GLOBAL VARIABLES */
-var meetingList = {};
+var meetingList = [];
 var iCreated = true;
 var allMeeting = true;
 var iAttending = true;
