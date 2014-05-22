@@ -33,6 +33,13 @@ function cancelMeetingNotification( meetingID )
 
 function editMeetingNotification( meetingID, courseID, location, meetingStartTime )
 {
-    cancelMeetingNotification( meetingID );
-    addMeetingNotification( meetingID, courseID, location, meetingStartTime)
+    var event = {
+					method: 'edit-notification',
+					id:      meetingID,
+					title:   'StudyBuddy Reminder: ' + courseID,
+					message: 'Your study meeting for ' + courseID + ' starts in 30 minutes in ' + location + "!",
+					date:    new Date( meetingStartTime.getTime() - 60 * 1000 * 30 )
+				};
+				
+	eventQueue[ eventQueue.length ] = event;
 }
