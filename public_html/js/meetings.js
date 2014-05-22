@@ -411,6 +411,7 @@ function createMeetingDetails( meetingIDContainer, meetingDesc, meetingEndDate, 
 /* goes through the meetingList array and adds it to the HTML list if called*/
 function regenerateList()
 {    
+    console.log('regen');
 	$("#my-meetings-list").html("");
 	for( i = 0; i < meetingList.length; i++ )
 	{
@@ -471,12 +472,14 @@ function myMeetingOnReady(){
 			    $('#i-created').attr( 'data-icon', 'star' );
                 $('#i-created').removeClass( 'ui-icon-no-star' );
                 $('#i-created').addClass( 'ui-icon-star' );
+                $('#i-created').addClass('toggled');
             }
             else
             {
 			    $('#i-created').attr( 'data-icon', 'no-star' );
                 $('#i-created').removeClass( 'ui-icon-star' );
                 $('#i-created').addClass( 'ui-icon-no-star' );
+                $('#i-created').removeClass('toggled');
             }
 
             regenerateList();
@@ -493,12 +496,14 @@ function myMeetingOnReady(){
 			    $('#not-attending').attr( 'data-icon', 'bars' );
                 $('#not-attending').removeClass( 'ui-icon-no-bars' );
                 $('#not-attending').addClass( 'ui-icon-bars' );
+                $('#not-attending').removeClass('toggled');
             }
             else
             {
 			    $('#not-attending').attr( 'data-icon', 'no-bars' );
                 $('#not-attending').removeClass( 'ui-icon-bars' );
                 $('#not-attending').addClass( 'ui-icon-no-bars' );
+                $('#not-attending').removeClass('toggled');
             }
 
             regenerateList();
@@ -514,12 +519,14 @@ function myMeetingOnReady(){
 			    $('#i-attending').attr( 'data-icon', 'check' );
                 $('#i-attending').removeClass( 'ui-icon-no-check' );
                 $('#i-attending').addClass( 'ui-icon-check' );
+                $('#i-attending').removeClass('toggled');
             }
             else
             {
 			    $('#i-attending').attr( 'data-icon', 'no-check' );
                 $('#i-attending').removeClass( 'ui-icon-check' );
                 $('#i-attending').addClass( 'ui-icon-no-check' );
+                $('#i-attending').removeClass('toggled');
             }
 
             regenerateList();
