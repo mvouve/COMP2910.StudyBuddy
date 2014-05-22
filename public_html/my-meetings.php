@@ -24,7 +24,7 @@
                            id="i-attending">
                         I'm In!</a></li>
                     <li><a href="#" 
-                           data-icon="grid" 
+                           data-icon="bars" 
                            data-iconpos="top" 
                            id="not-attending">
                         Not Attending</a></li>

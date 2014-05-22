@@ -466,7 +466,19 @@ function myMeetingOnReady(){
         {
             iCreated = !iCreated;
 			
-			$('#i-created').toggleClass("toggled");
+            if( iCreated )
+            {
+			    $('#i-created').attr( 'data-icon', 'star' );
+                $('#i-created').removeClass( 'ui-icon-no-star' );
+                $('#i-created').addClass( 'ui-icon-star' );
+            }
+            else
+            {
+			    $('#i-created').attr( 'data-icon', 'no-star' );
+                $('#i-created').removeClass( 'ui-icon-star' );
+                $('#i-created').addClass( 'ui-icon-no-star' );
+            }
+
             regenerateList();
             
             return false;
@@ -476,7 +488,19 @@ function myMeetingOnReady(){
         {
             allMeeting = !allMeeting;
 			
-			$('#not-attending').toggleClass("toggled");
+            if( allMeeting )
+            {
+			    $('#not-attending').attr( 'data-icon', 'bars' );
+                $('#not-attending').removeClass( 'ui-icon-no-bars' );
+                $('#not-attending').addClass( 'ui-icon-bars' );
+            }
+            else
+            {
+			    $('#not-attending').attr( 'data-icon', 'no-bars' );
+                $('#not-attending').removeClass( 'ui-icon-bars' );
+                $('#not-attending').addClass( 'ui-icon-no-bars' );
+            }
+
             regenerateList();
             
             return false;
@@ -484,8 +508,20 @@ function myMeetingOnReady(){
     $( '#i-attending' ).on( 'touchend', function(e)
         {
             iAttending = !iAttending;
-			
-			$('#i-attending').toggleClass("toggled");
+            
+            if( iAttending )
+            {
+			    $('#i-attending').attr( 'data-icon', 'check' );
+                $('#i-attending').removeClass( 'ui-icon-no-check' );
+                $('#i-attending').addClass( 'ui-icon-check' );
+            }
+            else
+            {
+			    $('#i-attending').attr( 'data-icon', 'no-check' );
+                $('#i-attending').removeClass( 'ui-icon-check' );
+                $('#i-attending').addClass( 'ui-icon-no-check' );
+            }
+
             regenerateList();
             
 			return false;
