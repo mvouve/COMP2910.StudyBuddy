@@ -1,8 +1,8 @@
 /* GLOBAL VARIABLES */
 var meetingList = {};
-var iCreated = false;
-var allMeeting = false;
-var iAttending = false;
+var iCreated = true;
+var allMeeting = true;
+var iAttending = true;
 
 /* a method to return all the meetings that you are attending, and adds them to your my meetings list via a helper function.
     returns a 2D array of meetings, each of which contains individual meeting data.
@@ -257,7 +257,7 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
     //    DIV: ListElement #n data-role="collapsible"
     //       h1: ListHeader
     //       div: listBody
-    //          p: meeting detail #1
+    //          p: meeting detail #1s
     //          p: meeting detail #2
     //                  ...
     //          p: meeting detail #n
@@ -268,33 +268,12 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
 
 
 
-    //assign the meetings list element to a variable
-    var meetingList = document.getElementById( 'my-meetings-list' );
+    var listItem = '<li data-role="collapsible" id = "meeting-' + meetingID + '">' + '<h1>Course:' + meetingCourse 
+                            + '<br>Location: ' + meetingLoc 
+                            + '<br>Date: ' + getHumanDate( meetingStartTime ) + '</h1>'
+                            + '<p>hi</p></li>';
+    $('#my-meetings-list').append(listItem);
     
-    //use createElement() to make a div with data-role="collapsible" to store the course information
-    var listElement = document.createElement( "div" );
-    listElement.setAttribute( "data-role", "collapsible" );
-    
-    //set the div id for the list element which will contain all the data for a meeting
-    listElement.setAttribute( "id", "meeting-" + meetingID );
-
-
-    //create a header to store main information on a meeting
-    var listHeader = document.createElement( "h1" );
-    listHeader.innerHTML( "Course: " + meetingCourse + "<br/>" + "Location: " + meetingLoc + "<br/>" + "Date: " + meetingStartTime );
-
-    //create a div element to store detailed/supplementary information on a meeting
-    var listBody = document.createElement( "div" );
-
-    //create a div container for buttons which will appear at the bottom of the expanded accordion
-    var buttonBar = document.createElement( "div" );
-    
-    //add information to the meetingList varable as a child node (i guess)
-    listElement.appendChild(listHeader);
-    listElement.appendChild(listBody);
-    listElement.appendChild(buttonBar);
-    meetingList.appendChild(listElement);
-
     $('#meeting-' + meetingID).bind( 'expand', function () 
     {
         // need some code here to remove any existing children from the parent list element that may exist from previous expands
