@@ -48,7 +48,7 @@
                 <div data-role="navbar">
 		            <ul>
 			            <li><a href="#page-my-meetings" data-icon="back" data-iconpos="top">Cancel</a></li>
-			            <li><a href="#page-edit-meeting" data-icon="plus" data-iconpos="top" id="edit-meeting-submit">Create Meeting</a></li>
+			            <li><a href="#page-edit-meeting" data-icon="plus" data-iconpos="top" id="edit-meeting-submit">Edit Meeting</a></li>
 		            </ul>
 	            </div>
             </div>
