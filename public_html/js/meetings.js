@@ -240,6 +240,8 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
     //          p: meeting detail #n
     //          div: buttonBar
     //              if (meetingFilter == 2) {button: edit meeting, button: cancel meeting}
+    //                          Marc says "The edit button needs to send an id to the edit meeting page.
+    //                                     This might need to be done with a session variable."
     //              if (meetingFilter != 2 && <not attending> && <meeting not cancelled>) {button: join meeting}
     //              if (meetingFilter != 2 && <attending>) {button: leave meeting}
     //    DIV: ListElement #2 data-role="collapsible"
