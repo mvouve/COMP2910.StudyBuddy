@@ -118,7 +118,7 @@
                  * When the user enters in a password to be changed. Send info to server.
                  *
                  */
-                $('#update-password').on( 'click tap', function (e) {
+                $('#update-password').on( 'click touchend', function (e) {
                     e.preventDefault();
                     
                     if ( changingPass == false ) {
@@ -136,7 +136,7 @@
                  * When user updates their name, update on the server as well.
                  *
                  */
-                $('#submit-display-name').on( 'click tap', function () {
+                $('#submit-display-name').on( 'click touchend', function () {
                     if ( changingName == false ) {
                         changingName = true;
                         var updateNameForm = $("#name-change").serializeArray();
@@ -162,7 +162,7 @@
                  * If the user wishes to deactivate their account, verify their password and notify them
                  * that their account has been deleted. else, do nothing.
                  */
-                $('#deactivate-account').on( 'click tap', function () {
+                $('#deactivate-account').on( 'click touchend', function () {
                     if ( deactivating == false ) {
                         deactivating = true;
                         var deactivateAccountForm = $("#deactivate-account-form").serializeArray();
@@ -301,7 +301,7 @@
                 $('#name-change-success').show();
             }
             
-            $( '#clear-my-courses' ).on( 'click tap', function(e)
+            $( '#clear-my-courses' ).on( 'click touchend', function(e)
                 {
                     if( clearing )
                     {
