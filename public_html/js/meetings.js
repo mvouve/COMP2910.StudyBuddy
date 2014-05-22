@@ -470,130 +470,154 @@ function myMeetingOnReady(){
 }
 
 
-                                                      
-    /*
-     * Populate courses when the user clicks courses.
-     */
-    $('#course-dropdown').focus( function()
+/*
+ * Populate courses when the user clicks courses.
+ */
+$('#course-dropdown').focus( function()
+{
+    document.getElementById('course-dropdown').innerHTML = '';
+    for( var key in myCoursesServerResponse )
     {
-        document.getElementById('course-dropdown').innerHTML = '';
-        for( var key in myCoursesServerResponse )
+        if( myCoursesServerResponse[key].visible )
         {
-            if( myCoursesServerResponse[key].visible )
-            {
-                var opt = '<option value="' + key + '">' + key + '</option>';
-                $('#course-dropdown').append( opt );
-            }
+            var opt = '<option value="' + key + '">' + key + '</option>';
+            $('#course-dropdown').append( opt );
         }
-    } );
-    /*
-     * Event handler for the button to create a meeting.
-     */
-    $( '#create-meeting-submit' ).on( 'click tap', submitCreateMeeting );
+    }
+} );
     
-    /*
-     * Validates form input.
-     * 
-     * @returns true on valid false on invalid.
-     */
-    function validateCreateMeeting()
+    
+/*
+ * Event handler for the button to create a meeting.
+ */
+$( '#create-meeting-submit' ).on( 'click tap', submitCreateMeeting );
+    
+    
+/*
+ * Validates form input.
+ * 
+ * @returns true on valid false on invalid.
+ */
+function validateCreateMeeting()
+{
+    var errorDiv = document.getElementById('create-meeting-error');
+    var retval = true;
+    
+    errorDiv.innerHTML = '';
+    
+    // Checks that there is a course.
+    if( !document.getElementById('course-dropdown').value.match( /^([A-Z]{4}[0-9]{4})$/gi ) )
     {
-        var errorDiv = document.getElementById('create-meeting-error');
-        var retval = true;
+        errorDiv.innerHTML += formatError( 'invalid course!' );
         
-        errorDiv.innerHTML = '';
-        
-        
-        if( !document.getElementById('course-dropdown').value.match( /^([A-Z]{4}[0-9]{4})$/gi ) )
-        {
-            errorDiv.innerHTML += formatError( 'invalid course!' );
-            
-            retval = false;
-        }
-        if( !document.getElementById('max-buddies').value.match( /^[0-9]+$/) )
-        {
-            errorDiv.innerHTML += formatError( 'You must specify maximum number of buddies' );
-            
-            retval = false;
-        }
-        if( document.getElementById('meeting-comments').value.length < 1 )
-        {
-            errorDiv.innerHTML += formatError( 'You must enter a comment' );
-            
-            retval = false;
-        }
-        
-        var startDate = document.getElementById( 'create-meeting-start-datetime' );
-        var endDate   = document.getElementById( 'create-meeting-end-datetime' );
-        if( !validateDates( startDate, endDate, errorDiv ) )
-        {
-            retval = false;
-        }
-        
-        return retval;
+        retval = false;
     }
     
-    /*
-     * At this point just formats a string into a paragraph in a "error" class div.
-     *
-     * @param str the string to be added to the div.
-     *
-     * @returns a string in a paragraph tag in a error class div.
-     */
-    function formatError( str )
+    // Checks that the number of buddies entered is an int.
+    if( !document.getElementById('max-buddies').value.match( /^[0-9]+$/) )
     {
-        return '<div class="error"><p>' + str + '</p></div>';
+        errorDiv.innerHTML += formatError( 'You must specify maximum number of buddies' );
+        
+        retval = false;
     }
     
-    /*
-     * Validates the date fields.
-     * 
-     * @param start date string.
-     * @param end date string.
-     * 
-     * @returns true on valid, string on invalid.
-     */
-    function validateDates( startDate, endDate, errorDiv )
+    // Check that there is a meeting comment set.
+    if( document.getElementById('meeting-comments').value.length < 1 )
     {
-        var start = new Date( startDate );
-        var end   = new Date( endDate );
+        errorDiv.innerHTML += formatError( 'You must enter a comment' );
         
-        if( end.getTime() < Date.now() )
-        {
-            
-            errorDiv.innerHTML += formatError( 'meeting ends in the past!' );
-            
-            return false;
-        }
-        if( end.getTime() < start.getTime() )
-        {
-            errorDiv.innerHTML += formatError( 'meeting must start before it ends.' );
-            
-            return false;
-        }
-        
-        return true;
+        retval = false;
     }
     
-    /*
-     * Creates a meeting.
-     */
-    function submitCreateMeeting()
+    //Check that the dates are valid.
+    var startDate = document.getElementById( 'create-meeting-start-datetime' );
+    var endDate   = document.getElementById( 'create-meeting-end-datetime' );
+    if( !validateDates( startDate, endDate, errorDiv ) )
     {
-        if( validateCreateMeeting() )
-        {
-            var courseID            = document.getElementById( 'course-dropdown' ).value;
-            var maxBuddies          = document.getElementById( 'max-buddies' ).value;
-            var courseDescription   = document.getElementById( 'meeting-comments' ).value;
-            var startTime           = document.getElementById( 'create-meeting-start-datetime' ).value;
-            var endTime             = document.getElementById( 'create-meeting-end-datetime' ).value;
-            var meetingLocation     = document.getElementById( 'location-dropdown' ).value;
-            
-            createMeeting ( ajaxURL, 
-                            courseID, courseDescription, 
-                            meetingLocation, startTime, 
-                            endTime, maxBuddies 
-                           );
-        }
-        return;
+        retval = false;
     }
+    
+    return retval;
+}
+
+/*
+ * At this point just formats a string into a paragraph in a "error" class div.
+ *
+ * @param str the string to be added to the div.
+ *
+ * @returns a string in a paragraph tag in a error class div.
+ */
+function formatError( str )
+{
+    return '<div class="error"><p>' + str + '</p></div>';
+}
+    
+/*
+ * Validates the date fields.
+ * 
+ * @param start date string.
+ * @param end date string.
+ * 
+ * @returns true on valid, string on invalid.
+ */
+function validateDates( startDate, endDate, errorDiv )
+{
+    // Verifies that something has been entered in the date box.
+    if( startDate.length > 1 || endDate.length > 1 )
+    {
+        errorDiv.innerHTML += formatError( 'Please enter start and end'
+             + 'dates for your meeting!' );
+    }         
+    
+    var start = new Date( startDate );
+    var end   = new Date( endDate );
+    
+    // Must end in the future!
+    if( end.getTime() < Date.now() )
+    {
+        
+        errorDiv.innerHTML += formatError( 'meeting ends in the past!' );
+        
+        return false;
+    }
+    
+    // The meeting must end after it starts.
+    if( end.getTime() < start.getTime() )
+    {
+        errorDiv.innerHTML += formatError( 'meeting must start before' 
+            + 'it ends.' );
+        
+        return false;
+    }
+    
+    return true;
+}
+
+/*
+ * Creates a meeting.
+ */
+function submitCreateMeeting()
+{
+    // Check for valid fields.
+    if( validateCreateMeeting() )
+    {
+        // Ready parameters.
+        var courseID          = document.getElementById( 'course-dropdown' ).value;
+        var maxBuddies        = document.getElementById( 'max-buddies' ).value;
+        var courseDescription = document.getElementById( 'meeting-comments' ).value;
+        var startTime         = document.getElementById( 'create-meeting-start-datetime' ).value;
+        var endTime           = document.getElementById( 'create-meeting-end-datetime' ).value;
+        var meetingLocation   = document.getElementById( 'location-dropdown' ).value;
+        
+        // Call ajax function to create meeting.
+        createMeeting ( ajaxURL, 
+                        courseID, 
+                        courseDescription, 
+                        meetingLocation, 
+                        startTime, 
+                        endTime, 
+                        maxBuddies 
+                       );
+    }
+    return;
+}
