@@ -743,9 +743,9 @@ function generateTimes ()
             if ( m == 0 )
             {
                 // displays 0 as 00 minutes
-                var formatMinute = "0" + m;
+                var m = "0" + m;
             }
-            var timeString = "" + h + ":" + formatMinute;
+            var timeString = "" + h + ":" + m;
             times[i] = timeString;
             i++;
         }
