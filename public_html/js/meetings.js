@@ -455,15 +455,52 @@ function myMeetingOnReady(){
         {
             allMeeting = !allMeeting;
 			
+<<<<<<< HEAD
 			$('#not-attending').toggleClass("toggled");
+=======
+            if( allMeeting )
+            {
+			    $('#not-attending').attr( 'data-icon', 'bars' );
+                $('#not-attending').removeClass( 'ui-icon-no-bars' );
+                $('#not-attending').addClass( 'ui-icon-bars' );
+                $('#not-attending').addClass('toggled');
+            }
+            else
+            {
+			    $('#not-attending').attr( 'data-icon', 'no-bars' );
+                $('#not-attending').removeClass( 'ui-icon-bars' );
+                $('#not-attending').addClass( 'ui-icon-no-bars' );
+                $('#not-attending').removeClass('toggled');
+            }
+
+>>>>>>> cd4734d59fbb01f00e54e3ace4b649fade112b40
             regenerateList();
             return false;
         });
     $( '#i-attending' ).on( 'touchend', function(e)
         {
             iAttending = !iAttending;
+<<<<<<< HEAD
 			
 			$('#i-attending').toggleClass("toggled");
+=======
+            
+            if( iAttending )
+            {
+			    $('#i-attending').attr( 'data-icon', 'check' );
+                $('#i-attending').removeClass( 'ui-icon-no-check' );
+                $('#i-attending').addClass( 'ui-icon-check' );
+                $('#i-attending').addClass('toggled');
+            }
+            else
+            {
+			    $('#i-attending').attr( 'data-icon', 'no-check' );
+                $('#i-attending').removeClass( 'ui-icon-check' );
+                $('#i-attending').addClass( 'ui-icon-no-check' );
+                $('#i-attending').removeClass('toggled');
+            }
+
+>>>>>>> cd4734d59fbb01f00e54e3ace4b649fade112b40
             regenerateList();
 			return false;
         });
