@@ -462,7 +462,7 @@ function myMeetingOnReady(){
     
     
     
-    $( '#i-created' ).on( 'touchend', function(e)
+    $( '#i-created' ).on( 'click touchend', function(e)
         {
             iCreated = !iCreated;
 			
@@ -472,7 +472,7 @@ function myMeetingOnReady(){
             return false;
             
         });
-    $( '#not-attending' ).on( 'touchend', function(e)
+    $( '#not-attending' ).on( 'click touchend', function(e)
         {
             allMeeting = !allMeeting;
 			
@@ -481,7 +481,7 @@ function myMeetingOnReady(){
             
             return false;
         });
-    $( '#i-attending' ).on( 'touchend', function(e)
+    $( '#i-attending' ).on( 'click touchend', function(e)
         {
             iAttending = !iAttending;
 			
