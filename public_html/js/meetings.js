@@ -235,8 +235,8 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
 {
     var listItem = '<li data-role="collapsible" id = "meeting-' + meetingID + '"><a href="#"  class="the-button ui-btn"' + '<h1>Course: ' + meetingCourse 
                             + '<br>Location: ' + meetingLoc + '</h1>'
-                            + '<p>start date: '  + getHumanDate( meetingStartTime ) 
-                            + '</p><div id="meeting-details-' + meetingID + '"><p>test</p></div></a></li>';
+                            + '<p>Start Date: '  + getHumanDate( meetingStartTime ) 
+                            + '</p><div id="meeting-details-' + meetingID + '"></div></a></li>';
     $( '#my-meetings-list' ).append(listItem);
     $( '#meeting-' + meetingID ).addClass('ui-icon-' + icon + ' ui-btn-icon-right');
     
@@ -251,12 +251,43 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
         console.log('HI');
         meetingListClickLock = true;
         setTimeout( function() { meetingListClickLock = false; }, 600 );
-        $('#meeting-details-' + meetingID ).slideToggle();
+        
     
-        if( $( 'meeting-details-' + meetingID ).css( 'display' ) == 'none' )
-        {
-            
-        }
+            $.ajax
+            ({
+                url: ajaxURL + 'meetings/meetings.php',
+                type: 'POST',
+                data:
+                {
+                    method: 'get-meeting-details',
+                    ID: meetingID
+                },
+                dataType: "json",
+                success: function ( json )
+                {
+                    var meetingDesc = json.discription;
+                    var meetingEndTime = json.endDate;
+                    var meetingMaxBuddies = json.maxBuddies;
+                    var currentBuddies = json.buddies.length
+                    var meetingBuddies = "";
+                    
+                    for ( var i = 0 ; i < currentBuddies; i++ )
+                    {
+                        meetingBuddies = json.buddies[i] + "<br/>";
+                        
+                    }
+                    
+                    console.log( meetingEndTime );
+                    var meetingDetailsStr = '<p class="my-meeting-end-date">End Date: ' + getHumanDate( meetingEndTime ) + '</p>'
+                                          + '<p class="my-meeting-desc">Comments: ' + meetingDesc + '</p>'
+                                          + '<p class="my-meeting-buddies-count">Buddies: '
+                                                + currentBuddies + '/' + meetingMaxBuddies + '</p>'
+                                          + '<div class="my-meeting-buddies"><p>' + meetingBuddies + '</p></div>';
+                    document.getElementById( 'meeting-details-' + meetingID ).
+                                                    innerHTML = meetingDetailsStr;
+                }
+            });
+        $('#meeting-details-' + meetingID ).slideToggle();
     });
     $('#meeting-details-' + meetingID ).hide();
     /*
@@ -266,18 +297,7 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
         this.empty();
 
         //ajax call to retrueve information from the server and call a function to create meeting details
-        $.ajax
-        ({
-            url: ajax_URL + 'meetings/meetings.php',
-            type: 'POST',
-            data:
-            {
-                method: 'get-meeting-details',
-                id: meetingID
-            },
-            dataType: "json",
-            success: function ( json )
-            {
+        
                 var meetingDesc = json.description;
                 var meetingEndTime = json.endDate;
                 var meetingMaxBuddies = json.maxBuddies;
