@@ -81,7 +81,7 @@
                 
                 <div data-role="collapsible">
                     <h3>Remove all courses</h3>
-                    <a href="#" data-role="button" id="clear-my-courses" data-icon="minus" data-iconpos="left">Remove All</a>
+                    <a href="#" data-role="button" id="clear-my-courses" data-icon="minus" data-iconpos="right">Remove All</a>
                 </div>
                 
                 <!-- account deactivation area -->
@@ -312,9 +312,9 @@
                         clearing = true;
                     }
                     $( '#clear-my-courses' ).attr( 'data-icon','false' );
-                    $( '#clear-my-courses' ).removeClass('ui-icon-minus ui-btn-icon-left' );
+                    $( '#clear-my-courses' ).removeClass('ui-icon-minus ui-btn-icon-right' );
                     $( '#clear-my-courses' ).html('<img class="footer-loading" src="css/images/ajax-loader.gif" alt="loading...">'
-                                                 +'<span style="margin-left: -8px !important;">Remove All</span>');
+                                                 +'<span style="margin-left: -9px !important;">Remove All</span>');
                     $.ajax
                     ({
                         url: ajaxURL + 'courses/user-courses.php',
