@@ -1,8 +1,8 @@
 /* GLOBAL VARIABLES */
 var meetingList = {};
-var iCreated = true;
-var allMeeting = true;
-var iAttending = true;
+var iCreated = false;
+var allMeeting = false;
+var iAttending = false;
 
 /* a method to return all the meetings that you are attending, and adds them to your my meetings list via a helper function.
     returns a 2D array of meetings, each of which contains individual meeting data.
@@ -56,7 +56,7 @@ function createMeeting ( ajax_URL, courseID, courseDescription, meetingLocation,
         success: function (json) {
             if (json.success == true) {
                 //redirect user to myMeetings
-                $.mobile.changePage("#page-my-meetings");
+                window.location.assign("my-meetings.php");
             }
             else {
                 //alert: meeting was not created successfully.
@@ -89,8 +89,8 @@ function editMeeting ( ajax_URL, meetingID, courseID, courseDescription, meeting
         data:
         {
             method: 'edit-meeting',
-            ID: meetingID,
-            courseID: courseID,
+            id: meetingID,
+            courseId: courseID,
             description: courseDescription,
             location: meetingLocation,
             startTime: startTime,
@@ -190,12 +190,12 @@ function leaveMeeting ( ajax_URL, meetingID )
 /* used to add the details of a particular meeting to a HTML form, for editing meetings
     @param meetingID the unique ID assigned to a meeting */
 
-function populateEditMeetingFields ( courseID, meetingLoc, description, meetingStartDate, meetingEndDate, meetingMaxBuddies, meetingID )
+function populateEditMeetingFields ( courseID, meetingLoc, description, meetingStartDate, meetingEndDate, meetingMaxBuddies )
 {
     //select a form element and assign json data to it
 	
-    var element = document.getElementById("course-edit-dropdown");
-    element.setAttribute("value", courseID );
+    var element = document.getElementById("courseID");
+    element.innerHTML(courseID);
 
     var element = document.getElementById("edit-location");
     element.setAttribute("value", meetingLoc);
@@ -206,14 +206,11 @@ function populateEditMeetingFields ( courseID, meetingLoc, description, meetingS
     var element = document.getElementById("meeting-end-datetime");
     element.setAttribute("value", meetingEndDate);
 
-    var element = document.getElementById("edit-max-buddies");
+    var element = document.getElementById("max-buddies");
     element.setAttribute("value", meetingMaxBuddies);
 
-    var element = document.getElementById("edit-meeting-comments");
+    var element = document.getElementById("meeting-comments");
     element.setAttribute("value", description);
-    
-    var element = document.getElementById("meeting-id");
-    element.setAttribute("value", meetingID );
 	
 }
 
@@ -243,8 +240,6 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
     //          p: meeting detail #n
     //          div: buttonBar
     //              if (meetingFilter == 2) {button: edit meeting, button: cancel meeting}
-    //                          Marc says "The edit button needs to send an id to the edit meeting page.
-    //                                     This might need to be done with a session variable."
     //              if (meetingFilter != 2 && <not attending> && <meeting not cancelled>) {button: join meeting}
     //              if (meetingFilter != 2 && <attending>) {button: leave meeting}
     //    DIV: ListElement #2 data-role="collapsible"
@@ -277,7 +272,7 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
     var meetingList = document.getElementById( 'my-meetings-list' );
     
     //use createElement() to make a div with data-role="collapsible" to store the course information
-    var listElement = document.createElement( "li" );
+    var listElement = document.createElement( "div" );
     listElement.setAttribute( "data-role", "collapsible" );
     
     //set the div id for the list element which will contain all the data for a meeting
@@ -286,7 +281,7 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
 
     //create a header to store main information on a meeting
     var listHeader = document.createElement( "h1" );
-    listHeader.innerHTML = "Course: " + meetingCourse + "<br/>" + "Location: " + meetingLoc + "<br/>" + "Date: " + getHumanDate( meetingStartTime );
+    listHeader.innerHTML( "Course: " + meetingCourse + "<br/>" + "Location: " + meetingLoc + "<br/>" + "Date: " + meetingStartTime );
 
     //create a div element to store detailed/supplementary information on a meeting
     var listBody = document.createElement( "div" );
@@ -337,17 +332,17 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
                     //button: edit meeting, button: cancel meeting
                     var editButton = document.createElement( "button" );
                     editButton.innerHTML( "Edit Meeting" );
-                    editButton.on( 'click touchend', function()
+                    editButton.on( 'click tap', function()
                     {
                         //call populate fields method for editing
                         /* populateEditMeetingFields ( courseID, meetingLoc, description, meetingStartDate, meetingEndDate, meetingMaxBuddies, meetingComments ) */
-                        populateEditMeetingFields ( meetingCourse, meetingLoc, meetingDesc, meetingStartTime, meetingEndTime, meetingMaxBuddies, meetingID )
+                        populateEditMeetingFields ( meetingCourse, meetingLoc, meetingDesc, meetingStartTime, meetingEndTime, meetingMaxBuddies )
                         //move the user to the edit meetings page.
                     });
 
                     var cancelButton = document.createElement( "button" );
                     cancelButton.innerHTML( "Edit Meeting" );
-                    cancelButton.on( 'click touchend', function()
+                    cancelButton.on( 'click tap', function()
                     {
                         //call the cancel meetings function.
                     });
@@ -360,7 +355,7 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
                     //button: join meeting
                     var joinButton = document.createElement( "button" );
                     joinButton.innerHTML( "Edit Meeting" );
-                    joinButton.on( 'click touchend', function()
+                    joinButton.on( 'click tap', function()
                     {
                         //call the join meeting function.
                     });
@@ -371,7 +366,7 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
                     //button: leave meeting
                     var leaveButton = document.createElement( "button" );
                     leaveButton.innerHTML( "Edit Meeting" );
-                    leaveButton.on( 'click touchend', function()
+                    leaveButton.on( 'click tap', function()
                     {
                         //call the leave meeting function.
                     });
@@ -411,11 +406,10 @@ function createMeetingDetails( meetingIDContainer, meetingDesc, meetingEndDate, 
 /* goes through the meetingList array and adds it to the HTML list if called*/
 function regenerateList()
 {    
-    console.log('regen');
-	$("#my-meetings-list").html("");
-	for( i = 0; i < meetingList.length; i++ )
+	$("#my-meeting-list").html("");
+	for( i = 0; i < meetingList.length; i += 1 )
 	{
-		if(allMeeting && meetingList[i].filter == 0)
+		if(allMeeting && meetingList.filter == 0)
 		{
 			addMeetingToList(meetingList[i].ID,
 							 meetingList[i].courseID,
@@ -424,7 +418,7 @@ function regenerateList()
 							 meetingList[i].cancelled,
 							 meetingList[i].filter);
 		}
-		else if( iCreated && meetingList[i].filter == 2)
+		else if( iCreated && meetingList.filter == 2)
 		{
 			addMeetingToList(meetingList[i].ID,
 							 meetingList[i].courseID,
@@ -433,7 +427,7 @@ function regenerateList()
 							 meetingList[i].cancelled,
 							 meetingList[i].filter);
 		}
-		else if( iAttending && meetingList[i].filter == 1)
+		else if( iAttending && meetingList.filter == 1)
 		{
 			addMeetingToList(meetingList[i].ID,
 							 meetingList[i].courseID,
@@ -443,288 +437,67 @@ function regenerateList()
 							 meetingList[i].filter);
 		}
 	}
-    $('#my-meetings-list').listview('refresh');
 }
 
 /*This function will check the toggles and add the meetings that match the criteria to the list.
 */    
 function myMeetingOnReady(){
-    $('#my-meetings-list').listview();
-    
-    if( iCreated )
-        console.log('iCreated');
-    if( iAttending )
-        console.log('iAttending');
-    if( allMeeting )
-        console.log('allMeeting');
-    
-        
-    getAllMyMeetings( ajaxURL );
-    
-    
-    
-    $( '#i-created' ).on( 'click touchend', function(e)
+
+    $( '#i-created' ).on( 'touchend', function(e)
         {
             iCreated = !iCreated;
 			
-            if( iCreated )
-            {
-			    $('#i-created').attr( 'data-icon', 'star' );
-                $('#i-created').removeClass( 'ui-icon-no-star' );
-                $('#i-created').addClass( 'ui-icon-star' );
-                $('#i-created').addClass('toggled');
-            }
-            else
-            {
-			    $('#i-created').attr( 'data-icon', 'no-star' );
-                $('#i-created').removeClass( 'ui-icon-star' );
-                $('#i-created').addClass( 'ui-icon-no-star' );
-                $('#i-created').removeClass('toggled');
-            }
-
+			$('#i-created').toggleClass("toggled");
             regenerateList();
-            
             return false;
-            
         });
-    $( '#not-attending' ).on( 'click touchend', function(e)
+    $( '#not-attending' ).on( 'touchend', function(e)
         {
             allMeeting = !allMeeting;
 			
-            if( allMeeting )
-            {
-			    $('#not-attending').attr( 'data-icon', 'bars' );
-                $('#not-attending').removeClass( 'ui-icon-no-bars' );
-                $('#not-attending').addClass( 'ui-icon-bars' );
-                $('#not-attending').removeClass('toggled');
-            }
-            else
-            {
-			    $('#not-attending').attr( 'data-icon', 'no-bars' );
-                $('#not-attending').removeClass( 'ui-icon-bars' );
-                $('#not-attending').addClass( 'ui-icon-no-bars' );
-                $('#not-attending').removeClass('toggled');
-            }
-
+			$('#not-attending').toggleClass("toggled");
             regenerateList();
-            
             return false;
         });
-    $( '#i-attending' ).on( 'click touchend', function(e)
+    $( '#i-attending' ).on( 'touchend', function(e)
         {
             iAttending = !iAttending;
-            
-            if( iAttending )
-            {
-			    $('#i-attending').attr( 'data-icon', 'check' );
-                $('#i-attending').removeClass( 'ui-icon-no-check' );
-                $('#i-attending').addClass( 'ui-icon-check' );
-                $('#i-attending').removeClass('toggled');
-            }
-            else
-            {
-			    $('#i-attending').attr( 'data-icon', 'no-check' );
-                $('#i-attending').removeClass( 'ui-icon-check' );
-                $('#i-attending').addClass( 'ui-icon-no-check' );
-                $('#i-attending').removeClass('toggled');
-            }
-
+			
+			$('#i-attending').toggleClass("toggled");
             regenerateList();
-            
 			return false;
         });
 }
 
+/* allow 15 minute increments in the date time piker */
 
-   
-
-    
-    
-/*
- * Validates form input.
- * 
- * @returns true on valid false on invalid.
- */
-function validateMeetingParams( courseID, 
-                               maxBuddies, 
-                               courseDescription, 
-                               startTime,
-                               endTime,
-                               meetingLocation,
-                               errorDiv )
+function generateTimes ()
 {
-    var retval = true;
-    
-    // Reset error div.
-    errorDiv.innerHTML = '';
-    
-    // Checks that there is a course.
-    if( !courseID.match( /^([A-Z]{4}[0-9]{4})$/gi ) )
+    var times = [];
+    var i = 0;
+
+    for ( h = 0 ; h < 24 ; h++ )
     {
-        errorDiv.innerHTML += formatError( 'invalid course!' );
-        
-        retval = false;
+        for ( m = 0 ; m < 60 ; m += 15 )
+        {
+            if ( m == 0 )
+            {
+                // displays 0 as 00 minutes
+                var formatMinute = "0" + m;
+            }
+            var timeString = "" + h + ":" + formatMinute;
+            times[i] = timeString;
+            i++;
+        }
     }
-    
-    // Checks that the number of buddies entered is an int.
-    if( !maxBuddies.match( /^[0-9]+$/) )
-    {
-        errorDiv.innerHTML += formatError( 'You must specify maximum number of buddies' );
-        
-        retval = false;
-    }
-    
-    // Check that there is a meeting comment set.
-    if( courseDescription.length < 1 )
-    {
-        errorDiv.innerHTML += formatError( 'You must enter a comment' );
-        
-        retval = false;
-    }
-    
-    //Check that the dates are valid.
-    if( !validateDates( startTime, endTime, errorDiv ) )
-    {
-        retval = false;
-    }
-    
-    return retval;
+    return times;
 }
 
-/*
- * At this point just formats a string into a paragraph in a "error" class div.
- *
- * @param str the string to be added to the div.
- *
- * @returns a string in a paragraph tag in a error class div.
- */
-function formatError( str )
+function alterPickerTimes ( dateTimePickerID )
 {
-    return '<div class="error"><p>' + str + '</p></div>';
-}
-    
-/*
- * Validates the date fields.
- * 
- * @param start date string.
- * @param end date string.
- * 
- * @returns true on valid, string on invalid.
- */
-function validateDates( startDate, endDate, errorDiv )
-{
-    // Verifies that something has been entered in the date box.
-    if( startDate.length < 1 || endDate.length < 1 )
-    {
-        errorDiv.innerHTML += formatError( 'Please enter start and end '
-             + 'dates for your meeting!' );
-    }         
-    
-    var start = new Date( startDate );
-    var end   = new Date( endDate );
-    
-    // Must end in the future!
-    if( end.getTime() < Date.now() )
-    {
-        
-        errorDiv.innerHTML += formatError( 'meeting ends in the past!' );
-        
-        return false;
-    }
-    
-    // The meeting must end after it starts.
-    if( end.getTime() < start.getTime() )
-    {
-        errorDiv.innerHTML += formatError( 'meeting must start before' 
-            + 'it ends.' );
-        
-        return false;
-    }
-    
-    return true;
-}
-/*
- * Creates a meeting.
- */
-function submitCreateMeeting()
-{
-    // Ready parameters.
-    var courseID          = document.getElementById( 'course-dropdown' ).value;
-    var maxBuddies        = document.getElementById( 'max-buddies' ).value;
-    var courseDescription = document.getElementById( 'meeting-comments' ).value;
-    var startTime         = document.getElementById( 'create-meeting-start-datetime' ).value;
-    var endTime           = document.getElementById( 'create-meeting-end-datetime' ).value;
-    var meetingLocation   = document.getElementById( 'location-dropdown' ).value;
-    var errorDiv          = document.getElementById( 'create-meeting-error' );
-    
-    // Check for valid fields.
-    if( validateMeetingParams( courseID, 
-                            maxBuddies, 
-                            courseDescription, 
-                            startTime,
-                            endTime,
-                            meetingLocation,
-                            errorDiv
-                            ))
-    {
-        
-        
-        // Call ajax function to create meeting.
-        createMeeting ( ajaxURL, 
-                        courseID, 
-                        courseDescription, 
-                        meetingLocation, 
-                        startTime, 
-                        endTime, 
-                        maxBuddies 
-                    );
-    }
-    return;
-}
-
-/*
- * Creates a meeting.
- */
-function submitEditMeeting()
-{
-    // Ready parameters.
-    var courseID          = document.getElementById( 'course-edit-dropdown' ).value;
-    var maxBuddies        = document.getElementById( 'edit-max-buddies' ).value;
-    var courseDescription = document.getElementById( 'edit-meeting-comments' ).value;
-    var startTime         = document.getElementById( 'meeting-start-datetime' ).value;
-    var endTime           = document.getElementById( 'meeting-end-datetime' ).value;
-    var meetingLocation   = document.getElementById( 'edit-location' ).value;
-    var errorDiv          = document.getElementById( 'edit-meeting-error' );
-    var meetingID         = document.getElementById( 'meeting-id' ).value;
-    
-    // Check for valid fields.
-    if( validateMeetingParams( courseID, 
-                            maxBuddies, 
-                            courseDescription, 
-                            startTime,
-                            endTime,
-                            meetingLocation,
-                            errorDiv
-                            ))
-    {
-        
-        
-        // Call ajax function to edit meeting.
-        editMeeting ( ajaxURL, 
-                      meetingID,
-                      courseID,
-                      courseDescription,
-                      meetingLocation,
-                      startTime,
-                      endTime,
-                      maxBuddies )
-    }
-    return;
-}
-
-function getHumanDate( d )
-{
-    date = new Date( d );
-    
-    return date.toDateString();
+    jQuery( '#' + dateTimePickerID ).datetimepicker
+    ({
+        datepicker:false,
+        allowTimes:generateTimes ()
+    });
 }
