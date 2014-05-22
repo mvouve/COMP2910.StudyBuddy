@@ -86,7 +86,8 @@ function getMeetingDetails( $meetingID )
 
     $ret = $meetings->getMeetingDetails( $meetingID );
     $ret['buddies'] = $meetings->getMeetingBuddyList( $meetingID );
-    return ret;
+    
+    return $ret;
 }
 
 /*

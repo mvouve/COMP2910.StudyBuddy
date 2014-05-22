@@ -251,12 +251,38 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
         console.log('HI');
         meetingListClickLock = true;
         setTimeout( function() { meetingListClickLock = false; }, 600 );
-        $('#meeting-details-' + meetingID ).slideToggle();
+        
     
-        if( $( 'meeting-details-' + meetingID ).css( 'display' ) == 'none' )
-        {
-            
-        }
+            $.ajax
+            ({
+                url: ajaxURL + 'meetings/meetings.php',
+                type: 'POST',
+                data:
+                {
+                    method: 'get-meeting-details',
+                    ID: meetingID
+                },
+                dataType: "json",
+                success: function ( json )
+                {
+                    var meetingDesc = json.description;
+                    var meetingEndTime = json.endDate;
+                    var meetingMaxBuddies = json.maxBuddies;
+                    var currentBuddies = json.buddies.length
+                    var meetingBuddies = "";
+                    
+                    for ( var i = 0 ; i < currentBuddies; i++ )
+                    {
+                        meetingBuddies = json.buddies[i] + "<br/>";
+                        
+                    }
+                    
+                    console.log( meetingEndTime );
+                    var meetingDetailsStr = '<p>' + meetingEndTime + '</p>';
+                    $( 'meeting-details-' + meetingID ).append(meetingDetailsStr);
+                }
+            });
+        $('#meeting-details-' + meetingID ).slideToggle();
     });
     $('#meeting-details-' + meetingID ).hide();
     /*
@@ -266,18 +292,7 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
         this.empty();
 
         //ajax call to retrueve information from the server and call a function to create meeting details
-        $.ajax
-        ({
-            url: ajax_URL + 'meetings/meetings.php',
-            type: 'POST',
-            data:
-            {
-                method: 'get-meeting-details',
-                id: meetingID
-            },
-            dataType: "json",
-            success: function ( json )
-            {
+        
                 var meetingDesc = json.description;
                 var meetingEndTime = json.endDate;
                 var meetingMaxBuddies = json.maxBuddies;
