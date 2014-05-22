@@ -337,7 +337,7 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
                     //button: edit meeting, button: cancel meeting
                     var editButton = document.createElement( "button" );
                     editButton.innerHTML( "Edit Meeting" );
-                    editButton.on( 'click tap', function()
+                    editButton.on( 'click touchend', function()
                     {
                         //call populate fields method for editing
                         /* populateEditMeetingFields ( courseID, meetingLoc, description, meetingStartDate, meetingEndDate, meetingMaxBuddies, meetingComments ) */
@@ -347,7 +347,7 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
 
                     var cancelButton = document.createElement( "button" );
                     cancelButton.innerHTML( "Edit Meeting" );
-                    cancelButton.on( 'click tap', function()
+                    cancelButton.on( 'click touchend', function()
                     {
                         //call the cancel meetings function.
                     });
@@ -360,7 +360,7 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
                     //button: join meeting
                     var joinButton = document.createElement( "button" );
                     joinButton.innerHTML( "Edit Meeting" );
-                    joinButton.on( 'click tap', function()
+                    joinButton.on( 'click touchend', function()
                     {
                         //call the join meeting function.
                     });
@@ -371,7 +371,7 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
                     //button: leave meeting
                     var leaveButton = document.createElement( "button" );
                     leaveButton.innerHTML( "Edit Meeting" );
-                    leaveButton.on( 'click tap', function()
+                    leaveButton.on( 'click touchend', function()
                     {
                         //call the leave meeting function.
                     });
