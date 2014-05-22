@@ -260,7 +260,8 @@ class Meeting
                          'courseID'     => $sql['courseID'],
                          'location'     => $sql['location'],
                          'startDate'    => $sql['startDate'],
-                         'endDate'      => $sql['endDate']
+                         'endDate'      => $sql['endDate'],
+                         'maxBuddies'   => $sql['maxBuddies']
                         );
         return $retval;
     }

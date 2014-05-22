@@ -235,8 +235,8 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
 {
     var listItem = '<li data-role="collapsible" id = "meeting-' + meetingID + '"><a href="#"  class="the-button ui-btn"' + '<h1>Course: ' + meetingCourse 
                             + '<br>Location: ' + meetingLoc + '</h1>'
-                            + '<p>start date: '  + getHumanDate( meetingStartTime ) 
-                            + '</p><div id="meeting-details-' + meetingID + '"><p>test</p></div></a></li>';
+                            + '<p>Start Date: '  + getHumanDate( meetingStartTime ) 
+                            + '</p><div id="meeting-details-' + meetingID + '"></div></a></li>';
     $( '#my-meetings-list' ).append(listItem);
     $( '#meeting-' + meetingID ).addClass('ui-icon-' + icon + ' ui-btn-icon-right');
     
@@ -278,8 +278,10 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
                     }
                     
                     console.log( meetingEndTime );
-                    var meetingDetailsStr = '<p>' + meetingEndTime + '</p>';
-                    $( 'meeting-details-' + meetingID ).append(meetingDetailsStr);
+                    var meetingDetailsStr = '<p>End Date: ' + getHumanDate( meetingEndTime ) + '</p>'
+                                          + '<p>Buddies:' + currentBuddies + '/' + meetingMaxBuddies +'</p>';
+                    document.getElementById( 'meeting-details-' + meetingID ).
+                                                    innerHTML = meetingDetailsStr;
                 }
             });
         $('#meeting-details-' + meetingID ).slideToggle();
