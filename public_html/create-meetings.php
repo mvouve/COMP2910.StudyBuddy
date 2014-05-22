@@ -45,7 +45,7 @@
                 <div data-role="navbar">
 		            <ul>
 			            <li><a href="#page-my-meetings" data-icon="back" data-iconpos="top">Cancel</a></li>
-			            <li><a href="#" id="create-meeting-submit" data-icon="plus" data-iconpos="top" >Create Meeting</a></li>
+			            <li><a href="#page-create-meeting" id="create-meeting-submit" data-icon="plus" data-iconpos="top" >Create Meeting</a></li>
 		            </ul>
 	            </div>
             </div>
@@ -55,8 +55,31 @@
     $('#create-meeting-start-datetime').datetimepicker({
                                                         inline: true
                                                         });
+                                                        
     $('#create-meeting-end-datetime').datetimepicker({
                                                       inline: true
                                                       });
-        
+
+    /*
+     * Populate courses when the user clicks courses.
+     */
+    $('#course-dropdown').focus( function()
+    {
+        document.getElementById('course-dropdown').innerHTML = '';
+        for( var key in myCoursesServerResponse )
+        {
+            if( myCoursesServerResponse[key].visible )
+            {
+                var opt = '<option value="' + key + '">' + key + '</option>';
+                $('#course-dropdown').append( opt );
+            }
+        }
+    } );
+    
+    /*
+     * Event handler for the button to create a meeting.
+     */
+    $( '#create-meeting-submit' ).on( 'click tap', submitCreateMeeting );
+    
+
 </script>
