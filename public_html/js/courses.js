@@ -455,6 +455,9 @@ function toggleVisibility ( ajax_URL, courseID )
             //refresh if safe
             if( refresh )
 			    $('#my-courses-list').listview('refresh');
+				
+			// Refresh my meetings list
+			getAllMyMeetings( ajax_URL );
         }
     });
 }
