@@ -579,41 +579,80 @@ function validateDates( startDate, endDate, errorDiv )
     
     return true;
 }
-    /*
-     * Creates a meeting.
-     */
-    function submitCreateMeeting()
-    {
-        // Ready parameters.
-        var courseID          = document.getElementById( 'course-dropdown' ).value;
-        var maxBuddies        = document.getElementById( 'max-buddies' ).value;
-        var courseDescription = document.getElementById( 'meeting-comments' ).value;
-        var startTime         = document.getElementById( 'create-meeting-start-datetime' ).value;
-        var endTime           = document.getElementById( 'create-meeting-end-datetime' ).value;
-        var meetingLocation   = document.getElementById( 'location-dropdown' ).value;
-        var errorDiv          = document.getElementById( 'create-meeting-error' );
-        
-        // Check for valid fields.
-        if( validateMeetingParams( courseID, 
-                                maxBuddies, 
-                                courseDescription, 
-                                startTime,
-                                endTime,
-                                meetingLocation,
-                                errorDiv
-                                ))
-        {
-            
-            
-            // Call ajax function to create meeting.
-            createMeeting ( ajaxURL, 
-                            courseID, 
+/*
+ * Creates a meeting.
+ */
+function submitCreateMeeting()
+{
+    // Ready parameters.
+    var courseID          = document.getElementById( 'course-dropdown' ).value;
+    var maxBuddies        = document.getElementById( 'max-buddies' ).value;
+    var courseDescription = document.getElementById( 'meeting-comments' ).value;
+    var startTime         = document.getElementById( 'create-meeting-start-datetime' ).value;
+    var endTime           = document.getElementById( 'create-meeting-end-datetime' ).value;
+    var meetingLocation   = document.getElementById( 'location-dropdown' ).value;
+    var errorDiv          = document.getElementById( 'create-meeting-error' );
+    
+    // Check for valid fields.
+    if( validateMeetingParams( courseID, 
+                            maxBuddies, 
                             courseDescription, 
-                            meetingLocation, 
-                            startTime, 
-                            endTime, 
-                            maxBuddies 
-                        );
-        }
-        return;
+                            startTime,
+                            endTime,
+                            meetingLocation,
+                            errorDiv
+                            ))
+    {
+        
+        
+        // Call ajax function to create meeting.
+        createMeeting ( ajaxURL, 
+                        courseID, 
+                        courseDescription, 
+                        meetingLocation, 
+                        startTime, 
+                        endTime, 
+                        maxBuddies 
+                    );
     }
+    return;
+}
+
+/*
+ * Creates a meeting.
+ */
+function submitEditMeeting()
+{
+    // Ready parameters.
+    var courseID          = document.getElementById( 'course-dropdown' ).value;
+    var maxBuddies        = document.getElementById( 'max-buddies' ).value;
+    var courseDescription = document.getElementById( 'meeting-comments' ).value;
+    var startTime         = document.getElementById( 'create-meeting-start-datetime' ).value;
+    var endTime           = document.getElementById( 'create-meeting-end-datetime' ).value;
+    var meetingLocation   = document.getElementById( 'location-dropdown' ).value;
+    var errorDiv          = document.getElementById( 'create-meeting-error' );
+    
+    // Check for valid fields.
+    if( validateMeetingParams( courseID, 
+                            maxBuddies, 
+                            courseDescription, 
+                            startTime,
+                            endTime,
+                            meetingLocation,
+                            errorDiv
+                            ))
+    {
+        
+        
+        // Call ajax function to create meeting.
+        createMeeting ( ajaxURL, 
+                        courseID, 
+                        courseDescription, 
+                        meetingLocation, 
+                        startTime, 
+                        endTime, 
+                        maxBuddies 
+                    );
+    }
+    return;
+}
