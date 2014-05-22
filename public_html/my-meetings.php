@@ -30,7 +30,7 @@
                         Not Attending</a></li>
                 </ul>
             </div>
-            <!-- CHECKBOX ATTEMPT ONE -->
+            <!-- CHECKBOX ATTEMPT ONE commenting this out so unique ids are a thing.
             <div class="ui-grid-b" class="center">
                 <div class=" ui-block-a custom-checkbox" >
                     <label class="custom-checkbox">
@@ -54,7 +54,7 @@
                         I am Not Attending</label>
                 </div>
             </div>
-            <!-- CHECKBOX ATTEMPT 2-->
+            <!-- CHECKBOX ATTEMPT 2
             <div class="ui-field-contain" class="center" class="custom-checkbox">
                 <fieldset data-role="controlgroup" data-type="horizontal" >
                     <label class="custom-checkbox checkbox-threeway">
@@ -74,7 +74,7 @@
                         I am Not Attending</label>
                 </fieldset>
             </div>
-            <!-- END -->
+            END -->
         </div>
     </div>
 <!--End of my-meetings.php-->
