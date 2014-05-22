@@ -411,7 +411,7 @@ function createMeetingDetails( meetingIDContainer, meetingDesc, meetingEndDate, 
 /* goes through the meetingList array and adds it to the HTML list if called*/
 function regenerateList()
 {    
-	$("#my-meeting-list").html("");
+	$("#my-meetings-list").html("");
 	for( i = 0; i < meetingList.length; i++ )
 	{
 		if(allMeeting && meetingList[i].filter == 0)
@@ -442,13 +442,14 @@ function regenerateList()
 							 meetingList[i].filter);
 		}
 	}
-    $('#my-meeting-list').listview('refresh');
+    $('#my-meetings-list').listview('refresh');
 }
 
 /*This function will check the toggles and add the meetings that match the criteria to the list.
 */    
 function myMeetingOnReady(){
-    $('#my-meeting-list').listview();
+    $('#my-meetings-list').listview();
+    
     if( iCreated )
         console.log('iCreated');
     if( iAttending )
