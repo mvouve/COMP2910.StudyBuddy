@@ -169,8 +169,8 @@
             var maxBuddies          = document.getElementById( 'max-buddies' ).value;
             var courseDescription   = document.getElementById( 'meeting-comments' ).value;
             console.log( document.getElementById( 'create-meeting-start-datetime' ).value );
-            var startTime           = new Date( document.getElementById( 'create-meeting-start-datetime' ).value ).getTime();
-            var endTime             = new Date( document.getElementById( 'create-meeting-end-datetime' ).value ).getTime();
+            var startTime           = document.getElementById( 'create-meeting-start-datetime' ).value;
+            var endTime             = document.getElementById( 'create-meeting-end-datetime' ).value;
             var meetingLocation     = document.getElementById( 'location-dropdown' ).value;
             
             createMeeting ( ajaxURL, 
