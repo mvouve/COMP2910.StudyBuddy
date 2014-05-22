@@ -40,7 +40,7 @@ else
     <script>
             var doingAjax = false;
             
-            $('#recovery-submit').on( 'click tap', function () {
+            $('#recovery-submit').on( 'click touchend', function () {
                 if ( doingAjax == false )
                 {
                     doingAjax = true;

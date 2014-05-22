@@ -125,7 +125,7 @@
             
             var registerClicked = false;
             // Note the change from $().click to $().on( 'click tap', function( e ) {} );
-            $("#register-submit").on( 'click tap', function (e) {
+            $("#register-submit").on( 'click touchend', function (e) {
                 // Use e.preventDefault() to stop page redirection!
 
                 //sebastians button fix start

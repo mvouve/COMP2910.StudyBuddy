@@ -29,7 +29,7 @@
 		        }
 	        }
 
-            $("#recovery-request-submit").on( 'click tap', function (e) 
+            $("#recovery-request-submit").on( 'click touchend', function (e) 
 	        {
 		        e.preventDefault();
                 e.stopImmediatePropagation();
