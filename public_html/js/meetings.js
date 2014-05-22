@@ -277,7 +277,7 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
     var meetingList = document.getElementById( 'my-meetings-list' );
     
     //use createElement() to make a div with data-role="collapsible" to store the course information
-    var listElement = document.createElement( "div" );
+    var listElement = document.createElement( "li" );
     listElement.setAttribute( "data-role", "collapsible" );
     
     //set the div id for the list element which will contain all the data for a meeting
@@ -442,20 +442,24 @@ function regenerateList()
 							 meetingList[i].filter);
 		}
 	}
+    $('#my-meeting-list').listview('refresh');
 }
 
 /*This function will check the toggles and add the meetings that match the criteria to the list.
 */    
 function myMeetingOnReady(){
-    
+    $('#my-meeting-list').listview();
     if( iCreated )
         console.log('iCreated');
     if( iAttending )
         console.log('iAttending');
     if( allMeeting )
         console.log('allMeeting');
+    
         
     getAllMyMeetings( ajaxURL );
+    
+    
     
     $( '#i-created' ).on( 'touchend', function(e)
         {
