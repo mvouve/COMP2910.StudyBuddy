@@ -469,12 +469,7 @@ function myMeetingOnReady(){
         });
 }
 
-    $('#create-meeting-start-datetime').datetimepicker({
-                                                        inline: true
-                                                        });
-    $('#create-meeting-end-datetime').datetimepicker({
-                                                      inline: true
-                                                      });
+
                                                       
     /*
      * Populate courses when the user clicks courses.
@@ -492,12 +487,8 @@ function myMeetingOnReady(){
         }
     } );
     /*
-     * When user types in the comment section validate the comment.
-     * Needs to be completed when 
+     * Event handler for the button to create a meeting.
      */
-    //$('#meeting-comments').keyup( function() { validateCreateMeeting() } );
-    //$('#max-buddies').keyup( function() { validateCreateMeeting() } );
-    //$('#course-dropdown').change( function() { validateCreateMeeting() } );
     $( '#create-meeting-submit' ).on( 'click tap', submitCreateMeeting );
     
     /*
@@ -542,9 +533,16 @@ function myMeetingOnReady(){
         return retval;
     }
     
+    /*
+     * At this point just formats a string into a paragraph in a "error" class div.
+     *
+     * @param str the string to be added to the div.
+     *
+     * @returns a string in a paragraph tag in a error class div.
+     */
     function formatError( str )
     {
-        return '<div><p>' + str + '</p></div>';
+        return '<div class="error"><p>' + str + '</p></div>';
     }
     
     /*
@@ -577,15 +575,16 @@ function myMeetingOnReady(){
         return true;
     }
     
-    
+    /*
+     * Creates a meeting.
+     */
     function submitCreateMeeting()
     {
         if( validateCreateMeeting() )
         {
-            var courseID              = document.getElementById( 'course-dropdown' ).value;
+            var courseID            = document.getElementById( 'course-dropdown' ).value;
             var maxBuddies          = document.getElementById( 'max-buddies' ).value;
             var courseDescription   = document.getElementById( 'meeting-comments' ).value;
-            console.log( document.getElementById( 'create-meeting-start-datetime' ).value );
             var startTime           = document.getElementById( 'create-meeting-start-datetime' ).value;
             var endTime             = document.getElementById( 'create-meeting-end-datetime' ).value;
             var meetingLocation     = document.getElementById( 'location-dropdown' ).value;
