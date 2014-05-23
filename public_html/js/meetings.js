@@ -513,6 +513,8 @@ function myMeetingOnReady(){
     $('#my-meetings-list').listview();
     getAllMyMeetings( ajaxURL );
     
+	$( "#my-meeting-no-courses" ).hide();
+	
     $( '#i-created' ).on( 'click touchend', function(e)
         {
             iCreated = !iCreated;
