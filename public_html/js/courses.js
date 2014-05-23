@@ -1,6 +1,6 @@
 
 //temporary user course list
-var myCoursesServerResponse = {};
+var myCoursesServerResponse = [];
 //indicates if course's visibality is being toggled
 var beingToggled = {};
 //html unorded list where the user courses are displayed

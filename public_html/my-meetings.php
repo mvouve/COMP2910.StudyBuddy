@@ -8,6 +8,9 @@
             <ul data-role="listview" data-filter="true" id="my-meetings-list">
             </ul>
         </div>
+		<div id="my-meeting-no-courses">
+			Hey, you have no meetings! Have you added any courses to your course list yet?
+		</div>
         
         <div data-role="footer" data-position="fixed" data-tap-toggle="false">
             <!--CALVINS BEAUTIFUL CREATION-->

@@ -450,12 +450,15 @@ function createMeetingDetails( meetingIDContainer, meetingDesc, meetingEndDate, 
 /* goes through the meetingList array and adds it to the HTML list if called*/
 function regenerateList()
 {    
+	var count = 0;
+
 	$("#my-meetings-list").html("");
 	for( i = 0; i < meetingList.length; i++ )
 	{
 		if(allMeeting && meetingList[i].filter == 0)
 		{
 			var icon = ( meetingList[i].cancelled ) ? 'cancel' : 'bars';
+			count += 1;
 		
 			addMeetingToList(meetingList[i].ID,
 							 meetingList[i].courseID,
@@ -468,6 +471,7 @@ function regenerateList()
 		else if( iCreated && meetingList[i].filter == 2)
 		{
 			var icon = ( meetingList[i].cancelled ) ? 'cancel' : 'star';
+			count += 1;
 		
 			addMeetingToList(meetingList[i].ID,
 							 meetingList[i].courseID,
@@ -480,6 +484,7 @@ function regenerateList()
 		else if( iAttending && meetingList[i].filter == 1)
 		{
 			var icon = ( meetingList[i].cancelled ) ? 'cancel' : 'check';
+			count += 1;
 		
 			addMeetingToList(meetingList[i].ID,
 							 meetingList[i].courseID,
@@ -491,6 +496,15 @@ function regenerateList()
 		}
 	}
     $('#my-meetings-list').listview('refresh');
+	
+	if ( meetingList.length > 0 )
+	{
+		$( "#my-meeting-no-courses" ).hide();
+	}
+	else
+	{
+		$( "#my-meeting-no-courses" ).show();
+	}
 }
 
 /*This function will check the toggles and add the meetings that match the criteria to the list.
