@@ -118,6 +118,16 @@ function editMeeting ( ajax_URL, meetingID, courseID, courseDescription, meeting
 
 function cancelMeeting( ajax_URL, meetingID )
 {
+	var tempCourseID = 0;
+
+	for ( i = 0; i < meetingList.length; i += 1 )
+	{
+		if ( meetingList[i].ID == meetingID )
+		{
+			tempCourseID = meetingList[i].courseID;
+		}
+	}
+
     $.ajax
     ({
         url: ajax_URL + 'meetings/meetings.php',
@@ -125,7 +135,8 @@ function cancelMeeting( ajax_URL, meetingID )
         data:
         {
             method: 'cancel-meeting',
-            ID: meetingID
+            ID: meetingID,
+			courseID: tempCourseID
         },
         dataType: "json",
         success: function ( json )
@@ -386,40 +397,40 @@ function regenerateList()
 	{
 		if(allMeeting && meetingList[i].filter == 0)
 		{
-			var icon = ( meetingList[i].cancelled ) ? 'cancel' : 'bars';
+			var icon = ( meetingList[i].canceled ) ? 'forbidden' : 'bars';
 			count += 1;
 		
 			addMeetingToList(meetingList[i].ID,
 							 meetingList[i].courseID,
 							 meetingList[i].location,
 							 meetingList[i].startDate,
-							 meetingList[i].cancelled,
+							 meetingList[i].canceled,
 							 meetingList[i].filter,
                              icon );
 		}
 		else if( iCreated && meetingList[i].filter == 2)
 		{
-			var icon = ( meetingList[i].cancelled ) ? 'cancel' : 'star';
+			var icon = ( meetingList[i].canceled ) ? 'forbidden' : 'star';
 			count += 1;
 		
 			addMeetingToList(meetingList[i].ID,
 							 meetingList[i].courseID,
 							 meetingList[i].location,
 							 meetingList[i].startDate,
-							 meetingList[i].cancelled,
+							 meetingList[i].canceled,
 							 meetingList[i].filter,
                              icon );
 		}
 		else if( iAttending && meetingList[i].filter == 1)
 		{
-			var icon = ( meetingList[i].cancelled ) ? 'cancel' : 'check';
+			var icon = ( meetingList[i].canceled ) ? 'forbidden' : 'check';
 			count += 1;
 		
 			addMeetingToList(meetingList[i].ID,
 							 meetingList[i].courseID,
 							 meetingList[i].location,
 							 meetingList[i].startDate,
-							 meetingList[i].cancelled,
+							 meetingList[i].canceled,
 							 meetingList[i].filter,
                              icon );
 		}

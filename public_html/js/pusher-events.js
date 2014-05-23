@@ -86,7 +86,7 @@ function pusherMeetingAdded( data )
 		ID: data.ID,
 		location: data.location,
 		startDate: data.startTime,
-		cancelled: false,
+		canceled: false,
 		courseID: data.courseID,
 		filter: filterSetting
 	};
@@ -109,12 +109,15 @@ function pusherMeetingAdded( data )
  */
 function pusherMeetingCancelled( data )
 {
+	console.log( "CALLBACK" );
+
 	//go into meeting list and look for meeting with this ID and set its cancelled property/flag to true
     for ( var i = 0 ; i < meetingList.length ; i++ )
     {
         if ( meetingList[i].ID == data.ID)
         {
-            meetingList[i].cancelled = true;
+			console.log( "MEETING FOUND" );
+            meetingList[i].canceled = true;
 			cancelMeetingNotification( data.ID );
 			break;
         }

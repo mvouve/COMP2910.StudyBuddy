@@ -47,7 +47,7 @@ if ( isset( $_POST['method'] ) )
             break;
             
         case 'cancel-meeting':
-            $retval = cancelMeeting( $_POST['ID'] );
+            $retval = cancelMeeting( $_POST['ID'], $_POST['courseID'] );
             break;
             
         case 'join-meeting':
@@ -168,7 +168,7 @@ function editMeeting( $meetingID, $courseID, $description, $location, $maxBuddie
 /*
  * Cancel a Meeting.
  */
-function cancelMeeting( $meetingID )
+function cancelMeeting( $meetingID, $courseID )
 {
 	global $meetings, $uid;
 
@@ -186,7 +186,7 @@ function cancelMeeting( $meetingID )
         // Push the cancellation through Pusher
         global $pusher;
         $data = array( 'ID' => $meetingID );
-        $pusher->trigger( 'private-' . $meetingID, 'meeting_cancelled', $data ); 
+        $pusher->trigger( 'private-' . $courseID, 'meeting_cancelled', $data ); 
     }
     
     return $ret;
