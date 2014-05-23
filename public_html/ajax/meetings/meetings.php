@@ -186,7 +186,7 @@ function cancelMeeting( $meetingID )
         // Push the cancellation through Pusher
         global $pusher;
         $data = array( 'ID' => $meetingID );
-        $pusher->trigger( 'private-' . $courseID, 'meeting_cancelled', $data ); 
+        $pusher->trigger( 'private-' . $meetingID, 'meeting_cancelled', $data ); 
     }
     
     return $ret;

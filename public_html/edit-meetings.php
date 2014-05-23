@@ -38,7 +38,7 @@
                 <label for="edit-meeting-comments">Comments :</label>
                 <textarea id="edit-meeting-comments" name="edit-meeting-comments"></textarea><br/>
             </div>
-            <input id="meeting-id" name="meeting-id" type="hidden">
+            <input id="meeting-id" name="meeting-id" type="hidden" value='1'>
         </form>
         <input id="cancel-meeting-button" type="button" value="Cancel Meeting"/>
     </div>
@@ -66,8 +66,8 @@
 
     //cancelling meeting
     $('#cancel-meeting-button').on('click touchend', function () {
-        cancelMeeting(ajaxURL, document.getElementById("meeting-id").attributes("value"));
-        //jQuery.mobile.changePage( '#my-meetings' );
+        cancelMeeting(ajaxURL, document.getElementById("meeting-id").value );
+		$.mobile.changePage('#page-my-meetings');
     });
 
     /* submit edit changes */

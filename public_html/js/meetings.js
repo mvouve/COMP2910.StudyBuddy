@@ -125,7 +125,7 @@ function cancelMeeting( ajax_URL, meetingID )
         data:
         {
             method: 'cancel-meeting',
-            id: userID
+            ID: meetingID
         },
         dataType: "json",
         success: function ( json )
