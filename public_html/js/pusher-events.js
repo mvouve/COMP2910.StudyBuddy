@@ -137,6 +137,18 @@ function pusherMeetingCancelled( data )
  */
 function pusherMeetingChanged( data )
 {
+	var filterSetting;
+
+	// Filter: 0 not attending, 1 attending, 2 created
+	if ( data.creator == uid )
+	{
+		filterSetting = 2;
+	}
+	else
+	{
+		filterSetting = 0;
+	}
+
 	//look through meeting list array, find the meeting with this ID
     //change its values to the new ones
     //regenerate the list.
@@ -145,14 +157,22 @@ function pusherMeetingChanged( data )
     {
         if ( meetingList[i].ID == data.ID)
         {
-            meetingList[i] = data;
-			var date = new Date( data.startTime );
+			meetingList[ i ] = {
+				ID: data.ID,
+				location: data.location,
+				startDate: data.startTime,
+				canceled: false,
+				courseID: data.courseID,
+				filter: filterSetting
+			};
 			
+			var date = new Date( data.startTime );
 			editMeetingNotification( data.ID, data.courseID, data.location, date );
 			
 			break;
         }
     }
+	
     // regenerate the list
     regenerateList();
 }

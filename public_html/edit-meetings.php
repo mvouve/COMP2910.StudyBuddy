@@ -54,14 +54,6 @@
 </div>
 
 <script>
-
-    $('#meeting-end-datetime').datetimepicker({
-        inline: true
-    });
-
-    $('#meeting-start-datetime').datetimepicker({
-        inline: true
-    });
     $('#edit-meeting-submit').on('click tap', submitEditMeeting);
 
     //cancelling meeting

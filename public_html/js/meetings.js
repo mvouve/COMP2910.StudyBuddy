@@ -297,63 +297,63 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
                                           + '<div data-role="controlgroup" data-type="horizontal" id="meeting-button-' + meetingID + '"></div>';
                     document.getElementById( 'meeting-details-' + meetingID ).innerHTML = meetingDetailsStr;
                     
-                    // Buttons for meeting master.
-                    if( meetingFilter == 2 )
-                    {
-                        var buttonGroup = '<a href="#" id="edit-meeting-' + meetingID + '" data-role="button">Edit Meeting</a>';
-                        document.getElementById( 'meeting-button-' + meetingID ).innerHTML = buttonGroup;
-                        $('#edit-meeting-' + meetingID ).button();
-                        
-                        $('#edit-meeting-' + meetingID ).on('click touchend', function()
-                        {
-                            populateEditMeetingFields( meetingCourse, 
-                                                       meetingLoc, 
-                                                       meetingDesc, 
-                                                       meetingStartTime, 
-                                                       meetingEndTime, 
-                                                       meetingMaxBuddies, 
-                                                       meetingID );
-                            $.mobile.changePage('#page-edit-meeting');
-                        });
-                    }
-                    
-                    else if( meetingFilter == 1 )
-                    {
-                        var buttonGroup = '<a href="#" id="leave-meeting-' + meetingID + '" data-role="button">Leave Meeting</a>';
-                        document.getElementById( 'meeting-button-' + meetingID ).innerHTML = buttonGroup;
-                        $('#leave-meeting-' + meetingID ).button();
-                        
-                        $('#leave-meeting-' + meetingID ).on('click touchend', function()
-                        {
-                            leaveMeeting( ajaxURL, meetingID );
-                            getAllMyMeetings( ajaxURL );
-                        });
-                        
-                    }
-                    
-                    else
-                    {
-                        if( meetingMaxBuddies > currentBuddies )
-                        {
-                            var buttonGroup = '<a href="#" id="join-meeting-' + meetingID +'" data-role="button">Join Meeting</a>';
-                            document.getElementById( 'meeting-button-' + meetingID ).innerHTML = buttonGroup;
-                            $('#join-meeting-' + meetingID ).button();
-                            $('#join-meeting-' + meetingID ).on('click touchend', function()
-                            {
-                                joinMeeting ( ajaxURL, meetingID );
-                                getAllMyMeetings( ajaxURL );
-                            });
-                        }
-                        else
-                        {
-                            var buttonGroup = '<h3>Meeting Full</h3>';
-                            document.getElementById( 'meeting-button-' + meetingID ).innerHTML = buttonGroup;
-                            
-                        }
-                        
-                        
-                        
-                    }
+					if ( !meetingCancelled )
+					{
+						// Buttons for meeting master.
+						if( meetingFilter == 2 )
+						{
+							var buttonGroup = '<a href="#" id="edit-meeting-' + meetingID + '" data-role="button">Edit Meeting</a>';
+							document.getElementById( 'meeting-button-' + meetingID ).innerHTML = buttonGroup;
+							$('#edit-meeting-' + meetingID ).button();
+							
+							$('#edit-meeting-' + meetingID ).on('click touchend', function()
+							{
+								populateEditMeetingFields( meetingCourse, 
+														   meetingLoc, 
+														   meetingDesc, 
+														   meetingStartTime, 
+														   meetingEndTime, 
+														   meetingMaxBuddies, 
+														   meetingID );
+								$.mobile.changePage('#page-edit-meeting');
+							});
+						}
+						
+						else if( meetingFilter == 1 )
+						{
+							var buttonGroup = '<a href="#" id="leave-meeting-' + meetingID + '" data-role="button">Leave Meeting</a>';
+							document.getElementById( 'meeting-button-' + meetingID ).innerHTML = buttonGroup;
+							$('#leave-meeting-' + meetingID ).button();
+							
+							$('#leave-meeting-' + meetingID ).on('click touchend', function()
+							{
+								leaveMeeting( ajaxURL, meetingID );
+								getAllMyMeetings( ajaxURL );
+							});
+							
+						}
+						
+						else
+						{
+							if( meetingMaxBuddies > currentBuddies )
+							{
+								var buttonGroup = '<a href="#" id="join-meeting-' + meetingID +'" data-role="button">Join Meeting</a>';
+								document.getElementById( 'meeting-button-' + meetingID ).innerHTML = buttonGroup;
+								$('#join-meeting-' + meetingID ).button();
+								$('#join-meeting-' + meetingID ).on('click touchend', function()
+								{
+									joinMeeting ( ajaxURL, meetingID );
+									getAllMyMeetings( ajaxURL );
+								});
+							}
+							else
+							{
+								var buttonGroup = '<h3>Meeting Full</h3>';
+								document.getElementById( 'meeting-button-' + meetingID ).innerHTML = buttonGroup;
+								
+							}
+						}
+					}
                 }
             });
         $('#meeting-details-' + meetingID ).slideToggle();
@@ -693,6 +693,9 @@ function submitEditMeeting()
     var errorDiv          = document.getElementById( 'edit-meeting-error' );
     var meetingID         = document.getElementById( 'meeting-id' ).value;
     
+	console.log( startTime );
+	console.log( endTime );
+	
     // Check for valid fields.
     if( validateMeetingParams( courseID, 
                             maxBuddies, 
