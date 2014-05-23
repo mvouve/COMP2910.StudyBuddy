@@ -4,7 +4,7 @@
     <div data-role="header">
     </div>
 
-    <div data-role="main" id="edit-meeting-div">
+    <div data-role="content" id="edit-meeting-div">
         <!--div where errors appear on invalid input-->
         <div id = "edit-meeting-error"></div>
         <form id="edit-meeting-form" name="edit-meeting-form" method="post">
@@ -21,12 +21,12 @@
 
             <div>
                 <label for="meeting-start-datetime">Start Time :</label>
-                <input id="meeting-start-datetime" name="meeting-start-datetime" type="text"><br/>
+                <input id="meeting-start-datetime" class="datetime-picker" name="meeting-start-datetime" type="text"><br/>
             </div>
 
             <div id="meeting-end-datetime-wrapper">
                 <label for="meeting-end-datetime">End Time :</label>
-                <input id="meeting-end-datetime" name="meeting-end-datetime" type="text"><br/>
+                <input id="meeting-end-datetime" class="datetime-picker" name="meeting-end-datetime" type="text"><br/>
             </div>
 
             <div id="max-buddies-wrapper">

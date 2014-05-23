@@ -21,12 +21,12 @@
 
             
                 <label for="create-meeting-start-datetime">Start Time :</label>
-                <input id="create-meeting-start-datetime" name="create-meeting-start-datetime" type="text"><br/>
+                <input id="create-meeting-start-datetime" class="datetime-picker" name="create-meeting-start-datetime" type="text"><br/>
+            
             
 
-
                 <label for="create-meeting-end-datetime">End Time :</label>
-                <input id="create-meeting-end-datetime" name="create-meeting-end-datetime" type="text"><br/>
+                <input id="create-meeting-end-datetime" class="datetime-picker" name="create-meeting-end-datetime" type="text"><br/>
 
 
             <div id="max-buddies-wrapper">
