@@ -19,6 +19,12 @@
 						?>;
         </script>
         <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script>
+            // Change jQuery Mobile Defaults
+            $(document).bind("mobileinit", function(){
+                $.mobile.defaultPageTransition = 'slide';
+            });
+        </script>
         <script src="js/jqm.js"></script>
 		<!--Source: http://www.kelvinluck.com/assets/jquery/styleswitch/-->
 	    <script type="text/javascript" src="js/styleswitch.js"></script>
