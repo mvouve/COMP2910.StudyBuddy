@@ -339,6 +339,9 @@
                                 }
 								
 								unbindFromAllCourses();
+								
+								// Regenerate Meetings list
+								getAllMyMeetings( ajaxURL );
                             }
                             $( '#clear-my-courses' ).attr( 'data-icon','minus' );
                             $( '#clear-my-courses' ).addClass('ui-icon-minus ui-btn-icon-right' );
