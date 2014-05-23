@@ -180,3 +180,9 @@ a
     max-height: 100px;
     overflow:auto;
 }
+
+#my-meeting-no-courses
+{
+	width: 90%;
+	margin: 32px 5%;
+}
