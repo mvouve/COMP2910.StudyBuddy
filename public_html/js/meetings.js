@@ -444,39 +444,44 @@ function createMeetingDetails( meetingIDContainer, meetingDesc, meetingEndDate, 
 /* goes through the meetingList array and adds it to the HTML list if called*/
 function regenerateList()
 {    
-    console.log('regen');
 	$("#my-meetings-list").html("");
 	for( i = 0; i < meetingList.length; i++ )
 	{
 		if(allMeeting && meetingList[i].filter == 0)
 		{
+			var icon = ( meetingList[i].cancelled ) ? 'cancel' : 'bars';
+		
 			addMeetingToList(meetingList[i].ID,
 							 meetingList[i].courseID,
 							 meetingList[i].location,
 							 meetingList[i].startDate,
 							 meetingList[i].cancelled,
 							 meetingList[i].filter,
-                             'bars' );
+                             icon );
 		}
 		else if( iCreated && meetingList[i].filter == 2)
 		{
+			var icon = ( meetingList[i].cancelled ) ? 'cancel' : 'star';
+		
 			addMeetingToList(meetingList[i].ID,
 							 meetingList[i].courseID,
 							 meetingList[i].location,
 							 meetingList[i].startDate,
 							 meetingList[i].cancelled,
 							 meetingList[i].filter,
-                             'star' );
+                             icon );
 		}
 		else if( iAttending && meetingList[i].filter == 1)
 		{
+			var icon = ( meetingList[i].cancelled ) ? 'cancel' : 'check';
+		
 			addMeetingToList(meetingList[i].ID,
 							 meetingList[i].courseID,
 							 meetingList[i].location,
 							 meetingList[i].startDate,
 							 meetingList[i].cancelled,
 							 meetingList[i].filter,
-                             'check' );
+                             icon );
 		}
 	}
     $('#my-meetings-list').listview('refresh');
@@ -486,18 +491,7 @@ function regenerateList()
 */    
 function myMeetingOnReady(){
     $('#my-meetings-list').listview();
-    
-    if( iCreated )
-        console.log('iCreated');
-    if( iAttending )
-        console.log('iAttending');
-    if( allMeeting )
-        console.log('allMeeting');
-    
-        
     getAllMyMeetings( ajaxURL );
-    
-    
     
     $( '#i-created' ).on( 'click touchend', function(e)
         {
