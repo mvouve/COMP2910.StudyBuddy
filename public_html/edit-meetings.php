@@ -66,8 +66,14 @@
 
     //cancelling meeting
     $('#cancel-meeting-button').on('click touchend', function () {
-        cancelMeeting( ajaxURL, document.getElementById ( "meeting-id" ).attributes( "value" ) );
-        jQuery.mobile.changePage( '#my-meetings' );
+        cancelMeeting(ajaxURL, document.getElementById("meeting-id").attributes("value"));
+        //jQuery.mobile.changePage( '#my-meetings' );
+    });
+
+    /* submit edit changes */
+    $('#page-edit-meeting').on('click touchend', function ()
+    {
+        //
     });
 
     /*
