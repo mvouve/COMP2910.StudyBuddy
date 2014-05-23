@@ -230,37 +230,50 @@ function populateEditMeetingFields ( courseID, meetingLoc, description, meetingS
 }
 
 /* used to add a meeting to a list of meetings
-    @param meetingID: a numeric meeting ID, unique to each meeting
-    @param meetingCourse: the course being studied at the meeting
-    @param meetingLoc: the location where the meeting will be held
-    @param meetingStartTime: the starting date time of the meeting
-    @param meetingCancelled: a boolean value
-                true: indicates a meeting is cancelled
-                false: indicates     the meeting is available
-    @param meetingFilter: a numeric value ( 0, 1, or 2 ) which detemines a user's relationship to any given meeting
-                0: not attending
-                1: attending
-                2: meeting creator */
+ * @param meetingID: a numeric meeting ID, unique to each meeting
+ * @param meetingCourse: the course being studied at the meeting
+ * @param meetingLoc: the location where the meeting will be held
+ * @param meetingStartTime: the starting date time of the meeting
+ * @param meetingCancelled: a boolean value
+ *             true: indicates a meeting is cancelled
+ *             false: indicates     the meeting is available
+ * @param meetingFilter: a numeric value ( 0, 1, or 2 ) which detemines a user's relationship to any given meeting
+ *             0: not attending
+ *             1: attending
+ *             2: meeting creator 
+ * @param icon:  a string for the icon to display.
+ */
 
 function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTime, meetingCancelled, meetingFilter, icon )
 {
-    var listItem = '<li data-role="collapsible" id = "meeting-' + meetingID + '"><a href="#"  class="the-button ui-btn"' 
-                            + '<h1>Course: ' + meetingCourse 
-                            + '<br>Location: ' + meetingLoc + '</h1>'
-                            + '<p>Start Date: '  + getHumanDate( meetingStartTime ) 
-                            + '</p></a><div id="meeting-details-' + meetingID + '"></div></li>';
+    // Create the header for the list item. / the skeleton for the rest of the function.
+    var listItem     = '<li data-role="collapsible" id = "meeting-' + meetingID + '"><a href="#"  class="the-button ui-btn"';
+    // Add The course the meeting is for to the the header.
+    listItem        += '<h1>Course: ' + meetingCourse + '</h1>';
+    // Add the location to the string.
+    listItem        += '<h1>Location: ' + meetingLoc +  '</h1>';
+    // Add the start date to the string.
+    listItem        += '<p>Start Date: '  + getHumanDate( meetingStartTime ) + '</p></a>';
+    // Add div to hold meeting details.
+    listItem        += '<div id="meeting-details-' + meetingID + '"></div></li>';
+     
+    // Add list item to list.
     $( '#my-meetings-list' ).append(listItem);
     $( '#meeting-' + meetingID ).addClass('ui-icon-' + icon + ' ui-btn-icon-right');
     
-    
+    // Add listener to expand the meeting.
     $( '#meeting-' + meetingID ).on( 'click tap', function ()
     {
+        // Ghost click check.
         if( meetingListClickLock )
         {
             return;
         }
- 
+        
+        // Ghost click.
         meetingListClickLock = true;
+        
+        // Re-allows users to expand close meetings after one second.
         setTimeout( function() { meetingListClickLock = false; }, 600 );
         
     
@@ -288,76 +301,95 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
                         
                     }
                     
-                    console.log( meetingEndTime );
-                    var meetingDetailsStr = '<p class="my-meeting-end-date">End Date: ' + getHumanDate( meetingEndTime ) + '</p>'
-                                          + '<p class="my-meeting-desc">Comments: ' + meetingDesc + '</p>'
-                                          + '<p class="my-meeting-buddies-count">Buddies: '
-                                                + currentBuddies + '/' + meetingMaxBuddies + '</p>'
-                                          + '<div class="my-meeting-buddies"><p>' + meetingBuddies + '</p></div>'
-                                          + '<div data-role="controlgroup" data-type="horizontal" id="meeting-button-' + meetingID + '"></div>';
+                    // Create HTML for details of list list item.
+                    // Add details stirng.
+                    var meetingDetailsStr   = '<p class="my-meeting-end-date">End Date: ' 
+                                                    + getHumanDate( meetingEndTime ) + '</p>';
+                    // Add Meeting comment to string.
+                    meetingDetailsStr       += '<p class="my-meeting-desc">Comments: ' + meetingDesc + '</p>';
+                    // Add buddy ratio to the string.
+                    meetingDetailsStr       += '<p class="my-meeting-buddies-count">Buddies: '
+                                                    + currentBuddies + '/' + meetingMaxBuddies + '</p>';
+                    meetingDetailsStr       += '<div class="my-meeting-buddies"><p>' + meetingBuddies + '</p></div>';
+                    // Add list of meeting buddies to the string.
+                    meetingDetailsStr       += '<div data-role="controlgroup" data-type="horizontal" id="meeting-button-' 
+                                                    + meetingID + '"></div>';
+                                                
+                    // add header to HTML to the details div of the meeting.
                     document.getElementById( 'meeting-details-' + meetingID ).innerHTML = meetingDetailsStr;
                     
-					if ( !meetingCancelled )
-					{
-						// Buttons for meeting master.
-						if( meetingFilter == 2 )
-						{
-							var buttonGroup = '<a href="#" id="edit-meeting-' + meetingID + '" data-role="button">Edit Meeting</a>';
-							document.getElementById( 'meeting-button-' + meetingID ).innerHTML = buttonGroup;
-							$('#edit-meeting-' + meetingID ).button();
-							
-							$('#edit-meeting-' + meetingID ).on('click touchend', function()
-							{
-								populateEditMeetingFields( meetingCourse, 
-														   meetingLoc, 
-														   meetingDesc, 
-														   meetingStartTime, 
-														   meetingEndTime, 
-														   meetingMaxBuddies, 
-														   meetingID );
-								$.mobile.changePage('#page-edit-meeting');
-							});
-						}
-						
-						else if( meetingFilter == 1 )
-						{
-							var buttonGroup = '<a href="#" id="leave-meeting-' + meetingID + '" data-role="button">Leave Meeting</a>';
-							document.getElementById( 'meeting-button-' + meetingID ).innerHTML = buttonGroup;
-							$('#leave-meeting-' + meetingID ).button();
-							
-							$('#leave-meeting-' + meetingID ).on('click touchend', function()
-							{
-								leaveMeeting( ajaxURL, meetingID );
-								getAllMyMeetings( ajaxURL );
-							});
-							
-						}
-						
-						else
-						{
-							if( meetingMaxBuddies > currentBuddies )
-							{
-								var buttonGroup = '<a href="#" id="join-meeting-' + meetingID +'" data-role="button">Join Meeting</a>';
-								document.getElementById( 'meeting-button-' + meetingID ).innerHTML = buttonGroup;
-								$('#join-meeting-' + meetingID ).button();
-								$('#join-meeting-' + meetingID ).on('click touchend', function()
-								{
-									joinMeeting ( ajaxURL, meetingID );
-									getAllMyMeetings( ajaxURL );
-								});
-							}
-							else
-							{
-								var buttonGroup = '<h3>Meeting Full</h3>';
-								document.getElementById( 'meeting-button-' + meetingID ).innerHTML = buttonGroup;
-								
-							}
-						}
-					}
+                    // Add buttons for meeting master.
+                    if( meetingFilter == 2 )
+                    {
+                        var buttonGroup = '<a href="#" id="edit-meeting-' + meetingID + '" data-role="button">Edit Meeting</a>';
+                        document.getElementById( 'meeting-button-' + meetingID ).innerHTML = buttonGroup;
+                        $('#edit-meeting-' + meetingID ).button();
+                        
+                        // Event for edit meeting button.
+                        $('#edit-meeting-' + meetingID ).on('click touchend', function()
+                        {
+                            populateEditMeetingFields( meetingCourse, 
+                                                       meetingLoc, 
+                                                       meetingDesc, 
+                                                       meetingStartTime, 
+                                                       meetingEndTime, 
+                                                       meetingMaxBuddies, 
+                                                       meetingID );
+                            $.mobile.changePage('#page-edit-meeting');
+                        });
+                    }
+                    
+                    // Add buttons for users currently attending the meeting.
+                    else if( meetingFilter == 1 )
+                    {
+                        //Leave meeting button, creation and addition.
+                        var buttonGroup = '<a href="#" id="leave-meeting-' + meetingID + '" data-role="button">Leave Meeting</a>';
+                        document.getElementById( 'meeting-button-' + meetingID ).innerHTML = buttonGroup;
+                        $('#leave-meeting-' + meetingID ).button();
+                        
+                        // Add leave meeting button to the page.
+                        $('#leave-meeting-' + meetingID ).on('click touchend', function()
+                        {
+                            leaveMeeting( ajaxURL, meetingID );
+                            getAllMyMeetings( ajaxURL );
+                        });
+                        
+                    }
+                    // Add buttons for users not currently in a meeting.
+                    else
+                    {
+                        // Only add the join button if there is room in the group.
+                        if( meetingMaxBuddies > currentBuddies )
+                        {
+                            // Create and add meeting to the div.
+                            var buttonGroup = '<a href="#" id="join-meeting-' + meetingID +'" data-role="button">Join Meeting</a>';
+                            document.getElementById( 'meeting-button-' + meetingID ).innerHTML = buttonGroup;
+                            $('#join-meeting-' + meetingID ).button();
+                            
+                            // Create event handler for clicking the meeting.
+                            $('#join-meeting-' + meetingID ).on('click touchend', function()
+                            {
+                                joinMeeting ( ajaxURL, meetingID );
+                                getAllMyMeetings( ajaxURL );
+                            });
+                        }
+                        // If the meeting is full, display an error in the place of the meeting.
+                        else
+                        {
+                            var buttonGroup = '<h3>Meeting Full</h3>';
+                            document.getElementById( 'meeting-button-' + meetingID ).innerHTML = buttonGroup;
+                            
+                        }
+                        
+                        
+                        
+                    }
                 }
             });
+        // On touch, slide out the new div.
         $('#meeting-details-' + meetingID ).slideToggle();
     });
+    // Hide the details on the creation of the div.
     $('#meeting-details-' + meetingID ).hide();
 }
 
@@ -693,9 +725,6 @@ function submitEditMeeting()
     var errorDiv          = document.getElementById( 'edit-meeting-error' );
     var meetingID         = document.getElementById( 'meeting-id' ).value;
     
-	console.log( startTime );
-	console.log( endTime );
-	
     // Check for valid fields.
     if( validateMeetingParams( courseID, 
                             maxBuddies, 
