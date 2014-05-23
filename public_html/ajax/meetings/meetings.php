@@ -12,6 +12,8 @@ if ( !$user->isLoggedIn() )
 $meetings = new Meeting();
 $uid = $user->getUserID( $_SESSION['email'] );
 
+date_default_timezone_set( 'America/Los_Angeles' );
+
 // Call the appropriate function based on the requested method.
 if ( isset( $_POST['method'] ) )
 {
