@@ -196,7 +196,7 @@ function populateEditMeetingFields ( courseID, meetingLoc, description, meetingS
     //select a form element and assign json data to it
 
     var element = document.getElementById("course-edit-dropdown");
-    element.setAttribute("value", courseID );
+    element.innerHTML = courseID;
 
     var element = document.getElementById("edit-location");
     element.setAttribute("value", meetingLoc);
@@ -211,7 +211,7 @@ function populateEditMeetingFields ( courseID, meetingLoc, description, meetingS
     element.setAttribute("value", meetingMaxBuddies);
 
     var element = document.getElementById("edit-meeting-comments");
-    element.setAttribute("value", description);
+    element.innerHTML = description;
     
     var element = document.getElementById("meeting-id");
     element.setAttribute("value", meetingID );
