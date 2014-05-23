@@ -246,10 +246,9 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
     {
         if( meetingListClickLock )
         {
-            console.log('BYE');
             return;
         }
-        console.log('HI');
+ 
         meetingListClickLock = true;
         setTimeout( function() { meetingListClickLock = false; }, 600 );
         
@@ -286,12 +285,14 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
                                           + '<div class="my-meeting-buddies"><p>' + meetingBuddies + '</p></div>'
                                           + '<div data-role="controlgroup" data-type="horizontal" id="meeting-button-' + meetingID + '"></div>';
                     document.getElementById( 'meeting-details-' + meetingID ).innerHTML = meetingDetailsStr;
-                                                    
+                    
+                    // Buttons for meeting master.
                     if( meetingFilter == 2 )
                     {
                         var buttonGroup = '<a href="#" id="edit-meeting-' + meetingID + '" data-role="button">Edit Meeting</a>';
                         document.getElementById( 'meeting-button-' + meetingID ).innerHTML = buttonGroup;
                         $('#edit-meeting-' + meetingID ).button();
+                        
                         $('#edit-meeting-' + meetingID ).on('click touchend', function()
                         {
                             populateEditMeetingFields( meetingCourse, 
@@ -303,6 +304,27 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
                                                        meetingID );
                             $.mobile.changePage('#page-edit-meeting');
                         });
+                    }
+                    
+                    else if( meetingFilter == 1 )
+                    {
+                        var buttonGroup = '<a href="#" id="leave-meeting-' + meetingID + '" data-role="button">Leave Meeting</a>';
+                        document.getElementById( 'meeting-button-' + meetingID ).innerHTML = buttonGroup;
+                        $('#leave-meeting-' + meetingID ).button();
+                        
+                        $('#edit-meeting-' + meetingID ).on('click touchend', function()
+                        {
+                            leaveMeeting( ajaxURL, meetingID );
+                        });
+                        
+                    }
+                    
+                    else
+                    {
+                        if( meetingMaxBuddies > currentBuddies )
+                        {
+                            var buttonGroup = '<a href="#" id="join-meeting-' + meetingID +'">' ;
+                        }
                     }
                 }
             });
