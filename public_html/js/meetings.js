@@ -805,6 +805,8 @@ function alterPickerTimes ( dateTimePickerID, timeFormat )
         inline: true,
         step: 15,
 		format: timeFormat,
-        scrollMonth: false
+        scrollMonth: false,
+        allowBlank: false,
+        scrollInput: false
     });
 }
