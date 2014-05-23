@@ -21,12 +21,12 @@
 
             
                 <label for="create-meeting-start-datetime">Start Time :</label>
-                <input id="create-meeting-start-datetime" class="create-datetime-picker" name="create-meeting-start-datetime" type="text"><br/>
+                <input id="create-meeting-start-datetime" class="datetime-picker" name="create-meeting-start-datetime" type="text"><br/>
             
             
 
                 <label for="create-meeting-end-datetime">End Time :</label>
-                <input id="create-meeting-end-datetime" class="create-datetime-picker" name="create-meeting-end-datetime" type="text"><br/>
+                <input id="create-meeting-end-datetime" class="datetime-picker" name="create-meeting-end-datetime" type="text"><br/>
 
 
             <div id="max-buddies-wrapper">
@@ -52,6 +52,15 @@
 </div>
 
 <script>
+    var createMeetingButtonPressLock = false;
+    
+    $('#create-meeting-start-datetime').datetimepicker({
+                                                        inline: true
+                                                        });
+                                                        
+    $('#create-meeting-end-datetime').datetimepicker({
+                                                      inline: true
+                                                      });
 
     /*
      * Populate courses when the user clicks courses.
@@ -73,7 +82,17 @@
     /*
      * Event handler for the button to create a meeting.
      */
-    $( '#create-meeting-submit' ).on( 'click touchend', submitCreateMeeting );
+    $( '#create-meeting-submit' ).on( 'click touchend', function() {
+        if( createMeetingButtonPressLock )
+        {
+            console.log( 'hi1' );
+            return;
+        }
+        createMeetingButtonPressLock = true;
+        setTimeout( function() { createMeetingButtonPressLock = false; }, 600 );
+        console.log( 'hi' );
+        submitCreateMeeting(); 
+    });
     
 
 </script>
