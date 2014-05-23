@@ -276,7 +276,7 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
                     
                     for ( var i = 0 ; i < currentBuddies; i++ )
                     {
-                        meetingBuddies = json.buddies[i] + "<br/>";
+                        meetingBuddies += json.buddies[i] + "<br/>";
                         
                     }
                     
@@ -285,9 +285,29 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
                                           + '<p class="my-meeting-desc">Comments: ' + meetingDesc + '</p>'
                                           + '<p class="my-meeting-buddies-count">Buddies: '
                                                 + currentBuddies + '/' + meetingMaxBuddies + '</p>'
-                                          + '<div class="my-meeting-buddies"><p>' + meetingBuddies + '</p></div>';
-                    document.getElementById( 'meeting-details-' + meetingID ).
-                                                    innerHTML = meetingDetailsStr;
+                                          + '<div class="my-meeting-buddies"><p>' + meetingBuddies + '</p></div>'
+                                          + '<div data-role="controlgroup" data-type="horizontal" id="meeting-button-' + meetingID + '"></div>';
+                    document.getElementById( 'meeting-details-' + meetingID ).innerHTML = meetingDetailsStr;
+                                                    
+                    if( meetingFilter == 2 )
+                    {
+                        var buttonGroup = '<a href="#" id="edit-meeting-' + meetingID + '" data-role="button">Edit Meeting</a>'
+                                        + '<a href="#" id="cancel-meeting-' + meetingID + '" data-role="button">Cancel Meeting</a>';
+                        document.getElementById( 'meeting-button-' + meetingID ).innerHTML = buttonGroup;
+                        $('#cancel-meeting-' + meetingID ).button();
+                        $('#edit-meeting-' + meetingID ).button();
+                        $('#edit-meeting-' + meetingID ).on('click touchend', function()
+                        {
+                            populateEditMeetingFields( meetingCourse, 
+                                                       meetingLoc, 
+                                                       meetingDesc, 
+                                                       meetingStartTime, 
+                                                       meetingEndTime, 
+                                                       maxBuddies, 
+                                                       meetingID );
+                            $.mobile.changePage('#page-edit-meeting');
+                        });
+                    }
                 }
             });
         $('#meeting-details-' + meetingID ).slideToggle();
