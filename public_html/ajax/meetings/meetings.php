@@ -51,7 +51,7 @@ if ( isset( $_POST['method'] ) )
             break;
             
         case 'join-meeting':
-            $retval = joinMeeting( $_POST['ID'] );
+            $retval = joinMeeting( $_POST['id'] );
             break;
             
         case 'leave-meeting':
@@ -209,7 +209,7 @@ function leaveMeeting( $meetingID )
 {
 	global $meetings, $uid;
 
-    return array( 'success' => $meetings->leaveMeeting( $meetingID, $uid ) );
+    return array( 'success' => $meetings->leaveMeeting( $uid, $meetingID ) );
 }
 
 

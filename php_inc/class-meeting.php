@@ -183,17 +183,23 @@ class Meeting
     public function leaveMeeting( $userID, $meetingID )
     {
         global $db;
-        
+		
         $db->beginTransaction();
         
         // remove the user from the meeting.
-        $sql = 'DELETE FROM' . Meeting::USER_MEETING_TABLE . '
-                    WHERE meetingID = :meetingID AND userID = :userID;';
+        $sql = 'DELETE FROM ' . Meeting::USER_MEETING_TABLE . ' 
+				WHERE meetingID = :meetingID AND userID = :userID;';
         $sql = $db->prepare( $sql );
         $sql->bindParam( ':meetingID',  $meetingID );
         $sql->bindParam( ':userID',     $userID );
-        $sql->execute();
         
+		if ( !$sql->execute() )
+		{
+			return false;
+		}
+		
+		
+		
         // If the user leaving the meeting is the current master, change the master.
         if( $this->isMaster( $userID, $meetingID ) )
         {
