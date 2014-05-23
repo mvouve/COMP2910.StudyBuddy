@@ -312,9 +312,10 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
                         document.getElementById( 'meeting-button-' + meetingID ).innerHTML = buttonGroup;
                         $('#leave-meeting-' + meetingID ).button();
                         
-                        $('#edit-meeting-' + meetingID ).on('click touchend', function()
+                        $('#leave-meeting-' + meetingID ).on('click touchend', function()
                         {
                             leaveMeeting( ajaxURL, meetingID );
+                            getAllMyMeetings( ajaxURL );
                         });
                         
                     }
@@ -326,6 +327,11 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
                             var buttonGroup = '<a href="#" id="join-meeting-' + meetingID +'" data-role="button">Join Meeting</a>';
                             document.getElementById( 'meeting-button-' + meetingID ).innerHTML = buttonGroup;
                             $('#join-meeting-' + meetingID ).button();
+                            $('#join-meeting-' + meetingID ).on('click touchend', function()
+                            {
+                                joinMeeting ( ajaxURL, meetingID );
+                                getAllMyMeetings( ajaxURL );
+                            });
                         }
                         else
                         {
