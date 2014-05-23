@@ -347,9 +347,11 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
 						else if( meetingFilter == 1 )
 						{
 							//Leave meeting button, creation and addition.
-							var buttonGroup = '<a href="#" id="leave-meeting-' + meetingID + '" data-role="button">Leave Meeting</a>';
+							var buttonGroup = '<button id="leave-meeting-' + meetingID + '" class="my-meeting-list-button">Leave Meeting</button>';
+							
+							//var buttonGroup = '<a href="#" id="leave-meeting-' + meetingID + '" data-role="button">Leave Meeting</a>';
 							document.getElementById( 'meeting-button-' + meetingID ).innerHTML = buttonGroup;
-							$('#leave-meeting-' + meetingID ).button();
+							//$('#leave-meeting-' + meetingID ).button();
 							
 							// Add leave meeting button to the page.
 							$('#leave-meeting-' + meetingID ).on('click touchend', function()
@@ -365,10 +367,12 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
 							// Only add the join button if there is room in the group.
 							if( meetingMaxBuddies > currentBuddies )
 							{
+								var buttonGroup = '<button id="join-meeting-' + meetingID + '" class="my-meeting-list-button">Join Meeting</button>';
+
 								// Create and add meeting to the div.
-								var buttonGroup = '<a href="#" id="join-meeting-' + meetingID +'" data-role="button">Join Meeting</a>';
+								//var buttonGroup = '<a href="#" id="join-meeting-' + meetingID +'" data-role="button">Join Meeting</a>';
 								document.getElementById( 'meeting-button-' + meetingID ).innerHTML = buttonGroup;
-								$('#join-meeting-' + meetingID ).button();
+								//$('#join-meeting-' + meetingID ).button();
 								
 								// Create event handler for clicking the meeting.
 								$('#join-meeting-' + meetingID ).on('click touchend', function()
