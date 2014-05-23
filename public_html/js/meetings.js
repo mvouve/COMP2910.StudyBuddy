@@ -323,8 +323,19 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
                     {
                         if( meetingMaxBuddies > currentBuddies )
                         {
-                            var buttonGroup = '<a href="#" id="join-meeting-' + meetingID +'">' ;
+                            var buttonGroup = '<a href="#" id="join-meeting-' + meetingID +'" data-role="button">Join Meeting</a>';
+                            document.getElementById( 'meeting-button-' + meetingID ).innerHTML = buttonGroup;
+                            $('#join-meeting-' + meetingID ).button();
                         }
+                        else
+                        {
+                            var buttonGroup = '<h3>Meeting Full</h3>';
+                            document.getElementById( 'meeting-button-' + meetingID ).innerHTML = buttonGroup;
+                            
+                        }
+                        
+                        
+                        
                     }
                 }
             });
