@@ -168,5 +168,10 @@ a
     background-color: rgba(0, 0, 0, 0.05);
     border: 2px solid rgba(0, 0, 0, 0.3);
     padding-left: 10px;
-    border-radius:5px;
+    border-radius: 5px;
+    margin-right: 10%;
+    margin-left: 10%;
+    
+    max-height: 100px;
+    overflow:scroll;
 }
