@@ -318,72 +318,75 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
                     // add header to HTML to the details div of the meeting.
                     document.getElementById( 'meeting-details-' + meetingID ).innerHTML = meetingDetailsStr;
                     
-                    // Add buttons for meeting master.
-                    if( meetingFilter == 2 )
-                    {
-                        var buttonGroup = '<a href="#" id="edit-meeting-' + meetingID + '" data-role="button">Edit Meeting</a>';
-                        document.getElementById( 'meeting-button-' + meetingID ).innerHTML = buttonGroup;
-                        $('#edit-meeting-' + meetingID ).button();
-                        
-                        // Event for edit meeting button.
-                        $('#edit-meeting-' + meetingID ).on('click touchend', function()
-                        {
-                            populateEditMeetingFields( meetingCourse, 
-                                                       meetingLoc, 
-                                                       meetingDesc, 
-                                                       meetingStartTime, 
-                                                       meetingEndTime, 
-                                                       meetingMaxBuddies, 
-                                                       meetingID );
-                            $.mobile.changePage('#page-edit-meeting');
-                        });
-                    }
-                    
-                    // Add buttons for users currently attending the meeting.
-                    else if( meetingFilter == 1 )
-                    {
-                        //Leave meeting button, creation and addition.
-                        var buttonGroup = '<a href="#" id="leave-meeting-' + meetingID + '" data-role="button">Leave Meeting</a>';
-                        document.getElementById( 'meeting-button-' + meetingID ).innerHTML = buttonGroup;
-                        $('#leave-meeting-' + meetingID ).button();
-                        
-                        // Add leave meeting button to the page.
-                        $('#leave-meeting-' + meetingID ).on('click touchend', function()
-                        {
-                            leaveMeeting( ajaxURL, meetingID );
-                            getAllMyMeetings( ajaxURL );
-                        });
-                        
-                    }
-                    // Add buttons for users not currently in a meeting.
-                    else
-                    {
-                        // Only add the join button if there is room in the group.
-                        if( meetingMaxBuddies > currentBuddies )
-                        {
-                            // Create and add meeting to the div.
-                            var buttonGroup = '<a href="#" id="join-meeting-' + meetingID +'" data-role="button">Join Meeting</a>';
-                            document.getElementById( 'meeting-button-' + meetingID ).innerHTML = buttonGroup;
-                            $('#join-meeting-' + meetingID ).button();
-                            
-                            // Create event handler for clicking the meeting.
-                            $('#join-meeting-' + meetingID ).on('click touchend', function()
-                            {
-                                joinMeeting ( ajaxURL, meetingID );
-                                getAllMyMeetings( ajaxURL );
-                            });
-                        }
-                        // If the meeting is full, display an error in the place of the meeting.
-                        else
-                        {
-                            var buttonGroup = '<h3>Meeting Full</h3>';
-                            document.getElementById( 'meeting-button-' + meetingID ).innerHTML = buttonGroup;
-                            
-                        }
-                        
-                        
-                        
-                    }
+					if ( !meetingCancelled )
+					{
+						// Add buttons for meeting master.
+						if( meetingFilter == 2 )
+						{
+							var buttonGroup = '<a href="#" id="edit-meeting-' + meetingID + '" data-role="button">Edit Meeting</a>';
+							document.getElementById( 'meeting-button-' + meetingID ).innerHTML = buttonGroup;
+							$('#edit-meeting-' + meetingID ).button();
+							
+							// Event for edit meeting button.
+							$('#edit-meeting-' + meetingID ).on('click touchend', function()
+							{
+								populateEditMeetingFields( meetingCourse, 
+														   meetingLoc, 
+														   meetingDesc, 
+														   meetingStartTime, 
+														   meetingEndTime, 
+														   meetingMaxBuddies, 
+														   meetingID );
+								$.mobile.changePage('#page-edit-meeting');
+							});
+						}
+						
+						// Add buttons for users currently attending the meeting.
+						else if( meetingFilter == 1 )
+						{
+							//Leave meeting button, creation and addition.
+							var buttonGroup = '<a href="#" id="leave-meeting-' + meetingID + '" data-role="button">Leave Meeting</a>';
+							document.getElementById( 'meeting-button-' + meetingID ).innerHTML = buttonGroup;
+							$('#leave-meeting-' + meetingID ).button();
+							
+							// Add leave meeting button to the page.
+							$('#leave-meeting-' + meetingID ).on('click touchend', function()
+							{
+								leaveMeeting( ajaxURL, meetingID );
+								getAllMyMeetings( ajaxURL );
+							});
+							
+						}
+						// Add buttons for users not currently in a meeting.
+						else
+						{
+							// Only add the join button if there is room in the group.
+							if( meetingMaxBuddies > currentBuddies )
+							{
+								// Create and add meeting to the div.
+								var buttonGroup = '<a href="#" id="join-meeting-' + meetingID +'" data-role="button">Join Meeting</a>';
+								document.getElementById( 'meeting-button-' + meetingID ).innerHTML = buttonGroup;
+								$('#join-meeting-' + meetingID ).button();
+								
+								// Create event handler for clicking the meeting.
+								$('#join-meeting-' + meetingID ).on('click touchend', function()
+								{
+									joinMeeting ( ajaxURL, meetingID );
+									getAllMyMeetings( ajaxURL );
+								});
+							}
+							// If the meeting is full, display an error in the place of the meeting.
+							else
+							{
+								var buttonGroup = '<h3>Meeting Full</h3>';
+								document.getElementById( 'meeting-button-' + meetingID ).innerHTML = buttonGroup;
+								
+							}
+							
+							
+							
+						}
+					}
                 }
             });
         // On touch, slide out the new div.
