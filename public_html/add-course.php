@@ -10,12 +10,12 @@
                 <div>
                     <div data-role="form">
                         <form id="user-course-form" name="user-course-form" method="POST">
-                            <label for="userCourseID">user Course ID: <span id="invalid-format" style="color: #FF0000">Please verify your format</span> </label>
+                            <label for="userCourseID">Course ID: <span id="invalid-format" style="color: #FF0000">Please verify your format</span> </label>
                             <div id="user-course-id-div">
                                 <input type="text" name="user-course-id" id="user-course-id" placeholder="COMP0000">
                             </div>
 
-                            <label for="user-course-title">user Course Title:</label>
+                            <label for="user-course-title">Course Title:</label>
                             <div id="user-course-title-div">
                                 <input type="text" name="user-course-title" id="user-course-title" placeholder="At least 4 letter description">
                             </div>
