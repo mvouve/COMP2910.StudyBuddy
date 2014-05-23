@@ -120,6 +120,15 @@ function createMeeting( $courseID, $description, $location, $maxBuddies, $startT
         $data = array( 'ID' => $created, 'courseID' => $courseID, 'creator' => $uid,
             'location' => $location, 'startTime' => $startTime );
         $pusher->trigger( 'private-' . $courseID, 'meeting_added', $data ); 
+        
+        // Push to the user who created it to create their notification in phonegap app
+        $data = array( 'meetingID' => $created, 'title' => 'StudyBuddy Reminder: ' . $courseID,
+                       'message' => 'Your study meeting for ' . $courseID .
+                                    ' starts in 30 minutes in ' . $location . '!',
+                       'date' => date_sub( DateTime::createFromFormat('Y-m-d H:i:s', $startTime),
+                                           date_interval_create_from_date_string('30 minutes'))
+                     );
+        $pusher->trigger( 'study_buddy_user_' . $uid, 'create_notification', $data );
     }
     
     return $ret;
@@ -162,6 +171,15 @@ function editMeeting( $meetingID, $courseID, $description, $location, $maxBuddie
         $data = array( 'ID' => $meetingID, 'courseID' => $courseID, 'creator' => $uid,
             'location' => $location, 'startTime' => $startTime );
         $pusher->trigger( 'private-' . $courseID, 'meeting_editted', $data ); 
+        
+        // Push to the user who editted it to edit their notification in phonegap app
+        $data = array( 'meetingID' => $meetingID, 'title' => 'StudyBuddy Reminder: ' . $courseID,
+                       'message' => 'Your study meeting for ' . $courseID .
+                                    ' starts in 30 minutes in ' . $location . '!',
+                       'date' => date_sub( DateTime::createFromFormat('Y-m-d H:i:s', $startTime), 
+                                           date_interval_create_from_date_string('30 minutes'))
+                     );
+        $pusher->trigger( 'study_buddy_user_' . $uid, 'edit_notification', $data );
     }
     
     return $ret;
@@ -189,6 +207,10 @@ function cancelMeeting( $meetingID, $courseID )
         global $pusher;
         $data = array( 'ID' => $meetingID );
         $pusher->trigger( 'private-' . $courseID, 'meeting_cancelled', $data ); 
+        
+        // Push to the user who cancelled it to cancel their notification in phonegap app
+        $data = array( 'meetingID' => $meetingID );
+        $pusher->trigger( 'study_buddy_user_' . $uid, 'cancel_notification', $data );
     }
     
     return $ret;
@@ -199,9 +221,27 @@ function cancelMeeting( $meetingID, $courseID )
  */
 function joinMeeting( $meetingID )
 {
-	global $meetings, $uid;
+	global $pusher, $meetings, $uid;
 
-    return array( 'success' => $meetings->joinMeeting( $meetingID, $uid ) );
+    $ret =  array( 'success' => $meetings->joinMeeting( $meetingID, $uid ) );
+    
+    if ( $ret['success'] )
+    {
+        $meeting = $meetings->getMeetingDetails( $meetingID );
+        
+        $sTime = new DateTime( $meeting['startDate'] );
+        
+        // Push to the user who created it to create their notification in phonegap app
+        $data = array( 'meetingID' => $meetingID,
+                       'title' => 'StudyBuddy Reminder: ' . $meeting['courseID'],
+                       'message' => 'Your study meeting for ' . $meeting['courseID'] .
+                                    ' starts in 30 minutes in ' . $meeting['location'] . '!',
+                       'date' => date_sub($sTime, date_interval_create_from_date_string('30 minutes'))
+                     );
+        $pusher->trigger( 'study_buddy_user_' . $uid, 'create_notification', $data );
+    }
+    
+    return $ret;
 }
 
 /*
@@ -209,9 +249,18 @@ function joinMeeting( $meetingID )
  */
 function leaveMeeting( $meetingID )
 {
-	global $meetings, $uid;
+	global $pusher, $meetings, $uid;
 
-    return array( 'success' => $meetings->leaveMeeting( $uid, $meetingID ) );
+    $ret = array( 'success' => $meetings->leaveMeeting( $uid, $meetingID ) );
+    
+    if ( $ret['success'] )
+    {
+        // Push to the user who left it to cancel their notification in phonegap app
+        $data = array( 'meetingID' => $meetingID );
+        $pusher->trigger( 'study_buddy_user_' . $uid, 'cancel_notification', $data );
+    }
+    
+    return $ret;
 }
 
 
