@@ -695,7 +695,7 @@ function submitCreateMeeting()
 function submitEditMeeting()
 {
     // Ready parameters.
-    var courseID          = document.getElementById( 'course-edit-dropdown' ).value;///////////////////////////////
+    var courseID          = document.getElementById( 'course-edit-dropdown' ).innerHTML;///////////////////////////////
     var maxBuddies        = document.getElementById( 'edit-max-buddies' ).value;
     var courseDescription = document.getElementById( 'edit-meeting-comments' ).value;
     var startTime         = document.getElementById( 'meeting-start-datetime' ).value;
