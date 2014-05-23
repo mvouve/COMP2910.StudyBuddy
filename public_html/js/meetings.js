@@ -747,12 +747,13 @@ function generateTimes ()
     {
         for ( m = 0 ; m < 60 ; m += 15 )
         {
+            min = m;
             if ( m == 0 )
             {
                 // displays 0 as 00 minutes
-                var m = "0" + m;
+                min = "00";
             }
-            var timeString = "" + h + ":" + m;
+            var timeString = "" + h + ":" + min;
             times[i] = timeString;
             i++;
         }
@@ -762,9 +763,9 @@ function generateTimes ()
 
 function alterPickerTimes ( dateTimePickerID )
 {
-    jQuery( '#' + dateTimePickerID ).datetimepicker
+    jQuery( dateTimePickerID ).datetimepicker
     ({
-        datepicker:false,
-        allowTimes:generateTimes ()
+        inline: true,
+        allowTimes:generateTimes()
     });
 }
