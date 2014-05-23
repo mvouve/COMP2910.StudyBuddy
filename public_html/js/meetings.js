@@ -260,9 +260,9 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
     // Add the location to the string.
     listItem        += '<h1>Location: ' + meetingLoc +  '</h1>';
     // Add the start date to the string.
-    listItem        += '<p>Start Date: '  + getHumanDate( meetingStartTime ) + '</p></a>';
+    listItem        += '<p><span class="meeting-detail-header">Start Date: </span>'  + getHumanDate( meetingStartTime ) + '</p></a>';
     // Add div to hold meeting details.
-    listItem        += '<div id="meeting-details-' + meetingID + '"></div></li>';
+    listItem        += '<div id="meeting-details-' + meetingID + '" class="meeting-details"></div></li>';
      
     // Add list item to list.
     $( '#my-meetings-list' ).append(listItem);
@@ -310,12 +310,12 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
                     
                     // Create HTML for details of list list item.
                     // Add details stirng.
-                    var meetingDetailsStr   = '<p class="my-meeting-end-date">End Date: ' 
+                    var meetingDetailsStr   = '<p class="my-meeting-end-date"><span class="meeting-detail-header">End Date: </span>' 
                                                     + getHumanDate( meetingEndTime ) + '</p>';
                     // Add Meeting comment to string.
-                    meetingDetailsStr       += '<p class="my-meeting-desc">Comments: ' + meetingDesc + '</p>';
+                    meetingDetailsStr       += '<p class="my-meeting-desc"><span class="meeting-detail-header">Comments: </span>' + meetingDesc + '</p>';
                     // Add buddy ratio to the string.
-                    meetingDetailsStr       += '<p class="my-meeting-buddies-count">Buddies: '
+                    meetingDetailsStr       += '<p class="my-meeting-buddies-count"><span class="meeting-detail-header">Buddies: </span>'
                                                     + currentBuddies + '/' + meetingMaxBuddies + '</p>';
                     meetingDetailsStr       += '<div class="my-meeting-buddies"><p>' + meetingBuddies + '</p></div>';
                     // Add list of meeting buddies to the string.
