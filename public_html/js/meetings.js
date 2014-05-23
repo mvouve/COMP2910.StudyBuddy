@@ -233,10 +233,11 @@ function populateEditMeetingFields ( courseID, meetingLoc, description, meetingS
 
 function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTime, meetingCancelled, meetingFilter, icon )
 {
-    var listItem = '<li data-role="collapsible" id = "meeting-' + meetingID + '"><a href="#"  class="the-button ui-btn"' + '<h1>Course: ' + meetingCourse 
+    var listItem = '<li data-role="collapsible" id = "meeting-' + meetingID + '"><a href="#"  class="the-button ui-btn"' 
+                            + '<h1>Course: ' + meetingCourse 
                             + '<br>Location: ' + meetingLoc + '</h1>'
                             + '<p>Start Date: '  + getHumanDate( meetingStartTime ) 
-                            + '</p><div id="meeting-details-' + meetingID + '"></div></a></li>';
+                            + '</p></a><div id="meeting-details-' + meetingID + '"></div></li>';
     $( '#my-meetings-list' ).append(listItem);
     $( '#meeting-' + meetingID ).addClass('ui-icon-' + icon + ' ui-btn-icon-right');
     
@@ -298,7 +299,7 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
                                                        meetingDesc, 
                                                        meetingStartTime, 
                                                        meetingEndTime, 
-                                                       maxBuddies, 
+                                                       meetingMaxBuddies, 
                                                        meetingID );
                             $.mobile.changePage('#page-edit-meeting');
                         });
