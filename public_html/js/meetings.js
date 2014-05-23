@@ -572,7 +572,7 @@ function myMeetingOnReady(){
         });
 
         //
-        alterPickerTimes(".edit-datetime-picker", 'YYYY-MM-DD HH:mm');
+        alterPickerTimes(".edit-datetime-picker", 'Y-m-d H:i:s');
 		alterPickerTimes(".create-datetime-picker", 'Y-m-d H:i:s');
         //
 }
