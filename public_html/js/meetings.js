@@ -4,6 +4,7 @@ var iCreated = true;
 var allMeeting = true;
 var iAttending = true;
 var meetingListClickLock = false;
+var editSubmitClicked = false;
 
 /* a method to return all the meetings that you are attending, and adds them to your my meetings list via a helper function.
     returns a 2D array of meetings, each of which contains individual meeting data.
@@ -108,6 +109,9 @@ function editMeeting ( ajax_URL, meetingID, courseID, courseDescription, meeting
                 //show an alert that the meeting was not successfully edited.
                 alert("meeting was not succesfully edited.");
             }
+			
+			console.log( "NOT FALSE" );
+			editSubmitClicked = false;
         }
     });
 }
@@ -724,8 +728,15 @@ function submitCreateMeeting()
  */
 function submitEditMeeting()
 {
+	if ( editSubmitClicked )
+	{
+		return;
+	}
+	
+	editSubmitClicked = true;
+
     // Ready parameters.
-    var courseID          = document.getElementById( 'course-edit-dropdown' ).innerHTML;///////////////////////////////
+    var courseID          = document.getElementById( 'course-edit-dropdown' ).innerHTML;
     var maxBuddies        = document.getElementById( 'edit-max-buddies' ).value;
     var courseDescription = document.getElementById( 'edit-meeting-comments' ).value;
     var startTime         = document.getElementById( 'meeting-start-datetime' ).value;
@@ -756,6 +767,10 @@ function submitEditMeeting()
                       endTime,
                       maxBuddies )
     }
+	else
+	{
+		editSubmitClicked = false;
+	}
     return;
 }
 

@@ -54,7 +54,7 @@
 </div>
 
 <script>
-    $('#edit-meeting-submit').on('click tap', submitEditMeeting);
+    $('#edit-meeting-submit').on('click touchend', submitEditMeeting);
 
     //cancelling meeting
     $('#cancel-meeting-button').on('click touchend', function () {
