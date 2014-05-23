@@ -173,5 +173,5 @@ a
     margin-left: 10%;
     
     max-height: 100px;
-    overflow:scroll;
+    overflow:auto;
 }
