@@ -40,6 +40,7 @@
             </div>
             <input id="meeting-id" name="meeting-id" type="hidden">
         </form>
+        <input id="cancel-meeting-button" type="button" value="Cancel Meeting"/>
     </div>
             <!-- save meeting and cancel buttons go here?-->
     <div data-role="footer" data-position="fixed" data-tap-toggle="false">
@@ -62,6 +63,9 @@
                                                  inline: true
                                                  });
     $('#edit-meeting-submit').on( 'click tap', submitEditMeeting );
+
+    //cancelling meeting
+    $('#cancel-meeting-button').on( 'touch end', cancelMeeting( ajaxURL, document.getElementById("meeting-id").attributes( "value" ) ) );
     
         /*
      * Populate courses when the user clicks courses.
