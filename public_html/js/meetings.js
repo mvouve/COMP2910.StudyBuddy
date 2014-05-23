@@ -105,7 +105,7 @@ function editMeeting ( ajax_URL, meetingID, courseID, courseDescription, meeting
         dataType: "json",
         success: function (json) {
 			if (json.success == true) {
-                document.getElementById('create-meeting-form').reset();
+                document.getElementById('edit-meeting-form').reset();
                 $.mobile.changePage('#page-my-meetings')
             }
             else {
@@ -113,7 +113,6 @@ function editMeeting ( ajax_URL, meetingID, courseID, courseDescription, meeting
                 alert("meeting was not succesfully edited.");
             }
 			
-			console.log( "NOT FALSE" );
 			editSubmitClicked = false;
         }
     });
@@ -334,7 +333,7 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
 							//var buttonGroup = '<a href="#" id="edit-meeting-' + meetingID + '" data-role="button">Edit Meeting</a>';
 							document.getElementById( 'meeting-button-' + meetingID ).innerHTML = buttonGroup;
 							//$('#edit-meeting-' + meetingID ).button();
-							
+                            
 							// Event for edit meeting button.
 							$('#edit-meeting-' + meetingID ).on('click touchend', function( e )
 							{
@@ -701,8 +700,6 @@ function submitCreateMeeting()
     var endTime           = document.getElementById( 'create-meeting-end-datetime' ).value;
     var meetingLocation   = document.getElementById( 'location-dropdown' ).value;
     var errorDiv          = document.getElementById( 'create-meeting-error' );
-    
-	console.log( startTime );
 	
     // Check for valid fields.
     if( validateMeetingParams( courseID, 

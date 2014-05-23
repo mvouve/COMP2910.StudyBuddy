@@ -61,13 +61,7 @@
         cancelMeeting(ajaxURL, document.getElementById("meeting-id").value );
 		$.mobile.changePage('#page-my-meetings');
     });
-
-    /* submit edit changes */
-    $('#page-edit-meeting').on('click touchend', function ()
-    {
-        //
-    });
-
+    
     /*
     * Populate courses when the user clicks courses.
     */
