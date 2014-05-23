@@ -60,6 +60,7 @@ function createMeeting ( ajax_URL, courseID, courseDescription, meetingLocation,
         dataType: "json",
         success: function (json) {
             if (json.success == true) {
+            
                 //redirect user to myMeetings
                 $.mobile.changePage("#page-my-meetings");
             }

@@ -39,6 +39,17 @@
             
             $( '#page-container' ).on( 'pagecontainerbeforeshow', function() {
 				$( '#page-container' ).find( '.ui-btn-active' ).removeClass( 'ui-btn-active ui-focus' );
+                
+                // Reset Create-Meeting form when loading page
+                if ( $.mobile.activePage.attr( 'id' ) == 'page-create-meeting' )
+                {
+                    document.getElementById('create-meeting-form').reset();
+                }
+                else if ( $.mobile.activePage.attr( 'id' ) == 'page-edit-meeting' )
+                {
+                    document.getElementById('edit-meeting-form').reset();
+                }
+                
 				colorChange();
             });
 			
