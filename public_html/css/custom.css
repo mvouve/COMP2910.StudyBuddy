@@ -186,3 +186,11 @@ a
 	width: 90%;
 	margin: 32px 5%;
 }
+
+.my-meeting-list-button
+{
+	display: block;
+	margin: 15px auto;
+	padding: 10px 20px;
+	width: 80%;
+}

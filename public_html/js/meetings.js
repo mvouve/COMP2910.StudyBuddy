@@ -323,13 +323,15 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
 						// Add buttons for meeting master.
 						if( meetingFilter == 2 )
 						{
-							var buttonGroup = '<a href="#" id="edit-meeting-' + meetingID + '" data-role="button">Edit Meeting</a>';
+							var buttonGroup = '<button id="edit-meeting-' + meetingID + '" class="my-meeting-list-button">Edit Meeting</button>';
+							//var buttonGroup = '<a href="#" id="edit-meeting-' + meetingID + '" data-role="button">Edit Meeting</a>';
 							document.getElementById( 'meeting-button-' + meetingID ).innerHTML = buttonGroup;
-							$('#edit-meeting-' + meetingID ).button();
+							//$('#edit-meeting-' + meetingID ).button();
 							
 							// Event for edit meeting button.
-							$('#edit-meeting-' + meetingID ).on('click touchend', function()
+							$('#edit-meeting-' + meetingID ).on('click touchend', function( e )
 							{
+								e.stopImmediatePropagation();
 								populateEditMeetingFields( meetingCourse, 
 														   meetingLoc, 
 														   meetingDesc, 
