@@ -40,6 +40,7 @@
             </div>
             <input id="meeting-id" name="meeting-id" type="hidden">
         </form>
+        <input id="cancel-meeting-button" type="button" value="Cancel Meeting"/>
     </div>
             <!-- save meeting and cancel buttons go here?-->
     <div data-role="footer" data-position="fixed" data-tap-toggle="false">
@@ -53,29 +54,32 @@
 </div>
 
 <script>
-    
+
     $('#meeting-end-datetime').datetimepicker({
-                                               inline: true
-                                               });
-                                                        
+        inline: true
+    });
+
     $('#meeting-start-datetime').datetimepicker({
-                                                 inline: true
-                                                 });
-    $('#edit-meeting-submit').on( 'click tap', submitEditMeeting );
-    
-        /*
-     * Populate courses when the user clicks courses.
-     */
-    $('#course-edit-dropdown').focus( function()
-    {
+        inline: true
+    });
+    $('#edit-meeting-submit').on('click tap', submitEditMeeting);
+
+    //cancelling meeting
+    $('#cancel-meeting-button').on('click touchend', function () {
+        cancelMeeting( ajaxURL, document.getElementById ( "meeting-id" ).attributes( "value" ) );
+        jQuery.mobile.changePage( '#my-meetings' );
+    });
+
+    /*
+    * Populate courses when the user clicks courses.
+    */
+    $('#course-edit-dropdown').focus(function () {
         document.getElementById('course-edit-dropdown').innerHTML = '';
-        for( var key in myCoursesServerResponse )
-        {
-            if( myCoursesServerResponse[key].visible )
-            {
+        for (var key in myCoursesServerResponse) {
+            if (myCoursesServerResponse[key].visible) {
                 var opt = '<option value="' + key + '">' + key + '</option>';
-                $('#course-edit-dropdown').append( opt );
+                $('#course-edit-dropdown').append(opt);
             }
         }
-    } );
+    });
 </script>
