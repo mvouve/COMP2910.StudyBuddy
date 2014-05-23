@@ -21,12 +21,12 @@
 
             <div>
                 <label for="meeting-start-datetime">Start Time :</label>
-                <input id="meeting-start-datetime" class="datetime-picker" name="meeting-start-datetime" type="text"><br/>
+                <input id="meeting-start-datetime" class="edit-datetime-picker" name="meeting-start-datetime" type="text"><br/>
             </div>
 
             <div id="meeting-end-datetime-wrapper">
                 <label for="meeting-end-datetime">End Time :</label>
-                <input id="meeting-end-datetime" class="datetime-picker" name="meeting-end-datetime" type="text"><br/>
+                <input id="meeting-end-datetime" class="edit-datetime-picker" name="meeting-end-datetime" type="text"><br/>
             </div>
 
             <div id="max-buddies-wrapper">

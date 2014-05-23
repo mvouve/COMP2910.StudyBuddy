@@ -101,7 +101,7 @@ function editMeeting ( ajax_URL, meetingID, courseID, courseDescription, meeting
         },
         dataType: "json",
         success: function (json) {
-            if (json.success == true) {
+			if (json.success == true) {
                 document.getElementById('create-meeting-form').reset();
                 $.mobile.changePage('#page-my-meetings')
             }
@@ -572,7 +572,8 @@ function myMeetingOnReady(){
         });
 
         //
-        alterPickerTimes(".datetime-picker");
+        alterPickerTimes(".edit-datetime-picker", 'YYYY-MM-DD HH:mm');
+		alterPickerTimes(".create-datetime-picker", 'Y-m-d H:i:s');
         //
 }
 
@@ -698,6 +699,8 @@ function submitCreateMeeting()
     var meetingLocation   = document.getElementById( 'location-dropdown' ).value;
     var errorDiv          = document.getElementById( 'create-meeting-error' );
     
+	console.log( startTime );
+	
     // Check for valid fields.
     if( validateMeetingParams( courseID, 
                             maxBuddies, 
@@ -806,11 +809,15 @@ function generateTimes ()
     return times;
 }
 
-function alterPickerTimes ( dateTimePickerID )
+function alterPickerTimes ( dateTimePickerID, timeFormat )
 {
     jQuery( dateTimePickerID ).datetimepicker
     ({
         inline: true,
-        allowTimes:generateTimes()
+		format: timeFormat
     });
+	/*
+	,
+        allowTimes:generateTimes()
+		*/
 }
