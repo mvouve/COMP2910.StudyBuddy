@@ -5,9 +5,6 @@ var allMeeting = true;
 var iAttending = true;
 var meetingListClickLock = false;
 
-var DAY_STRINGS = [ 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' ];
-var MONTH_STRING = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec' ];
-
 /* a method to return all the meetings that you are attending, and adds them to your my meetings list via a helper function.
     returns a 2D array of meetings, each of which contains individual meeting data.
     @param ajax_URL (string): the URI location where the ajax folder is located */
@@ -291,10 +288,8 @@ function addMeetingToList ( meetingID, meetingCourse, meetingLoc, meetingStartTi
                                                     
                     if( meetingFilter == 2 )
                     {
-                        var buttonGroup = '<a href="#" id="edit-meeting-' + meetingID + '" data-role="button">Edit Meeting</a>'
-                                        + '<a href="#" id="cancel-meeting-' + meetingID + '" data-role="button">Cancel Meeting</a>';
+                        var buttonGroup = '<a href="#" id="edit-meeting-' + meetingID + '" data-role="button">Edit Meeting</a>';
                         document.getElementById( 'meeting-button-' + meetingID ).innerHTML = buttonGroup;
-                        $('#cancel-meeting-' + meetingID ).button();
                         $('#edit-meeting-' + meetingID ).button();
                         $('#edit-meeting-' + meetingID ).on('click touchend', function()
                         {
@@ -733,20 +728,7 @@ function getHumanDate( d )
 {
     date = new Date( d );
     
-	var dayString = DAY_STRINGS[ date.getDay() ];
-	var month = MONTH_STRING[ date.getMonth() ];
-	var day = date.getDate();
-	var year = date.getFullYear();
-	var hour = date.getHours();
-	var minutes = date.getMinutes();
-	
-	// Pad Minutes with a zero
-	if ( minutes < 10 )
-	{
-		minutes = '0' + minutes;
-	}
-	
-    return dayString + ', ' + month + ' ' + day + ' ' + year + ' - ' + hour + ':' + minutes;
+    return date.toDateString();
 }
 
 /* allow 15 minute increments in the date time piker */
