@@ -798,40 +798,13 @@ function getHumanDate( d )
     return dayString + ', ' + month + ' ' + day + ' ' + year + ' - ' + hour + ':' + minutes;
 }
 
-/* allow 15 minute increments in the date time piker */
-
-function generateTimes ()
-{
-    var times = [];
-    var i = 0;
-
-    for ( h = 0 ; h < 24 ; h++ )
-    {
-        for ( m = 0 ; m < 60 ; m += 15 )
-        {
-            min = m;
-            if ( m == 0 )
-            {
-                // displays 0 as 00 minutes
-                min = "00";
-            }
-            var timeString = "" + h + ":" + min;
-            times[i] = timeString;
-            i++;
-        }
-    }
-    return times;
-}
-
 function alterPickerTimes ( dateTimePickerID, timeFormat )
 {
     jQuery( dateTimePickerID ).datetimepicker
     ({
         inline: true,
-		format: timeFormat
+        step: 15,
+		format: timeFormat,
+        scrollMonth: false
     });
-	/*
-	,
-        allowTimes:generateTimes()
-		*/
 }
