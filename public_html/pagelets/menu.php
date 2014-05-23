@@ -8,6 +8,8 @@
                         <li><a href='#page-my-courses'>My Courses</a></li>
                         <li><a href='#page-account-settings'>Account Settings</a></li>
                         <li><a href='login.php?logout=true' rel='external'>Logout</a></li>
+                        <li><br></li>
+                        <li><a href='#page-notify-demo'>Notification Demo</a></li>
                         <li>
                             <div data-role="collapsible" data-theme="a" data-content-theme="c" data-inset="false">
                                 <h1>Theme</h1>

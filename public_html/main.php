@@ -21,6 +21,7 @@
 		<?php include( 'my-courses.php' ); ?>
 		<?php include( 'add-course.php' ); ?>
         <?php include( 'edit-meetings.php' ); ?>
+        <?php include( 'notify-demo.php' ); ?>
     </body>
 	
 	<script>
