@@ -19,9 +19,7 @@
         <script>
             function sendDemoNotification()
             {
-                $.post( ajaxURL + "notify_demo.php", $( "#notify-demo-form" ).serialize() ).done( function( data ) {
-                    alert( "Done!" );
-                });
+                $.post( ajaxURL + "notify_demo.php", $( "#notify-demo-form" ).serialize() );
             }
         </script>
 <!--End of notify-demo.php-->

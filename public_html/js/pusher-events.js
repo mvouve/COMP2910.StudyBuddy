@@ -27,11 +27,8 @@ function unbindFromCourse( course )
 
 function unbindFromAllCourses()
 {
-    console.log( JSON.stringify( channels ) );
-
 	for ( var id in channels )
 	{
-        console.log( id );
 		if ( id != 'study_buddy' )
 		{
 			unbindFromCourse( id );
@@ -109,14 +106,11 @@ function pusherMeetingAdded( data )
  */
 function pusherMeetingCancelled( data )
 {
-	console.log( "CALLBACK" );
-
 	//go into meeting list and look for meeting with this ID and set its cancelled property/flag to true
     for ( var i = 0 ; i < meetingList.length ; i++ )
     {
         if ( meetingList[i].ID == data.ID)
         {
-			console.log( "MEETING FOUND" );
             meetingList[i].canceled = true;
 			cancelMeetingNotification( data.ID );
 			break;

@@ -32,7 +32,6 @@
             // Close the Menu Panel when the page is changed.
             $( '#page-container' ).on( "pagecontainerhide", function() {
                 var menuPanel = $.mobile.activePage.find(".menu-panel" );
-                $.mobile.activePage.find('.ui-btn-active').each( function() { console.log("ASFA"); } );
                 $.mobile.activePage.find('.ui-btn-active').removeClass('ui-state-persist');
                 menuPanel.panel( "close" );
             });
