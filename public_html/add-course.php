@@ -13,13 +13,13 @@
                         <form id="add-course-form" name="add-course-form" method="POST">
                             <label for="add-course-id">Course ID: 
 							<span id="invalid-format" style="color: #FF0000">Please verify your format</span> </label>
-                            <div id="user-course-id-div">
-                                <input type="text" name="user-course-id" id="user-course-id" placeholder="COMP0000">
+                            <div id="add-course-id-div">
+                                <input type="text" name="add-course-id" id="add-course-id" placeholder="COMP0000">
                             </div>
 
                             <label for="add-course-name">Course Title:</label>
-                            <div id="user-course-title-div">
-                                <input type="text" name="user-course-title" id="user-course-title" placeholder="At least 4 letter description">
+                            <div id="user-course-name-div">
+                                <input type="text" name="user-course-name" id="user-course-name" placeholder="At least 4 letter description">
                             </div>
 
                             <a href="#" data-role="button" id="add-course-submit">Add</a>
@@ -33,14 +33,9 @@
         </div>
 
         <script>
-            var idRegex = /^([A-Z]{4}[0-9]{4})$/gi;
-            var userEntry;
-            var invalidFormatBoolean = false;
-            var btn;
-            var formatMatch;
+            var CourseIdRegex = /^([A-Z]{4}[0-9]{4})$/gi;
             var userNewCourseId;
             var userNewCourseTitle;
-            
             var courseIdFilled;
             var courseTitleFilled;
 
@@ -49,7 +44,7 @@
                 $('#add-course-submit').addClass('ui-disabled');
                 $('#invalid-format').hide();
 
-                $('#user-course-id').keyup(function (e) {
+                $('#add-course-id').keyup(function (e) {
                     validateID();
                 });
                 
@@ -58,7 +53,7 @@
                 });
                //form submit function
                 $("#add-course-submit").on( 'click touchend', function (e) {
-                    userNewCourseID = $("#user-course-id").val();
+                    userNewCourseID = $("#add-course-id").val();
                     userNewCourseTitle = $("#user-course-title").val();
 					$('#add-course-submit').addClass('ui-disabled');
                     createCourse("<?php echo AJAX_URL; ?>", userNewCourseID, userNewCourseTitle);
@@ -74,13 +69,18 @@
                 });
             }
 
-            //Validating course ID to reg ex
+            /*
+			 * Validates user IDs.
+			 *
+			 * @returns
+			 *		TRUE: 	ID is valid.
+			 * 		FALSE: 	ID is invalid.
+			 */
             function validateID() {
                 courseIdFilled = false;
                 $('#add-course-submit').addClass('ui-disabled');
                 
-                $('#invalid-format').show();
-                var validID = document.getElementById("user-course-id").value.match(idRegex);
+                var validID = document.getElementById("add-course-id").value.match(CourseIdRegex);
                 if (validID == null || validID.length != 1) {
                     return false;
                 }
@@ -91,6 +91,11 @@
                 return true;
             }
             
+            /*
+             * Validate the user title by REGEX
+             *
+             *
+             */
             function validateTitle() {
                 courseTitleFilled = false;
                 $('#add-course-submit').addClass('ui-disabled');
