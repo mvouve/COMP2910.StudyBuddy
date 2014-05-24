@@ -8,28 +8,26 @@
             <?php renderPagelet( 'banner.php', array( '{{title}}' => 'Add Course' ) ); ?>
 
             <div data-role="content" data-theme="a">
-                <div>
-                    <div data-role="form">
-                        <form id="add-course-form" name="add-course-form" method="POST">
-                            <label for="add-course-id">Course ID: 
-							<span id="invalid-format" style="color: #FF0000">Please verify your format</span> </label>
-                            <div id="add-course-id-div">
-                                <input type="text" name="add-course-id" id="add-course-id" placeholder="COMP0000">
-                            </div>
-
-                            <label for="add-course-name">Course Title:</label>
-                            <div id="user-course-name-div">
-                                <input type="text" name="user-course-name" id="user-course-name" placeholder="At least 4 letter description">
-                            </div>
-
-                            <a href="#" data-role="button" id="add-course-submit">Add</a>
-                            <input type="hidden" name="method" value="add" />
-                        </form>
+                <form id="add-course-form" name="add-course-form" method="POST">
+                    
+                    <!-- Course ID -->
+                    <div id="add-course-id-div">
+                        <label for="add-course-id">Course ID:</label>
+                        <input type="text" name="add-course-id" id="add-course-id" placeholder="COMP0000">
                     </div>
-                    <a href="page-all-courses" data-role="button" id="cancel-add-course">Cancel</a>
-                </div>
+                    
+                    <!-- Course Name -->
+                    <div id="user-course-name-div">
+                        <label for="add-course-name">Course Title:</label>
+                        <input type="text" name="user-course-name" id="user-course-name" placeholder="At least 4 letter description">
+                    </div>
 
+                    <a href="#" data-role="button" id="add-course-submit">Add</a>
+                    <input type="hidden" name="method" value="add" />
+                </form>
+                <a href="page-all-courses" data-role="button" id="add-course-cancel">Cancel</a>
             </div>
+            
         </div>
 
         <script>
@@ -40,27 +38,37 @@
             var courseTitleFilled;
 
             //On ready function so stuff loads
-            function addCourseOnReady() {
+            function addCourseOnReady() 
+            {
+                // Submit button is disabled by default to prevent spam.
                 $('#add-course-submit').addClass('ui-disabled');
-                $('#invalid-format').hide();
-
-                $('#add-course-id').keyup(function (e) {
-                    validateID();
+                
+                // Add listener to the course-id-title.
+                $('#add-course-id').keyup(function ( e ) 
+                {
+                    validateCouseID();
                 });
                 
-                $('#user-course-title').keyup(function (e) {
-                    validateTitle();
+                // Add listener to user-course-title.
+                $('#user-course-title').keyup(function ( e ) 
+                {
+                    validateCouseTitle();
                 });
-               //form submit function
-                $("#add-course-submit").on( 'click touchend', function (e) {
+                
+                // Adds button listener to the add-course-submit-button.
+                $("#add-course-submit").on( 'click touchend', function ( e ) 
+                {
                     userNewCourseID = $("#add-course-id").val();
                     userNewCourseTitle = $("#user-course-title").val();
 					$('#add-course-submit').addClass('ui-disabled');
-                    createCourse("<?php echo AJAX_URL; ?>", userNewCourseID, userNewCourseTitle);
+                    createCourse( ajaxURL, userNewCourseID, userNewCourseTitle );
                     e.stopImmediatePropagation();
                     e.preventDefault();
-                }); 
-                $("#cancel-add-course").on( 'click touchend', function (e) {
+                });
+                
+                // Add listener to the course cancel button. 
+                $("add-course-cancel").on( 'click touchend', function ( e ) 
+                {
                     document.getElementById("user-course-form").reset();
 					$('#add-course-submit').addClass('ui-disabled');
                     $.mobile.changePage("#page-all-courses");
@@ -70,13 +78,13 @@
             }
 
             /*
-			 * Validates user IDs.
+			 * Validates user IDs by regex.
 			 *
 			 * @returns
 			 *		TRUE: 	ID is valid.
 			 * 		FALSE: 	ID is invalid.
 			 */
-            function validateID() {
+            function validateCouseID() {
                 courseIdFilled = false;
                 $('#add-course-submit').addClass('ui-disabled');
                 
@@ -92,11 +100,13 @@
             }
             
             /*
-             * Validate the user title by REGEX
+             * Validate the user title by regex.
              *
-             *
+             * @returns
+             *      TRUE:   Title is valid.
+             *      FALSE:  ID is invalid.
              */
-            function validateTitle() {
+            function validateCouseTitle() {
                 courseTitleFilled = false;
                 $('#add-course-submit').addClass('ui-disabled');
                 
@@ -107,7 +117,10 @@
                 checkFormFilled();
                 return true;
             }
-            //Verify both fields are filled
+            
+            /*
+             * Checks if both the courseID and the Form Feilds are Valid.
+             */
             function checkFormFilled(){
                 if(courseIdFilled == true && courseTitleFilled == true){
                     $('#add-course-submit').removeClass('ui-disabled');
