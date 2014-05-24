@@ -32,8 +32,6 @@
 
         <script>
             var CourseIdRegex = /^([A-Z]{4}[0-9]{4})$/gi;
-            var userNewCourseId;
-            var userNewCourseTitle;
             var courseIdFilled;
             var courseTitleFilled;
 
@@ -50,19 +48,36 @@
                 });
                 
                 // Add listener to user-course-title.
-                $('#user-course-title').keyup(function ( e ) 
+                $( '#user-course-title' ).keyup( function ( e ) 
                 {
-                    validateCouseTitle();
+                    var ID      = document.getElementById("add-course-id").value;
+                    var title   = document.getElementById("add-course-name").value;
+                    
+                    $('#add-course-submit').addClass('ui-disabled');
+                    
+                    if ( validateCourseTitle( title ) )
+                    {
+                        if( validateCourseID( ID ) )
+                        {
+                            $('#add-course-submit').removeClass('ui-disabled');
+                        }
+                            
+                    }
+                        
                 });
                 
                 // Adds button listener to the add-course-submit-button.
                 $("#add-course-submit").on( 'click touchend', function ( e ) 
                 {
-                    userNewCourseID = $("#add-course-id").val();
-                    userNewCourseTitle = $("#user-course-title").val();
+                    var userNewCourseID = $("#add-course-id").val();
+                    var userNewCourseTitle = $("#user-course-title").val();
 					$('#add-course-submit').addClass('ui-disabled');
                     createCourse( ajaxURL, userNewCourseID, userNewCourseTitle );
+                    
+                    // Prevent ghost-click in JQuery Mobile.
                     e.stopImmediatePropagation();
+                    
+                    // Stops anchor from trying to redirect.
                     e.preventDefault();
                 });
                 
@@ -77,55 +92,7 @@
                 });
             }
 
-            /*
-			 * Validates user IDs by regex.
-			 *
-			 * @returns
-			 *		TRUE: 	ID is valid.
-			 * 		FALSE: 	ID is invalid.
-			 */
-            function validateCouseID() {
-                courseIdFilled = false;
-                $('#add-course-submit').addClass('ui-disabled');
-                
-                var validID = document.getElementById("add-course-id").value.match(CourseIdRegex);
-                if (validID == null || validID.length != 1) {
-                    return false;
-                }
-                $('#invalid-format').hide();
-                //$('#add-course-submit').removeClass('ui-disabled');
-                courseIdFilled = true;
-                checkFormFilled();
-                return true;
-            }
-            
-            /*
-             * Validate the user title by regex.
-             *
-             * @returns
-             *      TRUE:   Title is valid.
-             *      FALSE:  ID is invalid.
-             */
-            function validateCouseTitle() {
-                courseTitleFilled = false;
-                $('#add-course-submit').addClass('ui-disabled');
-                
-                var titleEntry = document.getElementById("user-course-title").value;
-                if(titleEntry.length > 3){
-                    courseTitleFilled = true;
-                }
-                checkFormFilled();
-                return true;
-            }
-            
-            /*
-             * Checks if both the courseID and the Form Feilds are Valid.
-             */
-            function checkFormFilled(){
-                if(courseIdFilled == true && courseTitleFilled == true){
-                    $('#add-course-submit').removeClass('ui-disabled');
-                }
-            }
+ 
             
 
         </script>

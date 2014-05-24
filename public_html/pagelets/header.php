@@ -34,6 +34,7 @@
 		<script src="js/courses.js"></script>
 		<script src="js/meetings.js"></script>
         <script src="js/pusher-events.js"></script>
+        <script src="js/input-validation.js"></script>
         <!-- Source: http://www.jqueryrain.com/?lnsG0UbP -->
         <link rel="stylesheet" type="text/css" href="js/datetimepicker/jquery.datetimepicker.css"/>
         <script src="js/datetimepicker/jquery.datetimepicker.js"></script>
