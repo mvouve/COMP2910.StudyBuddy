@@ -1,4 +1,5 @@
 <!--Beginning of add-courses.php-->
+<!-- NOTE TO SELF: removed error message divs, need to readd them -->
 <?php
     $email = $_SESSION['email'];
     $display_name = $_SESSION['display_name'];
@@ -9,13 +10,14 @@
             <div data-role="content" data-theme="a">
                 <div>
                     <div data-role="form">
-                        <form id="user-course-form" name="user-course-form" method="POST">
-                            <label for="userCourseID">Course ID: <span id="invalid-format" style="color: #FF0000">Please verify your format</span> </label>
+                        <form id="add-course-form" name="add-course-form" method="POST">
+                            <label for="add-course-id">Course ID: 
+							<span id="invalid-format" style="color: #FF0000">Please verify your format</span> </label>
                             <div id="user-course-id-div">
                                 <input type="text" name="user-course-id" id="user-course-id" placeholder="COMP0000">
                             </div>
 
-                            <label for="user-course-title">Course Title:</label>
+                            <label for="add-course-name">Course Title:</label>
                             <div id="user-course-title-div">
                                 <input type="text" name="user-course-title" id="user-course-title" placeholder="At least 4 letter description">
                             </div>

@@ -15,7 +15,7 @@ CREATE TABLE User
 	UNIQUE KEY( verificationString )
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
-CREATE TABLE LoginAttept
+CREATE TABLE LoginAttempt
 (
 	email	VARCHAR(96)		NOT NULL,
 	time	TIMESTAMP		NOT NULL,
