@@ -8,6 +8,7 @@
             <?php renderPagelet( 'banner.php', array( '{{title}}' => 'Add Course' ) ); ?>
 
             <div data-role="content" data-theme="a">
+                <div id="add-course-error"></div>
                 <form id="add-course-form" name="add-course-form" method="POST">
                     
                     <!-- Course ID -->
@@ -22,55 +23,31 @@
                         <input type="text" name="user-course-name" id="user-course-name" placeholder="At least 4 letter description">
                     </div>
 
-                    <a href="#" data-role="button" id="add-course-submit">Add</a>
                     <input type="hidden" name="method" value="add" />
                 </form>
-                <a href="page-all-courses" data-role="button" id="add-course-cancel">Cancel</a>
             </div>
-            
+            <div data-role="footer" data-position="fixed" data-tap-toggle="false">
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href="#page-all-courses" data-icon="back" data-iconpos="top">Cancel</a></li>
+                        <li><a href="#page-add-course" id="add-course-submit" data-icon="plus" data-iconpos="top" >Add Course</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
+            
 
         <script>
             var CourseIdRegex = /^([A-Z]{4}[0-9]{4})$/gi;
-            var courseIdFilled;
-            var courseTitleFilled;
 
             //On ready function so stuff loads
             function addCourseOnReady() 
             {
-                // Submit button is disabled by default to prevent spam.
-                $('#add-course-submit').addClass('ui-disabled');
-                
-                // Add listener to the course-id-title.
-                $('#add-course-id').keyup(function ( e ) 
-                {
-                    validateCouseID();
-                });
-                
-                // Add listener to user-course-title.
-                $( '#user-course-title' ).keyup( function ( e ) 
-                {
-                    var ID      = document.getElementById("add-course-id").value;
-                    var title   = document.getElementById("add-course-name").value;
-                    
-                    $('#add-course-submit').addClass('ui-disabled');
-                    
-                    if ( validateCourseTitle( title ) )
-                    {
-                        if( validateCourseID( ID ) )
-                        {
-                            $('#add-course-submit').removeClass('ui-disabled');
-                        }
-                            
-                    }
-                        
-                });
-                
                 // Adds button listener to the add-course-submit-button.
                 $("#add-course-submit").on( 'click touchend', function ( e ) 
                 {
-                    var userNewCourseID = $("#add-course-id").val();
-                    var userNewCourseTitle = $("#user-course-title").val();
+                    var CourseID    = $("#add-course-id").val();
+                    var CourseName  = $("#user-course-name").val();
 					$('#add-course-submit').addClass('ui-disabled');
                     createCourse( ajaxURL, userNewCourseID, userNewCourseTitle );
                     
@@ -84,11 +61,7 @@
                 // Add listener to the course cancel button. 
                 $("add-course-cancel").on( 'click touchend', function ( e ) 
                 {
-                    document.getElementById("user-course-form").reset();
-					$('#add-course-submit').addClass('ui-disabled');
-                    $.mobile.changePage("#page-all-courses");
-                    return false;
-                    
+                    document.getElementById("user-course-form").reset();     
                 });
             }
 

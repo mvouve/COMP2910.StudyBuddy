@@ -110,6 +110,7 @@ var clearing = false;
 var loading = {};
 //html unorded list where all courses are displayed
 var allCoursesList;
+
 /* Adds course data to list elements in HTML 
     @param id the 4-letter and 4-number course code
     @param title a brief description / the name of the course

@@ -42,13 +42,13 @@
     </div>
             <!-- save meeting and cancel buttons go here?-->
     <div data-role="footer" data-position="fixed" data-tap-toggle="false">
-                <div data-role="navbar">
-		            <ul>
-			            <li><a href="#page-my-meetings" data-icon="back" data-iconpos="top">Cancel</a></li>
-			            <li><a href="#page-create-meeting" id="create-meeting-submit" data-icon="plus" data-iconpos="top" >Create Meeting</a></li>
-		            </ul>
-	            </div>
-            </div>
+        <div data-role="navbar">
+		    <ul>
+		        <li><a href="#page-my-meetings" data-icon="back" data-iconpos="top">Cancel</a></li>
+		        <li><a href="#page-create-meeting" id="create-meeting-submit" data-icon="plus" data-iconpos="top" >Create Meeting</a></li>
+		    </ul>
+	    </div>
+    </div>
 </div>
 
 <script>
